@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="persistenceUnit">
+        <class>domain.DcCodeDkhpEntity</class>
+        <class>domain.DcCodeEtkdEntity</class>
+        <class>domain.DcCodeKpEntity</class>
+        <class>domain.DcCodeZkpptrEntity</class>
+        <class>domain.DcDutiesMustKnowEntity</class>
+        <class>domain.DcDutiesQualificationRequirementsEntity</class>
+        <class>domain.DcDutiesTasksAndResponsibilitiesEntity</class>
+        <class>domain.DcDutiesNameEntity</class>
+        <class>domain.DcDutiesPartitionEntity</class>
+        <class>domain.DcDutiesTypeEntity</class>
+        <class>domain.DutiesValidityDateEntity</class>
+        <class>domain.RtCodeEntity</class>
+        <class>domain.RtDutiesEntity</class>
+        <class>domain.RtDutiesMustKnowEntity</class>
+        <class>domain.RtDutiesQualificationRequirementsEntity</class>
+        <class>domain.RtDutiesTaskAndResponsibilitiesEntity</class>
+        <class>domain.RtDutiesCodeEntity</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:sqlserver://77.47.135.158:1433"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="hibernate.connection.username"/>
+            <property name="hibernate.connection.password"/>
+        </properties>
+    </persistence-unit>
+</persistence>
