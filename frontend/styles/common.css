@@ -1,0 +1,135 @@
+body {
+    min-width: 800px;
+    min-height: 400px;
+}
+
+.btn-spinner {
+    display: none;
+}
+
+
+
+.color-aqua {  color: #33CB9A !important;  }
+.color-brown {  color: #6F5153 !important;  }
+.color-cyan {  color: #7BDBDA !important;  }
+.color-yellow {  color: #CDCC00 !important;  }
+
+.color-aqua--full,
+.color-aqua--full:hover,
+.color-aqua--full:active,
+.color-aqua--full:active:focus,
+.color-aqua--full:focus {
+    color: #33CB9A !important;
+}
+.color-brown--full,
+.color-brown--full:hover,
+.color-brown--full:active,
+.color-brown--full:active:focus,
+.color-brown--full:focus {
+    color: #6F5153 !important;
+}
+
+.border-aqua {  border-color: #36CB9A !important;  }
+.border-brown {  border-color: #6F5153 !important;  }
+.border-cyan {  border-color: #7BDBDA !important;  }
+.border-yellow {  border-color: #CDCC00 !important;  }
+
+
+
+.header-row {
+
+}
+
+    .header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .header--with-lines {
+        background: url("../img/lines-small-part.png") 0 90px repeat-x;
+    }
+
+
+        .header-logo {
+            background: url("../img/lines-small-part.png") white 0 18px no-repeat;
+        }
+
+            .header-logo-img {
+
+            }
+
+            .header-logo-text {
+                text-transform: uppercase;
+                color: #6F5153;
+                font-size: 1.5em;
+                margin: 0 0 0 30px;
+                padding: 10px 10px 10px 30px;
+            }
+
+        .header-menu {
+            display: flex;
+            align-items: center;
+        }
+
+            .header-menu-navbar {
+                margin-bottom: 25px;
+                font-size: 1.2em;
+            }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+        }
+
+            .header-user-btn-go-to-account {
+                vertical-align: middle;
+                line-height: 1.1em;
+                display: inline-flex;
+                align-items: flex-end;
+                padding: 10px;
+                margin-bottom: 30px;
+                font-style: italic;
+            }
+
+                .header-user-img {
+
+                }
+
+                .header-user-caption {
+                    padding: 7px;
+                }
+
+
+.main-row {
+
+}
+
+    .main {
+
+    }
+
+
+
+
+.footer-row {
+
+}
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+
+    }
+    .footer--with-lines {
+        background: url("../img/lines-small-part.png") 0 0 repeat-x;
+        padding-top: 40px;
+    }
+
+        .footer-info-block {
+            padding: 5px;
+        }
+
+            .footer-kpi-logo {
+                width: auto;
+                max-width: 50px;
+            }
