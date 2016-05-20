@@ -118,7 +118,7 @@ body {
     .footer {
         display: flex;
         justify-content: space-between;
-
+        align-items: center;
     }
     .footer--with-lines {
         background: url("../img/lines-small-part.png") 0 0 repeat-x;
@@ -131,5 +131,6 @@ body {
 
             .footer-kpi-logo {
                 width: auto;
-                max-width: 50px;
+                max-width: 40px;
+                max-height: 40px;
             }

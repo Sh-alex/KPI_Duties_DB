@@ -3,7 +3,7 @@
 <head lang="uk">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Авторизація | Державний класифікатор посад України </title>
+    <title> Пошук | Державний класифікатор посад України </title>
     <meta name="description" content="Державний класифікатор посад України">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='./styles/bootstrap.min.css' rel='stylesheet' type='text/css'>
@@ -47,11 +47,116 @@
     </section>
     <section class="row main-row">
         <main class="main">
-            <div class="auth-form-wrapper">
-                <form id="search-form" class="search-form" role="form">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum id odio quam repellat sint suscipit velit voluptas, voluptatem voluptates. Ab accusamus aliquam, atque commodi consequatur corporis cum dolore dolores ducimus earum eligendi enim eos eum excepturi fuga illo impedit ipsam iure labore laudantium, minus natus nemo obcaecati possimus quaerat quibusdam quo reiciendis rerum suscipit temporibus tenetur unde veniam voluptate. Accusantium aliquid, animi assumenda atque consectetur debitis dolore dolorem doloremque doloribus eaque eius eos expedita fuga harum id in incidunt laboriosam nam non odit perspiciatis quaerat quas quibusdam quidem rem unde veniam veritatis. Aliquam error illum quam quas quo? Alias aliquam assumenda commodi culpa cumque, delectus distinctio enim explicabo inventore laborum maxime mollitia necessitatibus, quaerat, quasi rem saepe vero voluptates. Ad aliquid aperiam culpa cumque distinctio dolore earum eius eveniet facere illo laudantium magnam magni modi nemo, nihil obcaecati, odit perferendis praesentium quaerat quibusdam ratione reprehenderit rerum sequi sint suscipit voluptate voluptatibus. Cupiditate eius error esse eveniet id inventore minima natus nisi officiis omnis pariatur quae, quas quis repudiandae sint temporibus ut voluptas, voluptate. Consequuntur delectus minus temporibus veritatis. Natus, tempora, voluptas. Adipisci architecto, aspernatur blanditiis eaque, ex fugit in labore laborum minus molestias nobis nostrum numquam porro possimus quia quisquam quo veritatis. Alias aliquam aliquid aut dolore dolorem, dolorum eaque enim facere maxime molestiae omnis perspiciatis quibusdam quo repudiandae saepe! Ab at, ducimus error fugit ipsum itaque neque quidem recusandae totam voluptas. Autem distinctio, incidunt? Aliquid consectetur dolorem ipsa suscipit! A aspernatur assumenda aut consectetur earum et eum, excepturi explicabo, harum, inventore laboriosam nobis optio pariatur quam quis quisquam quo similique vel! Ab assumenda aut cupiditate, distinctio dolores eos et odio officiis quia quidem quos repellendus sapiente similique tempora, unde? Dolorum, eaque hic itaque modi nam quaerat unde. Ab architecto aspernatur assumenda cum dignissimos, distinctio dolore dolorem doloremque ea, ex explicabo ipsa itaque iure magni, minima nam natus nesciunt optio perferendis praesentium. A asperiores autem consequatur, culpa cupiditate deleniti dolorem eius excepturi hic impedit incidunt ipsam ipsum iure maxime modi praesentium provident quaerat saepe sapiente sequi. Accusantium autem deserunt id modi nobis. Accusamus ad adipisci alias asperiores blanditiis consequuntur corporis deleniti distinctio dolore earum eligendi, enim esse eum fuga hic ipsa laborum maiores maxime molestias neque nostrum obcaecati officia officiis perspiciatis quam quas, quis recusandae reiciendis reprehenderit sint soluta tempora totam unde. Alias atque beatae corporis deleniti deserunt dolore eius iusto, minima molestiae nisi nostrum possimus qui quibusdam saepe sequi, suscipit veritatis? Dignissimos fugit magnam magni molestiae necessitatibus officia quaerat recusandae totam! Commodi dolore enim hic impedit ipsum magni non nostrum, omnis saepe totam! Aperiam consequatur itaque laborum maiores praesentium quo reiciendis reprehenderit sint temporibus voluptates. Alias atque eligendi et facilis nam praesentium, quaerat quam sed sequi voluptates. Ad delectus enim error ipsa ipsam ipsum iure labore laudantium libero magni maxime molestiae mollitia nemo, nulla numquam praesentium quisquam quo sunt veniam vero! Aliquam, aspernatur cumque dolores eveniet explicabo magnam magni perferendis, quasi qui quisquam reiciendis, repellendus reprehenderit velit? Accusamus beatae cumque deserunt modi omnis perspiciatis similique sint suscipit tempora ut!
-                </form>
-            </div>
+            <form id="search-form" class="form-horizontal search-form" role="form">
+                <div class="search-form-inner search-min">
+                    <fieldset class="search-form-fieldset">
+                        <legend class="search-form-legend search-form-legend--min">
+                            Пошук посад
+                        </legend>
+                        <legend class="search-form-legend search-form-legend--extended">
+                            Розширений пошук посад
+                        </legend>
+
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
+                                Дата створення посади в державі
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
+                            </div>
+                            <label for="inp-occupation-canceling-in-state" class="col-sm-2 control-label">
+                                Дата відміни посади в державі
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-canceling-in-state" placeholder="Дата відміни посади в державі">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
+                                Дата створення посади в КПІ
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
+                            </div>
+                            <label for="inp-occupation-canceling-in-kpi" class="col-sm-2 control-label">
+                                Дата відміни посади в КПІ
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-canceling-in-kpi" placeholder="Дата відміни посади в КПІ">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-code-KP" class="col-sm-2 control-label">
+                                Код КП
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                            </div>
+                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                Код ЗКППТР
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                Код ЄТДК
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                            </div>
+                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                Код ДКХП
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkbox-exists-in-kpi" class="col-sm-2 control-label">
+                                Приналежність до КПІ
+                            </label>
+                            <div class="col-sm-10">
+                                <label>
+                                    <input type="checkbox" checked="checked" id="checkbox-exists-in-kpi" class="form-control search-form-checkbox" >
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">
+                                    Шукати  <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <a role="button" id="btn-toggle-extended-search" class="btn btn-default btn-toggle-extended-search">
+                        Розширений пошук
+                        <i class="fa fa-chevron-down btn-toggle-icon--min" aria-hidden="true"></i>
+                        <i class="fa fa-chevron-up btn-toggle-icon--extended" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </form>
         </main>
     </section>
     <section class="row footer-row">
@@ -76,5 +181,6 @@
 </div>
 <script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="./scripts/tmp.js"></script>
 </body>
 </html>
