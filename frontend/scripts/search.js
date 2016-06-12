@@ -1,7 +1,7 @@
 "use strict";
 
 $("#btn-toggle-extended-search").click(e => {
-    let el = $(".search-form-inner");
+    let el = $(".form-inner");
     if(el.hasClass("search-extended")) {
         el.addClass("search-min");
         el.removeClass("search-extended");

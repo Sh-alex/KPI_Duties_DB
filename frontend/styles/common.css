@@ -108,6 +108,27 @@ body {
 
     }
 
+        .form-inner {
+            padding: 0 20px 20px;
+        }
+
+            .form-fieldset {
+                border: 1px solid #c0c0c0;
+                margin: 0;
+                padding: 0.35em 0.625em 0.75em;
+            }
+
+                .form-legend {
+                    border: none;
+                    width: auto;
+                }
+
+                    .form-checkbox {
+                        width: 18px;
+                        border-radius: 0;
+                        border: none;
+                        box-shadow: none;
+                    }
 
 
 

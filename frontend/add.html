@@ -3,13 +3,13 @@
 <head lang="uk">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Пошук | Державний класифікатор посад України </title>
+    <title> Додавання посади | Державний класифікатор посад України </title>
     <meta name="description" content="Державний класифікатор посад України">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='./styles/bootstrap.min.css' rel='stylesheet' type='text/css'>
     <link href='./styles/font-awesome.min.css' rel='stylesheet' type='text/css'>
     <link href='./styles/common.css' rel='stylesheet' type='text/css'>
-    <link href='./styles/search.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/add.css' rel='stylesheet' type='text/css'>
     <!--скачати змінні для теми з http://bootswatch.com/yeti/ -->
 </head>
 <body>
@@ -47,17 +47,14 @@
     </section>
     <section class="row main-row">
         <main class="main">
-            <form id="search-form" class="form-horizontal search-form" role="form">
-                <div class="form-inner container search-min">
+            <form id="add-form" class="form-horizontal add-form" role="form">
+                <div class="form-inner container">
                     <fieldset class="form-fieldset">
                         <legend class="form-legend search-form-legend--min">
-                            Пошук посад
-                        </legend>
-                        <legend class="form-legend search-form-legend--extended">
-                            Розширений пошук посад
+                            Додавання посади
                         </legend>
 
-                        <div class="form-group search-form-field--extended">
+                        <div class="form-group">
                             <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
@@ -69,13 +66,13 @@
                                 <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
                             </div>
                         </div>
-                        <div class="form-group search-form-field--extended">
+                        <div class="form-group">
                             <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади">
                             </div>
                         </div>
-                        <div class="form-group search-form-field--extended">
+                        <div class="form-group">
                             <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
                                 Дата створення посади в державі
                             </label>
@@ -89,7 +86,7 @@
                                 <input type="date" class="form-control" id="inp-occupation-canceling-in-state" placeholder="Дата відміни посади в державі">
                             </div>
                         </div>
-                        <div class="form-group search-form-field--extended">
+                        <div class="form-group">
                             <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
                                 Дата створення посади в КПІ
                             </label>
@@ -131,6 +128,106 @@
                                 <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
                             </div>
                         </div>
+<!--
+                        <div class="form-group">
+                            <label for="inp-code-KP" class="col-sm-2 control-label">
+                                Код КП
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                            </div>
+                            <label for="inp-code-KP-creating-date" class="col-sm-2 control-label">
+                                Дата створення коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-KP-creating-date" placeholder="Дата створення коду">
+                            </div>
+                            <label for="inp-code-KP-canceling-date" class="col-sm-2 control-label">
+                                Дата відміни коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-KP-canceling-date" placeholder="Дата відміни коду">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                Код ЗКППТР
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                            </div>
+                            <label for="inp-code-ZKPPTR-creating-date" class="col-sm-2 control-label">
+                                Дата створення коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-ZKPPTR-creating-date" placeholder="Дата створення коду">
+                            </div>
+                            <label for="inp-code-ZKPPTR-canceling-date" class="col-sm-2 control-label">
+                                Дата відміни коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-ZKPPTR-canceling-date" placeholder="Дата відміни коду">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                Код ЄТДК
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                            </div>
+                            <label for="inp-code-ETDK-creating-date" class="col-sm-2 control-label">
+                                Дата створення коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-ETDK-creating-date" placeholder="Дата створення коду">
+                            </div>
+                            <label for="inp-code-ETDK-canceling-date" class="col-sm-2 control-label">
+                                Дата відміни коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-ETDK-canceling-date" placeholder="Дата відміни коду">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                Код ДКХП
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                            </div>
+                            <label for="inp-code-DKHP-creating-date" class="col-sm-2 control-label">
+                                Дата створення коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-DKHP-creating-date" placeholder="Дата створення коду">
+                            </div>
+                            <label for="inp-code-DKHP-canceling-date" class="col-sm-2 control-label">
+                                Дата відміни коду
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="inp-code-DKHP-canceling-date" placeholder="Дата відміни коду">
+                            </div>
+                        </div>
+-->
+                        <div class="form-group">
+                            <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги"></textarea>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="checkbox-exists-in-kpi" class="col-sm-2 control-label">
                                 Приналежність до КПІ
@@ -145,16 +242,11 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary">
-                                    Шукати  <i class="fa fa-search" aria-hidden="true"></i>
+                                    Додати  <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
                     </fieldset>
-                    <a role="button" id="btn-toggle-extended-search" class="btn btn-default btn-toggle-extended-search">
-                        Розширений пошук
-                        <i class="fa fa-chevron-down btn-toggle-icon--min" aria-hidden="true"></i>
-                        <i class="fa fa-chevron-up btn-toggle-icon--extended" aria-hidden="true"></i>
-                    </a>
                 </div>
             </form>
         </main>
@@ -181,6 +273,6 @@
 </div>
 <script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="./scripts/search.js"></script>
+<script type="text/javascript" src="./scripts/add.js"></script>
 </body>
 </html>
