@@ -1,4 +1,4 @@
-package domain;
+package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 

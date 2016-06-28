@@ -1,12 +1,12 @@
-package domain;
+package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "DcCodeETKD", schema = "dbo", catalog = "DcDuties")
-public class DcCodeEtkdEntity {
+@Table(name = "DcDuties_MustKnow", schema = "dbo", catalog = "DcDuties")
+public class DcDutiesMustKnowEntity {
     private int id;
-    private String name;
+    private String text;
 
     @Id
     @Column(name = "Id")
@@ -19,13 +19,13 @@ public class DcCodeEtkdEntity {
     }
 
     @Basic
-    @Column(name = "Name")
-    public String getName() {
-        return name;
+    @Column(name = "Text")
+    public String getText() {
+        return text;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -33,10 +33,10 @@ public class DcCodeEtkdEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DcCodeEtkdEntity that = (DcCodeEtkdEntity) o;
+        DcDutiesMustKnowEntity that = (DcDutiesMustKnowEntity) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
         return true;
     }
@@ -44,7 +44,7 @@ public class DcCodeEtkdEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
         return result;
     }
 }

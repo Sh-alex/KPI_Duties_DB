@@ -1,16 +1,15 @@
-package domain;
+package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "RtDutiesCode", schema = "dbo", catalog = "DcDuties")
-public class RtDutiesCodeEntity {
+@Table(name = "RtCode", schema = "dbo", catalog = "DcDuties")
+public class RtCodeEntity {
     private int id;
-    private int rtDutiesCodeId;
+    private Integer newId;
     private Date dateStart;
     private Date dateStop;
-    private String guid;
 
     @Id
     @Column(name = "Id")
@@ -23,13 +22,13 @@ public class RtDutiesCodeEntity {
     }
 
     @Basic
-    @Column(name = "RtDutiesCodeId")
-    public int getRtDutiesCodeId() {
-        return rtDutiesCodeId;
+    @Column(name = "NewId")
+    public Integer getNewId() {
+        return newId;
     }
 
-    public void setRtDutiesCodeId(int rtDutiesCodeId) {
-        this.rtDutiesCodeId = rtDutiesCodeId;
+    public void setNewId(Integer newId) {
+        this.newId = newId;
     }
 
     @Basic
@@ -52,28 +51,17 @@ public class RtDutiesCodeEntity {
         this.dateStop = dateStop;
     }
 
-    @Basic
-    @Column(name = "GUID")
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RtDutiesCodeEntity that = (RtDutiesCodeEntity) o;
+        RtCodeEntity that = (RtCodeEntity) o;
 
         if (id != that.id) return false;
-        if (rtDutiesCodeId != that.rtDutiesCodeId) return false;
+        if (newId != null ? !newId.equals(that.newId) : that.newId != null) return false;
         if (dateStart != null ? !dateStart.equals(that.dateStart) : that.dateStart != null) return false;
         if (dateStop != null ? !dateStop.equals(that.dateStop) : that.dateStop != null) return false;
-        if (guid != null ? !guid.equals(that.guid) : that.guid != null) return false;
 
         return true;
     }
@@ -81,10 +69,9 @@ public class RtDutiesCodeEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + rtDutiesCodeId;
+        result = 31 * result + (newId != null ? newId.hashCode() : 0);
         result = 31 * result + (dateStart != null ? dateStart.hashCode() : 0);
         result = 31 * result + (dateStop != null ? dateStop.hashCode() : 0);
-        result = 31 * result + (guid != null ? guid.hashCode() : 0);
         return result;
     }
 }
