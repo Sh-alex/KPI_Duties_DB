@@ -1,10 +1,10 @@
-package domain;
+package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "DcDutiesName", schema = "dbo", catalog = "DcDuties")
-public class DcDutiesNameEntity {
+@Table(name = "DcCodeZKPPTR", schema = "dbo", catalog = "DcDuties")
+public class DcCodeZkpptrEntity {
     private int id;
     private String name;
 
@@ -33,7 +33,7 @@ public class DcDutiesNameEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DcDutiesNameEntity that = (DcDutiesNameEntity) o;
+        DcCodeZkpptrEntity that = (DcCodeZkpptrEntity) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;

@@ -1,11 +1,11 @@
-package domain;
+package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "RtDuties_TaskAndResponsibilities", schema = "dbo", catalog = "DcDuties")
-public class RtDutiesTaskAndResponsibilitiesEntity {
+@Table(name = "RtDuties_MustKnow", schema = "dbo", catalog = "DcDuties")
+public class RtDutiesMustKnowEntity {
     private int id;
     private Date dateStart;
     private Date dateEnd;
@@ -45,7 +45,7 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RtDutiesTaskAndResponsibilitiesEntity that = (RtDutiesTaskAndResponsibilitiesEntity) o;
+        RtDutiesMustKnowEntity that = (RtDutiesMustKnowEntity) o;
 
         if (id != that.id) return false;
         if (dateStart != null ? !dateStart.equals(that.dateStart) : that.dateStart != null) return false;
