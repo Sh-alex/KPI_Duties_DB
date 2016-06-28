@@ -1,0 +1,36 @@
+.auth-form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("../img/login-bg.png") fixed no-repeat center center;
+    background-size: cover;
+}
+
+    .auth-form {
+        width: 470px;
+        padding-bottom: 90px;
+        padding-right: 160px;
+    }
+
+        .auth-form-submit-btn {
+            width: 100px;
+            border: 2px solid #7CD7D8;
+            background: none;
+            color: #49BCBD;
+            font-weight: bold;
+        }
+
+.auth-form-submit-btn:hover,
+.auth-form-submit-btn:active,
+.auth-form-submit-btn:active:focus,
+.auth-form-submit-btn:focus {
+    color: white;
+    background-color: #7CD7D8;
+    border-color: #7CD7D8;
+}
+

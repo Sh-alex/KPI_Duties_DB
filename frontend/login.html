@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="uk">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> Авторизація | Державний класифікатор посад України </title>
+    <meta name="description" content="Державний класифікатор посад України">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='./styles/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/common.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/login.css' rel='stylesheet' type='text/css'>
+    <!--скачати змінні для теми з http://bootswatch.com/yeti/ -->
+</head>
+<body>
+    <div id="mount-point" class="container-fluid">
+        <section class="row header-row">
+            <header class="header">
+                <div class="header-logo">
+                    <p class="header-logo-text">
+                        Державний<br>класифікатор<br>посад<br>України
+                    </p>
+                </div>
+                <div class="header-menu">
+
+                </div>
+                <div class="header-user">
+
+                </div>
+            </header>
+        </section>
+        <section class="row main-row">
+            <main class="main">
+                <div class="auth-form-wrapper">
+                    <form id="auth-form" class="auth-form" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon border-aqua"> <i class="icon-append fa fa-user"></i> </span>
+                                <input type="email" class="form-control border-aqua" id="auth-form-login" name="login" placeholder="Логін">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon border-aqua"> <i class="icon-append fa fa-lock"></i> </span>
+                                <input type="password" class="form-control border-aqua" id="auth-form-pass" name="pass" placeholder="Пароль">
+                            </div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary auth-form-submit-btn">
+                                <span class="btn-label"> Вхід </span>
+                                <span class="btn-spinner"> <i class="fa fa-spinner fa-pulse"></i> </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </section>
+    </div>
+    <script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
+</body>
+</html>
