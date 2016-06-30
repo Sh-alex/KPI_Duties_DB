@@ -8,251 +8,297 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='./styles/bootstrap.min.css' rel='stylesheet' type='text/css'>
     <link href='./styles/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href="./styles/AdminLTE.min.css" rel="stylesheet">
+    <link href="./styles/skin-blue.min.css" rel="stylesheet">
+    <link href='./styles/select2.min.css' rel='stylesheet' type='text/css'>
     <link href='./styles/common.css' rel='stylesheet' type='text/css'>
     <link href='./styles/add.css' rel='stylesheet' type='text/css'>
-    <!--скачати змінні для теми з http://bootswatch.com/yeti/ -->
 </head>
-<body>
-<div id="mount-point" class="container-fluid">
-    <section class="row header-row">
-        <header class="header header--with-lines">
-            <div class="header-logo">
-                <p class="header-logo-text">
-                    Державний<br>класифікатор<br>посад<br>України
-                </p>
-            </div>
-            <div class="header-menu">
-                <ul class="nav navbar-nav header-menu-navbar">
-                    <li>
-                        <a href="/search" class="color-aqua">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Додати
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/add" class="color-aqua">
-                            <i class="fa fa-search" aria-hidden="true"></i> Пошук
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="header-user">
-                <a href="/account" class="color-brown--full header-user-btn-go-to-account">
-                    <img src="./img/users/1.jpg" alt="user 1" class="img-circle header-user-img">
-                    <span class="header-user-caption">
-                        Вітаємо,<br><span class="user-name" title="Генаш Максим Геннадійович"> Генаш Максим Геннадійович </span>
-                    </span>
-                </a>
-            </div>
-        </header>
-    </section>
-    <section class="row main-row">
-        <main class="main">
-            <form id="add-form" class="form-horizontal add-form" role="form">
-                <div class="form-inner container">
-                    <fieldset class="form-fieldset">
-                        <legend class="form-legend search-form-legend--min">
-                            Додавання посади
-                        </legend>
+<body class="skin-blue layout-top-nav">
+<div id="mount-point" class="wrapper">
 
-                        <div class="form-group">
-                            <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
-                                Дата створення посади в державі
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
-                            </div>
-                            <label for="inp-occupation-canceling-in-state" class="col-sm-2 control-label">
-                                Дата відміни посади в державі
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inp-occupation-canceling-in-state" placeholder="Дата відміни посади в державі">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
-                                Дата створення посади в КПІ
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
-                            </div>
-                            <label for="inp-occupation-canceling-in-kpi" class="col-sm-2 control-label">
-                                Дата відміни посади в КПІ
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inp-occupation-canceling-in-kpi" placeholder="Дата відміни посади в КПІ">
-                            </div>
-                        </div>
-                        <div class="form-group search-form-field--extended">
-                            <label for="inp-code-KP" class="col-sm-2 control-label">
-                                Код КП
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
-                            </div>
-                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
-                                Код ЗКППТР
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
-                            </div>
-                        </div>
-                        <div class="form-group search-form-field--extended">
-                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
-                                Код ЄТДК
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
-                            </div>
-                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
-                                Код ДКХП
-                            </label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
-                            </div>
-                        </div>
-<!--
-                        <div class="form-group">
-                            <label for="inp-code-KP" class="col-sm-2 control-label">
-                                Код КП
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
-                            </div>
-                            <label for="inp-code-KP-creating-date" class="col-sm-2 control-label">
-                                Дата створення коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-KP-creating-date" placeholder="Дата створення коду">
-                            </div>
-                            <label for="inp-code-KP-canceling-date" class="col-sm-2 control-label">
-                                Дата відміни коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-KP-canceling-date" placeholder="Дата відміни коду">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
-                                Код ЗКППТР
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
-                            </div>
-                            <label for="inp-code-ZKPPTR-creating-date" class="col-sm-2 control-label">
-                                Дата створення коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-ZKPPTR-creating-date" placeholder="Дата створення коду">
-                            </div>
-                            <label for="inp-code-ZKPPTR-canceling-date" class="col-sm-2 control-label">
-                                Дата відміни коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-ZKPPTR-canceling-date" placeholder="Дата відміни коду">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
-                                Код ЄТДК
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
-                            </div>
-                            <label for="inp-code-ETDK-creating-date" class="col-sm-2 control-label">
-                                Дата створення коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-ETDK-creating-date" placeholder="Дата створення коду">
-                            </div>
-                            <label for="inp-code-ETDK-canceling-date" class="col-sm-2 control-label">
-                                Дата відміни коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-ETDK-canceling-date" placeholder="Дата відміни коду">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
-                                Код ДКХП
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
-                            </div>
-                            <label for="inp-code-DKHP-creating-date" class="col-sm-2 control-label">
-                                Дата створення коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-DKHP-creating-date" placeholder="Дата створення коду">
-                            </div>
-                            <label for="inp-code-DKHP-canceling-date" class="col-sm-2 control-label">
-                                Дата відміни коду
-                            </label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" id="inp-code-DKHP-canceling-date" placeholder="Дата відміни коду">
-                            </div>
-                        </div>
--->
-                        <div class="form-group">
-                            <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="checkbox-exists-in-kpi" class="col-sm-2 control-label">
-                                Приналежність до КПІ
-                            </label>
-                            <div class="col-sm-10">
-                                <label>
-                                    <input type="checkbox" checked="checked" id="checkbox-exists-in-kpi" class="form-control form-checkbox" >
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">
-                                    Додати  <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </fieldset>
+    <!-- modal із пошуковою формою для додавання інфи з аналогічних посад -->
+    <div class="modal fade modal--add-info-from-related" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" > Додати інформацію з аналогічної посади </h4>
                 </div>
-            </form>
-        </main>
-    </section>
-    <section class="row footer-row">
-        <footer class="footer footer--with-lines">
+                <div class="modal-body">
+                    Тут пошукова форма для додавання інфи з аналогічних посад
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Відміна</button>
+                    <button type="button" class="btn btn-primary">Додати</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <nav class="navbar navbar-static-top">
+            <div class="container-fluid header-inner">
+                <a href="#" class="header-logo navbar-brand">
+                        <p class="header-logo-text header-logo-text--full hidden">
+                            Державний<br>класифікатор<br>посад<br>України
+                        </p>
+                        <p class="header-logo-text header-logo-text--abbr">
+                            ДКПУ
+                        </p>
+                    </a>
+                <div class="header-menu">
+                    <ul class="nav navbar-nav header-menu-navbar">
+                        <li class="active">
+                            <a href="/search">
+                                <span class="sr-only">(current)</span>
+                                <i class="fa fa-plus" aria-hidden="true"></i> Додати
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/add" class="color-aqua">
+                                <i class="fa fa-search" aria-hidden="true"></i> Пошук
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-user">
+                    <a href="javascript(void:0)" class="header-user-link">
+                        <img src="./img/users/1.jpg" alt="user 1" class="img-circle header-user-img">
+                        <span class="header-user-caption">
+                            Вітаємо,<br>
+                            <span class="user-name" title="Генаш Максим Геннадійович">
+                                Генаш Максим Геннадійович
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <section class="content">
+                <div class="box box-default">
+                    <div class="box-header with-border text-center">
+                        <h3 class="box-title"> Додавання посади </h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <form id="add-form" class="form-horizontal add-form" role="form">
+                            <div class="form-inner">
+                                <div class="form-group">
+                                    <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="California"><span class="select2-selection__choice__remove" role="presentation">×</span>California</li><li class="select2-selection__choice" title="Delaware"><span class="select2-selection__choice__remove" role="presentation">×</span>Delaware</li><li class="select2-selection__choice" title="Tennessee"><span class="select2-selection__choice__remove" role="presentation">×</span>Tennessee</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Старший інженер 1 категорії" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="California"><span class="select2-selection__choice__remove" role="presentation">×</span>California</li><li class="select2-selection__choice" title="Delaware"><span class="select2-selection__choice__remove" role="presentation">×</span>Delaware</li><li class="select2-selection__choice" title="Tennessee"><span class="select2-selection__choice__remove" role="presentation">×</span>Tennessee</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <input type="text" class="form-control disabled" id="inp-occupation-name-min" placeholder="Скорочена назва посади" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
+                                        Дата створення посади в державі
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="date" class="form-control" id="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
+                                    </div>
+                                    <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
+                                        Дата створення посади в КПІ
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
+                                    </div>
+                                </div>
+                                <div class="codes-portions">
+                                    <div class="codes-portions__item">
+                                        <hr>
+                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="form-group">
+                                            <label for="inp-code-KP" class="col-sm-2 control-label">
+                                                Код КП
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                                            </div>
+                                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                                Код ЗКППТР
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                                Код ЄТДК
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                                            </div>
+                                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                                Код ДКХП
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="codes-portions__item">
+                                        <hr>
+                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="form-group">
+                                            <label for="inp-code-KP" class="col-sm-2 control-label">
+                                                Код КП
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                                            </div>
+                                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                                Код ЗКППТР
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                                Код ЄТДК
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                                            </div>
+                                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                                Код ДКХП
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="codes-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default codes-portions__btn-amount-ctrl--bottom codes-portions__btn-amount-ctrl--plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження"></textarea>
+                                            <div class="input-group-btn">
+                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
+                                                    <span class="fa fa-link"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати"></textarea>
+                                            <div class="input-group-btn">
+                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
+                                                    <span class="fa fa-link"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги"></textarea>
+                                            <div class="input-group-btn">
+                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
+                                                    <span class="fa fa-link"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> Приналежність до КПІ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="reset" class="btn btn-default btn--add-form-action">
+                                            Очистити  <i class="fa fa-refresh" aria-hidden="true" title="Очистити форму"></i>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary btn--add-form-action" title="Додати нову посаду">
+                                            Додати  <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--<div class="box-footer">-->
+                        <!--Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about-->
+                        <!--the plugin.-->
+                    <!--</div>-->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.container -->
+    </div>
+
+    <footer class="main-footer">
+        <div class="container-fluid footer-inner">
             <div class="footer-info-block">
                 <a href="http://kpi.ua/" class="color-brown--full">
                     Національний технічний університет України <br>
@@ -268,11 +314,12 @@
                     Інформаційних систем www.kbis.kpi.ua
                 </a>
             </div>
-        </footer>
-    </section>
+        </div>
+    </footer>
 </div>
-<script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="./scripts/select2.full.min.js"></script>
 <script type="text/javascript" src="./scripts/add.js"></script>
 </body>
 </html>
