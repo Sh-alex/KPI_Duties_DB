@@ -12,6 +12,9 @@ public class RtDutiesCodeEntity {
     private Date dateStop;
     private String guid;
 
+    private RtCodeEntity rtCodeEntity;
+    private RtDutiesEntity rtDutiesEntity;
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -60,6 +63,27 @@ public class RtDutiesCodeEntity {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "RtCodeId")
+    public RtCodeEntity getRtCodeEntity() {
+        return this.rtCodeEntity;
+    }
+
+    public void setRtCodeEntity(RtCodeEntity rtCodeEntity) {
+        this.rtCodeEntity = rtCodeEntity;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    public RtDutiesEntity getRtDutiesEntity() {
+        return this.rtDutiesEntity;
+    }
+
+    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
+        this.rtDutiesEntity = rtDutiesEntity;
     }
 
     @Override

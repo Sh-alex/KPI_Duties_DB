@@ -10,6 +10,9 @@ public class RtDutiesQualificationRequirementsEntity {
     private Date dateStart;
     private Date dateEnd;
 
+    private RtDutiesEntity rtDutiesEntity;
+    private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -38,6 +41,25 @@ public class RtDutiesQualificationRequirementsEntity {
 
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    public RtDutiesEntity getRtDutiesEntity() {
+        return rtDutiesEntity;
+    }
+
+    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
+        this.rtDutiesEntity = rtDutiesEntity;
+    }
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_QualificationRequirementsId")
+    public DcDutiesQualificationRequirementsEntity getDcDutiesQualificationRequirementsEntity() {
+        return dcDutiesQualificationRequirementsEntity;
+    }
+
+    public void setDcDutiesQualificationRequirementsEntity(DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity) {
+        this.dcDutiesQualificationRequirementsEntity = dcDutiesQualificationRequirementsEntity;
     }
 
     @Override

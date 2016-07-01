@@ -2,6 +2,8 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "RtCode", schema = "dbo", catalog = "DcDuties")
@@ -10,6 +12,13 @@ public class RtCodeEntity {
     private Integer newId;
     private Date dateStart;
     private Date dateStop;
+
+    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities = new HashSet<>();
+
+    private DcCodeZkpptrEntity dcCodeZkpptrEntity;
+    private DcCodeDkhpEntity dcCodeDkhpEntity;
+    private DcCodeEtkdEntity dcCodeEtkdEntity;
+    private DcCodeKpEntity dcCodeKpEntity;
 
     @Id
     @Column(name = "Id")
@@ -49,6 +58,56 @@ public class RtCodeEntity {
 
     public void setDateStop(Date dateStop) {
         this.dateStop = dateStop;
+    }
+
+
+
+    @OneToMany(mappedBy = "rtCodeEntity", fetch = FetchType.LAZY)
+    public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
+        return this.rtDutiesCodeEntities;
+    }
+
+    public void setRtDutiesCodeEntities(Set<RtDutiesCodeEntity> rtDutiesCodeEntities) {
+        this.rtDutiesCodeEntities = rtDutiesCodeEntities;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "CodeZKPPTRId")
+    public DcCodeZkpptrEntity getDcCodeZkpptrEntity() {
+        return dcCodeZkpptrEntity;
+    }
+
+    public void setDcCodeZkpptrEntity(DcCodeZkpptrEntity dcCodeZkpptrEntity) {
+        this.dcCodeZkpptrEntity = dcCodeZkpptrEntity;
+    }
+    @ManyToOne
+    @JoinColumn(name = "CodeDKHPId")
+    public DcCodeDkhpEntity getDcCodeDkhpEntity() {
+        return dcCodeDkhpEntity;
+    }
+
+    public void setDcCodeDkhpEntity(DcCodeDkhpEntity dcCodeDkhpEntity) {
+        this.dcCodeDkhpEntity = dcCodeDkhpEntity;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "CodeETKDId")
+    public DcCodeEtkdEntity getDcCodeEtkdEntity() {
+        return dcCodeEtkdEntity;
+    }
+
+    public void setDcCodeEtkdEntity(DcCodeEtkdEntity dcCodeEtkdEntity) {
+        this.dcCodeEtkdEntity = dcCodeEtkdEntity;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "CodeKPId")
+    public DcCodeKpEntity getDcCodeKpEntity() {
+        return dcCodeKpEntity;
+    }
+
+    public void setDcCodeKpEntity(DcCodeKpEntity dcCodeKpEntity) {
+        this.dcCodeKpEntity = dcCodeKpEntity;
     }
 
     @Override
