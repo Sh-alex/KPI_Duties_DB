@@ -1,12 +1,16 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "DcDuties_QualificationRequirements", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesQualificationRequirementsEntity {
     private int id;
     private String text;
+
+    private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = new HashSet<>();
 
     @Id
     @Column(name = "Id")
@@ -26,6 +30,15 @@ public class DcDutiesQualificationRequirementsEntity {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @OneToMany(mappedBy = "dcDutiesQualificationRequirementsEntity", fetch = FetchType.LAZY)
+    public Set<RtDutiesQualificationRequirementsEntity> getRtDutiesQualificationRequirementsEntities() {
+        return rtDutiesQualificationRequirementsEntities;
+    }
+
+    public void setRtDutiesQualificationRequirementsEntities(Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities) {
+        this.rtDutiesQualificationRequirementsEntities = rtDutiesQualificationRequirementsEntities;
     }
 
     @Override

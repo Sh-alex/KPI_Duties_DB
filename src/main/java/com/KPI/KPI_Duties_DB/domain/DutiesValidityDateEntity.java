@@ -12,6 +12,8 @@ public class DutiesValidityDateEntity {
     private Date stop;
     private Boolean isVirtual;
 
+    private RtDutiesEntity rtDutiesEntity;
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -60,6 +62,16 @@ public class DutiesValidityDateEntity {
 
     public void setVirtual(Boolean virtual) {
         isVirtual = virtual;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    public RtDutiesEntity getRtDutiesEntity() {
+        return rtDutiesEntity;
+    }
+
+    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
+        this.rtDutiesEntity = rtDutiesEntity;
     }
 
     @Override

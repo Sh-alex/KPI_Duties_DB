@@ -2,23 +2,23 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
 
     <persistence-unit name="persistenceUnit">
-        <class>domain.DcCodeDkhpEntity</class>
-        <class>domain.DcCodeEtkdEntity</class>
-        <class>domain.DcCodeKpEntity</class>
-        <class>domain.DcCodeZkpptrEntity</class>
-        <class>domain.DcDutiesMustKnowEntity</class>
-        <class>domain.DcDutiesQualificationRequirementsEntity</class>
-        <class>domain.DcDutiesTasksAndResponsibilitiesEntity</class>
-        <class>domain.DcDutiesNameEntity</class>
-        <class>domain.DcDutiesPartitionEntity</class>
-        <class>domain.DcDutiesTypeEntity</class>
-        <class>domain.DutiesValidityDateEntity</class>
-        <class>domain.RtCodeEntity</class>
-        <class>domain.RtDutiesEntity</class>
-        <class>domain.RtDutiesMustKnowEntity</class>
-        <class>domain.RtDutiesQualificationRequirementsEntity</class>
-        <class>domain.RtDutiesTaskAndResponsibilitiesEntity</class>
-        <class>domain.RtDutiesCodeEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcCodeDkhpEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcCodeEtkdEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcCodeKpEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcCodeZkpptrEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesMustKnowEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesQualificationRequirementsEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesNameEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DcDutiesTypeEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtCodeEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtDutiesEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtDutiesMustKnowEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtDutiesQualificationRequirementsEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtDutiesTaskAndResponsibilitiesEntity</class>
+        <class>com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:sqlserver://77.47.135.158:1433"/>
             <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>

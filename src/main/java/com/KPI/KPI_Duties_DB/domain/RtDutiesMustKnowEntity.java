@@ -10,6 +10,9 @@ public class RtDutiesMustKnowEntity {
     private Date dateStart;
     private Date dateEnd;
 
+    private RtDutiesEntity rtDutiesEntity;
+    private DcDutiesMustKnowEntity dcDutiesMustKnowEntity;
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -38,6 +41,27 @@ public class RtDutiesMustKnowEntity {
 
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    public RtDutiesEntity getRtDutiesEntity() {
+        return rtDutiesEntity;
+    }
+
+    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
+        this.rtDutiesEntity = rtDutiesEntity;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_MustKnowId")
+    public DcDutiesMustKnowEntity getDcDutiesMustKnowEntity() {
+        return dcDutiesMustKnowEntity;
+    }
+
+    public void setDcDutiesMustKnowEntity(DcDutiesMustKnowEntity dcDutiesMustKnowEntity) {
+        this.dcDutiesMustKnowEntity = dcDutiesMustKnowEntity;
     }
 
     @Override
