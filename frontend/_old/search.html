@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="uk">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> Пошук | Державний класифікатор посад України </title>
+    <meta name="description" content="Державний класифікатор посад України">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='./styles/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/common.css' rel='stylesheet' type='text/css'>
+    <link href='./styles/search.css' rel='stylesheet' type='text/css'>
+    <!--скачати змінні для теми з http://bootswatch.com/yeti/ -->
+</head>
+<body>
+<div id="mount-point" class="container-fluid">
+    <section class="row header-row">
+        <header class="header header--with-lines">
+            <div class="header-logo">
+                <p class="header-logo-text">
+                    Державний<br>класифікатор<br>посад<br>України
+                </p>
+            </div>
+            <div class="header-menu">
+                <ul class="nav navbar-nav header-menu-navbar">
+                    <li>
+                        <a href="/search" class="color-aqua">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Додати
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/add" class="color-aqua">
+                            <i class="fa fa-search" aria-hidden="true"></i> Пошук
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-user">
+                <a href="/account" class="color-brown--full header-user-btn-go-to-account">
+                    <img src="./img/users/1.jpg" alt="user 1" class="img-circle header-user-img">
+                    <span class="header-user-caption">
+                        Вітаємо,<br><span class="user-name" title="Генаш Максим Геннадійович"> Генаш Максим Геннадійович </span>
+                    </span>
+                </a>
+            </div>
+        </header>
+    </section>
+    <section class="row main-row">
+        <main class="main">
+            <form id="search-form" class="form-horizontal search-form" role="form">
+                <div class="form-inner container search-min">
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend search-form-legend--min">
+                            Пошук посад
+                        </legend>
+                        <legend class="form-legend search-form-legend--extended">
+                            Розширений пошук посад
+                        </legend>
+
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
+                                Дата створення посади в державі
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
+                            </div>
+                            <label for="inp-occupation-canceling-in-state" class="col-sm-2 control-label">
+                                Дата відміни посади в державі
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-canceling-in-state" placeholder="Дата відміни посади в державі">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
+                                Дата створення посади в КПІ
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
+                            </div>
+                            <label for="inp-occupation-canceling-in-kpi" class="col-sm-2 control-label">
+                                Дата відміни посади в КПІ
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" id="inp-occupation-canceling-in-kpi" placeholder="Дата відміни посади в КПІ">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-code-KP" class="col-sm-2 control-label">
+                                Код КП
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                            </div>
+                            <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                Код ЗКППТР
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                            </div>
+                        </div>
+                        <div class="form-group search-form-field--extended">
+                            <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                Код ЄТДК
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                            </div>
+                            <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                Код ДКХП
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkbox-exists-in-kpi" class="col-sm-2 control-label">
+                                Приналежність до КПІ
+                            </label>
+                            <div class="col-sm-10">
+                                <label>
+                                    <input type="checkbox" checked="checked" id="checkbox-exists-in-kpi" class="form-control form-checkbox" >
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">
+                                    Шукати  <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <a role="button" id="btn-toggle-extended-search" class="btn btn-default btn-toggle-extended-search">
+                        Розширений пошук
+                        <i class="fa fa-chevron-down btn-toggle-icon--min" aria-hidden="true"></i>
+                        <i class="fa fa-chevron-up btn-toggle-icon--extended" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </form>
+        </main>
+    </section>
+    <section class="row footer-row">
+        <footer class="footer footer--with-lines">
+            <div class="footer-info-block">
+                <a href="http://kpi.ua/" class="color-brown--full">
+                    Національний технічний університет України <br>
+                    "Київський політехнічний інститут" www.kpi.ua
+                </a>
+            </div>
+            <div class="">
+                <img src="./img/kpi-logo.jpg" class="footer-kpi-logo" alt="kpi logo">
+            </div>
+            <div class="footer-info-block">
+                <a href="http://kpi.ua/" class="color-brown--full">
+                    Розробник: Конструкторське бюро<br>
+                    Інформаційних систем www.kbis.kpi.ua
+                </a>
+            </div>
+        </footer>
+    </section>
+</div>
+<script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="./scripts/search.js"></script>
+</body>
+</html>

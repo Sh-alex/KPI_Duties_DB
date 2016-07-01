@@ -1,0 +1,45 @@
+.input-group-btn {
+    vertical-align: top;
+}
+
+
+
+.codes-portions {
+    position: relative;
+}
+
+    .codes-portions__item {
+        position: relative;
+    }
+
+        .codes-portions__item .form-group {
+            padding-right: 15px;
+        }
+
+            .codes-portions__btn-plus-wrapper {
+                padding: 5px;
+                position: relative;
+            }
+
+            .codes-portions__btn-amount-ctrl {
+
+            }
+            .codes-portions__btn-amount-ctrl--top {
+                color: black;
+                position: absolute;
+                top: 5px;
+                right: 0;
+            }
+            .codes-portions__btn-amount-ctrl--top:hover,
+            .codes-portions__btn-amount-ctrl--top:focus {
+                color: black;
+            }
+            .codes-portions__btn-amount-ctrl--bottom {
+                position: absolute;
+                bottom: 12px;
+                right: 0;
+                border-radius: 50%;
+                padding: 0px;
+                width: 25px;
+                height: 25px;
+            }
