@@ -20,10 +20,10 @@
         <class>com.kpi.kpi_duties_db.domain.RtDutiesTaskAndResponsibilitiesEntity</class>
         <class>com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:sqlserver://77.47.135.158:1433"/>
+            <property name="hibernate.connection.url" value="jdbc:sqlserver://77.47.207.57:15042"/>
             <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-            <property name="hibernate.connection.username"/>
-            <property name="hibernate.connection.password"/>
+            <property name="hibernate.connection.username" value="TKIK_32"/>
+            <property name="hibernate.connection.password" value="TKIK_32_123"/>
         </properties>
     </persistence-unit>
 </persistence>
