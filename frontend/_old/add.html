@@ -63,7 +63,7 @@
                     </ul>
                 </div>
                 <div class="header-user">
-                    <a href="javascript(void:0)" class="header-user-link">
+                    <a href="#" class="header-user-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <img src="./img/users/1.jpg" alt="user 1" class="img-circle header-user-img">
                         <span class="header-user-caption">
                             Вітаємо,<br>
@@ -72,6 +72,15 @@
                             </span>
                         </span>
                     </a>
+                    <ul class="dropdown-menu header-user-menu">
+                        <li class="">
+                            <a href="#" class="btn-block btn-flat header-user-menu-item">
+                                Вихід з аккаунта
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </nav>
@@ -84,14 +93,21 @@
                     <div class="box-header with-border text-center">
                         <h3 class="box-title"> Додавання посади </h3>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
                         <form id="add-form" class="form-horizontal add-form" role="form">
                             <div class="form-inner">
                                 <div class="form-group">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                        <!-- Combobox, дані підгружаються із сервера -->
+                                        <select class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                            <option> Керівники </option>
+                                            <option> Професіонали </option>
+                                            <option> Фахівці </option>
+                                            <option> Технічні службовці </option>
+                                            <option> Найпростіші професії </option>
+                                            <option> ...Повний список підгружатиметься із сервера... </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -111,27 +127,15 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Старший інженер 1 категорії" disabled>
+                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Старший інженер 1 категорії">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
+                                    <label for="inp-occupation-name-min" class="col-sm-2 control-label">
+                                        Скорочена назва посади
+                                    </label>
                                     <div class="col-sm-10">
-                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
-                                            <option>Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="California"><span class="select2-selection__choice__remove" role="presentation">×</span>California</li><li class="select2-selection__choice" title="Delaware"><span class="select2-selection__choice__remove" role="presentation">×</span>Delaware</li><li class="select2-selection__choice" title="Tennessee"><span class="select2-selection__choice__remove" role="presentation">×</span>Tennessee</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name-min" placeholder="Скорочена назва посади" disabled>
+                                        <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади">
                                     </div>
                                 </div>
                                 <div class="form-group">
