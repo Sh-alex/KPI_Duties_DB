@@ -2,21 +2,21 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.repository.DcDutiesPartitionEntityRepository;
-import com.kpi.kpi_duties_db.service.DcDutiesPartitionEntityService;
+import com.kpi.kpi_duties_db.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class DcDutiesPartitionEntityServiceImpl implements DcDutiesPartitionEntityService {
+public class DcDutiesPartitionEntityServiceImpl implements BaseEntityService<DcDutiesPartitionEntity> {
 
     @Autowired
     private DcDutiesPartitionEntityRepository dcDutiesPartitionEntityRepository;
 
     @Override
-    public DcDutiesPartitionEntity addDcDutiesPartitionEntity(DcDutiesPartitionEntity bank) {
-        DcDutiesPartitionEntity savedDcDutiesPartitionEntity = dcDutiesPartitionEntityRepository.saveAndFlush(bank);
+    public DcDutiesPartitionEntity add(DcDutiesPartitionEntity entity) {
+        DcDutiesPartitionEntity savedDcDutiesPartitionEntity = dcDutiesPartitionEntityRepository.saveAndFlush(entity);
 
         return savedDcDutiesPartitionEntity;
     }
@@ -26,14 +26,13 @@ public class DcDutiesPartitionEntityServiceImpl implements DcDutiesPartitionEnti
         dcDutiesPartitionEntityRepository.delete(id);
     }
 
-    @Override
     public DcDutiesPartitionEntity getByName(String name) {
-        return dcDutiesPartitionEntityRepository.findByName(name);
+        return dcDutiesPartitionEntityRepository.getByName(name);
     }
 
     @Override
-    public DcDutiesPartitionEntity editDcDutiesPartitionEntity(DcDutiesPartitionEntity bank) {
-        return dcDutiesPartitionEntityRepository.saveAndFlush(bank);
+    public DcDutiesPartitionEntity edit(DcDutiesPartitionEntity entity) {
+        return dcDutiesPartitionEntityRepository.saveAndFlush(entity);
     }
 
     @Override

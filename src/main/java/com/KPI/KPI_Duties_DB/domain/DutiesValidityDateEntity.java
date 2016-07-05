@@ -15,6 +15,7 @@ public class DutiesValidityDateEntity {
     private RtDutiesEntity rtDutiesEntity;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;

@@ -13,6 +13,7 @@ public class DcDutiesQualificationRequirementsEntity {
     private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = new HashSet<>();
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;

@@ -21,6 +21,7 @@ public class RtCodeEntity {
     private DcCodeKpEntity dcCodeKpEntity;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;
