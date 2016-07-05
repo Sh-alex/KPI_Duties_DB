@@ -13,6 +13,7 @@ public class DcCodeKpEntity {
     private Set<RtCodeEntity> rtCodeEntities = new HashSet<>();
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;

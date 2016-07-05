@@ -14,6 +14,7 @@ public class RtDutiesQualificationRequirementsEntity {
     private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;

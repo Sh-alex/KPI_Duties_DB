@@ -13,6 +13,7 @@ public class DcDutiesTasksAndResponsibilitiesEntity {
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities = new HashSet<>();
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
     public int getId() {
         return id;

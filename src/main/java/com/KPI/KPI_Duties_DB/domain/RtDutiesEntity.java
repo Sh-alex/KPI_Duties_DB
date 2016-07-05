@@ -27,6 +27,7 @@ public class RtDutiesEntity {
     private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "RtDutiesId")
     public int getRtDutiesId() {
         return rtDutiesId;
