@@ -79,7 +79,7 @@
                             Розширений пошук посад
                         </h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <button type="button" class="btn btn-box-tool btn--collapse-box">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
@@ -101,10 +101,76 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
+                                <div class="inp-name-block inp-name-block--radio-uses-input">
+                                    <div class="form-group">
+                                        <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
+                                        <div class="col-sm-10 inp-name-block__input">
+                                            <input type="text" class="form-control" id="inp-occupation-name" placeholder="Назва посади">
+                                        </div>
+                                        <div class="col-sm-10 inp-name-block__multiselect">
+                                            <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                                <option> Інженер </option>
+                                                <option> Посол </option>
+                                                <option> Фрезерувальник </option>
+                                                <option> Молодший </option>
+                                                <option> Старший </option>
+                                                <option> 1 категорії </option>
+                                                <option> 3 розряду </option>
+                                            </select>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;">
+                                            <span class="selection">
+                                                <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                    <ul class="select2-selection__rendered">
+                                                        <li class="select2-selection__choice" title="California">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Інженер
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="Delaware">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Старший
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="Tennessee">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> 1 категорії
+                                                        </li>
+                                                        <li class="select2-search select2-search--inline">
+                                                            <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+                                            <span class="dropdown-wrapper" aria-hidden="true">
+                                            </span></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <label>
+                                                <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input">
+                                                Точна відповідність
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <label>
+                                                <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input" checked>
+                                                Рядок міститься у назві
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <label>
+                                                <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
+                                                Назва містить хоча б один із тегів
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <label>
+                                                <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
+                                                Назва містить кожен із тегів
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group search-form-field--extended">
@@ -192,6 +258,110 @@
                             <i class="fa fa-chevron-down btn-toggle-icon--min" aria-hidden="true"></i>
                             <i class="fa fa-chevron-up btn-toggle-icon--extended" aria-hidden="true"></i>
                         </a>
+                    </div>
+                </div>
+
+                <div class="box box-default">
+                    <div class="box-header with-border text-center">
+                        <h3 class="box-title">
+                            Результати пошуку
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool btn--collapse-box">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped search-res-table">
+                                <thead class="search-res-table__thead">
+                                <tr class="search-res-table__row">
+                                    <th title="Номер в списку"> № </th>
+                                    <th> Назва посади </th>
+                                    <th> Приналежність до КПІ </th>
+                                    <th> Редагувати  </th>
+                                    <th> Видалити </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="search-res-table__row">
+                                    <td title="Показать список билетов заказа" class="search-res-table__cell-expand">
+                                        <span class="pull-left" title="Номер в списку">
+                                            1
+                                        </span>
+                                        <a class="pull-right search-res-table__btn-expand" href="javascript:void(0)">
+                                            <i class='fa fa-chevron-right'></i> <!--expanded ? <i class='fa fa-chevron-down'></i>-->
+                                        </a>
+                                    </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-wrning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-remove" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" style="padding: 0;">
+                                        <div class="occupation-details">
+                                            Тут повний опис посади
+                                        </div>
+                                        <!--
+                                        <table class="table table-condensed table-bordered ticket-table" style="margin: 0;">
+                                            <thead class="ticket-table__thead">
+                                            <tr class="ticket-table__row">
+                                                <th > № т.с. </th>
+                                                <th>Тип</th>
+                                                <th>Места</th>
+                                                <th>Пассажир</th>
+                                                <th>Откуда</th>
+                                                <th>Куда</th>
+                                                <th>Вид билета</th>
+                                                <th colspan="2">Цена</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="bill in order.bills">
+                                                <td ng-bind="bill.tripId"></td>
+                                                <td>ЖД</td>
+                                                <td>Вагон {{::bill.carId}} Место {{bill.numberOfSeat}}</td>
+                                                <td>{{::bill.passengerSurname}} {{:: bill.passengerName}}</td>
+                                                <td>{{::bill.travelSrcName }} {{::bill.depDate}} в {{::bill.srcDep}}</td>
+                                                <td>{{::bill.travelDstName}} {{bill.dstArr}} в {{bill.dstArr}}</td>
+                                                <td title="Электронный посадочный документ">
+                                                    Электронный <fa class="fa fa-qrcode fa-lg" aria-hidden="true"></fa>
+                                                </td>
+                                                <td style="width: 15%;" ng-bind="bill.totalPrice/100"></td>
+                                                <td ng-show="dealer.orderStatus=='Closed'" class="text-center" title="Скачать билет">
+                                                    <a ng-click="ctrl.loadTicket(bill.uniqueCode,bill.numberOfSeat)">
+                                                        <fa class='fa fa-download'> </fa>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                   -->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination no-margin pull-right">
+                            <li><a href="#">«</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
                     </div>
                 </div>
             </section>

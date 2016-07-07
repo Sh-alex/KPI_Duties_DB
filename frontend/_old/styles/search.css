@@ -38,3 +38,21 @@
 
             }
 
+
+
+
+
+
+.inp-name-block--radio-uses-multiselect .inp-name-block__input {
+    display: none;
+}
+.inp-name-block--radio-uses-multiselect .inp-name-block__multiselect {
+    display: block;
+}
+
+.inp-name-block--radio-uses-input .inp-name-block__input {
+    display: block;
+}
+.inp-name-block--radio-uses-input .inp-name-block__multiselect {
+    display: none;
+}
