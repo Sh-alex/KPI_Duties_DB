@@ -56,3 +56,33 @@
 .inp-name-block--radio-uses-input .inp-name-block__multiselect {
     display: none;
 }
+
+
+
+.search-res-table {
+    margin: 0 auto;
+}
+    
+    .search-res-table tbody tr:nth-of-type(even) {
+        display: none;
+    }
+    .search-res-table tbody tr:nth-of-type(odd) {
+    }
+    
+        .search-res-table th,
+        .search-res-table td {
+            text-align: center;
+        }
+            
+            .search-res-table .occupation-details {
+                margin: 0 auto;
+            }
+                
+                .search-res-table .occupation-details dt {
+                    width: 22%;
+                }
+                .search-res-table .occupation-details dd {
+                    margin-left: calc(22% + 20px);
+                    text-align: left;
+                }
+                

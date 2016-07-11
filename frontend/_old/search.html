@@ -67,6 +67,216 @@
         </nav>
     </header>
 
+    <!-- modal із формою для редагування посади -->
+    <div class="modal fade modal--edit-occup-info" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" > Редагувати інформацію про посаду </h4>
+                </div>
+                <div class="modal-body">
+
+                    <form id="edit-form" class="form-horizontal edit-form" role="form">
+                        <div class="form-inner">
+                            <div class="form-group">
+                                <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
+                                <div class="col-sm-10">
+                                    <!-- Combobox, дані підгружаються із сервера -->
+                                    <select class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                        <option> Керівники </option>
+                                        <option> Професіонали </option>
+                                        <option> Фахівці </option>
+                                        <option selected> Технічні службовці </option>
+                                        <option> Найпростіші професії </option>
+                                        <option> ...Повний список підгружатиметься із сервера... </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                        <option> Інженер </option>
+                                        <option> Посол </option>
+                                        <option> Фрезерувальник </option>
+                                        <option> Молодший </option>
+                                        <option> Старший </option>
+                                        <option> 1 категорії </option>
+                                        <option> 3 розряду </option>
+                                    </select>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;">
+                                            <span class="selection">
+                                                <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                    <ul class="select2-selection__rendered">
+                                                        <li class="select2-selection__choice" title="Delaware">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Старший
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="California">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Інженер
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="Tennessee">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> 1 категорії
+                                                        </li>
+                                                        <li class="select2-search select2-search--inline">
+                                                            <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+                                            <span class="dropdown-wrapper" aria-hidden="true">
+                                            </span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Старший інженер 1 категорії">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-occupation-name-min" class="col-sm-2 control-label">
+                                    Скорочена назва посади
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Ст. інж. 1 кат.">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
+                                    Дата створення посади в державі
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="inp-occupation-creating-in-state" value="2001-04-07" placeholder="Дата створення посади в державі">
+                                </div>
+                                <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
+                                    Дата створення посади в КПІ
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" value="2001-05-02" placeholder="Дата створення посади в КПІ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
+                                    Дата відміни посади в державі
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="inp-occupation-canceling-in-state" value="" placeholder="Дата відміни посади в державі">
+                                </div>
+                                <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
+                                    Дата відміни посади в КПІ
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="inp-occupation-canceling-in-kpi" value="2016-07-14" placeholder="Дата відміни посади в КПІ">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-code-KP" class="col-sm-2 control-label">
+                                    Код КП
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="inp-code-KP" value="43g534gr3g" placeholder="Код КП">
+                                </div>
+                                <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
+                                    Код ЗКППТР
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="inp-code-ZKPPTR" value="23f23f2q3" placeholder="Код ЗКППТР">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-code-ETDK" class="col-sm-2 control-label">
+                                    Код ЄТДК
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="inp-code-ETDK" value="9ierverf" placeholder="Код ЄТДК">
+                                </div>
+                                <label for="inp-code-DKHP" class="col-sm-2 control-label">
+                                    Код ДКХП
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="inp-code-DKHP" value="efefw0w03" placeholder="Код ДКХП">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aspernatur consectetur culpa error illo inventore laboriosam magnam maiores molestiae officia, omnis sint unde, voluptatum. Consequatur dolor est fugiat ipsam, maxime nobis perferendis. Accusamus aliquam assumenda autem cumque deleniti dolorem ea eligendi est ex exercitationem incidunt iusto laboriosam laudantium molestias natus nulla numquam possimus, quisquam rem repellendus sapiente sequi sint, tempore veniam voluptates. At deleniti eligendi in maxime nemo nostrum quaerat, quasi reiciendis voluptates? Amet, animi asperiores aut beatae dolorem doloremque dolores eligendi enim est, et facere fugiat harum inventore, libero nostrum perspiciatis quo quos ratione soluta suscipit totam vero voluptas.
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci aperiam at aut beatae consectetur consequuntur corporis, cupiditate, dicta dignissimos dolorem doloribus eius eos expedita facere fugit id illo ipsam ipsum iste labore laboriosam magnam minus natus nemo officiis placeat porro quod quos reiciendis suscipit veritatis voluptas voluptatibus! Accusamus aut cum delectus dolore itaque molestiae mollitia, sapiente sunt tenetur ut. Alias, aliquid animi architecto aspernatur commodi consectetur deserunt dolor eligendi et fugit hic laboriosam nisi perferendis placeat quae quibusdam quisquam quo quod quos rem tenetur totam velit veritatis vero voluptas. Ad aliquam aliquid amet aspernatur atque aut commodi consequuntur cum debitis dignissimos doloribus enim ex hic iste itaque magni maiores molestiae mollitia nam officiis pariatur placeat possimus quaerat, quia quibusdam quod quos repellat repudiandae suscipit, tempora tempore totam vero vitae voluptas voluptate voluptatem voluptatum? Animi culpa delectus dolorem eligendi laboriosam minima, porro, possimus quia quos reprehenderit sapiente sit velit vitae.
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet dignissimos modi mollitia natus obcaecati officia repellat soluta voluptas. Aliquid blanditiis consequatur cumque debitis delectus dignissimos earum enim error, eveniet excepturi facere fuga illum impedit ipsam iste iure magnam maiores maxime minima necessitatibus nisi nostrum odio possimus quibusdam quidem quis quisquam quo quod ratione reiciendis repellendus temporibus totam voluptatibus! Accusantium, adipisci alias animi asperiores autem consequatur consequuntur dolore dolorem explicabo illum itaque laboriosam laudantium molestias mollitia nisi numquam perferendis perspiciatis porro praesentium quaerat quis quisquam similique sit tempora voluptatum! Animi architecto culpa cumque dolorum eaque expedita fugit harum hic illo ipsa iste itaque laborum nam nulla numquam obcaecati optio perferendis quas, repellendus tempora temporibus tenetur unde voluptatibus. Aliquid, minima, nam!
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Приналежність до КПІ
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal"> Відміна </button>
+                    <button type="button" class="btn btn-primary"> Зберегти </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-danger fade modal--confirm-del" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title"> Увага! </h4>
+                </div>
+                <div class="modal-body">
+                    <h3> Підтвердіть видалення інформації про посаду. </h3>
+                    <p> <u> Зміни неможливо буде повернути. </u> </p>
+                    <p class="checkbox">
+                        <label>
+                            <input type="checkbox" id="dont-remind-delete-danger" title="Якщо відмітити, після закриття вспливаючого вікна це попередження більше не з'являтиметься">
+                            <i> Більше не показувати попередження </i>
+                        </label>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">
+                        <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        Відміна
+                    </button>
+                    <button type="button" class="btn btn-outline">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Видалити
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="content-wrapper">
         <div class="container-fluid">
             <section class="content">
@@ -141,7 +351,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="col-sm-offset-2 col-sm-10 radio">
                                             <label>
                                                 <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input">
                                                 Точна відповідність
@@ -149,7 +359,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="col-sm-offset-2 col-sm-10 radio">
                                             <label>
                                                 <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input" checked>
                                                 Рядок міститься у назві
@@ -157,7 +367,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="col-sm-offset-2 col-sm-10 radio">
                                             <label>
                                                 <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
                                                 Назва містить хоча б один із тегів
@@ -165,7 +375,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="col-sm-offset-2 col-sm-10 radio">
                                             <label>
                                                 <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
                                                 Назва містить кожен із тегів
@@ -230,12 +440,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" checked="checked" id="checkbox-exists-in-kpi"> Приналежність до КПІ
-                                            </label>
-                                        </div>
+                                    <div class="col-sm-offset-2 col-sm-10 checkbox">
+                                        <label>
+                                            <input type="checkbox" checked="checked" id="checkbox-exists-in-kpi"> Приналежність до КПІ
+                                        </label>
                                     </div>
                                 </div>
 
@@ -274,79 +482,536 @@
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped search-res-table">
-                                <thead class="search-res-table__thead">
-                                <tr class="search-res-table__row">
+                            <table class="table table-hover occup-table search-res-table" id="search-res-table">
+                                <thead>
+                                <tr>
                                     <th title="Номер в списку"> № </th>
+                                    <th> Посадовий склад </th>
                                     <th> Назва посади </th>
                                     <th> Приналежність до КПІ </th>
-                                    <th> Редагувати  </th>
-                                    <th> Видалити </th>
+                                    <th> Дії  </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="search-res-table__row">
-                                    <td title="Показать список билетов заказа" class="search-res-table__cell-expand">
-                                        <span class="pull-left" title="Номер в списку">
-                                            1
-                                        </span>
-                                        <a class="pull-right search-res-table__btn-expand" href="javascript:void(0)">
-                                            <i class='fa fa-chevron-right'></i> <!--expanded ? <i class='fa fa-chevron-down'></i>-->
-                                        </a>
-                                    </td>
+                                <tr>
+                                    <td title="Номер в списку"> 1 </td>
+                                    <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td>
-                                        <button type="submit" class="btn btn-wrning" title="Редагувати посаду">
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду" data-toggle="modal" data-target=".modal--edit-occup-info">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger" title="Видалити посаду">
-                                            <i class="fa fa-remove" aria-hidden="true"></i>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду" data-toggle="modal" data-target=".modal--confirm-del">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <!--<i class="fa fa-chevron-down" aria-hidden="true"></i>-->
+                                            <i class='fa fa-chevron-up'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr style="display: table-row;">
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td title="Номер в списку"> 2 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> - </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" style="padding: 0;">
-                                        <div class="occupation-details">
-                                            Тут повний опис посади
-                                        </div>
-                                        <!--
-                                        <table class="table table-condensed table-bordered ticket-table" style="margin: 0;">
-                                            <thead class="ticket-table__thead">
-                                            <tr class="ticket-table__row">
-                                                <th > № т.с. </th>
-                                                <th>Тип</th>
-                                                <th>Места</th>
-                                                <th>Пассажир</th>
-                                                <th>Откуда</th>
-                                                <th>Куда</th>
-                                                <th>Вид билета</th>
-                                                <th colspan="2">Цена</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr ng-repeat="bill in order.bills">
-                                                <td ng-bind="bill.tripId"></td>
-                                                <td>ЖД</td>
-                                                <td>Вагон {{::bill.carId}} Место {{bill.numberOfSeat}}</td>
-                                                <td>{{::bill.passengerSurname}} {{:: bill.passengerName}}</td>
-                                                <td>{{::bill.travelSrcName }} {{::bill.depDate}} в {{::bill.srcDep}}</td>
-                                                <td>{{::bill.travelDstName}} {{bill.dstArr}} в {{bill.dstArr}}</td>
-                                                <td title="Электронный посадочный документ">
-                                                    Электронный <fa class="fa fa-qrcode fa-lg" aria-hidden="true"></fa>
-                                                </td>
-                                                <td style="width: 15%;" ng-bind="bill.totalPrice/100"></td>
-                                                <td ng-show="dealer.orderStatus=='Closed'" class="text-center" title="Скачать билет">
-                                                    <a ng-click="ctrl.loadTicket(bill.uniqueCode,bill.numberOfSeat)">
-                                                        <fa class='fa fa-download'> </fa>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                   -->
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 3 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 4 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 5 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 6 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 7 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 8 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 9 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td title="Номер в списку"> 10 </td>
+                                    <td> Технічні службовці </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <dl class="dl-horizontal occupation-details">
+                                            <dt> Посадовий склад </dt>
+                                            <dd> Технічні службовці </dd>
+                                            <dt> Назва посади </dt>
+                                            <dd> Старший інженер 1 категорії </dd>
+                                            <dt> Скорочена назва посади </dt>
+                                            <dd> Ст. інж. 1 кат. </dd>
+                                            <dt> Дата створення посади в державі </dt>
+                                            <dd> 11.04.2001 </dd>
+                                            <dt> Дата відміни посади в державі </dt>
+                                            <dd> - </dd>
+                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dd> 02.05.2001 </dd>
+                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dd> 03.07.2012 </dd>
+                                            <dt> Код КП </dt>
+                                            <dd> 43g534gr3g </dd>
+                                            <dt> Код ЗКППТР </dt>
+                                            <dd> wf2f23f2 </dd>
+                                            <dt> Код ЄТДК </dt>
+                                            <dd> 5h6rtgg4e </dd>
+                                            <dt> Код ДКХП </dt>
+                                            <dd> 90vevkejer2 </dd>
+                                            <dt> Завдання, обов'язки та повноваження</dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
+                                            <dt> Повинен знати </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
+                                            <dt> Кваліфікаційні вимоги </dt>
+                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
+                                        </dl>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -356,8 +1021,8 @@
                     </div>
                     <div class="box-footer clearfix">
                         <ul class="pagination no-margin pull-right">
-                            <li><a href="#">«</a></li>
-                            <li><a href="#">1</a></li>
+                            <li class="disabled"><a href="#">«</a></li>
+                            <li class="active"><a href="#">1</a></li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#">»</a></li>

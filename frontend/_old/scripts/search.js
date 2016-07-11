@@ -14,36 +14,33 @@ $("#btn-toggle-extended-search").click(e => {
 $(".btn--collapse-box").click(function(e) {
     let thisBtn = $(this),
         thisBox = thisBtn.closest(".box"),
-        collapsibleElements = thisBox.find(".box-body").add(".box-footer"),
-        //boxSearchForm = $(".box--search-form"),
         btnIcon = thisBtn.find(".fa");
     if(thisBox.hasClass("collapsed-box")) {
         thisBox.removeClass("collapsed-box");
-        collapsibleElements.slideDown();
-        btnIcon
-            .removeClass("fa-minus")
-            .addClass("fa-plus");
-    } else {
-        thisBox.addClass("collapsed-box");
-        collapsibleElements.slideUp();
         btnIcon
             .removeClass("fa-plus")
             .addClass("fa-minus");
+
+    } else {
+        thisBox.addClass("collapsed-box");
+        btnIcon
+            .removeClass("fa-minus")
+            .addClass("fa-plus");
     }
 });
 
 $(".inp-name-block").on("change", '[name="radio-type-of-occup-name-inp"]', function (e) {
     let radioBtn = $(e.target),
-        classNamemMltiselect = "inp-name-block--radio-uses-multiselect",
-        classNamemInput = "inp-name-block--radio-uses-input",
+        classNameMltiselect = "inp-name-block--radio-uses-multiselect",
+        classNameInput = "inp-name-block--radio-uses-input",
         inpNameBlock = radioBtn.closest(".inp-name-block")   ;
-    if(radioBtn.hasClass(classNamemMltiselect)) {
+    if(radioBtn.hasClass(classNameMltiselect)) {
         inpNameBlock
-            .removeClass(classNamemInput)
-            .addClass(classNamemMltiselect);
+            .removeClass(classNameInput)
+            .addClass(classNameMltiselect);
     } else {
         inpNameBlock
-            .removeClass(classNamemMltiselect)
-            .addClass(classNamemInput);
+            .removeClass(classNameMltiselect)
+            .addClass(classNameInput);
     }
 });
