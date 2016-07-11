@@ -43,3 +43,98 @@
                 width: 25px;
                 height: 25px;
             }
+
+
+
+
+.modal-add-info-from-related {
+
+}
+
+    .modal-add-info-from-related--search-form .form-search-similar {
+
+    }
+    .modal-add-info-from-related--search-form .search-similar-results {
+        display: none;
+    }
+    .modal-add-info-from-related--search-results .form-search-similar {
+        display: none;
+    }
+    .modal-add-info-from-related--search-results .search-similar-results {
+
+    }
+
+    .modal-add-info-from-related--search-form .modal-footer--search-form {
+
+    }
+    .modal-add-info-from-related--search-form .modal-footer--search-results {
+        display: none;
+    }
+    .modal-add-info-from-related--search-results .modal-footer--search-results {
+
+    }
+    .modal-add-info-from-related--search-results .modal-footer--search-form {
+        display: none;
+    }
+
+
+    .form-search-similar {
+
+    }
+
+
+    .search-similar-results {
+
+    }
+
+        .btn-back-to-search-form {
+
+        }
+
+        .search-similar-table {
+            margin: 0 auto;
+        }
+
+            .search-similar-table thead th {
+                /*white-space: nowrap;*/
+                text-align: center;
+            }
+
+            .search-similar-table__big-text-cell {
+                max-width: 530px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .search-similar-table__big-text-cell--expanded {
+                white-space: normal;
+            }
+
+        .modal-footer--search-results {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+.modal-footer--search-results > * {
+    flex-grow: 1;
+}
+
+
+@media (max-width: 768px) {
+
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .search-similar-table__big-text-cell {
+        max-width: 130px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .search-similar-table__big-text-cell {
+        max-width: 430px;
+    }
+}
+@media (min-width: 1200px) {
+    .search-similar-table__big-text-cell {
+        max-width: 530px;
+    }
+}
