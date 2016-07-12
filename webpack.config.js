@@ -1,10 +1,10 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./frontend/main.jsx",
+    entry: "./frontend/index.jsx",
     output: {
-        path: __dirname + '/src/main/resources/fe-build/',
-        publicPath: "fe-build/",
+        path: __dirname + '/src/main/resources/frontend-build/',
+        publicPath: "frontend-build/",
         filename: "bundle.js"
     },
     watch: true,
@@ -15,17 +15,12 @@ module.exports = {
     module: {
         preLoaders: [
             {
-                test: /\.jsx$/,
+                test: /\.js$/,
                 loader: "source-map",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/]
             }
         ],
         loaders: [
-            {
-                test: /\.js$/,
-                loader: "babel?presets[]=es2015",
-                exclude: [/node_modules/, /public/]
-            },
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader!autoprefixer-loader",
@@ -53,9 +48,9 @@ module.exports = {
                 loader: "url-loader?limit=26000&mimetype=image/svg+xml"
             },
             {
-                test: /\.jsx$/,
+                test: /\.(jsx|js)$/,
                 loader: "react-hot!babel?presets[]=es2015,presets[]=react",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/]
             },
             {
                 test:   /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,

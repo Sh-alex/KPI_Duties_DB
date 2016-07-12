@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Occupations classifier",
   "scripts": {
-    "build-prod": "rimraf dist && NODE_ENV=production webpack",
-    "build-dev": "rimraf dist && NODE_ENV=development webpack",
-    "webpack-devserver": "webpack-dev-server --debug --hot --output-pathinfo--colors --inline --content-base ./frontend --port 8090 --host 0.0.0.0",
+    "build-prod": "rimraf '/src/main/resources/frontend-build/' && NODE_ENV=production webpack",
+    "build-dev": "rimraf '/src/main/resources/frontend-build/' && NODE_ENV=development webpack",
+    "build": "rimraf '/src/main/resources/frontend-build/' && webpack",
+    "webpack-devserver": "webpack-dev-server --debug --hot --output-pathinfo--colors --devtool eval-source-map --watch --colors --inline --content-base ./frontend --port 8090 --host 0.0.0.0",
     "bs-static": "browser-sync start -s --files='./frontend/_old/'"
   },
   "authors": [
