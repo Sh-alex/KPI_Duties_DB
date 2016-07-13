@@ -4,37 +4,37 @@
 
 
 
-.codes-portions {
+.inp-portions {
     position: relative;
 }
 
-    .codes-portions__item {
+    .inp-portions__item {
         position: relative;
     }
 
-        .codes-portions__item .form-group {
+        .inp-portions__item .form-group {
             padding-right: 15px;
         }
 
-            .codes-portions__btn-plus-wrapper {
+            .inp-portions__btn-plus-wrapper {
                 padding: 5px;
                 position: relative;
             }
 
-            .codes-portions__btn-amount-ctrl {
+            .inp-portions__btn-amount-ctrl {
 
             }
-            .codes-portions__btn-amount-ctrl--top {
+            .inp-portions__btn-amount-ctrl--del {
                 color: black;
                 position: absolute;
                 top: 5px;
                 right: 0;
             }
-            .codes-portions__btn-amount-ctrl--top:hover,
-            .codes-portions__btn-amount-ctrl--top:focus {
+            .inp-portions__btn-amount-ctrl--del:hover,
+            .inp-portions__btn-amount-ctrl--del:focus {
                 color: black;
             }
-            .codes-portions__btn-amount-ctrl--bottom {
+            .inp-portions__btn-amount-ctrl--add {
                 position: absolute;
                 bottom: 12px;
                 right: 0;
