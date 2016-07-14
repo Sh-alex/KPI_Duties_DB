@@ -355,9 +355,9 @@
         </div>
     </div>
 
-    <!-- modal для  -->
+    <!-- modal для додавання нового ключового слова для уточнення -->
     <div class="modal fade modal-add-new-occup-key-word" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -366,7 +366,12 @@
                     <h4 class="modal-title" > Додати нове ключове слово для уточнення </h4>
                 </div>
                 <div class="modal-body">
-                    Тут буде форма для додавання нового ключового слова для уточнення
+                    <form role="form">
+                            <div class="form-group">
+                                <!--<label for="inp-add-new-occup-key-word"> Нове ключове слово у назвах посад </label>-->
+                                <input type="text" class="form-control" id="inp-add-new-occup-key-word" placeholder="Нове ключове слово у назвах посад">
+                            </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
