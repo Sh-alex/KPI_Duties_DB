@@ -244,6 +244,7 @@
         </div>
     </div>
 
+    <!-- modal із підтвердженням видалення посади -->
     <div class="modal modal-danger fade modal--confirm-del" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -297,6 +298,15 @@
                     <div class="box-body">
                         <form id="search-form" class="form-horizontal search-form" role="form">
                             <div class="form-inner">
+                                <div class="form-group">
+                                    <div class="col-xs-12 text-right">
+                                        <button class="btn btn-primary btn-sm" type="button">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            Переглянути усі доступні посади
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div class="form-group search-form-field--extended">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
@@ -482,13 +492,17 @@
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-hover occup-table search-res-table" id="search-res-table">
+                            <table class="table table-hover table-condensed occup-table search-res-table" id="search-res-table">
                                 <thead>
                                 <tr>
                                     <th title="Номер в списку"> № </th>
-                                    <th> Посадовий склад </th>
-                                    <th> Назва посади </th>
-                                    <th> Приналежність до КПІ </th>
+                                    <th class="sorting"> Посадовий склад </th>
+                                    <th class="sorting_asc"> Назва посади </th>
+                                    <th class="sorting"> Є в КПІ </th>
+                                    <th class="sorting" title="Дата створення посади в державі"> Створено в державі </th>
+                                    <th class="sorting" title="Дата відміни посади в державі"> Відмінено в державі </th>
+                                    <th class="sorting" title="Дата створення посади в КПІ "> Створено в КПІ </th>
+                                    <th class="sorting" title="Дата відміни посади в КПІ"> Відмінено в КПІ </th>
                                     <th> Дії  </th>
                                 </tr>
                                 </thead>
@@ -498,35 +512,35 @@
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
-                                    <td>
+                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>
+                                    <th title="Дата відміни посади в державі"> - </th>
+                                    <th title="Дата створення посади в КПІ "> 02.05.2001 </th>
+                                    <th title="Дата відміни посади в КПІ "> - </th>
+                                    <td class="action-btns-cell">
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду" data-toggle="modal" data-target=".modal--edit-occup-info">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду" data-toggle="modal" data-target=".modal--confirm-del">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <!--<i class="fa fa-chevron-down" aria-hidden="true"></i>-->
                                             <i class='fa fa-chevron-up'></i>
                                         </a>
                                     </td>
                                 </tr>
                                 <tr style="display: table-row;">
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
-                                            <dt> Посадовий склад </dt>
-                                            <dd> Технічні службовці </dd>
-                                            <dt> Назва посади </dt>
-                                            <dd> Старший інженер 1 категорії </dd>
                                             <dt> Скорочена назва посади </dt>
                                             <dd> Ст. інж. 1 кат. </dd>
-                                            <dt> Дата створення посади в державі </dt>
-                                            <dd> 11.04.2001 </dd>
-                                            <dt> Дата відміни посади в державі </dt>
-                                            <dd> - </dd>
-                                            <dt> Дата створення посади в КПІ </dt>
+                                            <dt> Є самостійною посадою </dt>
+                                            <dd> Так </dd>
+                                            <dt> Є віртуальною посадою </dt>
+                                            <dd> Ні </dd>
+                                            <dt> Дата введення набору кодів </dt>
                                             <dd> 02.05.2001 </dd>
-                                            <dt> Дата відміни посади в КПІ </dt>
+                                            <dt> Дата припинення дії набору кодів </dt>
                                             <dd> 03.07.2012 </dd>
                                             <dt> Код КП </dt>
                                             <dd> 43g534gr3g </dd>
@@ -551,6 +565,10 @@
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> - </td>
+                                    <th title="Дата створення посади в державі"> 13.06.1997 </th>
+                                    <th title="Дата відміни посади в державі"> 08.09.2002 </th>
+                                    <th title="Дата створення посади в КПІ "> - </th>
+                                    <th title="Дата відміни посади в КПІ"> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -558,14 +576,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -603,6 +621,10 @@
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
+                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>
+                                    <th title="Дата відміни посади в державі"> - </th>
+                                    <th title="Дата створення посади в КПІ "> 02.05.2001 </th>
+                                    <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -610,14 +632,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -654,7 +676,7 @@
                                     <td title="Номер в списку"> 4 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -662,14 +684,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -706,7 +728,7 @@
                                     <td title="Номер в списку"> 5 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -714,14 +736,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -758,7 +780,7 @@
                                     <td title="Номер в списку"> 6 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -766,14 +788,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -810,7 +832,7 @@
                                     <td title="Номер в списку"> 7 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -818,14 +840,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -862,7 +884,7 @@
                                     <td title="Номер в списку"> 8 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -870,14 +892,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -914,7 +936,7 @@
                                     <td title="Номер в списку"> 9 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -922,14 +944,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -966,7 +988,7 @@
                                     <td title="Номер в списку"> 10 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -974,14 +996,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -1020,13 +1042,27 @@
 
                     </div>
                     <div class="box-footer clearfix">
-                        <ul class="pagination no-margin pull-right">
-                            <li class="disabled"><a href="#">«</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                        <div class="col-sm-6">
+                            <label>
+                                Показувати по
+                                <select name="portions-size" class="input-sm">
+                                    <option value="10">  10  </option>
+                                    <option value="25">  25  </option>
+                                    <option value="50">  50  </option>
+                                    <option value="100"> 100 </option>
+                                </select>
+                                записів
+                            </label>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <ul class="pagination no-margin">
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
