@@ -115,16 +115,24 @@
         .search-res-table .action-btns-cell {
             white-space: nowrap;
         }
-            
+
             .search-res-table .occupation-details {
                 margin: 0 auto;
             }
-                
-                .search-res-table .occupation-details dt {
-                    width: 22%;
+
+                .occupation-details__row {
                 }
-                .search-res-table .occupation-details dd {
-                    margin-left: calc(22% + 20px);
+
+                    .occupation-details__title {
+                        font-weight: bold;
+                        margin-bottom: 7px;
+                        line-height: 1.2em;
+                        text-align: left;
+                    }
+
+                .occupation-details__data {
+                    font-style: italic;
+                    margin-bottom: 7px;
+                    line-height: 1.2em;
                     text-align: left;
                 }
-                
