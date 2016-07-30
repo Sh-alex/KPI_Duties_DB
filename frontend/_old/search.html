@@ -244,6 +244,7 @@
         </div>
     </div>
 
+    <!-- modal із підтвердженням видалення посади -->
     <div class="modal modal-danger fade modal--confirm-del" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -297,6 +298,15 @@
                     <div class="box-body">
                         <form id="search-form" class="form-horizontal search-form" role="form">
                             <div class="form-inner">
+                                <div class="form-group">
+                                    <div class="col-xs-12 text-right">
+                                        <button class="btn btn-primary btn-sm" type="button">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            Переглянути усі доступні посади
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div class="form-group search-form-field--extended">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
@@ -482,13 +492,17 @@
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-hover occup-table search-res-table" id="search-res-table">
+                            <table class="table table-hover table-condensed occup-table search-res-table" id="search-res-table">
                                 <thead>
                                 <tr>
                                     <th title="Номер в списку"> № </th>
-                                    <th> Посадовий склад </th>
-                                    <th> Назва посади </th>
-                                    <th> Приналежність до КПІ </th>
+                                    <th class="sorting"> Посадовий склад </th>
+                                    <th class="sorting_asc"> Назва посади </th>
+                                    <th class="sorting"> Є в КПІ </th>
+                                    <th class="sorting" title="Дата створення посади в державі"> Створено в державі </th>
+                                    <th class="sorting" title="Дата відміни посади в державі"> Відмінено в державі </th>
+                                    <th class="sorting" title="Дата створення посади в КПІ "> Створено в КПІ </th>
+                                    <th class="sorting" title="Дата відміни посади в КПІ"> Відмінено в КПІ </th>
                                     <th> Дії  </th>
                                 </tr>
                                 </thead>
@@ -498,59 +512,158 @@
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
-                                    <td>
+                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>
+                                    <th title="Дата відміни посади в державі"> - </th>
+                                    <th title="Дата створення посади в КПІ "> 02.05.2001 </th>
+                                    <th title="Дата відміни посади в КПІ "> - </th>
+                                    <td class="action-btns-cell">
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду" data-toggle="modal" data-target=".modal--edit-occup-info">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду" data-toggle="modal" data-target=".modal--confirm-del">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <!--<i class="fa fa-chevron-down" aria-hidden="true"></i>-->
                                             <i class='fa fa-chevron-up'></i>
                                         </a>
                                     </td>
                                 </tr>
                                 <tr style="display: table-row;">
-                                    <td colspan="7">
-                                        <dl class="dl-horizontal occupation-details">
-                                            <dt> Посадовий склад </dt>
-                                            <dd> Технічні службовці </dd>
-                                            <dt> Назва посади </dt>
-                                            <dd> Старший інженер 1 категорії </dd>
-                                            <dt> Скорочена назва посади </dt>
-                                            <dd> Ст. інж. 1 кат. </dd>
-                                            <dt> Дата створення посади в державі </dt>
-                                            <dd> 11.04.2001 </dd>
-                                            <dt> Дата відміни посади в державі </dt>
-                                            <dd> - </dd>
-                                            <dt> Дата створення посади в КПІ </dt>
-                                            <dd> 02.05.2001 </dd>
-                                            <dt> Дата відміни посади в КПІ </dt>
-                                            <dd> 03.07.2012 </dd>
-                                            <dt> Код КП </dt>
-                                            <dd> 43g534gr3g </dd>
-                                            <dt> Код ЗКППТР </dt>
-                                            <dd> wf2f23f2 </dd>
-                                            <dt> Код ЄТДК </dt>
-                                            <dd> 5h6rtgg4e </dd>
-                                            <dt> Код ДКХП </dt>
-                                            <dd> 90vevkejer2 </dd>
-                                            <dt> Завдання, обов'язки та повноваження</dt>
-                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto autem deleniti dicta expedita, explicabo inventore odit quas quis quisquam rem repudiandae, soluta sunt temporibus tenetur vel veniam voluptas? Debitis dolor eum provident quae quam sequi sunt suscipit? Aliquam at ea earum ratione rerum? Adipisci assumenda optio quod repellendus tenetur? A ducimus eos necessitatibus. Aliquid autem consequatur consequuntur ex expedita inventore ipsum laboriosam, molestiae nesciunt non odit optio quae saepe similique sint voluptates voluptatibus. Amet atque eaque enim et eum illo ipsa, laborum laudantium maiores maxime omnis pariatur quod reiciendis rerum soluta totam veritatis voluptatem voluptates! Ab, aperiam, architecto. </dd>
-                                            <dt> Повинен знати </dt>
-                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad eum maxime molestias veniam. Aliquid architecto exercitationem facilis quam quasi repellat vel. Ab adipisci aliquid aspernatur aut culpa dignissimos dolorem doloribus ducimus, ea eaque earum enim ex, illo ipsa ipsam laborum libero magnam nobis omnis porro quasi quibusdam quod quos reiciendis rerum vitae voluptate voluptatibus. Accusantium blanditiis commodi debitis distinctio earum, explicabo facere facilis illum impedit molestiae nobis perferendis, quisquam quod repellat saepe totam ullam veniam? Aliquid eaque laudantium libero. Alias deserunt doloremque eligendi illum incidunt iusto magnam molestiae perferendis quam sit. Ab alias consequuntur dicta facere fugit necessitatibus non nulla praesentium reprehenderit? Commodi, obcaecati recusandae. Ab blanditiis culpa cumque, eligendi est fuga fugiat illum incidunt, modi molestiae nulla numquam odit, porro quae quasi sint vel? Blanditiis expedita incidunt laborum nostrum odio rem repellat soluta totam ullam voluptas! Ab asperiores esse explicabo id iste perferendis quasi quod similique ut velit, voluptas! </dd>
-                                            <dt> Кваліфікаційні вимоги </dt>
-                                            <dd> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad adipisci asperiores consectetur ea earum hic impedit maxime nam necessitatibus, nisi nobis quae saepe sint sit vel, velit! Ab animi assumenda blanditiis consequuntur cum deleniti dolor doloremque ducimus ea eos ex expedita facilis, fugit in ipsam ipsum iusto labore laborum libero mollitia non nostrum obcaecati optio qui quibusdam quod rem sequi, soluta tenetur vitae. Ab ad adipisci amet asperiores consequatur, delectus dolor doloribus et ex fuga hic ipsa laudantium magnam nesciunt nobis non nostrum placeat recusandae saepe velit! Alias animi at atque commodi consequuntur debitis delectus deleniti dicta distinctio dolore dolorem eaque eius enim eum explicabo in ipsa iusto labore modi molestias obcaecati optio perferendis, provident quidem quisquam similique totam? </dd>
-                                        </dl>
+                                    <td colspan="30">
+                                        <div class="occupation-details">
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-3 occupation-details__title"> Скорочена назва посади: </div>
+                                                <div class="col-sm-9 occupation-details__data"> Ст. інж. 1 кат. </div>
+                                            </div>
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-3 occupation-details__title"> Є самостійною посадою: </div>
+                                                <div class="col-sm-3 occupation-details__data"> Так </div>
+                                                <div class="col-sm-3 occupation-details__title" style="padding-left: 5.5%;"> Є віртуальною посадою: </div>
+                                                <div class="col-sm-3 occupation-details__data" style="padding-left: 3.6%;"> Ні </div>
+                                            </div>
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-12 occupation-details__title"> Коди: </div>
+                                                <div class="col-sm-11 pull-right">
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата введення набору кодів: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії набору кодів: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Код КП: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 34па34п </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Код ЗКППТР: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> gg3r4g34g2 </div>
+                                                            <div class="col-sm-2 occupation-details__title"> Код ЄТДК: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 2efrwe3 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Код ДКХП: </div>
+                                                            <div class="col-sm-3 col-lg-1 occupation-details__data"> g3r4g3e4r </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата введення набору кодів: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії набору кодів: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Код КП: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 34па34п </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Код ЗКППТР: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> gg3r4g34g2 </div>
+                                                            <div class="col-sm-2 occupation-details__title"> Код ЄТДК: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 2efrwe3 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Код ДКХП: </div>
+                                                            <div class="col-sm-3 col-lg-1 occupation-details__data"> g3r4g3e4r </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-3 occupation-details__title"> Завдання, обов'язки та повноваження: </div>
+                                                <div class="col-sm-11 pull-right">
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-3 occupation-details__title"> Повинен знати: </div>
+                                                <div class="col-sm-11 pull-right">
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row occupation-details__row">
+                                                <div class="col-sm-3 occupation-details__title"> Кваліфікаційні вимоги: </div>
+                                                <div class="col-sm-11 pull-right">
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="occupation-details__items-portion">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 occupation-details__title"> Дата прийняття тексту: </div>
+                                                            <div class="col-sm-4 occupation-details__data" style="padding-left:3%;"> 02.05.2001 </div>
+                                                            <div class="col-sm-3 occupation-details__title"> Дата припинення дії тексту: </div>
+                                                            <div class="col-sm-3 occupation-details__data"> 03.07.2012 </div>
+                                                            <div class="col-sm-12 occupation-details__data"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi impedit laborum nemo optio praesentium quidem suscipit, temporibus vitae? Accusantium corporis doloremque, error iste odio quis reprehenderit. Aliquam asperiores dignissimos earum expedita mollitia placeat praesentium quo repellat sunt unde? Doloribus hic ipsam minus veniam! Aliquam consequuntur corporis cumque, ducimus eum eveniet fugiat impedit labore laudantium libero nobis provident quae vero, voluptatem voluptatibus. Ad adipisci aliquid amet, corporis, culpa expedita fugiat illo itaque iusto laudantium magni maxime nam neque numquam, odio odit omnis optio provident quas quibusdam quod saepe sapiente sit suscipit unde. Alias autem cumque harum, magnam quasi ratione soluta tempora. </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td title="Номер в списку"> 2 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> - </td>
+                                    <th title="Дата створення посади в державі"> 13.06.1997 </th>
+                                    <th title="Дата відміни посади в державі"> 08.09.2002 </th>
+                                    <th title="Дата створення посади в КПІ "> - </th>
+                                    <th title="Дата відміни посади в КПІ"> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -558,14 +671,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -603,6 +716,10 @@
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
+                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>
+                                    <th title="Дата відміни посади в державі"> - </th>
+                                    <th title="Дата створення посади в КПІ "> 02.05.2001 </th>
+                                    <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -610,14 +727,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -654,7 +771,7 @@
                                     <td title="Номер в списку"> 4 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -662,14 +779,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -706,7 +823,7 @@
                                     <td title="Номер в списку"> 5 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -714,14 +831,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -758,7 +875,7 @@
                                     <td title="Номер в списку"> 6 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -766,14 +883,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -810,7 +927,7 @@
                                     <td title="Номер в списку"> 7 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -818,14 +935,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -862,7 +979,7 @@
                                     <td title="Номер в списку"> 8 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -870,14 +987,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -914,7 +1031,7 @@
                                     <td title="Номер в списку"> 9 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -922,14 +1039,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -966,7 +1083,7 @@
                                     <td title="Номер в списку"> 10 </td>
                                     <td> Технічні службовці </td>
                                     <td> Старший інженер 1 категорії </td>
-                                    <td> + </td>
+                                    <td> + </td>                                    <th title="Дата створення посади в державі"> 11.04.2001 </th>                                     <th title="Дата відміни посади в державі"> - </th>                                     <th title="Дата створення посади в КПІ "> 02.05.2001 </th>                                     <th title="Дата відміни посади в КПІ "> - </th>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-warning" title="Редагувати посаду">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
@@ -974,14 +1091,14 @@
                                         <button type="button" class="btn btn-sm btn-danger" title="Видалити посаду">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                        <a class="occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
                                             <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                             <!--<i class='fa fa-chevron-up'></i>-->
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="30">
                                         <dl class="dl-horizontal occupation-details">
                                             <dt> Посадовий склад </dt>
                                             <dd> Технічні службовці </dd>
@@ -1020,13 +1137,27 @@
 
                     </div>
                     <div class="box-footer clearfix">
-                        <ul class="pagination no-margin pull-right">
-                            <li class="disabled"><a href="#">«</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                        <div class="col-sm-6">
+                            <label>
+                                Показувати по
+                                <select name="portions-size" class="input-sm">
+                                    <option value="10">  10  </option>
+                                    <option value="25">  25  </option>
+                                    <option value="50">  50  </option>
+                                    <option value="100"> 100 </option>
+                                </select>
+                                записів
+                            </label>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <ul class="pagination no-margin">
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>

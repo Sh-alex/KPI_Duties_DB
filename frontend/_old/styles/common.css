@@ -152,6 +152,11 @@ body {
                     }
 
 
+label {
+    font-weight: normal;
+    font-style: italic;
+}
+
 
 
 .inp-name-block--radio-uses-multiselect .inp-name-block__input {

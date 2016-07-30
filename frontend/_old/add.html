@@ -355,17 +355,47 @@
         </div>
     </div>
 
+    <!-- modal для додавання нового ключового слова для уточнення -->
+    <div class="modal fade modal-add-new-occup-key-word" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" > Додати нове ключове слово для уточнення </h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                            <div class="form-group">
+                                <!--<label for="inp-add-new-occup-key-word"> Нове ключове слово у назвах посад </label>-->
+                                <input type="text" class="form-control" id="inp-add-new-occup-key-word" placeholder="Нове ключове слово у назвах посад">
+                            </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                        Відміна
+                    </button>
+                    <button type="button" form="search-similar-results" class="btn btn-primary" data-dismiss="modal">
+                        Додати
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container-fluid header-inner">
                 <a href="#" class="header-logo navbar-brand">
-                        <p class="header-logo-text header-logo-text--full hidden">
-                            Державний<br>класифікатор<br>посад<br>України
-                        </p>
-                        <p class="header-logo-text header-logo-text--abbr">
-                            ДКПУ
-                        </p>
-                    </a>
+                    <p class="header-logo-text header-logo-text--full hidden">
+                        Державний<br>класифікатор<br>посад<br>України
+                    </p>
+                    <p class="header-logo-text header-logo-text--abbr">
+                        ДКПУ
+                    </p>
+                </a>
                 <div class="header-menu">
                     <ul class="nav navbar-nav header-menu-navbar">
                         <li class="active">
@@ -415,6 +445,7 @@
                     <div class="box-body">
                         <form id="add-form" class="form-horizontal add-form" role="form">
                             <div class="form-inner">
+                                <h4> Назва посади </h4>
                                 <div class="form-group">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
@@ -430,43 +461,45 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                    <label for="select-clarified-occup" class="col-sm-2 control-label">
+                                        Уточнювана посада
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="select-clarified-occup">
+                                            <option> - (Відсутня) </option>
                                             <option> Інженер </option>
+                                            <option> Інженер молодший </option>
+                                            <option> Інженер старший 1 категорії </option>
+                                            <option> Директор </option>
                                             <option> Посол </option>
                                             <option> Фрезерувальник </option>
-                                            <option> Молодший </option>
-                                            <option> Старший </option>
-                                            <option> 1 категорії </option>
-                                            <option> 3 розряду </option>
                                         </select>
-                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;">
-                                            <span class="selection">
-                                                <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
-                                                    <ul class="select2-selection__rendered">
-                                                        <li class="select2-selection__choice" title="California">
-                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Інженер
-                                                        </li>
-                                                        <li class="select2-selection__choice" title="Delaware">
-                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Старший
-                                                        </li>
-                                                        <li class="select2-selection__choice" title="Tennessee">
-                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> 1 категорії
-                                                        </li>
-                                                        <li class="select2-search select2-search--inline">
-                                                            <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
-                                                        </li>
-                                                    </ul>
-                                                </span>
-                                            </span>
-                                            <span class="dropdown-wrapper" aria-hidden="true">
-                                            </span></span>
+                                    </div>
+                                    <label for="select-clarification" class="col-sm-2 control-label">
+                                        Уточнення
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <select class="form-control" id="select-clarification">
+                                                <option> Патімейкер </option>
+                                                <option> Молодший </option>
+                                                <option> Замістник </option>
+                                                <option> Старший </option>
+                                                <option> 1 категорії </option>
+                                                <option> 3 розряду </option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button type="button" title="Додати нове ключове слово для уточнення" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-new-occup-key-word">
+                                                    +1
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Інженер старший 1 категорії">
+                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Повна назва посади </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Повна назва посади" value="Старший інженер 1 категорії">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -474,9 +507,33 @@
                                         Скорочена назва посади
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Інженер старший 1 категорії">
+                                        <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Ст. інж. 1 кат.">
                                     </div>
                                 </div>
+                                <hr>
+
+                                <h4> Особливості </h4>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox">
+                                                Є самостійною посадою
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox">
+                                                Є "віртуальною посадою"
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <h4> Терміни дії посади </h4>
                                 <div class="form-group">
                                     <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
                                         Дата створення посади в державі
@@ -491,12 +548,31 @@
                                         <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
                                     </div>
                                 </div>
-                                <div class="codes-portions">
-                                    <div class="codes-portions__item">
-                                        <hr>
-                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                <hr>
+
+                                <div class="col-sm-7 pull-right text-right">
+                                    <a href="#" class="" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                        <i> Заповнити коди із аналогічної посади </i>
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                </div>
+                                <h4> Коди </h4>
+                                <div class="inp-portions codes-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <label for="inp-codes-portion-start-date" class="col-sm-2 control-label">
+                                                Дата прийняття набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                            </div>
+                                            <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
+                                                Дата припинення дії набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="inp-code-KP" class="col-sm-2 control-label">
                                                 Код КП
@@ -526,11 +602,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="codes-portions__item">
+                                    <div class="inp-portions__item">
                                         <hr>
-                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close inp-portions__btn-amount-ctrl--del">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
+                                        <div class="form-group">
+                                            <label for="inp-codes-portion-start-date" class="col-sm-2 control-label">
+                                                Дата прийняття набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                            </div>
+                                            <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
+                                                Дата припинення дії набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="inp-code-KP" class="col-sm-2 control-label">
                                                 Код КП
@@ -560,59 +650,141 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="codes-portions__btn-plus-wrapper">
+                                    <div class="inp-portions__btn-plus-wrapper">
                                         <hr>
-                                        <button type="button" class="btn btn-default codes-portions__btn-amount-ctrl--bottom codes-portions__btn-amount-ctrl--plus">
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+
+                                <h4> Завдання, обов'язки та повноваження </h4>
+                                <div class="inp-portions responsiblities-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Завдання, обов'язки та повноваження" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+
+                                <h4> Повинен знати </h4>
+                                <div class="inp-portions have-to-know-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Повинен знати"  rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+                                    <div class="inp-portions__item">
+                                        <hr>
+                                        <button type="button" class="close inp-portions__btn-amount-ctrl--del">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Повинен знати" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Приналежність до КПІ
-                                            </label>
+
+                                <h4> Кваліфікаційні вимоги </h4>
+                                <div class="inp-portions qualiff-requir-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Кваліфікаційні вимоги" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </div>
                                 </div>
 
