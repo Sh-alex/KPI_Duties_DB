@@ -12,12 +12,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com.kpi.kpi_duties_db")
 @PropertySource("classpath:app.properties")
@@ -76,6 +80,15 @@ public class DataConfig {
         //properties.put(PROP_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROP_HIBERNATE_HBM2DDL_AUTO));
 
         return properties;
+    }
+
+    @Bean
+    public UrlBasedViewResolver setupViewResolver() {
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setPrefix("WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        resolver.setViewClass(JstlView.class);
+        return resolver;
     }
 
 }

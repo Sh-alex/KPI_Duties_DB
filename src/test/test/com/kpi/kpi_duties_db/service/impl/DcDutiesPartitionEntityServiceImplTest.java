@@ -49,7 +49,7 @@ public class DcDutiesPartitionEntityServiceImplTest {
 
     @Test
     public void delete() throws Exception {
-        dcDutiesPartitionEntityService.delete(17);
+        dcDutiesPartitionEntityService.delete(19);
     }
 
     @Test
