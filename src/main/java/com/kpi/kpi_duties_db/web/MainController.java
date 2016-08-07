@@ -1,5 +1,6 @@
 package com.kpi.kpi_duties_db.web;
 
+import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.service.impl.DcDutiesPartitionEntityServiceImpl;
 import org.hibernate.Criteria;
@@ -29,6 +30,7 @@ public class MainController {
 
         return "index";
     }
+
     @RequestMapping(value = "/api/occupGroup", method = RequestMethod.GET)
     @ResponseBody
     public List getAllPartitions() {
@@ -38,6 +40,19 @@ public class MainController {
         Criteria criteria = session.createCriteria(DcDutiesPartitionEntity.class);
 
         criteria.setProjection(Projections.property("dcDutiesPartitionName"));
+
+        return criteria.list();
+    }
+
+    @RequestMapping(value = "/api/dutiesNames", method = RequestMethod.GET)
+    @ResponseBody
+    public List getAllDutiesName() {
+
+        Session session = ((Session) em.getDelegate()).getSessionFactory().openSession();
+
+        Criteria criteria = session.createCriteria(DcDutiesNameEntity.class);
+
+        criteria.setProjection(Projections.property("name"));
 
         return criteria.list();
     }
