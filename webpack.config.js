@@ -1,17 +1,29 @@
-var webpack = require('webpack');
+var webpack = require('webpack'),
+    ExtractTextPlugin = require("extract-text-webpack-plugin"),
+    isDev = process.env.NODE_ENV != "production",
+    WDS_PORT = 2016,
+    BE_PORT = 8080;
 
 module.exports = {
-    entry: "./frontend/index.jsx",
+    entry: ([
+        'babel-polyfill',
+        "./frontend/main.jsx"
+    ]),
     output: {
         path: __dirname + '/src/main/resources/frontend-build/',
-        publicPath: "frontend-build/",
+        publicPath: "/src/main/resources/frontend-build/",
         filename: "bundle.js"
     },
-    watch: true,
+    watch: isDev,
     watchOptions: {
         aggregateTimeout: 100
     },
-    devtool: "eval-source-map",
+    cache: isDev,
+    debug: isDev,
+    devtool: isDev && "eval-source-map",
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    },
     module: {
         preLoaders: [
             {
@@ -23,38 +35,62 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader",
-                exclude: [/node_modules/, /public/]
+                loader: ExtractTextPlugin.extract("style", "css!autoprefixer"),
+                exclude: [/node_modules/]
+            },
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style", "css"),
+                include: [/node_modules/]
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
-                exclude: [/node_modules/, /public/]
+                loader: ExtractTextPlugin.extract("style", isDev? "css?sourceMap!autoprefixer!less?sourceMap" : "css!autoprefixer!less")
+            },
+            {
+                test: /\.(jsx|js)?$/,
+                exclude: [/node_modules/],
+                loader: "babel-loader",
+                query: {
+                    plugins: ['transform-runtime'],
+                    presets: ['es2015', 'stage-0', 'react']
+                }
+            },
+            {
+                test: /\.woff(\?[a-z0-9=\.]+)?$/,
+                loader: 'url?limit=10000000&mimetype=application/font-woff'
+            },
+            {
+                test: /\.woff2(\?[a-z0-9=\.]+)?$/,
+                loader: 'url?limit=10000000&mimetype=application/font-woff2'
+            },
+            {
+                test: /\.ttf(\?[a-z0-9=\.]+)?$/,
+                loader: 'url?limit=10000000&mimetype=application/octet-stream'
+            },
+            {
+                test: /\.otf(\?[a-z0-9=\.]+)?$/,
+                loader: 'url?limit=10000000&mimetype=application/font-otf'
+            },
+            {
+                test: /\.svg(\?[a-z0-9=\.]+)?$/,
+                loader: 'url?limit=10000&mimetype=image/svg+xml'
             },
             {
                 test: /\.gif$/,
                 loader: "url-loader?limit=10000&mimetype=image/gif"
             },
-            {
-                test: /\.jpg$/,
-                loader: "url-loader?limit=10000&mimetype=image/jpg"
-            },
+            // {
+            //     test: /\.jpe?g$/,
+            //     loader: "url-loader?limit=10000&mimetype=image/jpg"
+            // },
             {
                 test: /\.png$/,
                 loader: "url-loader?limit=10000&mimetype=image/png"
             },
             {
-                test: /\.svg/,
-                loader: "url-loader?limit=26000&mimetype=image/svg+xml"
-            },
-            {
-                test: /\.(jsx|js)$/,
-                loader: "react-hot!babel?presets[]=es2015,presets[]=react",
-                exclude: [/node_modules/]
-            },
-            {
-                test:   /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
-                loader: 'file?name=[name].[ext]?[hash]'
+            	test: /.(png|jpg|jpeg|gif|eot|svg)(\?[a-z0-9=\.]+)?$/,
+                loader: 'file-loader?name=[path][name].[ext]\?[hash]'
             },
             {
                 test: /\.json$/,
@@ -62,17 +98,33 @@ module.exports = {
             }
         ]
     },
-    plugins: [
+    plugins: (isDev ? [ ] : [
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {screw_ie8: true, keep_fnames: true, warnings: false},
+            mangle: {screw_ie8: true, keep_fnames: true}
+        }),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.AggressiveMergingPlugin()
+    ]).concat([
+        new ExtractTextPlugin("style.css", {allChunks: true, disable: isDev}),
         new webpack.ProvidePlugin({
-            '$': "jquery",
-            'jQuery': "jquery",
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         })
-    ]/*,
-    devServer: {
-        contentBase: __dirname + '/backend',
-        target: 'https://other-server.example.com',
+    ]),
+    devServer: isDev && {
+        //contentBase: __dirname + './frontend/',
+        historyApiFallback: { index: '/src/main/resources/index.html'},
+        // proxy: {
+        //     "*": 'http://localhost:${BE_PORT}',
+        //     "/api*": {
+        //         target : `http://localhost:${BE_PORT}`,
+        //         changeOrigin: true,
+        //         secure: false
+        //     }
+        // },
         hot: true,
-        port: 8090
-    }*/
+        port: WDS_PORT
+    }
 };
