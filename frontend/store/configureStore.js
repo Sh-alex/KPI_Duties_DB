@@ -9,12 +9,12 @@ export default function configureStore() {
     applyMiddleware(thunkMiddleware),
     applyMiddleware(createLogger()),
     applyMiddleware(redirect)
-  )(createStore)(rootReducer)
+  )(createStore)(rootReducer);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers').rootReducer
+      const nextRootReducer = require('../reducers').rootReducer;
       store.replaceReducer(nextRootReducer)
     });
   }
