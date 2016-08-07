@@ -1,5 +1,7 @@
 package com.kpi.kpi_duties_db.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "DcDutiesPartition", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesPartitionEntity {
+
     private int dcDutiesPartitionId;
     private String dcDutiesPartitionName;
 
