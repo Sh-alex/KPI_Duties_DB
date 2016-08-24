@@ -2,7 +2,7 @@ package test.com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.config.DataConfig;
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
-import com.kpi.kpi_duties_db.service.DcDutiesPartitionEntityService;
+import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class DcDutiesPartitionEntityServiceImplTest {
     protected EntityManager em;
 
     @Resource
-    private DcDutiesPartitionEntityService dcDutiesPartitionEntityService;
+    private DcDutiesPartitionService dcDutiesPartitionEntityService;
 
     @Before
     public void setUp() throws Exception {
