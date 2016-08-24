@@ -10,8 +10,8 @@ module.exports = {
         "./frontend/main.jsx"
     ]),
     output: {
-        path: __dirname + '/src/main/resources/frontend-build/',
-        publicPath: "/src/main/resources/frontend-build/",
+        path: __dirname + '/src/main/webapp/WEB-INF/frontend-build/',
+        publicPath: "/src/main/webapp/WEB-INF/frontend-build/",
         filename: "bundle.js"
     },
     watch: isDev,
@@ -20,7 +20,7 @@ module.exports = {
     },
     cache: isDev,
     debug: isDev,
-    devtool: isDev && "eval-source-map",
+    devtool: isDev ? "source-map" : null,
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
@@ -113,17 +113,15 @@ module.exports = {
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         })
     ]),
-    devServer: isDev && {
-        //contentBase: __dirname + './frontend/',
-        historyApiFallback: { index: '/src/main/resources/index.html'},
-        // proxy: {
-        //     "*": 'http://localhost:${BE_PORT}',
-        //     "/api*": {
-        //         target : `http://localhost:${BE_PORT}`,
-        //         changeOrigin: true,
-        //         secure: false
-        //     }
-        // },
+    devServer: !isDev ? null : {
+        historyApiFallback: { index: '/src/main/webapp/WEB-INF/views/index.html' },
+        proxy: {
+            "/api*": {
+                target : `http://localhost:${BE_PORT}`,
+                changeOrigin: true,
+                secure: false
+            }
+        },
         hot: true,
         port: WDS_PORT
     }
