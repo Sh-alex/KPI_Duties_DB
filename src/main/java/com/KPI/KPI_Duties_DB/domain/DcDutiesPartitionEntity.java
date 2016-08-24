@@ -1,7 +1,5 @@
 package com.kpi.kpi_duties_db.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,7 +34,7 @@ public class DcDutiesPartitionEntity {
         this.dcDutiesPartitionName = dcDutiesPartitionName;
     }
 
-    @OneToMany(mappedBy = "dcDutiesPartitionEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dcDutiesPartitionEntity")
     public Set<RtDutiesEntity> getRtDutiesEntities() {
         return rtDutiesEntities;
     }

@@ -6,16 +6,28 @@ import java.sql.Date;
 @Entity
 @Table(name = "RtDuties_TaskAndResponsibilities", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesTaskAndResponsibilitiesEntity {
-    private int id;
-    private Date dateStart;
-    private Date dateEnd;
-
-    private RtDutiesEntity rtDutiesEntity;
-    private DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Basic
+    @Column(name = "DateStart")
+    private Date dateStart;
+
+    @Column(name = "DateEnd")
+    private Date dateEnd;
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    private RtDutiesEntity rtDutiesEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
+    private DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity;
+
+
     public int getId() {
         return id;
     }
@@ -24,8 +36,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DateStart")
     public Date getDateStart() {
         return dateStart;
     }
@@ -34,8 +44,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.dateStart = dateStart;
     }
 
-    @Basic
-    @Column(name = "DateEnd")
     public Date getDateEnd() {
         return dateEnd;
     }
@@ -44,8 +52,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.dateEnd = dateEnd;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
     public RtDutiesEntity getRtDutiesEntity() {
         return rtDutiesEntity;
     }
@@ -54,8 +60,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.rtDutiesEntity = rtDutiesEntity;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
     public DcDutiesTasksAndResponsibilitiesEntity getDcDutiesTasksAndResponsibilitiesEntity() {
         return dcDutiesTasksAndResponsibilitiesEntity;
     }

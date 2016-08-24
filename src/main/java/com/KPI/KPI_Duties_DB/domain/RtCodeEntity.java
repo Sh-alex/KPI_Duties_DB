@@ -8,21 +8,44 @@ import java.util.Set;
 @Entity
 @Table(name = "RtCode", schema = "dbo", catalog = "DcDuties")
 public class RtCodeEntity {
-    private int id;
-    private Integer newId;
-    private Date dateStart;
-    private Date dateStop;
-
-    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities = new HashSet<>();
-
-    private DcCodeZkpptrEntity dcCodeZkpptrEntity;
-    private DcCodeDkhpEntity dcCodeDkhpEntity;
-    private DcCodeEtkdEntity dcCodeEtkdEntity;
-    private DcCodeKpEntity dcCodeKpEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Basic
+    @Column(name = "NewId")
+    private Integer newId;
+
+    @Basic
+    @Column(name = "DateStart")
+    private Date dateStart;
+
+    @Basic
+    @Column(name = "DateStop")
+    private Date dateStop;
+
+    @OneToMany(mappedBy = "rtCodeEntity")
+    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "CodeZKPPTRId")
+    private DcCodeZkpptrEntity dcCodeZkpptrEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeDKHPId")
+    private DcCodeDkhpEntity dcCodeDkhpEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeETKDId")
+    private DcCodeEtkdEntity dcCodeEtkdEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeKPId")
+    private DcCodeKpEntity dcCodeKpEntity;
+
+
     public int getId() {
         return id;
     }
@@ -31,8 +54,7 @@ public class RtCodeEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "NewId")
+
     public Integer getNewId() {
         return newId;
     }
@@ -41,8 +63,7 @@ public class RtCodeEntity {
         this.newId = newId;
     }
 
-    @Basic
-    @Column(name = "DateStart")
+
     public Date getDateStart() {
         return dateStart;
     }
@@ -51,8 +72,7 @@ public class RtCodeEntity {
         this.dateStart = dateStart;
     }
 
-    @Basic
-    @Column(name = "DateStop")
+
     public Date getDateStop() {
         return dateStop;
     }
@@ -61,9 +81,6 @@ public class RtCodeEntity {
         this.dateStop = dateStop;
     }
 
-
-
-    @OneToMany(mappedBy = "rtCodeEntity", fetch = FetchType.LAZY)
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
         return this.rtDutiesCodeEntities;
     }
@@ -72,8 +89,6 @@ public class RtCodeEntity {
         this.rtDutiesCodeEntities = rtDutiesCodeEntities;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "CodeZKPPTRId")
     public DcCodeZkpptrEntity getDcCodeZkpptrEntity() {
         return dcCodeZkpptrEntity;
     }
@@ -81,8 +96,7 @@ public class RtCodeEntity {
     public void setDcCodeZkpptrEntity(DcCodeZkpptrEntity dcCodeZkpptrEntity) {
         this.dcCodeZkpptrEntity = dcCodeZkpptrEntity;
     }
-    @ManyToOne
-    @JoinColumn(name = "CodeDKHPId")
+
     public DcCodeDkhpEntity getDcCodeDkhpEntity() {
         return dcCodeDkhpEntity;
     }
@@ -91,8 +105,7 @@ public class RtCodeEntity {
         this.dcCodeDkhpEntity = dcCodeDkhpEntity;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "CodeETKDId")
+
     public DcCodeEtkdEntity getDcCodeEtkdEntity() {
         return dcCodeEtkdEntity;
     }
@@ -101,8 +114,7 @@ public class RtCodeEntity {
         this.dcCodeEtkdEntity = dcCodeEtkdEntity;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "CodeKPId")
+
     public DcCodeKpEntity getDcCodeKpEntity() {
         return dcCodeKpEntity;
     }

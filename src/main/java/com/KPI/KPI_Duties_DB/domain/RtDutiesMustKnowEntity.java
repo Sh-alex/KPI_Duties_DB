@@ -6,16 +6,27 @@ import java.sql.Date;
 @Entity
 @Table(name = "RtDuties_MustKnow", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesMustKnowEntity {
-    private int id;
-    private Date dateStart;
-    private Date dateEnd;
-
-    private RtDutiesEntity rtDutiesEntity;
-    private DcDutiesMustKnowEntity dcDutiesMustKnowEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "DateStart")
+    private Date dateStart;
+
+    @Column(name = "DateEnd")
+    private Date dateEnd;
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    private RtDutiesEntity rtDutiesEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_MustKnowId")
+    private DcDutiesMustKnowEntity dcDutiesMustKnowEntity;
+
+
     public int getId() {
         return id;
     }
@@ -24,8 +35,7 @@ public class RtDutiesMustKnowEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DateStart")
+
     public Date getDateStart() {
         return dateStart;
     }
@@ -34,8 +44,7 @@ public class RtDutiesMustKnowEntity {
         this.dateStart = dateStart;
     }
 
-    @Basic
-    @Column(name = "DateEnd")
+
     public Date getDateEnd() {
         return dateEnd;
     }
@@ -44,8 +53,7 @@ public class RtDutiesMustKnowEntity {
         this.dateEnd = dateEnd;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
+
     public RtDutiesEntity getRtDutiesEntity() {
         return rtDutiesEntity;
     }
@@ -54,9 +62,6 @@ public class RtDutiesMustKnowEntity {
         this.rtDutiesEntity = rtDutiesEntity;
     }
 
-
-    @ManyToOne
-    @JoinColumn(name = "DcDuties_MustKnowId")
     public DcDutiesMustKnowEntity getDcDutiesMustKnowEntity() {
         return dcDutiesMustKnowEntity;
     }

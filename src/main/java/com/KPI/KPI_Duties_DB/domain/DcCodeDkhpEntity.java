@@ -7,14 +7,18 @@ import java.util.Set;
 @Entity
 @Table(name = "DcCodeDKHP", schema = "dbo", catalog = "DcDuties")
 public class DcCodeDkhpEntity {
-    private int id;
-    private String name;
-
-    private Set<RtCodeEntity> rtCodeEntities = new HashSet<>();
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "Name")
+    private String name;
+
+    @OneToMany(mappedBy = "dcCodeDkhpEntity")
+    private Set<RtCodeEntity> rtCodeEntities = new HashSet<>();
+
     public int getId() {
         return id;
     }
@@ -23,8 +27,7 @@ public class DcCodeDkhpEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "Name")
+
     public String getName() {
         return name;
     }
@@ -33,7 +36,6 @@ public class DcCodeDkhpEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "dcCodeDkhpEntity", fetch = FetchType.LAZY)
     public Set<RtCodeEntity> getRtCodeEntities() {
         return rtCodeEntities;
     }

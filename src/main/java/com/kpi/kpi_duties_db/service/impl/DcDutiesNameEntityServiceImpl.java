@@ -2,18 +2,19 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
 import com.kpi.kpi_duties_db.repository.DcDutiesNameEntityRepository;
-import com.kpi.kpi_duties_db.service.BaseEntityService;
+import com.kpi.kpi_duties_db.service.DcDutiesNameEntityService;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
-public class DcDutiesNameEntityServiceImpl  implements BaseEntityService<DcDutiesNameEntity>{
+public class DcDutiesNameEntityServiceImpl implements DcDutiesNameEntityService {
 
     @Autowired
     private
@@ -43,6 +44,7 @@ public class DcDutiesNameEntityServiceImpl  implements BaseEntityService<DcDutie
     }
 
     @Override
+    @Transactional
     public List<DcDutiesNameEntity> getAll() {
         return dcDutiesNameEntityRepository.findAll();
     }
@@ -54,6 +56,7 @@ public class DcDutiesNameEntityServiceImpl  implements BaseEntityService<DcDutie
         Criteria criteria = session.createCriteria(DcDutiesNameEntity.class);
 
         criteria.setProjection(Projections.property("name"));
+        criteria.setProjection(Projections.property("id"));
 
         return criteria.list();
     }
