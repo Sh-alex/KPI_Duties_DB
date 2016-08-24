@@ -12,8 +12,8 @@
     "Galchenko Yaroslav (https://github.com/GalchenkoYaroslav)"
   ],
   "scripts": {
-    "build-prod": "rimraf '/src/main/resources/frontend-build/' && set NODE_ENV=production && webpack",
-    "build-dev": "rimraf '/src/main/resources/frontend-build/' && set NODE_ENV=development && webpack-dev-server --debug --output-pathinfo--colors --colors --inline --hot",
+    "build-prod": "rimraf '/src/main/webapp/WEB-INF/frontend-build/' && set NODE_ENV=production&& webpack",
+    "build-dev": "rimraf '/src/main/webapp/WEB-INF/frontend-build/' && set NODE_ENV=development&& webpack-dev-server --debug --output-pathinfo--colors --colors --inline --hot",
     "inst-dependencies": "npm i"
   },
   "babel": {
@@ -34,7 +34,9 @@
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.4",
     "react-router": "^2.0.1",
+    "react-widgets": "^3.4.4",
     "redux": "^3.4.0",
+    "redux-form": "^5.3.2",
     "redux-logger": "^2.6.1",
     "redux-promise-middleware": "^3.3.2",
     "redux-thunk": "^2.1.0",
