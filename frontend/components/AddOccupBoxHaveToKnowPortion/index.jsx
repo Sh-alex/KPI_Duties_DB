@@ -13,7 +13,7 @@ export default class extends Component {
                     <button
                         type="button"
                         className="close inp-portions__btn-amount-ctrl--del"
-                        onClick={this.props.handleDelResponsibPortionBtnClick} >
+                        onClick={this.props.handleDelHaveToKnowPortionBtnClick} >
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -25,9 +25,9 @@ export default class extends Component {
                 <div className="col-sm-8">
                     <div className="input-group">
                         <textarea
-                            {...this.props.responsibPortionFields.text}
+                            {...this.props.haveToKnowPortionFields.text}
                             className="form-control" 
-                            placeholder="Завдання, обов'язки та повноваження" 
+                            placeholder="Повинен знати"
                             rows="6" />
                         <div className="input-group-btn">
                             <button 
@@ -46,12 +46,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата прийняття тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionStartDate}
+                            {...this.props.haveToKnowPortionFields.portionStartDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionStartDate.value}
+                            value={this.props.haveToKnowPortionFields.portionStartDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionStartDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionStartDate)}
+                            onChange={this.props.haveToKnowPortionFields.portionStartDate.onChange}
+                            onBlur={(event) => fixBlur(event, this.props.haveToKnowPortionFields.portionStartDate)}
                             placeholder="Дата прийняття тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}
@@ -60,12 +60,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата припинення дії тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionEndDate}
+                            {...this.props.haveToKnowPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionEndDate.value}
+                            value={this.props.haveToKnowPortionFields.portionEndDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionEndDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionEndDate)}
+                            onChange={this.props.haveToKnowPortionFields.portionEndDate.onChange}
+                            onBlur={(event) => fixBlur(event, this.props.haveToKnowPortionFields.portionEndDate)}
                             placeholder="Дата припинення дії тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}

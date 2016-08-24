@@ -8,16 +8,16 @@ import './styles.less'
 export default class extends Component {
     render() {
         let topCtrlPart = this.props.showDelBtn ? (
-                <div>
-                    <hr />
-                    <button
-                        type="button"
-                        className="close inp-portions__btn-amount-ctrl--del"
-                        onClick={this.props.handleDelResponsibPortionBtnClick} >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            ) : "";
+            <div>
+                <hr />
+                <button
+                    type="button"
+                    className="close inp-portions__btn-amount-ctrl--del"
+                    onClick={this.props.handleDelQualiffRequirPortionBtnClick} >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ) : "";
 
         return <div className={`inp-portions__item ${this.props.portionItemClassName}`}>
             {topCtrlPart}
@@ -25,16 +25,16 @@ export default class extends Component {
                 <div className="col-sm-8">
                     <div className="input-group">
                         <textarea
-                            {...this.props.responsibPortionFields.text}
-                            className="form-control" 
-                            placeholder="Завдання, обов'язки та повноваження" 
+                            {...this.props.qualiffRequirPortionFields.text}
+                            className="form-control"
+                            placeholder="Кваліфікаційні вимоги"
                             rows="6" />
                         <div className="input-group-btn">
-                            <button 
-                                type="button" 
-                                title="Додати інформацію з аналогічної посади" 
-                                className="btn btn-default btn-flat" 
-                                data-toggle="modal" 
+                            <button
+                                type="button"
+                                title="Додати інформацію з аналогічної посади"
+                                className="btn btn-default btn-flat"
+                                data-toggle="modal"
                                 data-target=".modal-add-info-from-related"
                             >
                                 <i className="fa fa-link" />
@@ -46,12 +46,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата прийняття тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionStartDate}
+                            {...this.props.qualiffRequirPortionFields.portionStartDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionStartDate.value}
+                            value={this.props.qualiffRequirPortionFields.portionStartDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionStartDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionStartDate)}
+                            onChange={this.props.qualiffRequirPortionFields.portionStartDate.onChange}
+                            onBlur={(event) => fixBlur(event, this.props.qualiffRequirPortionFields.portionStartDate)}
                             placeholder="Дата прийняття тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}
@@ -60,12 +60,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата припинення дії тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionEndDate}
+                            {...this.props.qualiffRequirPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionEndDate.value}
+                            value={this.props.qualiffRequirPortionFields.portionEndDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionEndDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionEndDate)}
+                            onChange={this.props.qualiffRequirPortionFields.portionEndDate.onChange}
+                            onBlur={(event) => fixBlur(event, this.props.qualiffRequirPortionFields.portionEndDate)}
                             placeholder="Дата припинення дії тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}

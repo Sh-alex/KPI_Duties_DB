@@ -10,7 +10,7 @@ export default class extends Component {
         <div className="col-sm-6">
           <div className="checkbox">
             <label>
-              <input type="checkbox" />
+              <input type="checkbox" {...this.props.featuresFields.isIndependent} />
                 Є самостійною посадою
             </label>
           </div>
@@ -18,7 +18,7 @@ export default class extends Component {
         <div className="col-sm-6">
           <div className="checkbox">
             <label>
-              <input type="checkbox" />
+              <input type="checkbox" {...this.props.featuresFields.isVirtual} />
                 Є "віртуальною посадою"
             </label>
           </div>
