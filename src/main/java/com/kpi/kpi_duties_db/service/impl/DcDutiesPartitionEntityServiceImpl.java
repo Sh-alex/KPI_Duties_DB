@@ -2,7 +2,7 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.repository.DcDutiesPartitionEntityRepository;
-import com.kpi.kpi_duties_db.service.BaseEntityService;
+import com.kpi.kpi_duties_db.service.DcDutiesPartitionEntityService;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
-public class DcDutiesPartitionEntityServiceImpl implements BaseEntityService<DcDutiesPartitionEntity> {
+public class DcDutiesPartitionEntityServiceImpl implements DcDutiesPartitionEntityService {
 
     @Autowired
     EntityManager em;

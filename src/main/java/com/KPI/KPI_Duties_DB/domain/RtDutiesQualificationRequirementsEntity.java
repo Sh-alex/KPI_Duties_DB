@@ -6,16 +6,27 @@ import java.sql.Date;
 @Entity
 @Table(name = "RtDuties_QualificationRequirements", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesQualificationRequirementsEntity {
-    private int id;
-    private Date dateStart;
-    private Date dateEnd;
-
-    private RtDutiesEntity rtDutiesEntity;
-    private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "DateStart")
+    private Date dateStart;
+
+    @Column(name = "DateEnd")
+    private Date dateEnd;
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    private RtDutiesEntity rtDutiesEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_QualificationRequirementsId")
+    private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
+
+
     public int getId() {
         return id;
     }
@@ -24,8 +35,6 @@ public class RtDutiesQualificationRequirementsEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DateStart")
     public Date getDateStart() {
         return dateStart;
     }
@@ -34,8 +43,7 @@ public class RtDutiesQualificationRequirementsEntity {
         this.dateStart = dateStart;
     }
 
-    @Basic
-    @Column(name = "DateEnd")
+
     public Date getDateEnd() {
         return dateEnd;
     }
@@ -44,8 +52,7 @@ public class RtDutiesQualificationRequirementsEntity {
         this.dateEnd = dateEnd;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
+
     public RtDutiesEntity getRtDutiesEntity() {
         return rtDutiesEntity;
     }
@@ -53,8 +60,7 @@ public class RtDutiesQualificationRequirementsEntity {
     public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
         this.rtDutiesEntity = rtDutiesEntity;
     }
-    @ManyToOne
-    @JoinColumn(name = "DcDuties_QualificationRequirementsId")
+
     public DcDutiesQualificationRequirementsEntity getDcDutiesQualificationRequirementsEntity() {
         return dcDutiesQualificationRequirementsEntity;
     }

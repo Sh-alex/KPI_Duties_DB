@@ -6,18 +6,33 @@ import java.sql.Date;
 @Entity
 @Table(name = "RtDutiesCode", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesCodeEntity {
-    private int id;
-    private int rtDutiesCodeId;
-    private Date dateStart;
-    private Date dateStop;
-    private String guid;
-
-    private RtCodeEntity rtCodeEntity;
-    private RtDutiesEntity rtDutiesEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "RtDutiesCodeId")
+    private int rtDutiesCodeId;
+
+    @Column(name = "DateStart")
+    private Date dateStart;
+
+    @Column(name = "DateStop")
+    private Date dateStop;
+
+    @Column(name = "GUID")
+    private String guid;
+
+    @ManyToOne
+    @JoinColumn(name = "RtCodeId")
+    private RtCodeEntity rtCodeEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    private RtDutiesEntity rtDutiesEntity;
+
+
     public int getId() {
         return id;
     }
@@ -26,8 +41,6 @@ public class RtDutiesCodeEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "RtDutiesCodeId")
     public int getRtDutiesCodeId() {
         return rtDutiesCodeId;
     }
@@ -36,8 +49,6 @@ public class RtDutiesCodeEntity {
         this.rtDutiesCodeId = rtDutiesCodeId;
     }
 
-    @Basic
-    @Column(name = "DateStart")
     public Date getDateStart() {
         return dateStart;
     }
@@ -46,8 +57,6 @@ public class RtDutiesCodeEntity {
         this.dateStart = dateStart;
     }
 
-    @Basic
-    @Column(name = "DateStop")
     public Date getDateStop() {
         return dateStop;
     }
@@ -56,8 +65,6 @@ public class RtDutiesCodeEntity {
         this.dateStop = dateStop;
     }
 
-    @Basic
-    @Column(name = "GUID")
     public String getGuid() {
         return guid;
     }
@@ -66,9 +73,6 @@ public class RtDutiesCodeEntity {
         this.guid = guid;
     }
 
-
-    @ManyToOne
-    @JoinColumn(name = "RtCodeId")
     public RtCodeEntity getRtCodeEntity() {
         return this.rtCodeEntity;
     }
@@ -77,8 +81,6 @@ public class RtDutiesCodeEntity {
         this.rtCodeEntity = rtCodeEntity;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
     public RtDutiesEntity getRtDutiesEntity() {
         return this.rtDutiesEntity;
     }

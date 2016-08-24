@@ -6,17 +6,29 @@ import java.sql.Date;
 @Entity
 @Table(name = "DutiesValidityDate", schema = "dbo", catalog = "DcDuties")
 public class DutiesValidityDateEntity {
-    private int id;
-    private boolean isInKpi;
-    private Date start;
-    private Date stop;
-    private Boolean isVirtual;
-
-    private RtDutiesEntity rtDutiesEntity;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "isInKPI")
+    private boolean isInKpi;
+
+    @Column(name = "Start")
+    private Date start;
+
+    @Column(name = "Stop")
+    private Date stop;
+
+    @Column(name = "isVirtual")
+    private Boolean isVirtual;
+
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    private RtDutiesEntity rtDutiesEntity;
+
+
     public int getId() {
         return id;
     }
@@ -25,8 +37,6 @@ public class DutiesValidityDateEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "isInKPI")
     public boolean isInKpi() {
         return isInKpi;
     }
@@ -35,8 +45,6 @@ public class DutiesValidityDateEntity {
         isInKpi = inKpi;
     }
 
-    @Basic
-    @Column(name = "Start")
     public Date getStart() {
         return start;
     }
@@ -45,8 +53,7 @@ public class DutiesValidityDateEntity {
         this.start = start;
     }
 
-    @Basic
-    @Column(name = "Stop")
+
     public Date getStop() {
         return stop;
     }
@@ -55,8 +62,6 @@ public class DutiesValidityDateEntity {
         this.stop = stop;
     }
 
-    @Basic
-    @Column(name = "isVirtual")
     public Boolean getVirtual() {
         return isVirtual;
     }
@@ -65,8 +70,7 @@ public class DutiesValidityDateEntity {
         isVirtual = virtual;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
+
     public RtDutiesEntity getRtDutiesEntity() {
         return rtDutiesEntity;
     }

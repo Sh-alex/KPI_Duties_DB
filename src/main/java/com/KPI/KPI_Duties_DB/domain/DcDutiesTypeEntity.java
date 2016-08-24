@@ -1,20 +1,23 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "DcDutiesType", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesTypeEntity {
-    private int id;
-    private String name;
-
-    private Set<DcDutiesNameEntity> dcDutiesNameEntitys = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "Name")
+    private String name;
+
+    @OneToMany(mappedBy = "dcDutiesTypeEntity")
+    private Set<DcDutiesNameEntity> dcDutiesNameEntities;
+
     public int getId() {
         return id;
     }
@@ -23,8 +26,6 @@ public class DcDutiesTypeEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "Name")
     public String getName() {
         return name;
     }
@@ -33,15 +34,12 @@ public class DcDutiesTypeEntity {
         this.name = name;
     }
 
-
-
-    @OneToMany(mappedBy = "dcDutiesTypeEntity", fetch = FetchType.LAZY)
-    public Set<DcDutiesNameEntity> getDcDutiesNameEntitys() {
-        return this.dcDutiesNameEntitys;
+    public Set<DcDutiesNameEntity> getDcDutiesNameEntities() {
+        return this.dcDutiesNameEntities;
     }
 
-    public void setDcDutiesNameEntitys(Set<DcDutiesNameEntity> dcDutiesNameEntity) {
-        this.dcDutiesNameEntitys = dcDutiesNameEntity;
+    public void setDcDutiesNameEntities(Set<DcDutiesNameEntity> dcDutiesNameEntity) {
+        this.dcDutiesNameEntities = dcDutiesNameEntity;
     }
 
     @Override

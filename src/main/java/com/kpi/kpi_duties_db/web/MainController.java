@@ -1,8 +1,13 @@
 package com.kpi.kpi_duties_db.web;
 
-import com.kpi.kpi_duties_db.service.impl.DcDutiesNameEntityServiceImpl;
-import com.kpi.kpi_duties_db.service.impl.DcDutiesPartitionEntityServiceImpl;
-import com.kpi.kpi_duties_db.service.impl.RtDutiesEntityServiceImpl;
+import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
+import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
+import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.service.DcDutiesNameEntityService;
+import com.kpi.kpi_duties_db.service.DcDutiesPartitionEntityService;
+import com.kpi.kpi_duties_db.service.RtDutiesEntityService;
+import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,13 +26,13 @@ public class MainController {
     EntityManager em;
 
     @Autowired
-    DcDutiesPartitionEntityServiceImpl dcDutiesPartitionEntityService;
+    DcDutiesPartitionEntityService dcDutiesPartitionEntityService;
 
     @Autowired
-    DcDutiesNameEntityServiceImpl dcDutiesNameEntityService;
+    DcDutiesNameEntityService dcDutiesNameEntityService;
 
     @Autowired
-    RtDutiesEntityServiceImpl rtDutiesEntityService;
+    RtDutiesEntityService rtDutiesEntityService;
 
     @RequestMapping(value = "/*", method = RequestMethod.GET)
     public String goIndex() {
@@ -36,25 +42,62 @@ public class MainController {
 
     @RequestMapping(value = "/api/occupGroup", method = RequestMethod.GET)
     @ResponseBody
-    public List getAllPartitionsNames() {
+    public ListIdNameResponse getAllPartitionsNames() {
 
+        List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
 
-        return dcDutiesPartitionEntityService.getAllDutiesNames();
+        ListIdNameResponse response = new ListIdNameResponse();
+
+        response.setIdNameResponses(new ArrayList<>());
+
+        for (DcDutiesPartitionEntity entity : all) {
+            IdNameResponse idNameResponse = new IdNameResponse();
+            idNameResponse.setId(entity.getDcDutiesPartitionId());
+            idNameResponse.setName(entity.getDcDutiesPartitionName());
+
+            response.getIdNameResponses().add(idNameResponse);
+        }
+        return response;
     }
 
     @RequestMapping(value = "/api/clarifiedOccup", method = RequestMethod.GET)
     @ResponseBody
-    public List getAllDutiesNames() {
+    public ListIdNameResponse getAllDutiesNames() {
 
+        List<RtDutiesEntity> all = rtDutiesEntityService.getAll();
 
-        return dcDutiesNameEntityService.getAllDutiesNames();
+        ListIdNameResponse response = new ListIdNameResponse();
+
+        response.setIdNameResponses(new ArrayList<>());
+
+        for (RtDutiesEntity entity : all) {
+            IdNameResponse idNameResponse = new IdNameResponse();
+            idNameResponse.setId(entity.getRtDutiesId());
+            idNameResponse.setName(entity.getRtDutiesName());
+
+            response.getIdNameResponses().add(idNameResponse);
+        }
+        return response;
     }
 
     @RequestMapping(value = "/api/clarification", method = RequestMethod.GET)
     @ResponseBody
-    public List getAllRtDutiesNames() {
+    public ListIdNameResponse getAllRtDutiesNames() {
 
-        return rtDutiesEntityService.getAllRtDutiesNames();
+        List<DcDutiesNameEntity> all = dcDutiesNameEntityService.getAll();
+
+        ListIdNameResponse response = new ListIdNameResponse();
+
+        response.setIdNameResponses(new ArrayList<>());
+
+        for (DcDutiesNameEntity entity : all) {
+            IdNameResponse idNameResponse = new IdNameResponse();
+            idNameResponse.setId(entity.getId());
+            idNameResponse.setName(entity.getName());
+
+            response.getIdNameResponses().add(idNameResponse);
+        }
+        return response;
     }
 
 }

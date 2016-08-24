@@ -7,14 +7,19 @@ import java.util.Set;
 @Entity
 @Table(name = "DcDuties_QualificationRequirements", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesQualificationRequirementsEntity {
-    private int id;
-    private String text;
-
-    private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = new HashSet<>();
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    private int id;
+
+    @Column(name = "Text")
+    private String text;
+
+    @OneToMany(mappedBy = "dcDutiesQualificationRequirementsEntity")
+    private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = new HashSet<>();
+
+
     public int getId() {
         return id;
     }
@@ -23,8 +28,7 @@ public class DcDutiesQualificationRequirementsEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "Text")
+
     public String getText() {
         return text;
     }
@@ -33,7 +37,7 @@ public class DcDutiesQualificationRequirementsEntity {
         this.text = text;
     }
 
-    @OneToMany(mappedBy = "dcDutiesQualificationRequirementsEntity", fetch = FetchType.LAZY)
+
     public Set<RtDutiesQualificationRequirementsEntity> getRtDutiesQualificationRequirementsEntities() {
         return rtDutiesQualificationRequirementsEntities;
     }
