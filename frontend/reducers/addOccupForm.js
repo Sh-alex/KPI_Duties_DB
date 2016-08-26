@@ -50,11 +50,19 @@ export default function addOccupForm(state, action) {
                     ...state.name,
                     occupationName: {
                         ...state.name.occupationName,
-                        value: calcNewOccupationNameVal(state.name.occupationName.value, state.clarifiedOccupTextVal, action.newVal.textVal)
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textVal
+                        )
                     },
                     occupationNameMin: {
                         ...state.name.occupationNameMin,
-                        value: calcNewOccupationNameVal(state.name.occupationName.value, state.clarifiedOccupTextVal, action.newVal.textVal)
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textVal
+                        )
                     }
                 },
                 clarificationTextVal: action.newVal.textVal    //потрібно щоб порахувати occupationName
@@ -66,11 +74,19 @@ export default function addOccupForm(state, action) {
                     ...state.name,
                     occupationName: {
                         ...state.name.occupationName,
-                        value: calcNewOccupationNameVal(state.name.occupationName.value, action.newVal.textVal, state.clarificationTextVal)
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            action.newVal.id == -1 ? "" : action.newVal.textVal,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
                     },
                     occupationNameMin: {
                         ...state.name.occupationNameMin,
-                        value: calcNewOccupationNameVal(state.name.occupationNameMin.value, action.newVal.textVal, state.clarificationTextVal)
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            action.newVal.id == -1 ? "" : action.newVal.textVal,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
                     }
                 },
                 clarifiedOccupTextVal: action.newVal.textVal    //потрібно щоб порахувати occupationName
