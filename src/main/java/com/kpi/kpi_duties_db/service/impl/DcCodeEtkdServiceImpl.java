@@ -22,7 +22,7 @@ public class DcCodeEtkdServiceImpl implements DcCodeEtkdService {
 
     @Override
     public DcCodeEtkdEntity add(DcCodeEtkdEntity entity) {
-        return null;
+        return dcCodeEtkdRepository.saveAndFlush(entity);
     }
 
     @Override

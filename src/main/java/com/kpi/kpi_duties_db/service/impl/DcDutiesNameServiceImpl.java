@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
@@ -17,10 +16,8 @@ public class DcDutiesNameServiceImpl implements DcDutiesNameService {
     private
     DcDutiesNameRepository dcDutiesNameRepository;
 
-    @Autowired
-    EntityManager em;
-
     @Override
+    @Transactional
     public DcDutiesNameEntity add(DcDutiesNameEntity entity) {
 
         return dcDutiesNameRepository.saveAndFlush(entity);
@@ -41,7 +38,6 @@ public class DcDutiesNameServiceImpl implements DcDutiesNameService {
     }
 
     @Override
-    @Transactional
     public List<DcDutiesNameEntity> getAll() {
         return dcDutiesNameRepository.findAll();
     }

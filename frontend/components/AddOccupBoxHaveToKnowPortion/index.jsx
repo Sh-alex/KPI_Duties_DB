@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import { DateTimePicker } from 'react-widgets'
-import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur"
-import { OCCUPATION_MIN_DATE } from "../../constants/common"
-
-import './styles.less'
+import React, {Component} from "react";
+import {DateTimePicker} from "react-widgets";
+import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
+import {OCCUPATION_MIN_DATE} from "../../constants/common";
+import "./styles.less";
 
 export default class extends Component {
     render() {

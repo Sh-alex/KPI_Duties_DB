@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import AddOccupBoxCodesPortion from "../AddOccupBoxCodesPortion"
-
-import './styles.less'
+import React, {Component} from "react";
+import AddOccupBoxCodesPortion from "../AddOccupBoxCodesPortion";
+import "./styles.less";
 
 export default class extends Component {
     render() {

@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-
-import './styles.less'
+import React, {Component} from "react";
+import "./styles.less";
 
 export default class LoginBoxBody extends Component {
   render() {

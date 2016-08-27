@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import LoginBoxLogo from '../LoginBoxLogo'
-import LoginBoxAuthForm from '../LoginBoxAuthForm'
-import LoginBoxNav from '../LoginBoxNav'
-
-import './styles.less'
+import React, {Component} from "react";
+import LoginBoxLogo from "../LoginBoxLogo";
+import LoginBoxAuthForm from "../LoginBoxAuthForm";
+import LoginBoxNav from "../LoginBoxNav";
+import "./styles.less";
 
 export default class LoginBox extends Component {
   render() {

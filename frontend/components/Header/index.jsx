@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import HeaderLogo from '../HeaderLogo'
-import HeaderMenu from '../HeaderMenu'
-import HeaderUserBlock from '../HeaderUserBlock'
-
-import './styles.less'
+import React, {Component} from "react";
+import HeaderLogo from "../HeaderLogo";
+import HeaderMenu from "../HeaderMenu";
+import HeaderUserBlock from "../HeaderUserBlock";
+import "./styles.less";
 
 export default class Header extends Component {
   render() {

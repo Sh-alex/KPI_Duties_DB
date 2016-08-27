@@ -1,0 +1,22 @@
+#logging
+logging:
+  file: logs/kpi.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework: INFO
+#    org.hibernate: DEBUG
+    itt.store.product: INFO
+
+#Base path to jersey controller endpoint
+
+spring:
+  jersey:
+      application-path: /api
+  profiles:
+    active: dev
+defaults:
+  entity-status-id: 1
+  delete-status-id: 2
+

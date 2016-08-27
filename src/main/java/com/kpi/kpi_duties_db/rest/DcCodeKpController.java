@@ -1,15 +1,17 @@
-package com.kpi.kpi_duties_db.web;
+package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcCodeKpEntity;
 import com.kpi.kpi_duties_db.service.DcCodeKpService;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
+import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +21,18 @@ import java.util.List;
  * @since 25.08.2016
  */
 
-@Controller
+@Path("/kp_code")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Component
 public class DcCodeKpController {
 
     @Autowired
     DcCodeKpService dcCodeKpEntityService;
 
-    @RequestMapping(value = "/api/kp_code/gets", method = RequestMethod.GET)
-    @ResponseBody
-    public ListIdNameResponse getAll() {
+    @GET
+    @Path("/gets")
+    public Response getAll() {
 
         List<DcCodeKpEntity> all = dcCodeKpEntityService.getAll();
 
@@ -42,6 +47,16 @@ public class DcCodeKpController {
 
             response.getIdNameResponses().add(idNameResponse);
         }
-        return response;
+        return Response.ok(response).build();
+    }
+
+    @POST
+    public Response add(@NotNull NewValueRequest request) {
+
+        DcCodeKpEntity entity = new DcCodeKpEntity();
+        entity.setName(request.getNewVal());
+        dcCodeKpEntityService.add(entity);
+
+        return Response.ok().entity(entity).build();
     }
 }

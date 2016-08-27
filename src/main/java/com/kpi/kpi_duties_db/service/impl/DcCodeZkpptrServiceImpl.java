@@ -22,7 +22,7 @@ public class DcCodeZkpptrServiceImpl implements DcCodeZkpptrService {
 
     @Override
     public DcCodeZkpptrEntity add(DcCodeZkpptrEntity entity) {
-        return null;
+        return dcCodeZkpptrRepository.saveAndFlush(entity);
     }
 
     @Override

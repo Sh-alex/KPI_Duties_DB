@@ -1,4 +1,4 @@
-package com.kpi.kpi_duties_db.web;
+package com.kpi.kpi_duties_db.rest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +13,4 @@ public class MainController {
 
         return "index";
     }
-
-
 }

@@ -23,3 +23,9 @@ crashlytics-build.properties
 build-analyze.log
 dist/
 /target
+/build/
+/gradlew
+/logs/
+/gradle/
+/.gradle/
+/gradlew.bat

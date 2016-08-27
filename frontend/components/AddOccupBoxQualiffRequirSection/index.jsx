@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import AddOccupBoxQualiffRequirPortion from "../AddOccupBoxQualiffRequirPortion"
-
-import './styles.less'
+import React, {Component} from "react";
+import AddOccupBoxQualiffRequirPortion from "../AddOccupBoxQualiffRequirPortion";
+import "./styles.less";
 
 export default class extends Component {
     render() {

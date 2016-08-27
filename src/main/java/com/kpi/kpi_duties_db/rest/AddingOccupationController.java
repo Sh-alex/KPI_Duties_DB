@@ -1,20 +1,19 @@
-package com.kpi.kpi_duties_db.web;
+package com.kpi.kpi_duties_db.rest;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
-import com.kpi.kpi_duties_db.service.DcDutiesNameService;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
 import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,23 +22,20 @@ import java.util.List;
  * @version 1.0
  * @since 24.08.2016
  */
-@Controller
+@Path("/adding")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Component
 public class AddingOccupationController {
-
-    @Autowired
-    EntityManager em;
 
     @Autowired
     DcDutiesPartitionService dcDutiesPartitionEntityService;
 
     @Autowired
-    DcDutiesNameService dcDutiesNameEntityService;
-
-    @Autowired
     RtDutiesService rtDutiesEntityService;
 
-    @RequestMapping(value = "/api/occupGroup", method = RequestMethod.GET)
-    @ResponseBody
+    @GET
+    @Path("/occupGroup")
     public ListIdNameResponse getAllPartitionsNames() {
 
         List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
@@ -58,8 +54,8 @@ public class AddingOccupationController {
         return response;
     }
 
-    @RequestMapping(value = "/api/clarifiedOccup", method = RequestMethod.GET)
-    @ResponseBody
+    @GET
+    @Path("/clarifiedOccup")
     public ListIdNameResponse getAllDutiesNames() {
 
         List<RtDutiesEntity> all = rtDutiesEntityService.getAll();
@@ -78,23 +74,4 @@ public class AddingOccupationController {
         return response;
     }
 
-    @RequestMapping(value = "/api/clarification", method = RequestMethod.GET)
-    @ResponseBody
-    public ListIdNameResponse getAllRtDutiesNames() {
-
-        List<DcDutiesNameEntity> all = dcDutiesNameEntityService.getAll();
-
-        ListIdNameResponse response = new ListIdNameResponse();
-
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (DcDutiesNameEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
-        return response;
-    }
 }
