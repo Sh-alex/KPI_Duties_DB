@@ -7,6 +7,7 @@ import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
 import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,8 +23,9 @@ import java.util.List;
  * @since 24.08.2016
  */
 @Path("/adding")
-@Produces( MediaType.APPLICATION_JSON )
-@Consumes( MediaType.APPLICATION_JSON )
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Component
 public class AddingOccupationController {
 
     @Autowired

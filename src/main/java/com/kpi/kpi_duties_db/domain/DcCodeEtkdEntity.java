@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ public class DcCodeEtkdEntity {
     private String name;
 
     @OneToMany(mappedBy = "dcCodeEtkdEntity")
-    private Set<RtCodeEntity> rtCodeEntities = new HashSet<>();
+    private Set<RtCodeEntity> rtCodeEntities;
 
 
     public int getId() {

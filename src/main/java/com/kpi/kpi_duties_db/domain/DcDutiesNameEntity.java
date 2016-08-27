@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ public class DcDutiesNameEntity {
     private DcDutiesTypeEntity dcDutiesTypeEntity;
 
     @OneToMany(mappedBy = "dcDutiesNameEntity")
-    private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
+    private Set<RtDutiesEntity> rtDutiesEntities;
 
     public int getId() {
         return id;

@@ -22,7 +22,7 @@ public class DcCodeKpServiceImpl implements DcCodeKpService {
 
     @Override
     public DcCodeKpEntity add(DcCodeKpEntity entity) {
-        return null;
+        return dcCodeKpRepository.saveAndFlush(entity);
     }
 
     @Override

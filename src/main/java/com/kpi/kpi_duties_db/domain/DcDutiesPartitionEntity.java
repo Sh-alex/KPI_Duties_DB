@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +10,7 @@ public class DcDutiesPartitionEntity {
     private int dcDutiesPartitionId;
     private String dcDutiesPartitionName;
 
-    private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
+    private Set<RtDutiesEntity> rtDutiesEntities;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

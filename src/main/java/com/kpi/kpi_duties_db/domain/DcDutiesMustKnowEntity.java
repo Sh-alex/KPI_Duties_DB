@@ -1,15 +1,14 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "DcDuties_MustKnow", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesMustKnowEntity {
-
+    //TODO: розкоментувати коли додам автоінкремент
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
 
@@ -17,7 +16,7 @@ public class DcDutiesMustKnowEntity {
     private String text;
 
     @OneToMany(mappedBy = "dcDutiesMustKnowEntity")
-    private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities = new HashSet<>();
+    private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 
 
     public int getId() {

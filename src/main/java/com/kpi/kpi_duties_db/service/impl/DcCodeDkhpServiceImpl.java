@@ -22,7 +22,7 @@ public class DcCodeDkhpServiceImpl implements DcCodeDkhpService {
 
     @Override
     public DcCodeDkhpEntity add(DcCodeDkhpEntity entity) {
-        return null;
+        return dcCodeDkhpRepository.saveAndFlush(entity);
     }
 
     @Override

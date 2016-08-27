@@ -25,7 +25,7 @@ import java.util.List;
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 @Component
-public class СlarificationController {
+public class DcDutiesСlarificationController {
 
     @Autowired
     DcDutiesNameService dcDutiesNameEntityService;

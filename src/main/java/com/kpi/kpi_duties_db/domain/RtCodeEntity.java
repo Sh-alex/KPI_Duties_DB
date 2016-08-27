@@ -2,7 +2,6 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +26,7 @@ public class RtCodeEntity {
     private Date dateStop;
 
     @OneToMany(mappedBy = "rtCodeEntity")
-    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities = new HashSet<>();
+    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
 
     @ManyToOne
     @JoinColumn(name = "CodeZKPPTRId")
