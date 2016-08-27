@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import AddOccupBoxHaveToKnowPortion from "../AddOccupBoxHaveToKnowPortion"
-
-import './styles.less'
+import React, {Component} from "react";
+import AddOccupBoxHaveToKnowPortion from "../AddOccupBoxHaveToKnowPortion";
+import "./styles.less";
 
 export default class extends Component {
   render() {

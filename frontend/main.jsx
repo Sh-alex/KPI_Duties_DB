@@ -1,23 +1,21 @@
-import 'babel-polyfill'
-import React from 'react'
-import { render } from 'react-dom'
-import { Router, browserHistory } from 'react-router'
-import { Provider } from 'react-redux'
-import configureStore from './store/configureStore'
-import { routes } from './routes.jsx'
-
-import moment from 'moment';
-import 'moment/locale/uk';
-import momentLocalizer from 'react-widgets/lib/localizers/moment'
-
-//require.context("./common-assets/", true, /.*/);  //перетащити всі common-assets у папку з білдом
-
+import "babel-polyfill";
+import React from "react";
+import {render} from "react-dom";
+import {Router, browserHistory} from "react-router";
+import {Provider} from "react-redux";
+import configureStore from "./store/configureStore";
+import {routes} from "./routes.jsx";
+import moment from "moment";
+import "moment/locale/uk";
+import momentLocalizer from "react-widgets/lib/localizers/moment";
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './common-assets/styles/AdminLTE.min.css'
-import './common-assets/styles/skin-blue.min.css'
-import 'react-widgets/lib/less/react-widgets.less'
-import './main.less'
+import "./common-assets/styles/AdminLTE.min.css";
+import "./common-assets/styles/skin-blue.min.css";
+import "react-widgets/lib/less/react-widgets.less";
+import "./main.less";
+
+//require.context("./common-assets/", true, /.*/);  //перетащити всі common-assets у папку з білдом
 
 //налаштовуємо локалізацію у react-widgets
 console.log(moment.locale());

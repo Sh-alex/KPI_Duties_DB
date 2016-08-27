@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import HeaderMenuItem from "../HeaderMenuItem"
-import './styles.less'
+import React, {Component} from "react";
+import HeaderMenuItem from "../HeaderMenuItem";
+import "./styles.less";
 
 export default class HeaderMenu extends Component {
   render() {

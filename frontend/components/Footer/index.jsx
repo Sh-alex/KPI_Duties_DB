@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import './styles.less'
-import imgKpiLogo from "../../common-assets/img/kpi-logo.jpg"
+import React, {Component} from "react";
+import "./styles.less";
+import imgKpiLogo from "../../common-assets/img/kpi-logo.jpg";
 
 export default class Footer extends Component {
   render() {

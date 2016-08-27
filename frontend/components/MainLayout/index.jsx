@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import Header from '../Header'
-import Content from '../Content'
-import Footer from '../Footer'
+import React, {Component} from "react";
+import Header from "../Header";
+import Content from "../Content";
+import Footer from "../Footer";
 
 export default class MainLayout extends Component {
   render() {

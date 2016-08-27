@@ -1,31 +1,22 @@
-import React, { Component } from 'react'
-import {reduxForm} from 'redux-form';
-
-import AddOccupBoxNameSection from "../AddOccupBoxNameSection"
-import AddOccupBoxFeaturesSection from "../AddOccupBoxFeaturesSection"
-import AddOccupBoxDurationSection from "../AddOccupBoxDurationSection"
-import AddOccupBoxCodesSection from "../AddOccupBoxCodesSection"
-import AddOccupBoxResponsibSection from "../AddOccupBoxResponsibSection"
-import AddOccupBoxHaveToKnowSection from "../AddOccupBoxHaveToKnowSection"
-import AddOccupBoxQualiffRequirSection from "../AddOccupBoxQualiffRequirSection"
-
-import { Alert } from 'react-bootstrap'
-
-import {
-    fetchOccupGroupList,
-    fetchClarifiedOccupList,
-    fetchClarificationList
-} from "../../actions/occupationNameInfo"
-
+import React, {Component} from "react";
+import {reduxForm} from "redux-form";
+import AddOccupBoxNameSection from "../AddOccupBoxNameSection";
+import AddOccupBoxFeaturesSection from "../AddOccupBoxFeaturesSection";
+import AddOccupBoxDurationSection from "../AddOccupBoxDurationSection";
+import AddOccupBoxCodesSection from "../AddOccupBoxCodesSection";
+import AddOccupBoxResponsibSection from "../AddOccupBoxResponsibSection";
+import AddOccupBoxHaveToKnowSection from "../AddOccupBoxHaveToKnowSection";
+import AddOccupBoxQualiffRequirSection from "../AddOccupBoxQualiffRequirSection";
+import {Alert} from "react-bootstrap";
+import {fetchOccupGroupList, fetchClarifiedOccupList, fetchClarificationList} from "../../actions/occupationNameInfo";
 import {
     submitAddForm,
     hideAddFormServerRespMsg,
     occupationGroupInpChange,
     clarificationInpChange,
     clarifiedOccupInpChange
-} from "../../actions/addOccupBox"
-
-import './styles.less'
+} from "../../actions/addOccupBox";
+import "./styles.less";
 
 let initialFormState = {
     name: {

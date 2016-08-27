@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import classnames from 'classnames'
-import NavLink from '../NavLink'
-import LoginBoxBody from '../LoginBoxBody'
-import './styles.less'
+import React, {Component} from "react";
+import classnames from "classnames";
+import NavLink from "../NavLink";
+import LoginBoxBody from "../LoginBoxBody";
+import "./styles.less";
 
 export default class LoginBoxNav extends Component {
   render() {

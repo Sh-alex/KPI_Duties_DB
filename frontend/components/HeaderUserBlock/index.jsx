@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { DropdownButton, Dropdown, MenuItem } from 'react-bootstrap';
-
-import './styles.less'
-import userImg from "../../common-assets/img/users/1.jpg"
+import React, {Component} from "react";
+import {DropdownButton, Dropdown, MenuItem} from "react-bootstrap";
+import "./styles.less";
+import userImg from "../../common-assets/img/users/1.jpg";
 
 export default class HeaderUserBlock extends Component {
   render() {

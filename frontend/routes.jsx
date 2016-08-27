@@ -1,7 +1,12 @@
-import React from 'react'
-import { Route, IndexRoute } from 'react-router'
-
-import NotFound from './components/NotFound'
+import React from "react";
+import {Route, IndexRoute} from "react-router";
+import NotFound from "./components/NotFound";
+import App from "./containers/App";
+import LoginBox from "./components/LoginBox";
+import SearchFormBox from "./components/SearchFormBox";
+import SearchResultsBox from "./components/SearchResultsBox";
+import AddOccupBox from "./components/AddOccupBox";
+import MainLayout from "./components/MainLayout";
 
 /*
 import Admin from './components/Admin'
@@ -27,13 +32,6 @@ export const routes = (
   </div>
 )
 */
-
-import App from './containers/App'
-import LoginBox from './components/LoginBox'
-import SearchFormBox from './components/SearchFormBox'
-import SearchResultsBox from './components/SearchResultsBox'
-import AddOccupBox from './components/AddOccupBox'
-import MainLayout from './components/MainLayout'
 
 export const routes = (
     <div>

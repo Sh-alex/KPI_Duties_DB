@@ -14,7 +14,7 @@ public class DcDutiesPartitionEntity {
     private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "DcDutiesPartitionId")
     public int getDcDutiesPartitionId() {
         return dcDutiesPartitionId;
