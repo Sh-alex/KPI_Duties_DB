@@ -1,6 +1,6 @@
 #hibernate settings
 datasource:
-  url: jdbc:sqlserver://77.47.207.57:10936
+  url: jdbc:sqlserver://localhost:1433
   username: TKIK_32
   password: TKIK_32_123
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
