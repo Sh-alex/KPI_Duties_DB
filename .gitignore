@@ -1,6 +1,7 @@
 /KPI_Duties_DB.iml
 .idea
 node_modules/
+frontend-build/
 .sass-cache/
 bower_components/
 app/bower_components
