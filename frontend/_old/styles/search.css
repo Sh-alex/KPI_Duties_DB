@@ -1,39 +1,138 @@
-.search-form {
+.box--search-form {
 
 }
 
-    .search-min {
-    }
-    .search-extended {
+    .search-form {
 
     }
 
-        .search-min .search-form-legend--extended,
-        .search-extended .search-form-legend--min{
-            display: none;
-            /*transform: 0.5s fade-in, fade-out;*/
+        .search-min {
+        }
+        .search-extended {
+
         }
 
-        .search-min .search-form-field--extended,
-        .search-extended .search-form-field--min{
-            display: none;
-            /*transform: 0.5s slide-down, slide-up;*/
-        }
+            .search-min .search-form-title--extended,
+            .search-extended .search-form-title--min{
+                display: none;
+                /*transform: 0.5s fade-in, fade-out;*/
+            }
 
-        .search-min .btn-toggle-icon--extended,
-        .search-extended .btn-toggle-icon--min{
-            display: none;
-            /*transform: 0.5s slide-down, slide-up;*/
-        }
+            .search-min .search-form-field--extended,
+            .search-extended .search-form-field--min{
+                display: none;
+                /*transform: 0.5s slide-down, slide-up;*/
+            }
 
-        .btn-toggle-extended-search {
-            border-color: #c0c0c0;
+            .search-min .btn-toggle-icon--extended,
+            .search-extended .btn-toggle-icon--min{
+                display: none;
+                /*transform: 0.5s slide-down, slide-up;*/
+            }
+
+            .btn-toggle-extended-search {
+                display: block;
+                text-align: center;
+            }
+            .btn-toggle-extended-search:hover {
+
+            }
+
+
+
+
+
+
+.inp-name-block--radio-uses-multiselect .inp-name-block__input {
+    display: none;
+}
+.inp-name-block--radio-uses-multiselect .inp-name-block__multiselect {
+    display: block;
+}
+
+.inp-name-block--radio-uses-input .inp-name-block__input {
+    display: block;
+}
+.inp-name-block--radio-uses-input .inp-name-block__multiselect {
+    display: none;
+}
+
+
+
+.search-res-table {
+    margin: 0 auto;
+}
+
+    .search-res-table thead > tr > th {
+        text-align: center;
+        padding-right: 20px;
+    }
+
+    table.search-res-table thead .sorting,
+    table.search-res-table thead .sorting_asc,
+    table.search-res-table thead .sorting_desc {
+        cursor: pointer;
+        position: relative;
+    }
+
+        table.search-res-table thead .sorting:after,
+        table.search-res-table thead .sorting_asc:after,
+        table.search-res-table thead .sorting_desc:after {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
             display: block;
-            background-color: white;
-            border-top: 0;
+            font-family: 'FontAwesome';
+            opacity: 0.5;
+        }
+        table.search-res-table thead .sorting:after {
+            opacity: 0.2;
+            content: "\f0dc"; /* fa-unsorted */
+        }
+        table.search-res-table thead .sorting_asc:after {
+            content: "\f160"; /* fa-sort-amount-asc */
+        }
+        table.search-res-table thead .sorting_desc:after {
+            content: "\f161"; /* fa-sort-amount-desc */
+        }
+
+        table.search-res-table thead .sorting_asc_disabled:after,
+        table.search-res-table thead .sorting_desc_disabled:after {
+            color: #eee;
+        }
+
+    .search-res-table tbody tr:nth-of-type(even) {
+        display: none;
+    }
+    .search-res-table tbody tr:nth-of-type(odd) {
+    }
+
+        .search-res-table tbody > tr > td {
             text-align: center;
-
+            padding: 8px 1px;
         }
-        .btn-toggle-extended-search:hover {
 
+        .search-res-table .action-btns-cell {
+            white-space: nowrap;
         }
+
+            .search-res-table .occupation-details {
+                margin: 0 auto;
+            }
+
+                .occupation-details__row {
+                }
+
+                    .occupation-details__title {
+                        font-weight: bold;
+                        margin-bottom: 7px;
+                        line-height: 1.2em;
+                        text-align: left;
+                    }
+
+                .occupation-details__data {
+                    font-style: italic;
+                    margin-bottom: 7px;
+                    line-height: 1.2em;
+                    text-align: left;
+                }

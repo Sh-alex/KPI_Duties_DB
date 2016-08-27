@@ -5,16 +5,18 @@ import { rootReducer } from '../reducers'
 import { redirect } from '../middlewares/redirect'
 
 export default function configureStore() {
-  const store = compose(
-    applyMiddleware(thunkMiddleware),
-    applyMiddleware(createLogger()),
-    applyMiddleware(redirect)
-  )(createStore)(rootReducer)
+  const store = createStore(
+      rootReducer,
+      compose(
+        applyMiddleware(thunkMiddleware, createLogger(), redirect),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
+      )
+  );
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers').rootReducer
+      const nextRootReducer = require('../reducers').rootReducer;
       store.replaceReducer(nextRootReducer)
     });
   }

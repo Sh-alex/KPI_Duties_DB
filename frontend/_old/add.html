@@ -18,19 +18,368 @@
 <div id="mount-point" class="wrapper">
 
     <!-- modal із пошуковою формою для додавання інфи з аналогічних посад -->
-    <div class="modal fade modal--add-info-from-related" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal fade modal-add-info-from-related modal-add-info-from-related--search-form" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <h4 class="modal-title" > Додати інформацію з аналогічної посади </h4>
                 </div>
                 <div class="modal-body">
-                    Тут пошукова форма для додавання інфи з аналогічних посад
+
+                    <form id="form-search-similar" class="form-horizontal search-form form-search-similar" role="form">
+                        <div class="form-inner">
+                            <div class="form-group">
+                                <label for="form-search-similar__inp-occupation-group" class="col-sm-3 control-label"> Посадовий склад </label>
+                                <div class="col-sm-9">
+                                    <!-- Combobox, дані підгружаються із сервера -->
+                                    <select class="form-control" id="form-search-similar__inp-occupation-group" placeholder="Посадовий склад">
+                                        <option> Керівники </option>
+                                        <option> Професіонали </option>
+                                        <option> Фахівці </option>
+                                        <option> Технічні службовці </option>
+                                        <option> Найпростіші професії </option>
+                                        <option> ...Повний список підгружатиметься із сервера... </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="inp-name-block inp-name-block--radio-uses-input">
+                                <div class="form-group">
+                                    <label for="form-search-similar__inp-occupation-name" class="col-sm-3 control-label"> Назва посади </label>
+                                    <div class="col-sm-9 inp-name-block__input">
+                                        <input type="text" class="form-control" id="form-search-similar__inp-occupation-name" placeholder="Назва посади">
+                                    </div>
+                                    <div class="col-sm-9 inp-name-block__multiselect">
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
+                                            <option> Інженер </option>
+                                            <option> Посол </option>
+                                            <option> Фрезерувальник </option>
+                                            <option> Молодший </option>
+                                            <option> Старший </option>
+                                            <option> 1 категорії </option>
+                                            <option> 3 розряду </option>
+                                        </select>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;">
+                                            <span class="selection">
+                                                <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                    <ul class="select2-selection__rendered">
+                                                        <li class="select2-selection__choice" title="California">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Інженер
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="Delaware">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> Старший
+                                                        </li>
+                                                        <li class="select2-selection__choice" title="Tennessee">
+                                                            <span class="select2-selection__choice__remove" role="presentation">×</span> 1 категорії
+                                                        </li>
+                                                        <li class="select2-search select2-search--inline">
+                                                            <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+                                            <span class="dropdown-wrapper" aria-hidden="true">
+                                            </span></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9 radio">
+                                        <label>
+                                            <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input">
+                                            Точна відповідність
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9 radio">
+                                        <label>
+                                            <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-input" checked>
+                                            Рядок міститься у назві
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9 radio">
+                                        <label>
+                                            <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
+                                            Назва містить хоча б один із тегів
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9 radio">
+                                        <label>
+                                            <input type="radio" name="radio-type-of-occup-name-inp" class="minimal inp-name-block--radio-uses-multiselect">
+                                            Назва містить кожен із тегів
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9 checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="checked" id="form-search-similar__checkbox-exists-in-kpi"> Приналежність до КПІ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="search-similar-results" class="search-similar-results">
+                        <a href="#" class="btn-back-to-search-form">
+                            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                            <i> Повернутися до пошукової форми </i>
+                        </a>
+                        <div class="table-responsive">
+                            <table class="table table-hover occup-table search-similar-table" id="search-similar-table">
+                                <thead>
+                                <tr>
+                                    <th colspan="2" title="Номер в списку"> № </th>
+                                    <th> Назва посади </th>
+                                    <th> Приналежн. до КПІ </th>
+                                    <th colspan="2"> Завдання, обов'язки та повноваження </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 1 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell search-similar-table__big-text-cell--expanded">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <!--<i class="fa fa-chevron-down" aria-hidden="true"></i>-->
+                                            <i class='fa fa-chevron-up'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 2 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 3 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 4 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 5 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 6 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 7 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 8 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 9 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio-selected-similar-occup" class="minimal">
+                                    </td>
+                                    <td title="Номер в списку"> 10 </td>
+                                    <td> Старший інженер 1 категорії </td>
+                                    <td> + </td>
+                                    <td class="search-similar-table__big-text-cell">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                    </td>
+                                    <td>
+                                        <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <!--<i class='fa fa-chevron-up'></i>-->
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer modal-footer--search-form">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Відміна</button>
+                    <div class="pull-right">
+                        <button type="reset" form="form-search-similar" class="btn btn-default">
+                            Очистити поля <i class="fa fa-refresh" aria-hidden="true" title="Очистити поля форми"></i>
+                        </button>
+                        <button type="submit" form="form-search-similar" class="btn btn-primary" title="Шукати посаду">
+                            Шукати  <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer--search-results">
+                    <div class="text-left">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Відміна
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <ul class="pagination no-margin">
+                            <li class="disabled"><a href="#">«</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
+                    </div>
+                    <div class="text-right">
+                        <button type="button" form="search-similar-results" class="btn btn-primary" data-dismiss="modal">
+                            Додати
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal для додавання нового ключового слова для уточнення -->
+    <div class="modal fade modal-add-new-occup-key-word" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" > Додати нове ключове слово для уточнення </h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                            <div class="form-group">
+                                <!--<label for="inp-add-new-occup-key-word"> Нове ключове слово у назвах посад </label>-->
+                                <input type="text" class="form-control" id="inp-add-new-occup-key-word" placeholder="Нове ключове слово у назвах посад">
+                            </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Відміна</button>
-                    <button type="button" class="btn btn-primary">Додати</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                        Відміна
+                    </button>
+                    <button type="button" form="search-similar-results" class="btn btn-primary" data-dismiss="modal">
+                        Додати
+                    </button>
                 </div>
             </div>
         </div>
@@ -40,13 +389,13 @@
         <nav class="navbar navbar-static-top">
             <div class="container-fluid header-inner">
                 <a href="#" class="header-logo navbar-brand">
-                        <p class="header-logo-text header-logo-text--full hidden">
-                            Державний<br>класифікатор<br>посад<br>України
-                        </p>
-                        <p class="header-logo-text header-logo-text--abbr">
-                            ДКПУ
-                        </p>
-                    </a>
+                    <p class="header-logo-text header-logo-text--full hidden">
+                        Державний<br>класифікатор<br>посад<br>України
+                    </p>
+                    <p class="header-logo-text header-logo-text--abbr">
+                        ДКПУ
+                    </p>
+                </a>
                 <div class="header-menu">
                     <ul class="nav navbar-nav header-menu-navbar">
                         <li class="active">
@@ -63,7 +412,7 @@
                     </ul>
                 </div>
                 <div class="header-user">
-                    <a href="javascript(void:0)" class="header-user-link">
+                    <a href="#" class="header-user-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <img src="./img/users/1.jpg" alt="user 1" class="img-circle header-user-img">
                         <span class="header-user-caption">
                             Вітаємо,<br>
@@ -72,6 +421,15 @@
                             </span>
                         </span>
                     </a>
+                    <ul class="dropdown-menu header-user-menu">
+                        <li class="">
+                            <a href="#" class="btn-block btn-flat header-user-menu-item">
+                                Вихід з аккаунта
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </nav>
@@ -84,56 +442,98 @@
                     <div class="box-header with-border text-center">
                         <h3 class="box-title"> Додавання посади </h3>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
                         <form id="add-form" class="form-horizontal add-form" role="form">
                             <div class="form-inner">
+                                <h4> Назва посади </h4>
                                 <div class="form-group">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Назва посади </label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
-                                            <option>Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
+                                        <!-- Combobox, дані підгружаються із сервера -->
+                                        <select class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                            <option> Керівники </option>
+                                            <option> Професіонали </option>
+                                            <option> Фахівці </option>
+                                            <option> Технічні службовці </option>
+                                            <option> Найпростіші професії </option>
+                                            <option> ...Повний список підгружатиметься із сервера... </option>
                                         </select>
-                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="California"><span class="select2-selection__choice__remove" role="presentation">×</span>California</li><li class="select2-selection__choice" title="Delaware"><span class="select2-selection__choice__remove" role="presentation">×</span>Delaware</li><li class="select2-selection__choice" title="Tennessee"><span class="select2-selection__choice__remove" role="presentation">×</span>Tennessee</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Назва посади" value="Старший інженер 1 категорії" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inp-occupation-name-min" class="col-sm-2 control-label"> Скорочена назва посади </label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
-                                            <option>Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
+                                    <label for="select-clarified-occup" class="col-sm-2 control-label">
+                                        Уточнювана посада
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="select-clarified-occup">
+                                            <option> - (Відсутня) </option>
+                                            <option> Інженер </option>
+                                            <option> Інженер молодший </option>
+                                            <option> Інженер старший 1 категорії </option>
+                                            <option> Директор </option>
+                                            <option> Посол </option>
+                                            <option> Фрезерувальник </option>
                                         </select>
-                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="California"><span class="select2-selection__choice__remove" role="presentation">×</span>California</li><li class="select2-selection__choice" title="Delaware"><span class="select2-selection__choice__remove" role="presentation">×</span>Delaware</li><li class="select2-selection__choice" title="Tennessee"><span class="select2-selection__choice__remove" role="presentation">×</span>Tennessee</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <label for="select-clarification" class="col-sm-2 control-label">
+                                        Уточнення
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <select class="form-control" id="select-clarification">
+                                                <option> Патімейкер </option>
+                                                <option> Молодший </option>
+                                                <option> Замістник </option>
+                                                <option> Старший </option>
+                                                <option> 1 категорії </option>
+                                                <option> 3 розряду </option>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button type="button" title="Додати нове ключове слово для уточнення" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-new-occup-key-word">
+                                                    +1
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name-min" placeholder="Скорочена назва посади" disabled>
+                                    <label for="inp-occupation-name" class="col-sm-2 control-label"> Повна назва посади </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Повна назва посади" value="Старший інженер 1 категорії">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="inp-occupation-name-min" class="col-sm-2 control-label">
+                                        Скорочена назва посади
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Ст. інж. 1 кат.">
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <h4> Особливості </h4>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox">
+                                                Є самостійною посадою
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox">
+                                                Є "віртуальною посадою"
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <h4> Терміни дії посади </h4>
                                 <div class="form-group">
                                     <label for="inp-occupation-creating-in-state" class="col-sm-2 control-label">
                                         Дата створення посади в державі
@@ -148,12 +548,31 @@
                                         <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
                                     </div>
                                 </div>
-                                <div class="codes-portions">
-                                    <div class="codes-portions__item">
-                                        <hr>
-                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                <hr>
+
+                                <div class="col-sm-7 pull-right text-right">
+                                    <a href="#" class="" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                        <i> Заповнити коди із аналогічної посади </i>
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                </div>
+                                <h4> Коди </h4>
+                                <div class="inp-portions codes-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <label for="inp-codes-portion-start-date" class="col-sm-2 control-label">
+                                                Дата прийняття набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                            </div>
+                                            <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
+                                                Дата припинення дії набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="inp-code-KP" class="col-sm-2 control-label">
                                                 Код КП
@@ -183,11 +602,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="codes-portions__item">
+                                    <div class="inp-portions__item">
                                         <hr>
-                                        <button type="button" class="close codes-portions__btn-amount-ctrl--top codes-portions__btn-amount-ctrl--minus" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close inp-portions__btn-amount-ctrl--del">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
+                                        <div class="form-group">
+                                            <label for="inp-codes-portion-start-date" class="col-sm-2 control-label">
+                                                Дата прийняття набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                            </div>
+                                            <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
+                                                Дата припинення дії набору кодів
+                                            </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="inp-code-KP" class="col-sm-2 control-label">
                                                 Код КП
@@ -217,59 +650,141 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="codes-portions__btn-plus-wrapper">
+                                    <div class="inp-portions__btn-plus-wrapper">
                                         <hr>
-                                        <button type="button" class="btn btn-default codes-portions__btn-amount-ctrl--bottom codes-portions__btn-amount-ctrl--plus">
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inp-responsiblities" class="col-sm-2 control-label"> Завдання, обов'язки та повноваження </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-responsiblities" placeholder="Завдання, обов'язки та повноваження"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+
+                                <h4> Завдання, обов'язки та повноваження </h4>
+                                <div class="inp-portions responsiblities-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Завдання, обов'язки та повноваження" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inp-have-to-know" class="col-sm-2 control-label"> Повинен знати </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-have-to-know" placeholder="Повинен знати"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+
+                                <h4> Повинен знати </h4>
+                                <div class="inp-portions have-to-know-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Повинен знати"  rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inp-qualiffiaction-requirements" class="col-sm-2 control-label"> Кваліфікаційні вимоги </label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <textarea class="form-control" id="inp-qualiffiaction-requirements" placeholder="Кваліфікаційні вимоги"></textarea>
-                                            <div class="input-group-btn">
-                                                <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal--add-info-from-related">
-                                                    <span class="fa fa-link"></span>
-                                                </button>
+                                    <div class="inp-portions__item">
+                                        <hr>
+                                        <button type="button" class="close inp-portions__btn-amount-ctrl--del">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Повинен знати" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Приналежність до КПІ
-                                            </label>
+
+                                <h4> Кваліфікаційні вимоги </h4>
+                                <div class="inp-portions qualiff-requir-portions">
+                                    <div class="inp-portions__item">
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <textarea class="form-control" placeholder="Кваліфікаційні вимоги" rows="6"></textarea>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            <span class="fa fa-link"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="center-block">
+                                                    Дата прийняття тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                                <label class="center-block">
+                                                    Дата припинення дії тексту <br>
+                                                    <input type="date" class="form-control">
+                                                </label>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="inp-portions__btn-plus-wrapper">
+                                        <hr>
+                                        <button type="button" class="btn btn-default inp-portions__btn-amount-ctrl--add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -286,15 +801,9 @@
                             </div>
                         </form>
                     </div>
-                    <!--<div class="box-footer">-->
-                        <!--Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about-->
-                        <!--the plugin.-->
-                    <!--</div>-->
                 </div>
             </section>
-            <!-- /.content -->
         </div>
-        <!-- /.container -->
     </div>
 
     <footer class="main-footer">

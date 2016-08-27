@@ -1,7 +1,6 @@
-/*eslint-disable*/
 import {
   LOGIN_REQUEST,
-  LOGIN_FAIL, //eslint-disable-line no-unused-vars
+  LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS
 } from '../constants/User'
@@ -42,4 +41,3 @@ export function logout() {
     type: LOGOUT_SUCCESS
   }
 }
-/*eslint-enable*/

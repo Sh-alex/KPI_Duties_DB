@@ -1,0 +1,1 @@
+export const OCCUPATION_MIN_DATE = new Date("1992-01-01");
