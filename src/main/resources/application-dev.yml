@@ -8,7 +8,7 @@ datasource:
   ddl-auto : none
   show-sql : false
   format-sql : true
-  db.entitymanager.packages.to.scan: com.kpi.kpi_duties_db.domain
+  entitymanager.packages.to.scan: com.kpi.kpi_duties_db.domain
 
 server:
   port: 52300
