@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Service
 public class DcDutiesPartitionServiceImpl implements DcDutiesPartitionService {
 

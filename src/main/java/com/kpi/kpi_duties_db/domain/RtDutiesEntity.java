@@ -5,6 +5,11 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "RtDuties", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesEntity {

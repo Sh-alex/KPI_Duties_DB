@@ -11,6 +11,12 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ * @since 26.08.2016
+ */
+
 @Configuration
 public class AppConfig {
 

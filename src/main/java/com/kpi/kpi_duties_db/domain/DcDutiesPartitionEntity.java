@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "DcDutiesPartition", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesPartitionEntity {

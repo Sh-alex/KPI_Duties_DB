@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Service
 public class DcDutiesNameServiceImpl implements DcDutiesNameService {
 

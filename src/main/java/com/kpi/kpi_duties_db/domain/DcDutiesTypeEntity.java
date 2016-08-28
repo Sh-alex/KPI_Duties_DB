@@ -3,6 +3,11 @@ package com.kpi.kpi_duties_db.domain;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "DcDutiesType", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesTypeEntity {

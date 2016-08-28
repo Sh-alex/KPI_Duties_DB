@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "RtCode", schema = "dbo", catalog = "DcDuties")
 public class RtCodeEntity {

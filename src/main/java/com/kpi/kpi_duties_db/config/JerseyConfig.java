@@ -15,6 +15,12 @@ import org.springframework.core.env.Environment;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ * @since 26.08.2016
+ */
+
 @Configuration
 public class JerseyConfig extends ResourceConfig {
 

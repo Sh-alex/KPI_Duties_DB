@@ -12,6 +12,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ * @since 26.08.2016
+ */
 
 @Configuration
 public class DatabaseConfig {
