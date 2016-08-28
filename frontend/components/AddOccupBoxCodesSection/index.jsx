@@ -18,7 +18,10 @@ export default class extends Component {
                         key={i}
                         portionKey={i}
                         handleDelCodesPortionBtnClick={decoratedDelHandler}
-                    />
+                        DKHPCodesList={this.props.DKHPCodesList}
+                        ETDKCodesList={this.props.ETDKCodesList}
+                        ZKPPTRCodesList={this.props.ZKPPTRCodesList}
+                        KPCodesList={this.props.KPCodesList} />
                 )
             });
 

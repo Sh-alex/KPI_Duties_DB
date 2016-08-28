@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import {DateTimePicker} from "react-widgets";
-import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
-import {OCCUPATION_MIN_DATE} from "../../constants/common";
-import "./styles.less";
+import React, { Component } from 'react'
+import { DateTimePicker, DropdownList } from 'react-widgets'
+import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur"
+import { OCCUPATION_MIN_DATE } from "../../constants/common"
+import './styles.less'
 
 export default class extends Component {
     render() {
@@ -62,23 +62,57 @@ export default class extends Component {
                     Код КП
                 </label>
                 <div className="col-sm-4">
-                    <input
-                        {...this.props.codesPortionFields.codeKP}
-                        type="text"
-                        className="form-control"
-                        id={"inp-code-KP"+this.props.portionKey}
-                        placeholder="Код КП" />
+                    <div className="input-group">
+                        <DropdownList
+                            {...this.props.codesPortionFields.codeKP}
+                            id={"inp-code-KP"+this.props.portionKey}
+                            placeholder="Оберіть варіант зі списку"
+                            data={this.props.KPCodesList.items}
+                            valueField='id'
+                            textField='textValue'
+                            defaultValue={null}
+                            onChange={ newVal => this.props.codesPortionFields.codeKP.onChange(newVal.id) }
+                            busy={this.props.KPCodesList.isFetching}
+                            caseSensitive={false}
+                            filter='startsWith' />
+                        <div className="input-group-btn">
+                            <button
+                                type="button"
+                                title="Додати нове значення у цей список кодів"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                +1
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <label htmlFor={"inp-code-ZKPPTR"+this.props.portionKey} className="col-sm-2 control-label">
                     Код ЗКППТР
                 </label>
                 <div className="col-sm-4">
-                    <input
-                        {...this.props.codesPortionFields.codeZKPPTR}
-                        type="text"
-                        className="form-control"
-                        id={"inp-code-ZKPPTR"+this.props.portionKey}
-                        placeholder="Код ЗКППТР" />
+                    <div className="input-group">
+                        <DropdownList
+                            {...this.props.codesPortionFields.codeZKPPTR}
+                            id={"inp-code-ZKPPTR"+this.props.portionKey}
+                            placeholder="Оберіть варіант зі списку"
+                            data={this.props.ZKPPTRCodesList.items}
+                            valueField='id'
+                            textField='textValue'
+                            defaultValue={null}
+                            onChange={ newVal => this.props.codesPortionFields.codeZKPPTR.onChange(newVal.id) }
+                            busy={this.props.ZKPPTRCodesList.isFetching}
+                            caseSensitive={false}
+                            filter='startsWith' />
+                        <div className="input-group-btn">
+                            <button
+                                type="button"
+                                title="Додати нове значення у цей список кодів"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                +1
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="form-group">
@@ -86,23 +120,57 @@ export default class extends Component {
                     Код ЄТДК
                 </label>
                 <div className="col-sm-4">
-                    <input
-                        {...this.props.codesPortionFields.codeETDK}
-                        type="text"
-                        className="form-control"
-                        id={"inp-code-ETDK"+this.props.portionKey}
-                        placeholder="Код ЄТДК" />
+                    <div className="input-group">
+                        <DropdownList
+                            {...this.props.codesPortionFields.codeETDK}
+                            id={"inp-code-ETDK"+this.props.portionKey}
+                            placeholder="Оберіть варіант зі списку"
+                            data={this.props.ETDKCodesList.items}
+                            valueField='id'
+                            textField='textValue'
+                            defaultValue={null}
+                            onChange={ newVal => this.props.codesPortionFields.codeETDK.onChange(newVal.id) }
+                            busy={this.props.ETDKCodesList.isFetching}
+                            caseSensitive={false}
+                            filter='startsWith' />
+                        <div className="input-group-btn">
+                            <button
+                                type="button"
+                                title="Додати нове значення у цей список кодів"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                +1
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <label htmlFor={"inp-code-DKHP"+this.props.portionKey} className="col-sm-2 control-label">
                     Код ДКХП
                 </label>
                 <div className="col-sm-4">
-                    <input
-                        {...this.props.codesPortionFields.codeDKHP}
-                        type="text"
-                        className="form-control"
-                        id={"inp-code-DKHP"+this.props.portionKey}
-                        placeholder="Код ДКХП" />
+                    <div className="input-group">
+                        <DropdownList
+                            {...this.props.codesPortionFields.codeDKHP}
+                            id={"inp-code-DKHP"+this.props.portionKey}
+                            placeholder="Оберіть варіант зі списку"
+                            data={this.props.DKHPCodesList.items}
+                            valueField='id'
+                            textField='textValue'
+                            defaultValue={null}
+                            onChange={ newVal => this.props.codesPortionFields.codeDKHP.onChange(newVal.id) }
+                            busy={this.props.DKHPCodesList.isFetching}
+                            caseSensitive={false}
+                            filter='startsWith' />
+                        <div className="input-group-btn">
+                            <button
+                                type="button"
+                                title="Додати нове значення у цей список кодів"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                +1
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
