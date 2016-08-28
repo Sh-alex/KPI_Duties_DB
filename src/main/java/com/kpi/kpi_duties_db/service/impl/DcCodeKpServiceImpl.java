@@ -27,7 +27,7 @@ public class DcCodeKpServiceImpl implements DcCodeKpService {
 
     @Override
     public void delete(int id) {
-
+        dcCodeKpRepository.delete(id);
     }
 
     @Override

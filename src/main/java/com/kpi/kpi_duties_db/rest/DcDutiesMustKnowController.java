@@ -63,4 +63,13 @@ public class DcDutiesMustKnowController {
 
         return Response.ok().build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcDutiesMustKnowService.delete(id);
+
+        return Response.ok().build();
+    }
 }

@@ -70,4 +70,14 @@ public class DcCodeDkhpController {
 
         return Response.ok().build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcCodeDkhpService.delete(id);
+
+        return Response.ok().build();
+    }
+
 }

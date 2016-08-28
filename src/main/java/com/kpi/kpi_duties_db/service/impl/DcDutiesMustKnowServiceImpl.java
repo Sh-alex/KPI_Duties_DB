@@ -27,7 +27,7 @@ public class DcDutiesMustKnowServiceImpl implements DcDutiesMustKnowService{
 
     @Override
     public void delete(int id) {
-
+        dcDutiesMustKnowRepository.delete(id);
     }
 
     @Override

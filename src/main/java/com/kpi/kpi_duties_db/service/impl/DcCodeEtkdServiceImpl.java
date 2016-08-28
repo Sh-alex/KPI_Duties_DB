@@ -27,7 +27,7 @@ public class DcCodeEtkdServiceImpl implements DcCodeEtkdService {
 
     @Override
     public void delete(int id) {
-
+        dcCodeEtkdRepository.delete(id);
     }
 
     @Override

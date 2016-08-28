@@ -70,4 +70,13 @@ public class DcCodeZkpptrController {
 
         return Response.ok().build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcCodeZkpptrService.delete(id);
+
+        return Response.ok().build();
+    }
 }

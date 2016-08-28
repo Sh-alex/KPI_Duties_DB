@@ -26,7 +26,7 @@ public class DcDutiesQualificationRequirementsServiceImpl implements DcDutiesQua
 
     @Override
     public void delete(int id) {
-
+        dcDutiesQualificationRequirementsRepository.delete(id);
     }
 
     @Override

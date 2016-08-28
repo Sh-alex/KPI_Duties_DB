@@ -70,4 +70,13 @@ public class DcDutiesСlarificationController {
 
         return Response.ok().build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcDutiesNameEntityService.delete(id);
+
+        return Response.ok().build();
+    }
 }

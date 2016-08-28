@@ -27,7 +27,7 @@ public class DcCodeZkpptrServiceImpl implements DcCodeZkpptrService {
 
     @Override
     public void delete(int id) {
-
+        dcCodeZkpptrRepository.delete(id);
     }
 
     @Override

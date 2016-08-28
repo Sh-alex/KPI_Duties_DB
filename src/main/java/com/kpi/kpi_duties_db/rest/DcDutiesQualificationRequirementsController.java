@@ -62,4 +62,13 @@ public class DcDutiesQualificationRequirementsController {
 
         return Response.ok().build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcDutiesQualificationRequirementsService.delete(id);
+
+        return Response.ok().build();
+    }
 }

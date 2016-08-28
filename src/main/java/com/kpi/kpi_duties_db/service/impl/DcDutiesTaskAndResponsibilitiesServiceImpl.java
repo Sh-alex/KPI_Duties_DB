@@ -27,7 +27,7 @@ public class DcDutiesTaskAndResponsibilitiesServiceImpl implements DcDutiesTaskA
 
     @Override
     public void delete(int id) {
-
+        dcDutiesTasksAndResponsibilitiesRepository.delete(id);
     }
 
     @Override
