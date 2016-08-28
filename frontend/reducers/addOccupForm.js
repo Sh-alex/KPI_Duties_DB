@@ -10,6 +10,9 @@ import {
     ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE
 } from '../constants/AddOccupBox'
 
+import {
+    ADD_NEW_CLARIFICATION_SUCCESS
+} from '../constants/occupationNameInfo'
 
 function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
     if(clarifiedOccupTextVal && clarificationTextVal)
@@ -48,6 +51,10 @@ export default function addOccupForm(state, action) {
                 ...state,
                 name: {
                     ...state.name,
+                    clarification: {
+                        ...state.name.clarification,
+                        value: action.newVal.id
+                    },
                     occupationName: {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(

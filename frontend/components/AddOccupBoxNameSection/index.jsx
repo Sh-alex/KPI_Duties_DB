@@ -71,11 +71,12 @@ export default class extends Component {
                             busy={clarificationList.isFetching}
                             filter='contains'/>
                         <div className="input-group-btn">
-                            <button type="button" title="Додати нове ключове слово для уточнення" className="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-new-occup-key-word">
+                            <button
+                                type="button"
+                                title="Додати нове ключове слово для уточнення"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
                                 +1
-                            </button>
-                            <button type="button" title="Видалити одне з ключових слів для уточнення" className="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-del-occup-key-word">
-                                -1
                             </button>
                         </div>
                     </div>

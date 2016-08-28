@@ -1,22 +1,41 @@
-import React, {Component} from "react";
-import {reduxForm} from "redux-form";
-import AddOccupBoxNameSection from "../AddOccupBoxNameSection";
-import AddOccupBoxFeaturesSection from "../AddOccupBoxFeaturesSection";
-import AddOccupBoxDurationSection from "../AddOccupBoxDurationSection";
-import AddOccupBoxCodesSection from "../AddOccupBoxCodesSection";
-import AddOccupBoxResponsibSection from "../AddOccupBoxResponsibSection";
-import AddOccupBoxHaveToKnowSection from "../AddOccupBoxHaveToKnowSection";
-import AddOccupBoxQualiffRequirSection from "../AddOccupBoxQualiffRequirSection";
-import {Alert} from "react-bootstrap";
-import {fetchOccupGroupList, fetchClarifiedOccupList, fetchClarificationList} from "../../actions/occupationNameInfo";
+import React, { Component } from 'react'
+import {reduxForm} from 'redux-form';
+
+import ModalAddNewOccupKeyWord from "../ModalAddNewOccupKeyWord"
+import AddOccupBoxNameSection from "../AddOccupBoxNameSection"
+import AddOccupBoxFeaturesSection from "../AddOccupBoxFeaturesSection"
+import AddOccupBoxDurationSection from "../AddOccupBoxDurationSection"
+import AddOccupBoxCodesSection from "../AddOccupBoxCodesSection"
+import AddOccupBoxResponsibSection from "../AddOccupBoxResponsibSection"
+import AddOccupBoxHaveToKnowSection from "../AddOccupBoxHaveToKnowSection"
+import AddOccupBoxQualiffRequirSection from "../AddOccupBoxQualiffRequirSection"
+
+import { Alert } from 'react-bootstrap'
+
+import {
+    fetchOccupGroupList,
+    fetchClarifiedOccupList,
+    fetchClarificationList,
+    addNewClarification,
+    dismissModalAddNewClarificationAlert
+} from "../../actions/occupationNameInfo"
+
+import {
+    fetchKPCodesList,
+    fetchZKPPTRCodesList,
+    fetchETDKCodesList,
+    fetchDKHPCodesList
+} from "../../actions/occupCodesLists"
+
 import {
     submitAddForm,
     hideAddFormServerRespMsg,
     occupationGroupInpChange,
     clarificationInpChange,
     clarifiedOccupInpChange
-} from "../../actions/addOccupBox";
-import "./styles.less";
+} from "../../actions/addOccupBox"
+
+import './styles.less'
 
 let initialFormState = {
     name: {
@@ -48,21 +67,21 @@ let initialFormState = {
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'text': ""
+            'textId': ""
         }
     ],
     haveToKnow: [
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'text': ""
+            'textId': ""
         }
     ],
-    ualiffRequir: [
+    qualiffRequir: [
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'text': ""
+            'textId': ""
         }
     ]
 };
@@ -70,6 +89,12 @@ let initialFormState = {
 class AddOccupBox extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            newOccupKeyWordInpVal: "",
+            showModalAddNewOccupKeyWord: false
+        };
+
         this.handleAddCodesPortionBtnClick = this.handleAddCodesPortionBtnClick.bind(this);
         this.handleDelCodesPortionBtnClick = this.handleDelCodesPortionBtnClick.bind(this);
         this.handleAddResponsibPortionBtnClick = this.handleAddResponsibPortionBtnClick.bind(this);
@@ -82,14 +107,30 @@ class AddOccupBox extends Component {
         this.handleOccupationGroupInpChange = this.handleOccupationGroupInpChange.bind(this);
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
         this.handleClarificationInpChange = this.handleClarificationInpChange.bind(this);
-        
+
+        this.handleHideModalAddNewOccupKeyWord = this.handleHideModalAddNewOccupKeyWord.bind(this);
+        this.openModalAddNewOccupKeyWord = this.openModalAddNewOccupKeyWord.bind(this);
+
         this.props.initializeForm(initialFormState);
+    }
+
+    handleHideModalAddNewOccupKeyWord() {
+        this.setState({ showModalAddNewOccupKeyWord: false });
+    }
+
+    openModalAddNewOccupKeyWord() {
+        this.setState({ showModalAddNewOccupKeyWord: true });
     }
 
     componentDidMount() {
         this.props.dispatch(fetchOccupGroupList());
         this.props.dispatch(fetchClarifiedOccupList());
         this.props.dispatch(fetchClarificationList());
+
+        this.props.dispatch(fetchKPCodesList());
+        this.props.dispatch(fetchZKPPTRCodesList());
+        this.props.dispatch(fetchETDKCodesList());
+        this.props.dispatch(fetchDKHPCodesList());
     }
 
     // /**
@@ -142,7 +183,7 @@ class AddOccupBox extends Component {
     }
 
     handleAddQualiffRequirPortionBtnClick() {
-        this.props.fields.ualiffRequir.addField({
+        this.props.fields.qualiffRequir.addField({
             'portionStartDate': null,
             'portionEndDate': null,
             'text': ""
@@ -150,7 +191,7 @@ class AddOccupBox extends Component {
     }
 
     handleDelQualiffRequirPortionBtnClick(index) {
-        this.props.fields.ualiffRequir.removeField(index);
+        this.props.fields.qualiffRequir.removeField(index);
     }
 
     handleOccupationGroupInpChange(newVal) {
@@ -170,11 +211,12 @@ class AddOccupBox extends Component {
 
     render() {
         const {
-            fields: { name, features, duration, codes, responsibilities, haveToKnow, ualiffRequir},
+            fields: { name, features, duration, codes, responsibilities, haveToKnow, qualiffRequir},
             handleSubmit,
             resetForm,
             invalid,
             handleServerRespMsgDismiss,
+            handleModalAddNewClarificationAlertDismiss,
             shouldShowServerRespMsg,
             submitting
         } = this.props;
@@ -208,6 +250,15 @@ class AddOccupBox extends Component {
                 <h3 className="box-title"> Додавання посади </h3>
             </div>
             <div className="box-body">
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newOccupKeyWordInpVal}
+                    onInpValChange={newVal => this.setState({ newOccupKeyWordInpVal: newVal })}
+                    show={this.state.showModalAddNewOccupKeyWord}
+                    errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
+                    isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
+                    onSave={this.props.addNewClarification}
+                    onAlertDismiss={ handleModalAddNewClarificationAlertDismiss }
+                    onHide={this.handleHideModalAddNewOccupKeyWord} />
                 <form id="add-form" className="form-horizontal add-form" onSubmit={handleSubmit} role="form">
                     <div className="form-inner">
                         <AddOccupBoxNameSection
@@ -216,11 +267,12 @@ class AddOccupBox extends Component {
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
-                        />
+                            openModalAddNewOccupKeyWord={this.openModalAddNewOccupKeyWord}  />
                         <AddOccupBoxFeaturesSection featuresFields={features} />
                         <AddOccupBoxDurationSection durationFields={duration} />
                         <AddOccupBoxCodesSection
                             codesFields={codes}
+                            {...this.props.occupCodesLists}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
                         <AddOccupBoxResponsibSection
@@ -232,7 +284,7 @@ class AddOccupBox extends Component {
                             handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
                         <AddOccupBoxQualiffRequirSection
-                            qualiffRequirFields={ualiffRequir}
+                            qualiffRequirFields={qualiffRequir}
                             handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
                         <div>
@@ -287,9 +339,9 @@ export default reduxForm(
             'haveToKnow[].text',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
-            'ualiffRequir[].text',
-            'ualiffRequir[].portionStartDate',
-            'ualiffRequir[].portionEndDate'
+            'qualiffRequir[].text',
+            'qualiffRequir[].portionStartDate',
+            'qualiffRequir[].portionEndDate'
         ],
         touchOnChange: true,
         validate(travel) {
@@ -309,6 +361,7 @@ export default reduxForm(
     (state, ownProps) => {    //mapStateToProps
         return {
             occupNameInfoLists: state.occupationNameInfo,
+            occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.addForm.shouldShowServerRespMsg
         }
     },
@@ -316,6 +369,12 @@ export default reduxForm(
         return {
             handleServerRespMsgDismiss() {
                 return dispatch( hideAddFormServerRespMsg() );
+            },
+            handleModalAddNewClarificationAlertDismiss() {
+                return dispatch( dismissModalAddNewClarificationAlert() );
+            },
+            addNewClarification(val) {
+                dispatch(addNewClarification(val));
             }
         }
     }

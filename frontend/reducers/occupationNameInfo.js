@@ -26,7 +26,7 @@ const initialState = {
                 "id": 4,
                 "textVal": "Найпростіші професії"
             }
-        ]
+        ],
     },
     clarifiedOccupationList: {
         isFetching: false,
@@ -65,6 +65,8 @@ const initialState = {
     },
     clarificationList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
   //      items : []
         items : [
@@ -98,6 +100,44 @@ const initialState = {
 
 export default function occupationNameInfo(state = initialState, action) {
     switch (action.type) {
+        case aTypes.ADD_NEW_CLARIFICATION_REQUEST:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_CLARIFICATION_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    items: [...state.clarificationList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_CLARIFICATION_FAIL:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.clarificationList.addingErrors, action.error]
+                }
+            };
+
+        case aTypes.DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    addingErrors: []
+                }
+            };
+
         case aTypes.FETCH_OCCUP_GROUP_LIST_REQUEST:
             return {
                 ...state,
