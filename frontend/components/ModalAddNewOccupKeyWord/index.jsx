@@ -12,7 +12,7 @@ export default class extends Component {
             this.props.onSave(this.props.inpVal);
         };
 
-        let errorAlert = this.props.errors.length < 1 ? "" : (
+        let errorAlert = (!this.props.errors || (this.props.errors.length < 1)) ? "" : (
                 <Alert bsStyle="danger" onDismiss={this.props.onAlertDismiss}>
                     <h4>
                         <i className="icon fa fa-warning" />

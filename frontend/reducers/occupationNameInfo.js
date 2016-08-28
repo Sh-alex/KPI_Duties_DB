@@ -8,23 +8,23 @@ const initialState = {
         items : [
             {
                 "id": 0,
-                "textVal": "Керівники"
+                "textValue": "Керівники"
             },
             {
                 "id": 1,
-                "textVal": "Професіонали"
+                "textValue": "Професіонали"
             },
             {
                 "id": 2,
-                "textVal": "Фахівці"
+                "textValue": "Фахівці"
             },
             {
                 "id": 3,
-                "textVal": "Технічні службовці"
+                "textValue": "Технічні службовці"
             },
             {
                 "id": 4,
-                "textVal": "Найпростіші професії"
+                "textValue": "Найпростіші професії"
             }
         ],
     },
@@ -35,31 +35,31 @@ const initialState = {
         items : [
             {
                 "id": -1,
-                "textVal": "-(Відсутня)-"
+                "textValue": "-(Відсутня)-"
             },
             {
                 "id": 0,
-                "textVal": "Інженер"
+                "textValue": "Інженер"
             },
             {
                 "id": 1,
-                "textVal": "Інженер молодший"
+                "textValue": "Інженер молодший"
             },
             {
                 "id": 2,
-                "textVal": "Інженер старший 1 категорії"
+                "textValue": "Інженер старший 1 категорії"
             },
             {
                 "id": 3,
-                "textVal": "Директор"
+                "textValue": "Директор"
             },
             {
                 "id": 4,
-                "textVal": "Посол"
+                "textValue": "Посол"
             },
             {
                 "id": 5,
-                "textVal": "Фрезерувальник"
+                "textValue": "Фрезерувальник"
             }
         ]
     },
@@ -72,27 +72,27 @@ const initialState = {
         items : [
             {
                 "id": 0,
-                "textVal": "Патімейкер"
+                "textValue": "Патімейкер"
             },
             {
                 "id": 1,
-                "textVal": "Молодший"
+                "textValue": "Молодший"
             },
             {
                 "id": 2,
-                "textVal": "Замістник"
+                "textValue": "Замістник"
             },
             {
                 "id": 3,
-                "textVal": "Старший"
+                "textValue": "Старший"
             },
             {
                 "id": 4,
-                "textVal": "1 категорії"
+                "textValue": "1 категорії"
             },
             {
                 "id": 5,
-                "textVal": "3 розряду"
+                "textValue": "3 розряду"
             }
         ]
     }

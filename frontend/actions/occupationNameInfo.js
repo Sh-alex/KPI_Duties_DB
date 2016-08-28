@@ -31,17 +31,28 @@ export function fetchClarificationList() {
 
         return fetch(API_URIs.FETCH_CLARIFICATION_LIST)
             .then( response => {
+                if(response.status === 404)
+                    throw 'При отриманні списку Уточнення не знайдено відповідного методу на сервері!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При отриманні списку Уточнення сталася помилка ${response.status} на сервері!`;
+
                 var contentType = response.headers.get("content-type");
                 if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json().idNameResponses
+                    return response.json();
                 } else {
                     return Promise.reject("Отримано некоректні дані для списку Уточнення");
                 }
             })
-            .then( data => dispatch({
-                type: FETCH_CLARIFICATION_LIST_SUCCESS,
-                data
-            }))
+            .then( data => {
+                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
+                    return Promise.reject("Отримано некоректні дані для списку Уточнення");
+                if (data && data.idNameResponses)
+                    data = data.idNameResponses;
+                dispatch({
+                    type: FETCH_CLARIFICATION_LIST_SUCCESS,
+                    data
+                })
+            })
             .catch( error => dispatch({
                 type: FETCH_CLARIFICATION_LIST_FAIL,
                 error
@@ -56,16 +67,16 @@ export function addNewClarification(newVal) {
             newVal
         });
 
-            return fetch( API_URIs.ADD_NEW_CLARIFICATION, {
-                credentials: 'include',
-                mode: 'cors',
-                method: 'post',
-                body: JSON.stringify( { newVal } ),
-                headers: {
-                    'Content-Type': 'application/json',
-                    //'X-CSRFToken': CSRF_TOKEN
-                }
-            })
+        return fetch( API_URIs.ADD_NEW_CLARIFICATION, {
+            credentials: 'include',
+            mode: 'cors',
+            method: 'post',
+            body: JSON.stringify( { newVal } ),
+            headers: {
+                'Content-Type': 'application/json',
+                //'X-CSRFToken': CSRF_TOKEN
+            }
+        })
             .then( response => {
                 if(response.status === 404)
                     throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
@@ -74,19 +85,21 @@ export function addNewClarification(newVal) {
 
                 var contentType = response.headers.get("content-type");
                 if(contentType && contentType.indexOf("application/json") !== -1) {
-                    let createdId = response.json().createdId,
-                        error = response.json().error;
-                    if(createdId != undefined)
-                        return createdId;
-                    if(error)
-                        throw error;
+                    return response.json();
                 }
                 throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
             })
-            .then( createdId => {
+            .then( json => {
+                let createdId = json.id,
+                    error = json.error;
+                if(createdId == undefined)
+                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
+                if(error)
+                    throw error;
+
                 let resObj = {
                     "id": createdId,
-                    "textVal": newVal
+                    "textValue": newVal
                 };
                 dispatch({
                     type: ADD_NEW_CLARIFICATION_SUCCESS,
@@ -115,17 +128,29 @@ export function fetchOccupGroupList() {
 
         return fetch(API_URIs.FETCH_OCCUPATION_GROUP_LIST)
             .then( response => {
+                if(response.status === 404)
+                    throw 'При отриманні списку Посадовий склад не знайдено відповідного методу на сервері!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При отриманні списку Посадовий склад сталася помилка ${response.status} на сервері!`;
+
+
                 var contentType = response.headers.get("content-type");
                 if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json().idNameResponses
+                    return response.json();
                 } else {
                     return Promise.reject("Отримано некоректні дані для списку Посадовий склад");
                 }
             })
-            .then( data => dispatch({
-                type: FETCH_OCCUP_GROUP_LIST_SUCCESS,
-                data
-            }))
+            .then( data => {
+                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
+                    return Promise.reject("Отримано некоректні дані для списку Посадовий склад");
+                if (data && data.idNameResponses)
+                    data = data.idNameResponses;
+                dispatch({
+                    type: FETCH_OCCUP_GROUP_LIST_SUCCESS,
+                    data
+                })
+            })
             .catch( error => dispatch({
                 type: FETCH_OCCUP_GROUP_LIST_FAIL,
                 error
@@ -141,17 +166,28 @@ export function fetchClarifiedOccupList() {
 
         return fetch(API_URIs.FETCH_CLARIFIED_OCCUP_LIST)
             .then( response => {
+                if(response.status === 404)
+                    throw 'При отриманні списку Уточнювана посада не знайдено відповідного методу на сервері!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При отриманні списку Уточнювана посада сталася помилка ${response.status} на сервері!`;
+
                 var contentType = response.headers.get("content-type");
                 if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json().idNameResponses
+                    return response.json();
                 } else {
                     return Promise.reject("Отримано некоректні дані для списку Уточнювана посада");
                 }
             })
-            .then( data => dispatch({
-                type: FETCH_CLARIFIED_OCCUP_LIST_SUCCESS,
-                data
-            }))
+            .then( data => {
+                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
+                    return Promise.reject("Отримано некоректні дані для списку Уточнювана посада");
+                if (data && data.idNameResponses)
+                    data = data.idNameResponses;
+                dispatch({
+                    type: FETCH_CLARIFIED_OCCUP_LIST_SUCCESS,
+                    data
+                })
+            })
             .catch( error => dispatch({
                 type: FETCH_CLARIFIED_OCCUP_LIST_FAIL,
                 error

@@ -22,7 +22,7 @@ export default class extends Component {
                         placeholder="Оберіть варіант зі списку"
                         data={occupationGroupList.items}
                         valueField='id'
-                        textField='textVal'
+                        textField='textValue'
                         defaultValue={null}
                         onChange={ this.props.handleOccupationGroupInpChange }
                         busy={occupationGroupList.isFetching}
@@ -41,7 +41,7 @@ export default class extends Component {
                         placeholder="Оберіть варіант зі списку"
                         data={clarifiedOccupationList.items}
                         valueField='id'
-                        textField='textVal'
+                        textField='textValue'
                         defaultValue={null}
                         onChange={ this.props.handleClarifiedOccupInpChange }
                         caseSensitive={false}
@@ -64,7 +64,7 @@ export default class extends Component {
                             placeholder="Оберіть варіант зі списку"
                             data={clarificationList.items}
                             valueField='id'
-                            textField='textVal'
+                            textField='textValue'
                             defaultValue={null}
                             onChange={ this.props.handleClarificationInpChange }
                             caseSensitive={false}

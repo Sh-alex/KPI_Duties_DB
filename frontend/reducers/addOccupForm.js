@@ -60,7 +60,7 @@ export default function addOccupForm(state, action) {
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
                             state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textVal
+                            action.newVal.textValue
                         )
                     },
                     occupationNameMin: {
@@ -68,11 +68,11 @@ export default function addOccupForm(state, action) {
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
                             state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textVal
+                            action.newVal.textValue
                         )
                     }
                 },
-                clarificationTextVal: action.newVal.textVal    //потрібно щоб порахувати occupationName
+                clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
             };
         case ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE:
             return {
@@ -83,7 +83,7 @@ export default function addOccupForm(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            action.newVal.id == -1 ? "" : action.newVal.textVal,    //якщо відсутня уточнювана посада
+                            action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     },
@@ -91,12 +91,12 @@ export default function addOccupForm(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            action.newVal.id == -1 ? "" : action.newVal.textVal,    //якщо відсутня уточнювана посада
+                            action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     }
                 },
-                clarifiedOccupTextVal: action.newVal.textVal    //потрібно щоб порахувати occupationName
+                clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
             };
 
         case ADD_FORM_OCCUPATION_GROUP_INP_CHANGE: //TODO
