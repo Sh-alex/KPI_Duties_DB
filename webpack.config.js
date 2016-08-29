@@ -2,7 +2,7 @@ var webpack = require('webpack'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     isDev = process.env.NODE_ENV != "production",
     WDS_PORT = 2016,
-    BE_PORT = 8080;
+    BE_PORT = 52300;
 
 module.exports = {
     entry: ([
@@ -10,8 +10,8 @@ module.exports = {
         "./frontend/main.jsx"
     ]),
     output: {
-        path: __dirname + '/src/main/webapp/WEB-INF/frontend-build/',
-        publicPath: "/src/main/webapp/WEB-INF/frontend-build/",
+        path: __dirname + '/frontend-build/',
+        publicPath: "/frontend-build/",
         filename: "bundle.js"
     },
     watch: isDev,
@@ -52,7 +52,7 @@ module.exports = {
                 exclude: [/node_modules/],
                 loader: "babel-loader",
                 query: {
-                    plugins: ['transform-runtime'],
+                    plugins: isDev ? ['transform-runtime'] : null,
                     presets: ['es2015', 'stage-0', 'react']
                 }
             },

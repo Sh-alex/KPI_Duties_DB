@@ -492,6 +492,9 @@
                                                 <button type="button" title="Додати нове ключове слово для уточнення" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-new-occup-key-word">
                                                     +1
                                                 </button>
+                                                <button type="button" title="Видалити одне з ключових слів для уточнення" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-del-occup-key-word">
+                                                    -1
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -663,14 +666,22 @@
                                     <div class="inp-portions__item">
                                         <div class="form-group">
                                             <div class="col-sm-8">
-                                                <div class="input-group">
-                                                    <textarea class="form-control" placeholder="Завдання, обов'язки та повноваження" rows="6"></textarea>
-                                                    <div class="input-group-btn">
-                                                        <button type="button" title="Додати інформацію з аналогічної посади" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
-                                                            <span class="fa fa-link"></span>
+                                                <div class="btn-group btn-group-justified" role="group">
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-default btn-flat">
+                                                            Редагувати
+                                                            <i class="fa fa-pencil"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-info-from-related">
+                                                            Додати інформацію з аналогічної посади
+                                                            <i class="fa fa-link"></i>
                                                         </button>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" value="78"> <!-- id тексту яке буде передано на сервер -->
+                                                <textarea class="form-control add-form__occup-description-text-block" disabled placeholder="Оберіть текст з іншої посади, або введіть новий натиснувши кнопку 'Редагувати текст'" rows="6"></textarea>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class="center-block">

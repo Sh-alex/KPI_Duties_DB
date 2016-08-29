@@ -4,100 +4,140 @@ const initialState = {
     occupationGroupList: {
         isFetching: false,
         errors: [],
-        // items : []
-        items : [
-            {
-                "id": 0,
-                "textVal": "Керівники"
-            },
-            {
-                "id": 1,
-                "textVal": "Професіонали"
-            },
-            {
-                "id": 2,
-                "textVal": "Фахівці"
-            },
-            {
-                "id": 3,
-                "textVal": "Технічні службовці"
-            },
-            {
-                "id": 4,
-                "textVal": "Найпростіші професії"
-            }
-        ]
+        items : []
+        // items : [
+        //     {
+        //         "id": 0,
+        //         "textValue": "Керівники"
+        //     },
+        //     {
+        //         "id": 1,
+        //         "textValue": "Професіонали"
+        //     },
+        //     {
+        //         "id": 2,
+        //         "textValue": "Фахівці"
+        //     },
+        //     {
+        //         "id": 3,
+        //         "textValue": "Технічні службовці"
+        //     },
+        //     {
+        //         "id": 4,
+        //         "textValue": "Найпростіші професії"
+        //     }
+        // ],
     },
     clarifiedOccupationList: {
         isFetching: false,
         errors: [],
-        // items : []
-        items : [
-            {
-                "id": -1,
-                "textVal": "-(Відсутня)-"
-            },
-            {
-                "id": 0,
-                "textVal": "Інженер"
-            },
-            {
-                "id": 1,
-                "textVal": "Інженер молодший"
-            },
-            {
-                "id": 2,
-                "textVal": "Інженер старший 1 категорії"
-            },
-            {
-                "id": 3,
-                "textVal": "Директор"
-            },
-            {
-                "id": 4,
-                "textVal": "Посол"
-            },
-            {
-                "id": 5,
-                "textVal": "Фрезерувальник"
-            }
-        ]
+        items : []
+        // items : [
+        //     {
+        //         "id": -1,
+        //         "textValue": "-(Відсутня)-"
+        //     },
+        //     {
+        //         "id": 0,
+        //         "textValue": "Інженер"
+        //     },
+        //     {
+        //         "id": 1,
+        //         "textValue": "Інженер молодший"
+        //     },
+        //     {
+        //         "id": 2,
+        //         "textValue": "Інженер старший 1 категорії"
+        //     },
+        //     {
+        //         "id": 3,
+        //         "textValue": "Директор"
+        //     },
+        //     {
+        //         "id": 4,
+        //         "textValue": "Посол"
+        //     },
+        //     {
+        //         "id": 5,
+        //         "textValue": "Фрезерувальник"
+        //     }
+        // ]
     },
     clarificationList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
-  //      items : []
-        items : [
-            {
-                "id": 0,
-                "textVal": "Патімейкер"
-            },
-            {
-                "id": 1,
-                "textVal": "Молодший"
-            },
-            {
-                "id": 2,
-                "textVal": "Замістник"
-            },
-            {
-                "id": 3,
-                "textVal": "Старший"
-            },
-            {
-                "id": 4,
-                "textVal": "1 категорії"
-            },
-            {
-                "id": 5,
-                "textVal": "3 розряду"
-            }
-        ]
+        items : []
+        // items : [
+        //     {
+        //         "id": 0,
+        //         "textValue": "Патімейкер"
+        //     },
+        //     {
+        //         "id": 1,
+        //         "textValue": "Молодший"
+        //     },
+        //     {
+        //         "id": 2,
+        //         "textValue": "Замістник"
+        //     },
+        //     {
+        //         "id": 3,
+        //         "textValue": "Старший"
+        //     },
+        //     {
+        //         "id": 4,
+        //         "textValue": "1 категорії"
+        //     },
+        //     {
+        //         "id": 5,
+        //         "textValue": "3 розряду"
+        //     }
+        // ]
     }
 };
 
 export default function occupationNameInfo(state = initialState, action) {
     switch (action.type) {
+        case aTypes.ADD_NEW_CLARIFICATION_REQUEST:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_CLARIFICATION_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    items: [...state.clarificationList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_CLARIFICATION_FAIL:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.clarificationList.addingErrors, action.error]
+                }
+            };
+
+        case aTypes.DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    addingErrors: []
+                }
+            };
+
         case aTypes.FETCH_OCCUP_GROUP_LIST_REQUEST:
             return {
                 ...state,
@@ -167,7 +207,13 @@ export default function occupationNameInfo(state = initialState, action) {
             return {
                 ...state,
                 clarifiedOccupationList: {
-                    items: action.data,
+                    items: [
+                        {
+                            "id": -1,
+                            "textValue": "-(Відсутня)-"
+                        },
+                        ...action.data
+                    ],
                     isFetching: false,
                     errors: []
                 }

@@ -73,7 +73,7 @@ export function submitAddForm(data, dispatch) {
                 } else if(response.status === 404) {
                     throw(new Error('Не знайдено відповідного методу на сервері!'));
                 } else if( 499 < response.status && response.status < 600 ) {
-                    throw(new Error('Сталася помилка на сервері!'));
+                    throw(new Error(`Сталася помилка ${response.status} на сервері!`));
                 } else {
                     // we're not sure what happened, but handle it:
                     // our Error will get passed straight to `.catch()`

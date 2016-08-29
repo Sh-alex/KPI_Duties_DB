@@ -1,5 +1,5 @@
 "use strict";
-
+/*
 $("#btn-toggle-extended-search").click(e => {
     let el = $(".box--search-form");
     if(el.hasClass("search-extended")) {
@@ -10,7 +10,7 @@ $("#btn-toggle-extended-search").click(e => {
         el.addClass("search-extended");
     }
 });
-
+*/
 $(".btn--collapse-box").click(function(e) {
     let thisBtn = $(this),
         thisBox = thisBtn.closest(".box"),
@@ -38,9 +38,13 @@ $(".inp-name-block").on("change", '[name="radio-type-of-occup-name-inp"]', funct
         inpNameBlock
             .removeClass(classNameInput)
             .addClass(classNameMltiselect);
-    } else {
+    } else if(radioBtn.hasClass(classNameInput)){
         inpNameBlock
             .removeClass(classNameMltiselect)
+            .addClass(classNameInput);
+    } else {
+        inpNameBlock
+            .addClass(classNameMltiselect)
             .addClass(classNameInput);
     }
 });

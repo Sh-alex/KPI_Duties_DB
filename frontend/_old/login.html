@@ -18,7 +18,7 @@
         <div class="login-page login-box-wrapper">
             <div class="box box-primary login-box">
                 <div class="login-logo">
-                    <a href="/">
+                    <a href="javascript:void(0)">
                         Державний <br>
                         Класифікатор <br>
                         Посад <br>
@@ -26,7 +26,7 @@
                     </a>
                 </div>
 
-                <div class="login-box-body">
+                <div class="login-box-body login-box-body--auth-form-wrapper hidden">
                     <p class="login-box-msg">
                         Авторизуйтесь для початку роботи із сервісом
                     </p>
@@ -52,14 +52,32 @@
                         </div>
                     </form>
                 </div>
-                <!-- /.login-box-body -->
+
+                <div class="login-box-body login-box-body--nav">
+                    <p class="login-box-msg">
+                        Доброго дня, Генаш Максим!
+                    </p>
+                    <div class="list-group text-center">
+                        <a href="/add" class="list-group-item">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Додати нову посаду
+                        </a>
+                        <a href="/search" class="list-group-item">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            Пошук посад
+                        </a>
+                        <a href="#" class="list-group-item btn-logout">
+                            <i class="fa fa-sign-out"></i>
+                            Вихід з аккаунта
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="./scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="./scripts/jquery-1.10.2.js"></script>
-
 </body>
 
 </html>

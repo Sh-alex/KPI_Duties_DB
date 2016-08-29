@@ -22,7 +22,7 @@ export default class extends Component {
                         placeholder="Оберіть варіант зі списку"
                         data={occupationGroupList.items}
                         valueField='id'
-                        textField='textVal'
+                        textField='textValue'
                         defaultValue={null}
                         onChange={ this.props.handleOccupationGroupInpChange }
                         busy={occupationGroupList.isFetching}
@@ -41,7 +41,7 @@ export default class extends Component {
                         placeholder="Оберіть варіант зі списку"
                         data={clarifiedOccupationList.items}
                         valueField='id'
-                        textField='textVal'
+                        textField='textValue'
                         defaultValue={null}
                         onChange={ this.props.handleClarifiedOccupInpChange }
                         caseSensitive={false}
@@ -64,18 +64,19 @@ export default class extends Component {
                             placeholder="Оберіть варіант зі списку"
                             data={clarificationList.items}
                             valueField='id'
-                            textField='textVal'
+                            textField='textValue'
                             defaultValue={null}
                             onChange={ this.props.handleClarificationInpChange }
                             caseSensitive={false}
                             busy={clarificationList.isFetching}
                             filter='contains'/>
                         <div className="input-group-btn">
-                            <button type="button" title="Додати нове ключове слово для уточнення" className="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-add-new-occup-key-word">
+                            <button
+                                type="button"
+                                title="Додати нове ключове слово для уточнення"
+                                className="btn btn-default btn-flat"
+                                onClick={this.props.openModalAddNewOccupKeyWord} >
                                 +1
-                            </button>
-                            <button type="button" title="Видалити одне з ключових слів для уточнення" className="btn btn-default btn-flat" data-toggle="modal" data-target=".modal-del-occup-key-word">
-                                -1
                             </button>
                         </div>
                     </div>
