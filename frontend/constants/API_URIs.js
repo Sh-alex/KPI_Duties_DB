@@ -9,4 +9,5 @@ export const FETCH_ZKPPTR_CODES_LIST = '/api/zkpptr_code/gets';
 export const FETCH_ETDK_CODES_LIST = '/api/etkd_code/gets';
 export const FETCH_DKHP_CODES_LIST = '/api/dkhp_code/gets';
 
-export const ADD_OCCUPATION = '/api/addOccupation';
+export const ADD_OCCUPATION = '/api/occupations';
+export const SEARCH_OCCUPATION = '/api/occupations';

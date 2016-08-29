@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {reduxForm} from 'redux-form';
 
+import ModalAddInfoFromAnotherOccup from "../ModalAddInfoFromAnotherOccup"
 import ModalAddNewOccupKeyWord from "../ModalAddNewOccupKeyWord"
 import AddOccupBoxNameSection from "../AddOccupBoxNameSection"
 import AddOccupBoxFeaturesSection from "../AddOccupBoxFeaturesSection"
@@ -35,6 +36,10 @@ import {
     clarifiedOccupInpChange
 } from "../../actions/addOccupBox"
 
+import {
+    showModalAddInfoFromAnotherOccup
+} from '../../actions/addingInfoFromAnotherOccup'
+
 import './styles.less'
 
 let initialFormState = {
@@ -57,31 +62,34 @@ let initialFormState = {
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'codeKP': "",
-            'codeETDK': "",
-            'codeZKPPTR': "",
-            'codeDKHP': ""
+            'codeKP': null,
+            'codeETDK': null,
+            'codeZKPPTR': null,
+            'codeDKHP': null
         }
     ],
     responsibilities: [
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'textId': ""
+            'text': "",
+            'id': null
         }
     ],
     haveToKnow: [
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'textId': ""
+            'text': "",
+            'id': null
         }
     ],
     qualiffRequir: [
         {
             'portionStartDate': null,
             'portionEndDate': null,
-            'textId': ""
+            'text': "",
+            'id': null
         }
     ]
 };
@@ -218,6 +226,7 @@ class AddOccupBox extends Component {
             handleServerRespMsgDismiss,
             handleModalAddNewClarificationAlertDismiss,
             shouldShowServerRespMsg,
+            handleBtnAddInfoFromAnotherOccupClick,
             submitting
         } = this.props;
 
@@ -250,6 +259,7 @@ class AddOccupBox extends Component {
                 <h3 className="box-title"> Додавання посади </h3>
             </div>
             <div className="box-body">
+                <ModalAddInfoFromAnotherOccup />
                 <ModalAddNewOccupKeyWord
                     inpVal={this.state.newOccupKeyWordInpVal}
                     onInpValChange={newVal => this.setState({ newOccupKeyWordInpVal: newVal })}
@@ -273,18 +283,22 @@ class AddOccupBox extends Component {
                         <AddOccupBoxCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
                         <AddOccupBoxResponsibSection
                             responsibFields={responsibilities}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                             handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
                         <AddOccupBoxHaveToKnowSection
                             haveToKnowFields={haveToKnow}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
                         <AddOccupBoxQualiffRequirSection
                             qualiffRequirFields={qualiffRequir}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
                         <div>
@@ -334,12 +348,15 @@ export default reduxForm(
             'codes[].codeZKPPTR',
             'codes[].codeDKHP',
             'responsibilities[].text',
+            'responsibilities[].id',
             'responsibilities[].portionStartDate',
             'responsibilities[].portionEndDate',
             'haveToKnow[].text',
+            'haveToKnow[].id',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
             'qualiffRequir[].text',
+            'qualiffRequir[].id',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate'
         ],
@@ -374,7 +391,10 @@ export default reduxForm(
                 return dispatch( dismissModalAddNewClarificationAlert() );
             },
             addNewClarification(val) {
-                dispatch(addNewClarification(val));
+                return dispatch(addNewClarification(val));
+            },
+            handleBtnAddInfoFromAnotherOccupClick(data){
+                return dispatch(showModalAddInfoFromAnotherOccup(data));
             }
         }
     }

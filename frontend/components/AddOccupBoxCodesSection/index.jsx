@@ -2,9 +2,17 @@ import React, {Component} from "react";
 import AddOccupBoxCodesPortion from "../AddOccupBoxCodesPortion";
 import "./styles.less";
 
+import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES } from '../../constants/addingInfoFromAnotherOccup';
+
 export default class extends Component {
     render() {
         let originalHandler = this.props.handleDelCodesPortionBtnClick,
+            handleBtnAddInfoFromAnotherOccupClick = () => {
+                this.props.handleBtnAddInfoFromAnotherOccupClick({
+                    typeText: "коди",
+                    typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES
+                })
+            },
             portionsMarkup = this.props.codesFields.map((codesFieldsItem, i, codesFieldsArr) => {
                 //прив'язуємо обробник видалення до номера порції
                 let decoratedDelHandler = (index => {
@@ -27,7 +35,7 @@ export default class extends Component {
 
         return <div>
             <div className="col-sm-7 pull-right text-right">
-                <a href="#" className="" data-toggle="modal" data-target=".modal-add-info-from-related">
+                <a href="#" className="" data-toggle="modal" onClick={handleBtnAddInfoFromAnotherOccupClick}>
                     <i> Заповнити коди із аналогічної посади </i>
                     <i className="fa fa-link" />
                 </a>

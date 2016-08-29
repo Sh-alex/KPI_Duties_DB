@@ -23,6 +23,9 @@ export default class extends Component {
             <div className="form-group">
                 <div className="col-sm-8">
                     <div className="input-group">
+                        <input
+                            type="hidden"
+                            {...this.props.haveToKnowPortionFields.id} />
                         <textarea
                             {...this.props.haveToKnowPortionFields.text}
                             className="form-control" 
