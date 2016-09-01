@@ -66,7 +66,7 @@ public class AddingOccupationController {
 
         for (RtDutiesEntity entity : all) {
             IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getRtDutiesId());
+            idNameResponse.setId(entity.getId());
             idNameResponse.setName(entity.getRtDutiesName());
 
             response.getIdNameResponses().add(idNameResponse);

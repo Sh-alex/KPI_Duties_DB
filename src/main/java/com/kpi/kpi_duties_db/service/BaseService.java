@@ -10,7 +10,8 @@ import java.util.List;
 public interface BaseService<T> {
 
     T add(T entity);
-    void delete(int id);
+    List<T> add(List<T> entity);
+    void delete(Integer id);
     T edit(T entity);
     List<T> getAll();
 }
