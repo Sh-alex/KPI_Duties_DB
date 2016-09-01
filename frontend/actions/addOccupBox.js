@@ -47,6 +47,7 @@ function submitAddFormFail (error) {
 export function submitAddForm(data, dispatch) {
     dispatch(submitAddFormRequest(data));
 
+    //тут проміс треба для redux-form
     return new Promise((resolve, reject) => {
         postToApi(data)
             .then((response) => {

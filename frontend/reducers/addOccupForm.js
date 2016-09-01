@@ -11,6 +11,14 @@ import {
 } from '../constants/AddOccupBox'
 
 import {
+    ADD_INFO_FROM_ANOTHER_OCCUPATION,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
+} from '../constants/addingInfoFromAnotherOccup'
+
+import {
     ADD_NEW_CLARIFICATION_SUCCESS
 } from '../constants/occupationNameInfo'
 
@@ -45,6 +53,53 @@ export default function addOccupForm(state, action) {
                 shouldShowServerRespMsg: false
             };
 
+        case ADD_INFO_FROM_ANOTHER_OCCUPATION:
+            // action.resPortionIndex
+            switch(action.resultsType){
+                case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
+                    if(!action.data || !action.data.codes instanceof Array)
+                        return state;
+                    else
+                        return {
+                            ...state,
+                            codes: action.data.codes.map(portion => {
+                                return {
+                                    "portionStartDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "portionEndDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "codeKP": {
+                                        "initial": null,
+                                        "value": portion.codeKP ? portion.codeKP.id : null,
+                                        "_isFieldValue": true,
+                                    },
+                                    "codeETDK": {
+                                        "initial": null,
+                                        "value": portion.codeETDK ? portion.codeETDK.id : null,
+                                        "_isFieldValue": true
+                                    },
+                                    "codeZKPPTR": {
+                                        "initial": null,
+                                        "value": portion.codeZKPPTR ? portion.codeZKPPTR.id : null,
+                                        "_isFieldValue": true
+                                    },
+                                    "codeDKHP": {
+                                        "initial": null,
+                                        "value": portion.codeDKHP ? portion.codeDKHP.id : null,
+                                        "_isFieldValue": true
+                                    }
+                                }
+                            })
+                        };
+                default:
+                    return state;
+            }
 
         case ADD_FORM_CLARIFICATION_INP_CHANGE:
             return {
