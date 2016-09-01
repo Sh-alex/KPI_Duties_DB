@@ -15,7 +15,7 @@ public class DcCodeDkhpEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "Name")
     private String name;
@@ -23,11 +23,11 @@ public class DcCodeDkhpEntity {
     @OneToMany(mappedBy = "dcCodeDkhpEntity")
     private Set<RtCodeEntity> rtCodeEntities;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,24 +12,28 @@ import java.util.Set;
 @Table(name = "DcDutiesPartition", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesPartitionEntity {
 
-    private int dcDutiesPartitionId;
-    private String dcDutiesPartitionName;
-
-    private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "DcDutiesPartitionId")
-    public int getDcDutiesPartitionId() {
-        return dcDutiesPartitionId;
-    }
-
-    public void setDcDutiesPartitionId(int dcDutiesPartitionId) {
-        this.dcDutiesPartitionId = dcDutiesPartitionId;
-    }
+    private Integer dcDutiesPartitionId;
 
     @Basic
     @Column(name = "DcDutiesPartitionName")
+    private String dcDutiesPartitionName;
+
+    @OneToMany(mappedBy = "dcDutiesPartitionEntity")
+    private Set<RtDutiesEntity> rtDutiesEntities;
+
+
+    public Integer getDcDutiesPartitionId() {
+        return dcDutiesPartitionId;
+    }
+
+    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
+        this.dcDutiesPartitionId = dcDutiesPartitionId;
+    }
+
+
     public String getDcDutiesPartitionName() {
         return dcDutiesPartitionName;
     }
@@ -39,7 +42,7 @@ public class DcDutiesPartitionEntity {
         this.dcDutiesPartitionName = dcDutiesPartitionName;
     }
 
-    @OneToMany(mappedBy = "dcDutiesPartitionEntity")
+
     public Set<RtDutiesEntity> getRtDutiesEntities() {
         return rtDutiesEntities;
     }
