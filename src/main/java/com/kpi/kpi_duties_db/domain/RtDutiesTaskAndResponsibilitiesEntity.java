@@ -18,11 +18,8 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "DcDuties_TasksAndResponsibilitiesId", updatable = false, insertable = false)
+    @Column(name = "DcDuties_TasksAndResponsibilitiesId")
     private Integer dcDutiesTasksAndResponsibilitiesId;
-
-    @Column(name = "RtDutiesId", updatable = false, insertable = false)
-    private Integer rtDutiesId;
 
     @Column(name = "DateStart")
     private Date dateStart;
@@ -32,12 +29,7 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
 
     @ManyToOne
     @JoinColumn(name = "RtDutiesId")
-    private RtDutiesEntity rtDutiesEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
-    private DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity;
-
+    RtDutiesEntity rtDutiesEntity;
 
     public Integer getId() {
         return id;
@@ -53,14 +45,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
 
     public void setDcDutiesTasksAndResponsibilitiesId(Integer dcDutiesTasksAndResponsibilitiesId) {
         this.dcDutiesTasksAndResponsibilitiesId = dcDutiesTasksAndResponsibilitiesId;
-    }
-
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
-    }
-
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
     }
 
     public Date getDateStart() {
@@ -87,14 +71,6 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.rtDutiesEntity = rtDutiesEntity;
     }
 
-    public DcDutiesTasksAndResponsibilitiesEntity getDcDutiesTasksAndResponsibilitiesEntity() {
-        return dcDutiesTasksAndResponsibilitiesEntity;
-    }
-
-    public void setDcDutiesTasksAndResponsibilitiesEntity(DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity) {
-        this.dcDutiesTasksAndResponsibilitiesEntity = dcDutiesTasksAndResponsibilitiesEntity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,15 +78,12 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         RtDutiesTaskAndResponsibilitiesEntity that = (RtDutiesTaskAndResponsibilitiesEntity) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesTasksAndResponsibilitiesId(), that.getDcDutiesTasksAndResponsibilitiesId()) &&
-                Objects.equals(getRtDutiesId(), that.getRtDutiesId()) &&
                 Objects.equals(getDateStart(), that.getDateStart()) &&
-                Objects.equals(getDateEnd(), that.getDateEnd()) &&
-                Objects.equals(getRtDutiesEntity(), that.getRtDutiesEntity()) &&
-                Objects.equals(getDcDutiesTasksAndResponsibilitiesEntity(), that.getDcDutiesTasksAndResponsibilitiesEntity());
+                Objects.equals(getDateEnd(), that.getDateEnd());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesTasksAndResponsibilitiesId(), getRtDutiesId(), getDateStart(), getDateEnd(), getRtDutiesEntity(), getDcDutiesTasksAndResponsibilitiesEntity());
+        return Objects.hash(getId(), getDcDutiesTasksAndResponsibilitiesId(), getDateStart(), getDateEnd());
     }
 }

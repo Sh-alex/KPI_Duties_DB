@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.service.impl;
 import com.kpi.kpi_duties_db.domain.RtCodeEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesCodeRepository;
+import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.service.RtDutiesCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
     @Autowired
     RtDutiesCodeRepository repository;
 
+    @Autowired
+    RtDutiesRepository rtDutiesEntity;
+
     @Override
     public List<RtDutiesCodeEntity> add(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
 
@@ -29,7 +33,8 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
         for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
 
-            entity.setRtDutiesId(rtDutiesId);
+            entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
+
             entity.setRtCodeId(rtCodeEntity.getId());
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
@@ -38,4 +43,18 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
         return list;
     }
 
+    @Override
+    public List<RtDutiesCodeEntity> edit(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
+        List<RtDutiesCodeEntity> list = new ArrayList<>();
+        for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
+            RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
+
+            entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
+            entity.setRtCodeId(rtCodeEntity.getId());
+            entity.setDateStart(rtCodeEntity.getDateStart());
+            entity.setDateStop(rtCodeEntity.getDateStop());
+            list.add(repository.saveAndFlush(entity));
+        }
+        return list;
+    }
 }

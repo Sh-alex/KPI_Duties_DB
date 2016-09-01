@@ -21,12 +21,8 @@ public class RtDutiesCodeEntity {
     @Column(name = "RtDutiesCodeId")
     private Integer rtDutiesCodeId;
 
-    @Column(name = "RtDutiesId", insertable = false, updatable = false)
-    private Integer rtDutiesId;
-
-    @Column(name = "RtCodeId", insertable = false, updatable = false)
+    @Column(name = "RtCodeId")
     private Integer rtCodeId;
-
 
     @Column(name = "DateStart")
     private Date dateStart;
@@ -37,14 +33,9 @@ public class RtDutiesCodeEntity {
     @Column(name = "GUID")
     private String guid;
 
-    @ManyToOne
-    @JoinColumn(name = "RtCodeId")
-    private RtCodeEntity rtCodeEntity;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RtDutiesId")
-    private RtDutiesEntity rtDutiesEntity;
-
+    RtDutiesEntity rtDutiesEntity;
 
     public Integer getId() {
         return id;
@@ -60,14 +51,6 @@ public class RtDutiesCodeEntity {
 
     public void setRtDutiesCodeId(Integer rtDutiesCodeId) {
         this.rtDutiesCodeId = rtDutiesCodeId;
-    }
-
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
-    }
-
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
     }
 
     public Integer getRtCodeId() {
@@ -102,14 +85,6 @@ public class RtDutiesCodeEntity {
         this.guid = guid;
     }
 
-    public RtCodeEntity getRtCodeEntity() {
-        return rtCodeEntity;
-    }
-
-    public void setRtCodeEntity(RtCodeEntity rtCodeEntity) {
-        this.rtCodeEntity = rtCodeEntity;
-    }
-
     public RtDutiesEntity getRtDutiesEntity() {
         return rtDutiesEntity;
     }
@@ -125,17 +100,14 @@ public class RtDutiesCodeEntity {
         RtDutiesCodeEntity entity = (RtDutiesCodeEntity) o;
         return Objects.equals(getId(), entity.getId()) &&
                 Objects.equals(getRtDutiesCodeId(), entity.getRtDutiesCodeId()) &&
-                Objects.equals(getRtDutiesId(), entity.getRtDutiesId()) &&
                 Objects.equals(getRtCodeId(), entity.getRtCodeId()) &&
                 Objects.equals(getDateStart(), entity.getDateStart()) &&
                 Objects.equals(getDateStop(), entity.getDateStop()) &&
-                Objects.equals(getGuid(), entity.getGuid()) &&
-                Objects.equals(getRtCodeEntity(), entity.getRtCodeEntity()) &&
-                Objects.equals(getRtDutiesEntity(), entity.getRtDutiesEntity());
+                Objects.equals(getGuid(), entity.getGuid());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRtDutiesCodeId(), getRtDutiesId(), getRtCodeId(), getDateStart(), getDateStop(), getGuid(), getRtCodeEntity(), getRtDutiesEntity());
+        return Objects.hash(getId(), getRtDutiesCodeId(), getRtCodeId(), getDateStart(), getDateStop(), getGuid());
     }
 }

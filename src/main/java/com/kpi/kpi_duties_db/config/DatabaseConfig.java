@@ -1,11 +1,13 @@
 package com.kpi.kpi_duties_db.config;
 
+import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
@@ -23,6 +25,20 @@ public class DatabaseConfig {
 
     @Autowired
     private Environment env;
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactoryBean() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan("com.kpi.kpi_duties_db.database");
+        sessionFactory.setHibernateProperties(getHibernateProperties());
+        return sessionFactory;
+    }
+
+    @Bean
+    public SessionFactory sessionFactory() {
+        return sessionFactoryBean().getObject();
+    }
 
 
     @Bean

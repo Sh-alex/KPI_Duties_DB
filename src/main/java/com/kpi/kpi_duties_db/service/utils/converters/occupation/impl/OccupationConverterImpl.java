@@ -43,7 +43,10 @@ public class OccupationConverterImpl implements OccupationConverter {
         entity.setDcDutiesPartitionId(nameOccupation.getDcDutiesPartitionId());
 
         if (!nameOccupation.getRtDutiesParentId().equals(-1)) {
-            entity.setParentId(nameOccupation.getRtDutiesParentId());
+
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setId(nameOccupation.getRtDutiesParentId());
+            entity.setRtDutiesEntity(rtDutiesEntity);
         }
         entity.setRtDutiesName(nameOccupation.getRtDutiesName());
         entity.setRtDutiesNameShort(nameOccupation.getRtDutiesNameShort());
@@ -58,9 +61,8 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         List<DutiesValidityDateEntity> list = new ArrayList<>();
 
-        DutiesValidityDateEntity entity = new DutiesValidityDateEntity();
-
         for (int i = 0; i <= 1; i++) {
+            DutiesValidityDateEntity entity = new DutiesValidityDateEntity();
             if (i == 0) {
                 entity.setStart(request.getDurationOccupation().getCreatingInStateDate());
                 entity.setInKpi(true);
@@ -71,10 +73,12 @@ public class OccupationConverterImpl implements OccupationConverter {
             }
 
             entity.setVirtual(request.getFeaturesOccupation().getVirtual());
-            entity.setRtDutiesId(rtDutiesId);
-        }
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setId(rtDutiesId);
+            entity.setRtDutiesEntity(rtDutiesEntity);
 
-        list.add(entity);
+            list.add(entity);
+        }
 
         return list;
     }
@@ -93,6 +97,8 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setCodeZKPPTRId(codeOccupation.getCodeZKPPTRId());
             entity.setDateStart(codeOccupation.getPortionStartDate());
             entity.setDateStop(codeOccupation.getPortionEndDate());
+
+            list.add(entity);
         }
         return list;
     }
@@ -116,7 +122,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 entity.setDcDutiesTasksAndResponsibilitiesId(responsibility.getId());
             }
 
-            entity.setRtDutiesId(rtDutiesId);
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setId(rtDutiesId);
+            entity.setRtDutiesEntity(rtDutiesEntity);
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
@@ -144,7 +152,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 entity.setDcDutiesMustKnowId(responsibility.getId());
             }
 
-            entity.setRtDutiesId(rtDutiesId);
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setId(rtDutiesId);
+            entity.setRtDutiesEntity(rtDutiesEntity);
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
@@ -173,7 +183,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 entity.setDcDutiesQualificationRequirementsId(responsibility.getId());
             }
 
-            entity.setRtDutiesId(rtDutiesId);
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setId(rtDutiesId);
+            entity.setRtDutiesEntity(rtDutiesEntity);
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 

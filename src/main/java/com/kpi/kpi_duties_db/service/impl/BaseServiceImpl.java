@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,21 +30,32 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     @Transactional
     public List<T> add(List<T> entities) {
-        List<T> list = new ArrayList<>();
-        for (T entity : entities) {
-            list.add(repository.saveAndFlush(entity));
-        }
+
+        List<T> list = repository.save(entities);
+        repository.flush();
+
         return list;
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
         repository.delete(id);
     }
 
     @Override
+    @Transactional
     public T edit(T entity) {
         return repository.saveAndFlush(entity);
+    }
+
+    @Override
+    @Transactional
+    public List<T> edit(List<T> entities) {
+        List<T> list = repository.save(entities);
+        repository.flush();
+
+        return list;
     }
 
     @Override

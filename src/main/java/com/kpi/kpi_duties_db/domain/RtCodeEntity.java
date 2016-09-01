@@ -28,36 +28,21 @@ public class RtCodeEntity {
     @Column(name = "DateStop")
     private Date dateStop;
 
-    @Column(name = "CodeDKHPId", insertable = false, updatable = false)
+    @Column(name = "CodeDKHPId")
     private Integer codeDKHPId;
 
-    @Column(name = "CodeETKDId", insertable = false, updatable = false)
+    @Column(name = "CodeETKDId")
     private Integer codeETKDId;
 
-    @Column(name = "CodeKPId", insertable = false, updatable = false)
+    @Column(name = "CodeKPId")
     private Integer codeKPId;
 
-    @Column(name = "CodeZKPPTRId", insertable = false, updatable = false)
+    @Column(name = "CodeZKPPTRId")
     private Integer codeZKPPTRId;
 
-    @OneToMany(mappedBy = "rtCodeEntity")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "RtCodeId")
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
-
-    @ManyToOne
-    @JoinColumn(name = "CodeZKPPTRId")
-    private DcCodeZkpptrEntity dcCodeZkpptrEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "CodeDKHPId")
-    private DcCodeDkhpEntity dcCodeDkhpEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "CodeETKDId")
-    private DcCodeEtkdEntity dcCodeEtkdEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "CodeKPId")
-    private DcCodeKpEntity dcCodeKpEntity;
 
 
     public int getId() {
@@ -132,60 +117,24 @@ public class RtCodeEntity {
         this.rtDutiesCodeEntities = rtDutiesCodeEntities;
     }
 
-    public DcCodeZkpptrEntity getDcCodeZkpptrEntity() {
-        return dcCodeZkpptrEntity;
-    }
-
-    public void setDcCodeZkpptrEntity(DcCodeZkpptrEntity dcCodeZkpptrEntity) {
-        this.dcCodeZkpptrEntity = dcCodeZkpptrEntity;
-    }
-
-    public DcCodeDkhpEntity getDcCodeDkhpEntity() {
-        return dcCodeDkhpEntity;
-    }
-
-    public void setDcCodeDkhpEntity(DcCodeDkhpEntity dcCodeDkhpEntity) {
-        this.dcCodeDkhpEntity = dcCodeDkhpEntity;
-    }
-
-    public DcCodeEtkdEntity getDcCodeEtkdEntity() {
-        return dcCodeEtkdEntity;
-    }
-
-    public void setDcCodeEtkdEntity(DcCodeEtkdEntity dcCodeEtkdEntity) {
-        this.dcCodeEtkdEntity = dcCodeEtkdEntity;
-    }
-
-    public DcCodeKpEntity getDcCodeKpEntity() {
-        return dcCodeKpEntity;
-    }
-
-    public void setDcCodeKpEntity(DcCodeKpEntity dcCodeKpEntity) {
-        this.dcCodeKpEntity = dcCodeKpEntity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RtCodeEntity)) return false;
-        RtCodeEntity entity = (RtCodeEntity) o;
-        return getId() == entity.getId() &&
-                Objects.equals(getNewId(), entity.getNewId()) &&
-                Objects.equals(getDateStart(), entity.getDateStart()) &&
-                Objects.equals(getDateStop(), entity.getDateStop()) &&
-                Objects.equals(getCodeDKHPId(), entity.getCodeDKHPId()) &&
-                Objects.equals(getCodeETKDId(), entity.getCodeETKDId()) &&
-                Objects.equals(getCodeKPId(), entity.getCodeKPId()) &&
-                Objects.equals(getCodeZKPPTRId(), entity.getCodeZKPPTRId()) &&
-                Objects.equals(getRtDutiesCodeEntities(), entity.getRtDutiesCodeEntities()) &&
-                Objects.equals(getDcCodeZkpptrEntity(), entity.getDcCodeZkpptrEntity()) &&
-                Objects.equals(getDcCodeDkhpEntity(), entity.getDcCodeDkhpEntity()) &&
-                Objects.equals(getDcCodeEtkdEntity(), entity.getDcCodeEtkdEntity()) &&
-                Objects.equals(getDcCodeKpEntity(), entity.getDcCodeKpEntity());
+        RtCodeEntity that = (RtCodeEntity) o;
+        return getId() == that.getId() &&
+                Objects.equals(getNewId(), that.getNewId()) &&
+                Objects.equals(getDateStart(), that.getDateStart()) &&
+                Objects.equals(getDateStop(), that.getDateStop()) &&
+                Objects.equals(getCodeDKHPId(), that.getCodeDKHPId()) &&
+                Objects.equals(getCodeETKDId(), that.getCodeETKDId()) &&
+                Objects.equals(getCodeKPId(), that.getCodeKPId()) &&
+                Objects.equals(getCodeZKPPTRId(), that.getCodeZKPPTRId()) &&
+                Objects.equals(getRtDutiesCodeEntities(), that.getRtDutiesCodeEntities());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNewId(), getDateStart(), getDateStop(), getCodeDKHPId(), getCodeETKDId(), getCodeKPId(), getCodeZKPPTRId(), getRtDutiesCodeEntities(), getDcCodeZkpptrEntity(), getDcCodeDkhpEntity(), getDcCodeEtkdEntity(), getDcCodeKpEntity());
+        return Objects.hash(getId(), getNewId(), getDateStart(), getDateStop(), getCodeDKHPId(), getCodeETKDId(), getCodeKPId(), getCodeZKPPTRId(), getRtDutiesCodeEntities());
     }
 }

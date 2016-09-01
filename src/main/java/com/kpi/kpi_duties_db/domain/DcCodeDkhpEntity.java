@@ -20,7 +20,8 @@ public class DcCodeDkhpEntity {
     @Column(name = "Name")
     private String name;
 
-    @OneToMany(mappedBy = "dcCodeDkhpEntity")
+    @OneToMany
+    @JoinColumn(name = "CodeDKHPId")
     private Set<RtCodeEntity> rtCodeEntities;
 
     public Integer getId() {

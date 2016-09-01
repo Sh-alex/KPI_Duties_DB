@@ -14,4 +14,6 @@ import java.util.List;
 public interface RtDutiesCodeService extends BaseService<RtDutiesCodeEntity> {
 
      List<RtDutiesCodeEntity> add(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities);
+
+     List<RtDutiesCodeEntity> edit(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities);
 }

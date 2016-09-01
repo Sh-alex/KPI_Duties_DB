@@ -28,47 +28,33 @@ public class RtDutiesEntity {
     @Column(name = "RtDutiesNameShort")
     private String rtDutiesNameShort;
 
-    @Column(name = "ParentId", insertable = false, updatable = false)
-    private Integer parentId;
-
-    @Column(name = "DcDutiesNameId", insertable = false, updatable = false)
+    @Column(name = "DcDutiesNameId")
     private Integer dcDutiesNameId;
 
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
 
-    @ManyToOne
-    @JoinColumn(name = "DcDutiesNameId")
-    private DcDutiesNameEntity dcDutiesNameEntity;
-
-    /*@ManyToOne
-    @JoinColumn(name = "DcDutiesPartitionId")
-    private DcDutiesPartitionEntity dcDutiesPartitionEntity;*/
-
-    @ManyToOne
-    @JoinColumn(name = "ParentId")
-    private RtDutiesEntity rtDutiesEntity;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesEntity> rtDutiesEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity")
+    @ManyToOne
+    @JoinColumn( name = "ParentId")
+    private RtDutiesEntity rtDutiesEntity;
+
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
 
-    @OneToMany
-    @JoinColumn(name = "RtDutiesId")
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<DutiesValidityDateEntity> dutiesValidityDateEntities;
 
-    @OneToMany
-    @JoinColumn(name = "RtDutiesId")
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
 
-    @OneToMany
-    @JoinColumn(name = "RtDutiesId")
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity")
+    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
 
     public Integer getId() {
@@ -103,14 +89,6 @@ public class RtDutiesEntity {
         this.rtDutiesNameShort = rtDutiesNameShort;
     }
 
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
     public Integer getDcDutiesNameId() {
         return dcDutiesNameId;
     }
@@ -127,12 +105,12 @@ public class RtDutiesEntity {
         this.vcChangeDate = vcChangeDate;
     }
 
-    public DcDutiesNameEntity getDcDutiesNameEntity() {
-        return dcDutiesNameEntity;
+    public Set<RtDutiesEntity> getRtDutiesEntities() {
+        return rtDutiesEntities;
     }
 
-    public void setDcDutiesNameEntity(DcDutiesNameEntity dcDutiesNameEntity) {
-        this.dcDutiesNameEntity = dcDutiesNameEntity;
+    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
+        this.rtDutiesEntities = rtDutiesEntities;
     }
 
     public RtDutiesEntity getRtDutiesEntity() {
@@ -141,14 +119,6 @@ public class RtDutiesEntity {
 
     public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
         this.rtDutiesEntity = rtDutiesEntity;
-    }
-
-    public Set<RtDutiesEntity> getRtDutiesEntities() {
-        return rtDutiesEntities;
-    }
-
-    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
-        this.rtDutiesEntities = rtDutiesEntities;
     }
 
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
@@ -195,26 +165,17 @@ public class RtDutiesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RtDutiesEntity)) return false;
-        RtDutiesEntity entity = (RtDutiesEntity) o;
-        return Objects.equals(getId(), entity.getId()) &&
-                Objects.equals(getDcDutiesPartitionId(), entity.getDcDutiesPartitionId()) &&
-                Objects.equals(getRtDutiesName(), entity.getRtDutiesName()) &&
-                Objects.equals(getRtDutiesNameShort(), entity.getRtDutiesNameShort()) &&
-                Objects.equals(getParentId(), entity.getParentId()) &&
-                Objects.equals(getDcDutiesNameId(), entity.getDcDutiesNameId()) &&
-                Objects.equals(getVcChangeDate(), entity.getVcChangeDate()) &&
-                Objects.equals(getDcDutiesNameEntity(), entity.getDcDutiesNameEntity()) &&
-                Objects.equals(getRtDutiesEntity(), entity.getRtDutiesEntity()) &&
-                Objects.equals(getRtDutiesEntities(), entity.getRtDutiesEntities()) &&
-                Objects.equals(getRtDutiesCodeEntities(), entity.getRtDutiesCodeEntities()) &&
-                Objects.equals(getDutiesValidityDateEntities(), entity.getDutiesValidityDateEntities()) &&
-                Objects.equals(getRtDutiesQualificationRequirementsEntities(), entity.getRtDutiesQualificationRequirementsEntities()) &&
-                Objects.equals(getRtDutiesMustKnowEntities(), entity.getRtDutiesMustKnowEntities()) &&
-                Objects.equals(getRtDutiesTaskAndResponsibilitiesEntities(), entity.getRtDutiesTaskAndResponsibilitiesEntities());
+        RtDutiesEntity that = (RtDutiesEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getDcDutiesPartitionId(), that.getDcDutiesPartitionId()) &&
+                Objects.equals(getRtDutiesName(), that.getRtDutiesName()) &&
+                Objects.equals(getRtDutiesNameShort(), that.getRtDutiesNameShort()) &&
+                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId()) &&
+                Objects.equals(getVcChangeDate(), that.getVcChangeDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getParentId(), getDcDutiesNameId(), getVcChangeDate(), getDcDutiesNameEntity(), getRtDutiesEntity(), getRtDutiesEntities(), getRtDutiesCodeEntities(), getDutiesValidityDateEntities(), getRtDutiesQualificationRequirementsEntities(), getRtDutiesMustKnowEntities(), getRtDutiesTaskAndResponsibilitiesEntities());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getDcDutiesNameId(), getVcChangeDate());
     }
 }

@@ -16,10 +16,8 @@ public class DutiesValidityDateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
-    @Column(name= "RtDutiesId")
-    private Integer rtDutiesId;
 
     @Column(name = "isInKPI")
     private boolean isInKpi;
@@ -33,24 +31,20 @@ public class DutiesValidityDateEntity {
     @Column(name = "isVirtual")
     private Boolean isVirtual;
 
+    @ManyToOne
+    @JoinColumn(name = "RtDutiesId")
+    RtDutiesEntity rtDutiesEntity;
+
     public DutiesValidityDateEntity() {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
-    }
-
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
     }
 
     public boolean isInKpi() {
@@ -85,14 +79,21 @@ public class DutiesValidityDateEntity {
         isVirtual = virtual;
     }
 
+    public RtDutiesEntity getRtDutiesEntity() {
+        return rtDutiesEntity;
+    }
+
+    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
+        this.rtDutiesEntity = rtDutiesEntity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DutiesValidityDateEntity)) return false;
         DutiesValidityDateEntity that = (DutiesValidityDateEntity) o;
-        return getId() == that.getId() &&
-                isInKpi() == that.isInKpi() &&
-                Objects.equals(getRtDutiesId(), that.getRtDutiesId()) &&
+        return isInKpi() == that.isInKpi() &&
+                Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getStart(), that.getStart()) &&
                 Objects.equals(getStop(), that.getStop()) &&
                 Objects.equals(isVirtual, that.isVirtual);
@@ -100,6 +101,6 @@ public class DutiesValidityDateEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRtDutiesId(), isInKpi(), getStart(), getStop(), isVirtual);
+        return Objects.hash(getId(), isInKpi(), getStart(), getStop(), isVirtual);
     }
 }
