@@ -3,9 +3,6 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcDutiesQualificationRequirementsEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesQualificationRequirementsService;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,18 +31,10 @@ public class DcDutiesQualificationRequirementsController {
 
     @POST
     public Response add(@NotNull NewValueRequest request) {
-        //TODO: Пофіксить цей костиль і додати автоінкремент для сутності
+
         DcDutiesQualificationRequirementsEntity entity = new DcDutiesQualificationRequirementsEntity();
 
-        Session session = ((Session) em.getDelegate()).getSessionFactory().openSession();
-
-        Criteria criteria = session.createCriteria(DcDutiesQualificationRequirementsEntity.class);
-        criteria.setProjection(Projections.max("id"));
-
-        Integer entityMaxId = (Integer) criteria.uniqueResult();
-
         entity.setText(request.getNewVal());
-        entity.setId(++entityMaxId);
         dcDutiesQualificationRequirementsService.add(entity);
 
         return Response.ok().entity(entity).build();

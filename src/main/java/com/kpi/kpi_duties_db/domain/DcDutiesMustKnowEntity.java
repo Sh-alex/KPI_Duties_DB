@@ -20,7 +20,8 @@ public class DcDutiesMustKnowEntity {
     @Column(name = "Text")
     private String text;
 
-    @OneToMany(mappedBy = "dcDutiesMustKnowEntity")
+    @OneToMany
+    @JoinColumn(name = "DcDuties_MustKnowId")
     private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 
 

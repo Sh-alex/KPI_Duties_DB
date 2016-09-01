@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -18,17 +19,26 @@ public class RtCodeEntity {
     @Column(name = "Id")
     private int id;
 
-    @Basic
     @Column(name = "NewId")
     private Integer newId;
 
-    @Basic
     @Column(name = "DateStart")
     private Date dateStart;
 
-    @Basic
     @Column(name = "DateStop")
     private Date dateStop;
+
+    @Column(name = "CodeDKHPId", insertable = false, updatable = false)
+    private Integer codeDKHPId;
+
+    @Column(name = "CodeETKDId", insertable = false, updatable = false)
+    private Integer codeETKDId;
+
+    @Column(name = "CodeKPId", insertable = false, updatable = false)
+    private Integer codeKPId;
+
+    @Column(name = "CodeZKPPTRId", insertable = false, updatable = false)
+    private Integer codeZKPPTRId;
 
     @OneToMany(mappedBy = "rtCodeEntity")
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
@@ -58,7 +68,6 @@ public class RtCodeEntity {
         this.id = id;
     }
 
-
     public Integer getNewId() {
         return newId;
     }
@@ -66,7 +75,6 @@ public class RtCodeEntity {
     public void setNewId(Integer newId) {
         this.newId = newId;
     }
-
 
     public Date getDateStart() {
         return dateStart;
@@ -76,7 +84,6 @@ public class RtCodeEntity {
         this.dateStart = dateStart;
     }
 
-
     public Date getDateStop() {
         return dateStop;
     }
@@ -85,8 +92,40 @@ public class RtCodeEntity {
         this.dateStop = dateStop;
     }
 
+    public Integer getCodeDKHPId() {
+        return codeDKHPId;
+    }
+
+    public void setCodeDKHPId(Integer codeDKHPId) {
+        this.codeDKHPId = codeDKHPId;
+    }
+
+    public Integer getCodeETKDId() {
+        return codeETKDId;
+    }
+
+    public void setCodeETKDId(Integer codeETKDId) {
+        this.codeETKDId = codeETKDId;
+    }
+
+    public Integer getCodeKPId() {
+        return codeKPId;
+    }
+
+    public void setCodeKPId(Integer codeKPId) {
+        this.codeKPId = codeKPId;
+    }
+
+    public Integer getCodeZKPPTRId() {
+        return codeZKPPTRId;
+    }
+
+    public void setCodeZKPPTRId(Integer codeZKPPTRId) {
+        this.codeZKPPTRId = codeZKPPTRId;
+    }
+
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
-        return this.rtDutiesCodeEntities;
+        return rtDutiesCodeEntities;
     }
 
     public void setRtDutiesCodeEntities(Set<RtDutiesCodeEntity> rtDutiesCodeEntities) {
@@ -109,7 +148,6 @@ public class RtCodeEntity {
         this.dcCodeDkhpEntity = dcCodeDkhpEntity;
     }
 
-
     public DcCodeEtkdEntity getDcCodeEtkdEntity() {
         return dcCodeEtkdEntity;
     }
@@ -117,7 +155,6 @@ public class RtCodeEntity {
     public void setDcCodeEtkdEntity(DcCodeEtkdEntity dcCodeEtkdEntity) {
         this.dcCodeEtkdEntity = dcCodeEtkdEntity;
     }
-
 
     public DcCodeKpEntity getDcCodeKpEntity() {
         return dcCodeKpEntity;
@@ -130,24 +167,25 @@ public class RtCodeEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RtCodeEntity that = (RtCodeEntity) o;
-
-        if (id != that.id) return false;
-        if (newId != null ? !newId.equals(that.newId) : that.newId != null) return false;
-        if (dateStart != null ? !dateStart.equals(that.dateStart) : that.dateStart != null) return false;
-        if (dateStop != null ? !dateStop.equals(that.dateStop) : that.dateStop != null) return false;
-
-        return true;
+        if (!(o instanceof RtCodeEntity)) return false;
+        RtCodeEntity entity = (RtCodeEntity) o;
+        return getId() == entity.getId() &&
+                Objects.equals(getNewId(), entity.getNewId()) &&
+                Objects.equals(getDateStart(), entity.getDateStart()) &&
+                Objects.equals(getDateStop(), entity.getDateStop()) &&
+                Objects.equals(getCodeDKHPId(), entity.getCodeDKHPId()) &&
+                Objects.equals(getCodeETKDId(), entity.getCodeETKDId()) &&
+                Objects.equals(getCodeKPId(), entity.getCodeKPId()) &&
+                Objects.equals(getCodeZKPPTRId(), entity.getCodeZKPPTRId()) &&
+                Objects.equals(getRtDutiesCodeEntities(), entity.getRtDutiesCodeEntities()) &&
+                Objects.equals(getDcCodeZkpptrEntity(), entity.getDcCodeZkpptrEntity()) &&
+                Objects.equals(getDcCodeDkhpEntity(), entity.getDcCodeDkhpEntity()) &&
+                Objects.equals(getDcCodeEtkdEntity(), entity.getDcCodeEtkdEntity()) &&
+                Objects.equals(getDcCodeKpEntity(), entity.getDcCodeKpEntity());
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (newId != null ? newId.hashCode() : 0);
-        result = 31 * result + (dateStart != null ? dateStart.hashCode() : 0);
-        result = 31 * result + (dateStop != null ? dateStop.hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getNewId(), getDateStart(), getDateStop(), getCodeDKHPId(), getCodeETKDId(), getCodeKPId(), getCodeZKPPTRId(), getRtDutiesCodeEntities(), getDcCodeZkpptrEntity(), getDcCodeDkhpEntity(), getDcCodeEtkdEntity(), getDcCodeKpEntity());
     }
 }

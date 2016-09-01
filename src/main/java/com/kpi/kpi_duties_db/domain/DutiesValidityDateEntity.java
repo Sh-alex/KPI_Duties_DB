@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * @author Olexandr Shevchenko
@@ -17,6 +18,9 @@ public class DutiesValidityDateEntity {
     @Column(name = "Id")
     private int id;
 
+    @Column(name= "RtDutiesId")
+    private Integer rtDutiesId;
+
     @Column(name = "isInKPI")
     private boolean isInKpi;
 
@@ -29,9 +33,8 @@ public class DutiesValidityDateEntity {
     @Column(name = "isVirtual")
     private Boolean isVirtual;
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
-    private RtDutiesEntity rtDutiesEntity;
+    public DutiesValidityDateEntity() {
+    }
 
 
     public int getId() {
@@ -40,6 +43,14 @@ public class DutiesValidityDateEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
+    }
+
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
     }
 
     public boolean isInKpi() {
@@ -58,7 +69,6 @@ public class DutiesValidityDateEntity {
         this.start = start;
     }
 
-
     public Date getStop() {
         return stop;
     }
@@ -75,38 +85,21 @@ public class DutiesValidityDateEntity {
         isVirtual = virtual;
     }
 
-
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
-    }
-
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof DutiesValidityDateEntity)) return false;
         DutiesValidityDateEntity that = (DutiesValidityDateEntity) o;
-
-        if (id != that.id) return false;
-        if (isInKpi != that.isInKpi) return false;
-        if (start != null ? !start.equals(that.start) : that.start != null) return false;
-        if (stop != null ? !stop.equals(that.stop) : that.stop != null) return false;
-        if (isVirtual != null ? !isVirtual.equals(that.isVirtual) : that.isVirtual != null) return false;
-
-        return true;
+        return getId() == that.getId() &&
+                isInKpi() == that.isInKpi() &&
+                Objects.equals(getRtDutiesId(), that.getRtDutiesId()) &&
+                Objects.equals(getStart(), that.getStart()) &&
+                Objects.equals(getStop(), that.getStop()) &&
+                Objects.equals(isVirtual, that.isVirtual);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (isInKpi ? 1 : 0);
-        result = 31 * result + (start != null ? start.hashCode() : 0);
-        result = 31 * result + (stop != null ? stop.hashCode() : 0);
-        result = 31 * result + (isVirtual != null ? isVirtual.hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getRtDutiesId(), isInKpi(), getStart(), getStop(), isVirtual);
     }
 }

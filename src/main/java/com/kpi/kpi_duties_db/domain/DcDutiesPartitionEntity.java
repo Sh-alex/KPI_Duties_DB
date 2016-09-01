@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,33 +12,38 @@ import java.util.Set;
 @Table(name = "DcDutiesPartition", schema = "dbo", catalog = "DcDuties")
 public class DcDutiesPartitionEntity {
 
-    private int dcDutiesPartitionId;
-    private String dcDutiesPartitionName;
-
-    private Set<RtDutiesEntity> rtDutiesEntities = new HashSet<>();
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "DcDutiesPartitionId")
-    public int getDcDutiesPartitionId() {
-        return dcDutiesPartitionId;
-    }
-
-    public void setDcDutiesPartitionId(int dcDutiesPartitionId) {
-        this.dcDutiesPartitionId = dcDutiesPartitionId;
-    }
+    private Integer id;
 
     @Basic
     @Column(name = "DcDutiesPartitionName")
-    public String getDcDutiesPartitionName() {
-        return dcDutiesPartitionName;
+    private String name;
+
+    @OneToMany
+    @JoinColumn(name="DcDutiesPartitionId")
+    private Set<RtDutiesEntity> rtDutiesEntities;
+
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setDcDutiesPartitionName(String dcDutiesPartitionName) {
-        this.dcDutiesPartitionName = dcDutiesPartitionName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @OneToMany(mappedBy = "dcDutiesPartitionEntity")
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     public Set<RtDutiesEntity> getRtDutiesEntities() {
         return rtDutiesEntities;
     }
@@ -55,8 +59,8 @@ public class DcDutiesPartitionEntity {
 
         DcDutiesPartitionEntity that = (DcDutiesPartitionEntity) o;
 
-        if (dcDutiesPartitionId != that.dcDutiesPartitionId) return false;
-        if (dcDutiesPartitionName != null ? !dcDutiesPartitionName.equals(that.dcDutiesPartitionName) : that.dcDutiesPartitionName != null)
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
 
         return true;
@@ -64,8 +68,8 @@ public class DcDutiesPartitionEntity {
 
     @Override
     public int hashCode() {
-        int result = dcDutiesPartitionId;
-        result = 31 * result + (dcDutiesPartitionName != null ? dcDutiesPartitionName.hashCode() : 0);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

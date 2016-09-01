@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 24.08.2016
  */
 
-public class NameAddOccupation {
+public class NameOccupation {
 
     @JsonProperty("occupationGroup")
     private Integer dcDutiesPartitionId;
 
     @JsonProperty("clarifiedOccup")
-    private Integer rtDutiesId;
+    private Integer rtDutiesParentId;
 
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
@@ -33,12 +33,12 @@ public class NameAddOccupation {
         this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
+    public Integer getRtDutiesParentId() {
+        return rtDutiesParentId;
     }
 
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
+    public void setRtDutiesParentId(Integer rtDutiesParentId) {
+        this.rtDutiesParentId = rtDutiesParentId;
     }
 
     public Integer getDcDutiesNameId() {
