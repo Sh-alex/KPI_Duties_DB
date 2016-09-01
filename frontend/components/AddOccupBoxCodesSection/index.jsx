@@ -10,7 +10,8 @@ export default class extends Component {
             handleBtnAddInfoFromAnotherOccupClick = () => {
                 this.props.handleBtnAddInfoFromAnotherOccupClick({
                     typeText: "коди",
-                    typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES
+                    typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES,
+                    resPortionIndex: null
                 })
             },
             portionsMarkup = this.props.codesFields.map((codesFieldsItem, i, codesFieldsArr) => {
@@ -35,7 +36,7 @@ export default class extends Component {
 
         return <div>
             <div className="col-sm-7 pull-right text-right">
-                <a href="#" className="" data-toggle="modal" onClick={handleBtnAddInfoFromAnotherOccupClick}>
+                <a href="javascript:void(0)" className="" onClick={handleBtnAddInfoFromAnotherOccupClick}>
                     <i> Заповнити коди із аналогічної посади </i>
                     <i className="fa fa-link" />
                 </a>

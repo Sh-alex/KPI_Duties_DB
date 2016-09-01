@@ -14,33 +14,64 @@ import {
 import './styles.less'
 
 
-export default class extends Component {
+export default class FormAddInfoFromAnotherOccup extends Component {
     constructor(props) {
         super(props);
 
+        this.resetState = this.resetState.bind(this);
+        this.submitForm = this.submitForm.bind(this);
+
         this.state = {
-            searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
-            occupGroupVal: null,    // 8
-            searchText: "",         //"інженер"
-            searchTags: null,       // [4, 7, 19] => ["Старший", "Інженер", "1 розряду"]
-            inKpi: true,
+            form: {
+                searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
+                occupGroupVal: -1,     // 8
+                searchText: "",        //"інженер"
+                searchTags: [],      // [4, 7, 19] => ["Старший", "Інженер", "1 розряду"]
+                inKpi: true,
+            }
         };
     }
 
-    render() {
-        const submitHandler = e => {
-            e.preventDefault();
-            this.props.onSubmit(this.props.inpVal);
-        };
+    resetState() {
+        this.setState({
+            form: {
+                searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
+                occupGroupVal: -1,     // 8
+                searchText: "",        //"інженер"
+                searchTags: [],      // [4, 7, 19] => ["Старший", "Інженер", "1 розряду"]
+                inKpi: true,
+            }
+        });
+    }
 
-        let btnSpinnerClass = classNames({
+    submitForm(e) {
+        e.preventDefault();
+        this.props.onSubmitSearchForm({
+            ...this.state.form,
+            searchTags: this.state.form.searchTags.map(tag => tag.id)
+        });
+    }
+
+    render() {
+        let errorAlert = (!this.props.searchError) ? "" : (
+            <Alert bsStyle="danger" onDismiss={this.props.onAlertDismiss}>
+                <h4>
+                    <i className="icon fa fa-warning" />
+                    Помилка! :(
+                </h4>
+                <p>
+                    { this.props.searchError }
+                </p>
+            </Alert>
+        ),
+            btnSpinnerClass = classNames({
             'btn-spinner': true,
             'hidden': !this.props.isSubmittng
         });
 
         return (
             <form
-                onSubmit={submitHandler}
+                onSubmit={this.submitForm}
                 className="form-horizontal search-form form-search-similar"
                 id="form-search-similar"
                 role="form">
@@ -60,9 +91,13 @@ export default class extends Component {
                                 ]}
                                 valueField='id'
                                 textField='textValue'
-                                defaultValue={null}
-                                value={this.state.occupGroupVal}
-                                onChange={ newVal => this.setState({occupGroupVal: newVal}) }
+                                defaultValue={-1}
+                                value={this.state.form.occupGroupVal}
+                                onChange={ newVal => {
+                                    this.setState({
+                                        form: { ...this.state.form, occupGroupVal: newVal}
+                                    })
+                                }}
                                 busy={this.props.occupationGroupList.isFetching}
                                 caseSensitive={false}
                                 filter='contains' />
@@ -74,8 +109,12 @@ export default class extends Component {
                         </label>
                         <div className="col-sm-9">
                             <select
-                                value={this.state.searchType}
-                                onChange={e => this.setState({searchType: e.currentTarget.value}) }
+                                value={this.state.form.searchType}
+                                onChange={ e => {
+                                    this.setState({
+                                        form: { ...this.state.form, searchType: e.currentTarget.value}
+                                    })
+                                }}
                                 className="form-control"
                                 id="form-search-similar__select-occupation-name"
                             >
@@ -100,19 +139,23 @@ export default class extends Component {
                     <div className="form-group">
                         <div className="col-sm-offset-3 col-sm-9">
                             {
-                                this.state.searchType === CONTAINS_STRING || this.state.searchType === MATCH_STRING ?
+                                this.state.form.searchType === CONTAINS_STRING || this.state.form.searchType === MATCH_STRING ?
                                     (
                                         <input
                                             type="text"
                                             className="form-control"
                                             id="form-search-similar__inp-occupation-name"
                                             placeholder="Введіть текст"
-                                            value={this.state.searchText}
-                                            onChange={ newVal => this.setState({searchText: newVal}) }/>
+                                            value={this.state.form.searchText}
+                                            onChange={ e => {
+                                                this.setState({
+                                                    form: { ...this.state.form, searchText: e.currentTarget.value}
+                                                })
+                                            }} />
                                     ) : ""
                             }
                             {
-                                this.state.searchType === ALL_TAGS || this.state.searchType === SOME_TAGS ?
+                                this.state.form.searchType === ALL_TAGS || this.state.form.searchType === SOME_TAGS ?
                                     (
                                         <Multiselect
                                             id="form-search-similar__inp-occupation-name"
@@ -121,8 +164,12 @@ export default class extends Component {
                                             valueField='id'
                                             textField='textValue'
                                             defaultValue={null}
-                                            value={this.state.searchTags}
-                                            onChange={ newVal => this.setState({searchTags: newVal}) }
+                                            value={this.state.form.searchTags}
+                                            onChange={ newVal => {
+                                                this.setState({
+                                                    form: { ...this.state.form, searchTags: newVal }
+                                                })
+                                            }}
                                             busy={this.props.occupationGroupList.isFetching}
                                             caseSensitive={false}
                                             filter='contains' />
@@ -135,16 +182,19 @@ export default class extends Component {
                             <label>
                                 <input
                                     type="checkbox"
-                                    checked={this.state.inKpi}
-                                    onChange={ newVal => this.setState({inKpi: newVal}) } />
+                                    checked={this.state.form.inKpi}
+                                    onChange={ e => {
+                                        this.setState({
+                                            form: { ...this.state.form, inKpi: e.currentTarget.value}
+                                        })
+                                    }} />
                                 Приналежність до КПІ
                             </label>
                         </div>
                     </div>
                 </div>
-
-                { /* errorAlert */}
-                <div className="clearfix form-search-similar__bottom-btns-part">
+                { errorAlert }
+                <div className="clearfix search-similar__bottom-btns-part">
                     <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
                         Відміна
                     </button>
@@ -153,6 +203,7 @@ export default class extends Component {
                         <button
                             type="reset"
                             className="btn btn-default"
+                            onClick={this.resetState}
                         >
                             Очистити поля {" "}
                             <i className="fa fa-refresh" aria-hidden="true" title="Очистити поля форми" />
@@ -161,7 +212,7 @@ export default class extends Component {
                             type="submit"
                             className="btn btn-primary"
                             title="Шукати посаду"
-                            disabled={this.props.isSubmittng || !this.state.inpVal}
+                            disabled={this.props.isSubmittng || this.props.errors}
                         >
                             <span className="btn-label"> 
                                 Шукати {" "}

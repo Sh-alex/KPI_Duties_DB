@@ -155,10 +155,10 @@ class AddOccupBox extends Component {
         this.props.fields.codes.addField({
             'portionStartDate': null,
             'portionEndDate': null,
-            'codeKP': "",
-            'codeETDK': "",
-            'codeZKPPTR': "",
-            'codeDKHP': ""
+            'codeKP': null,
+            'codeETDK': null,
+            'codeZKPPTR': null,
+            'codeDKHP': null
         });
     }
 
@@ -170,6 +170,7 @@ class AddOccupBox extends Component {
         this.props.fields.responsibilities.addField({
             'portionStartDate': null,
             'portionEndDate': null,
+            'id': null,
             'text': ""
         });
     }
@@ -182,6 +183,7 @@ class AddOccupBox extends Component {
         this.props.fields.haveToKnow.addField({
             'portionStartDate': null,
             'portionEndDate': null,
+            'id': null,
             'text': ""
         });
     }
@@ -194,6 +196,7 @@ class AddOccupBox extends Component {
         this.props.fields.qualiffRequir.addField({
             'portionStartDate': null,
             'portionEndDate': null,
+            'id': null,
             'text': ""
         });
     }

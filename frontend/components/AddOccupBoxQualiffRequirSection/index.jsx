@@ -2,14 +2,24 @@ import React, {Component} from "react";
 import AddOccupBoxQualiffRequirPortion from "../AddOccupBoxQualiffRequirPortion";
 import "./styles.less";
 
+import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR } from '../../constants/addingInfoFromAnotherOccup';
+
 export default class extends Component {
     render() {
-        let originalHandler = this.props.handleDelQualiffRequirPortionBtnClick,
+        let originalDelPortionHandler = this.props.handleDelQualiffRequirPortionBtnClick,
+            originalAddInfoFromAnotherOccupHandler = this.props.handleBtnAddInfoFromAnotherOccupClick,
             portionsMarkup = this.props.qualiffRequirFields.map((fieldsItem, i, fieldsArr) => {
-                //прив'язуємо обробник видалення до номера порції
+                //прив'язуємо обробники до номера порції
                 let decoratedDelHandler = (index => {
-                    return () => originalHandler(index)
-                })(i);
+                    return () => originalDelPortionHandler(index)
+                })(i),
+                    decoratedAddInfoFromAnotherOccupHandler = (index => {
+                        return () => originalAddInfoFromAnotherOccupHandler({
+                            typeText: "кваліфікаційні вимоги",
+                            typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR,
+                            resPortionIndex: index
+                        })
+                    })(i);
                 return(
                     <AddOccupBoxQualiffRequirPortion
                         qualiffRequirPortionFields={fieldsItem}
@@ -18,6 +28,7 @@ export default class extends Component {
                         key={i}
                         portionKey={i}
                         handleDelQualiffRequirPortionBtnClick={decoratedDelHandler}
+                        handleBtnAddInfoFromAnotherOccupClick={decoratedAddInfoFromAnotherOccupHandler}
                     />
                 )
             });
