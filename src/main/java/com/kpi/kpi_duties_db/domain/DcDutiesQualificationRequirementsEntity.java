@@ -20,7 +20,8 @@ public class DcDutiesQualificationRequirementsEntity {
     @Column(name = "Text")
     private String text;
 
-    @OneToMany(mappedBy = "dcDutiesQualificationRequirementsEntity")
+    @OneToMany
+    @JoinColumn(name = "DcDuties_QualificationRequirementsId")
     private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
 
 

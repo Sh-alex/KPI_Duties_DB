@@ -18,11 +18,8 @@ public class RtDutiesQualificationRequirementsEntity {
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "DcDuties_QualificationRequirementsId", insertable = false, updatable = false)
+    @Column(name = "DcDuties_QualificationRequirementsId")
     private Integer dcDutiesQualificationRequirementsId;
-
-    @Column(name = "RtDutiesId", insertable = false, updatable = false)
-    private Integer rtDutiesId;
 
     @Column(name = "DateStart")
     private Date dateStart;
@@ -32,12 +29,7 @@ public class RtDutiesQualificationRequirementsEntity {
 
     @ManyToOne
     @JoinColumn(name = "RtDutiesId")
-    private RtDutiesEntity rtDutiesEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "DcDuties_QualificationRequirementsId")
-    private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
-
+    RtDutiesEntity rtDutiesEntity;
 
     public Integer getId() {
         return id;
@@ -53,14 +45,6 @@ public class RtDutiesQualificationRequirementsEntity {
 
     public void setDcDutiesQualificationRequirementsId(Integer dcDutiesQualificationRequirementsId) {
         this.dcDutiesQualificationRequirementsId = dcDutiesQualificationRequirementsId;
-    }
-
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
-    }
-
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
     }
 
     public Date getDateStart() {
@@ -87,14 +71,6 @@ public class RtDutiesQualificationRequirementsEntity {
         this.rtDutiesEntity = rtDutiesEntity;
     }
 
-    public DcDutiesQualificationRequirementsEntity getDcDutiesQualificationRequirementsEntity() {
-        return dcDutiesQualificationRequirementsEntity;
-    }
-
-    public void setDcDutiesQualificationRequirementsEntity(DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity) {
-        this.dcDutiesQualificationRequirementsEntity = dcDutiesQualificationRequirementsEntity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,15 +78,13 @@ public class RtDutiesQualificationRequirementsEntity {
         RtDutiesQualificationRequirementsEntity that = (RtDutiesQualificationRequirementsEntity) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesQualificationRequirementsId(), that.getDcDutiesQualificationRequirementsId()) &&
-                Objects.equals(getRtDutiesId(), that.getRtDutiesId()) &&
                 Objects.equals(getDateStart(), that.getDateStart()) &&
                 Objects.equals(getDateEnd(), that.getDateEnd()) &&
-                Objects.equals(getRtDutiesEntity(), that.getRtDutiesEntity()) &&
-                Objects.equals(getDcDutiesQualificationRequirementsEntity(), that.getDcDutiesQualificationRequirementsEntity());
+                Objects.equals(getRtDutiesEntity(), that.getRtDutiesEntity());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesQualificationRequirementsId(), getRtDutiesId(), getDateStart(), getDateEnd(), getRtDutiesEntity(), getDcDutiesQualificationRequirementsEntity());
+        return Objects.hash(getId(), getDcDutiesQualificationRequirementsId(), getDateStart(), getDateEnd(), getRtDutiesEntity());
     }
 }

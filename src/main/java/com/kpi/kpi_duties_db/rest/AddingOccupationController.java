@@ -46,8 +46,8 @@ public class AddingOccupationController {
 
         for (DcDutiesPartitionEntity entity : all) {
             IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getDcDutiesPartitionId());
-            idNameResponse.setName(entity.getDcDutiesPartitionName());
+            idNameResponse.setId(entity.getId());
+            idNameResponse.setName(entity.getName());
 
             response.getIdNameResponses().add(idNameResponse);
         }

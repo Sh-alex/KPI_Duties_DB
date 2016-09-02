@@ -15,20 +15,21 @@ public class DcCodeZkpptrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "Name")
     private String name;
 
-    @OneToMany(mappedBy = "dcCodeZkpptrEntity")
+    @OneToMany
+    @JoinColumn(name = "CodeZKPPTRId")
     private Set<RtCodeEntity> rtCodeEntities;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -15,31 +15,32 @@ public class DcDutiesPartitionEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "DcDutiesPartitionId")
-    private Integer dcDutiesPartitionId;
+    private Integer id;
 
     @Basic
     @Column(name = "DcDutiesPartitionName")
-    private String dcDutiesPartitionName;
+    private String name;
 
-    @OneToMany(mappedBy = "dcDutiesPartitionEntity")
+    @OneToMany
+    @JoinColumn(name="DcDutiesPartitionId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
 
-    public Integer getDcDutiesPartitionId() {
-        return dcDutiesPartitionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
-        this.dcDutiesPartitionId = dcDutiesPartitionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 
-    public String getDcDutiesPartitionName() {
-        return dcDutiesPartitionName;
+    public String getName() {
+        return name;
     }
 
-    public void setDcDutiesPartitionName(String dcDutiesPartitionName) {
-        this.dcDutiesPartitionName = dcDutiesPartitionName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -58,8 +59,8 @@ public class DcDutiesPartitionEntity {
 
         DcDutiesPartitionEntity that = (DcDutiesPartitionEntity) o;
 
-        if (dcDutiesPartitionId != that.dcDutiesPartitionId) return false;
-        if (dcDutiesPartitionName != null ? !dcDutiesPartitionName.equals(that.dcDutiesPartitionName) : that.dcDutiesPartitionName != null)
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
 
         return true;
@@ -67,8 +68,8 @@ public class DcDutiesPartitionEntity {
 
     @Override
     public int hashCode() {
-        int result = dcDutiesPartitionId;
-        result = 31 * result + (dcDutiesPartitionName != null ? dcDutiesPartitionName.hashCode() : 0);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

@@ -20,7 +20,8 @@ public class DcDutiesTasksAndResponsibilitiesEntity {
     @Column(name = "Text")
     private String text;
 
-    @OneToMany(mappedBy = "dcDutiesTasksAndResponsibilitiesEntity", fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
 
     public int getId() {
