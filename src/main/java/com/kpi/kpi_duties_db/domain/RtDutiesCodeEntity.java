@@ -21,8 +21,6 @@ public class RtDutiesCodeEntity {
     @Column(name = "RtDutiesCodeId")
     private Integer rtDutiesCodeId;
 
-    @Column(name = "RtCodeId")
-    private Integer rtCodeId;
 
     @Column(name = "DateStart")
     private Date dateStart;
@@ -36,6 +34,10 @@ public class RtDutiesCodeEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RtDutiesId")
     RtDutiesEntity rtDutiesEntity;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "RtCodeId")
+    RtCodeEntity rtCodeEntity;
 
     public Integer getId() {
         return id;
@@ -51,14 +53,6 @@ public class RtDutiesCodeEntity {
 
     public void setRtDutiesCodeId(Integer rtDutiesCodeId) {
         this.rtDutiesCodeId = rtDutiesCodeId;
-    }
-
-    public Integer getRtCodeId() {
-        return rtCodeId;
-    }
-
-    public void setRtCodeId(Integer rtCodeId) {
-        this.rtCodeId = rtCodeId;
     }
 
     public Date getDateStart() {
@@ -93,6 +87,14 @@ public class RtDutiesCodeEntity {
         this.rtDutiesEntity = rtDutiesEntity;
     }
 
+    public RtCodeEntity getRtCodeEntity() {
+        return rtCodeEntity;
+    }
+
+    public void setRtCodeEntity(RtCodeEntity rtCodeEntity) {
+        this.rtCodeEntity = rtCodeEntity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,7 +102,6 @@ public class RtDutiesCodeEntity {
         RtDutiesCodeEntity entity = (RtDutiesCodeEntity) o;
         return Objects.equals(getId(), entity.getId()) &&
                 Objects.equals(getRtDutiesCodeId(), entity.getRtDutiesCodeId()) &&
-                Objects.equals(getRtCodeId(), entity.getRtCodeId()) &&
                 Objects.equals(getDateStart(), entity.getDateStart()) &&
                 Objects.equals(getDateStop(), entity.getDateStop()) &&
                 Objects.equals(getGuid(), entity.getGuid());
@@ -108,6 +109,6 @@ public class RtDutiesCodeEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRtDutiesCodeId(), getRtCodeId(), getDateStart(), getDateStop(), getGuid());
+        return Objects.hash(getId(), getRtDutiesCodeId(), getDateStart(), getDateStop(), getGuid());
     }
 }

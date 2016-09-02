@@ -40,8 +40,7 @@ public class RtCodeEntity {
     @Column(name = "CodeZKPPTRId")
     private Integer codeZKPPTRId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "RtCodeId")
+    @OneToMany(mappedBy = "rtCodeEntity", cascade = CascadeType.ALL)
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
 
 

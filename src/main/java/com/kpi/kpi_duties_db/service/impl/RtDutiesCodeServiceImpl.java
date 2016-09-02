@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.RtCodeEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity;
+import com.kpi.kpi_duties_db.repository.RtCodeRepository;
 import com.kpi.kpi_duties_db.repository.RtDutiesCodeRepository;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.service.RtDutiesCodeService;
@@ -26,6 +27,9 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
     @Autowired
     RtDutiesRepository rtDutiesEntity;
 
+    @Autowired
+    RtCodeRepository rtCodeRepository;
+
     @Override
     public List<RtDutiesCodeEntity> add(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
 
@@ -35,7 +39,8 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
 
             entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
 
-            entity.setRtCodeId(rtCodeEntity.getId());
+            entity.setRtCodeEntity(rtCodeRepository.findOne(rtCodeEntity.getId()));
+
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
             list.add(repository.saveAndFlush(entity));
@@ -50,7 +55,8 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
 
             entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
-            entity.setRtCodeId(rtCodeEntity.getId());
+
+            entity.setRtCodeEntity(rtCodeRepository.findOne(rtCodeEntity.getId()));
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
             list.add(repository.saveAndFlush(entity));
