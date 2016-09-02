@@ -26,6 +26,10 @@ export default class extends Component {
                         portionItemClassName={ i===0 ? "is-first-item" : "" }
                         key={i}
                         portionKey={i}
+                        openModalAddNewKPCode={this.props.openModalAddNewKPCode}
+                        openModalAddNewDKHPCode={this.props.openModalAddNewDKHPCode}
+                        openModalAddNewZKPPTRCode={this.props.openModalAddNewZKPPTRCode}
+                        openModalAddNewETDKCode={this.props.openModalAddNewETDKCode}
                         handleDelCodesPortionBtnClick={decoratedDelHandler}
                         DKHPCodesList={this.props.DKHPCodesList}
                         ETDKCodesList={this.props.ETDKCodesList}

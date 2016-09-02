@@ -25,7 +25,15 @@ import {
     fetchKPCodesList,
     fetchZKPPTRCodesList,
     fetchETDKCodesList,
-    fetchDKHPCodesList
+    fetchDKHPCodesList,
+    addNewKPCode,
+    addNewDKHPCode,
+    addNewETDKCode,
+    addNewZKPPTRCode,
+    clearKPCodeAddingError,
+    clearDKHPCodeAddingError,
+    clearETDKCodeAddingError,
+    clearZKPPTRCodeAddingError
 } from "../../actions/occupCodesLists"
 
 import {
@@ -99,8 +107,16 @@ class AddOccupBox extends Component {
         super(props);
 
         this.state = {
-            newOccupKeyWordInpVal: "",
-            showModalAddNewOccupKeyWord: false
+            newClarificationInpVal: "",
+            newKPCodeInpVal: "",
+            newDKHPCodeInpVal: "",
+            newETDKCodeInpVal: "",
+            newZKPPTRCodeInpVal: "",
+            showModalAddNewClarification: false,
+            showModalAddNewKPCode: false,
+            showModalAddNewDKHPCode: false,
+            showModalAddNewETDKCode: false,
+            showModalAddNewZKPPTRCode: false
         };
 
         this.handleAddCodesPortionBtnClick = this.handleAddCodesPortionBtnClick.bind(this);
@@ -116,18 +132,7 @@ class AddOccupBox extends Component {
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
         this.handleClarificationInpChange = this.handleClarificationInpChange.bind(this);
 
-        this.handleHideModalAddNewOccupKeyWord = this.handleHideModalAddNewOccupKeyWord.bind(this);
-        this.openModalAddNewOccupKeyWord = this.openModalAddNewOccupKeyWord.bind(this);
-
         this.props.initializeForm(initialFormState);
-    }
-
-    handleHideModalAddNewOccupKeyWord() {
-        this.setState({ showModalAddNewOccupKeyWord: false });
-    }
-
-    openModalAddNewOccupKeyWord() {
-        this.setState({ showModalAddNewOccupKeyWord: true });
     }
 
     componentDidMount() {
@@ -209,7 +214,7 @@ class AddOccupBox extends Component {
         this.props.fields.name.occupationGroup.onChange(newVal.id);
         this.props.dispatch(occupationGroupInpChange(newVal));
     }
-    
+
     handleClarifiedOccupInpChange(newVal) {
         this.props.fields.name.clarifiedOccup.onChange(newVal.id);
         this.props.dispatch(clarifiedOccupInpChange(newVal));
@@ -227,7 +232,6 @@ class AddOccupBox extends Component {
             resetForm,
             invalid,
             handleServerRespMsgDismiss,
-            handleModalAddNewClarificationAlertDismiss,
             shouldShowServerRespMsg,
             handleBtnAddInfoFromAnotherOccupClick,
             submitting
@@ -264,14 +268,50 @@ class AddOccupBox extends Component {
             <div className="box-body">
                 <ModalAddInfoFromAnotherOccup />
                 <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newOccupKeyWordInpVal}
-                    onInpValChange={newVal => this.setState({ newOccupKeyWordInpVal: newVal })}
-                    show={this.state.showModalAddNewOccupKeyWord}
+                    inpVal={this.state.newClarificationInpVal}
+                    onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
+                    show={this.state.showModalAddNewClarification}
                     errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
                     isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
                     onSave={this.props.addNewClarification}
-                    onAlertDismiss={ handleModalAddNewClarificationAlertDismiss }
-                    onHide={this.handleHideModalAddNewOccupKeyWord} />
+                    onAlertDismiss={ this.props.dismissModalAddNewClarificationAlert }
+                    onHide={() => this.setState({ showModalAddNewClarification: false })} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newKPCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewKPCode}
+                    errors={this.props.occupCodesLists.KPCodesList.addingErrors}
+                    isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
+                    onSave={this.props.addNewKPCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
+                    onHide={() => this.setState({ showModalAddNewKPCode: false })} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newETDKCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewETDKCode}
+                    errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
+                    isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
+                    onSave={this.props.addNewETDKCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
+                    onHide={() => this.setState({ showModalAddNewETDKCode: false })} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newDKHPCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewDKHPCode}
+                    errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
+                    isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
+                    onSave={this.props.addNewDKHPCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
+                    onHide={() => this.setState({ showModalAddNewDKHPCode: false })} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newZKPPTRCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewZKPPTRCode}
+                    errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
+                    isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
+                    onSave={this.props.addNewZKPPTRCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
+                    onHide={() => this.setState({ showModalAddNewZKPPTRCode: false })} />
                 <form id="add-form" className="form-horizontal add-form" onSubmit={handleSubmit} role="form">
                     <div className="form-inner">
                         <AddOccupBoxNameSection
@@ -280,12 +320,16 @@ class AddOccupBox extends Component {
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
-                            openModalAddNewOccupKeyWord={this.openModalAddNewOccupKeyWord}  />
+                            openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
                         <AddOccupBoxFeaturesSection featuresFields={features} />
                         <AddOccupBoxDurationSection durationFields={duration} />
                         <AddOccupBoxCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
+                            openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
+                            openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
+                            openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
+                            openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
@@ -390,14 +434,39 @@ export default reduxForm(
             handleServerRespMsgDismiss() {
                 return dispatch( hideAddFormServerRespMsg() );
             },
-            handleModalAddNewClarificationAlertDismiss() {
+            dismissModalAddNewClarificationAlert() {
                 return dispatch( dismissModalAddNewClarificationAlert() );
             },
             addNewClarification(val) {
                 return dispatch(addNewClarification(val));
             },
+            addNewKPCode(val) {
+                return dispatch(addNewKPCode(val));
+            },
+            addNewDKHPCode(val) {
+                return dispatch(addNewDKHPCode(val));
+            },
+            addNewETDKCode(val) {
+                return dispatch(addNewETDKCode(val));
+            },
+            addNewZKPPTRCode(val) {
+                return dispatch(addNewZKPPTRCode(val));
+            },
             handleBtnAddInfoFromAnotherOccupClick(data){
                 return dispatch(showModalAddInfoFromAnotherOccup(data));
+            },
+            
+            dismissModalAddNewKPCodeAlert() {
+                return dispatch( clearKPCodeAddingError() );
+            },
+            dismissModalAddNewZKPPTRCodeAlert() {
+                return dispatch( clearZKPPTRCodeAddingError() );
+            },
+            dismissModalAddNewDKHPCodeAlert() {
+                return dispatch( clearDKHPCodeAddingError() );
+            },
+            dismissModalAddNewETDKCodeAlert() {
+                return dispatch( clearETDKCodeAddingError() );
             }
         }
     }

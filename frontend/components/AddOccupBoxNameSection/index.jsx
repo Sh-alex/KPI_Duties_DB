@@ -75,7 +75,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове ключове слово для уточнення"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewClarification} >
                                 +1
                             </button>
                         </div>

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import './styles.less'
 
-export default class extends Component {
+export default class ModalAddNewOccupKeyWord extends Component {
     render() {
         const submitHandler = e => {
             e.preventDefault();
@@ -32,7 +32,7 @@ export default class extends Component {
             <Modal {...this.props} bsSize="small">
                 <Modal.Header closeButton>
                     <Modal.Title className="text-center">
-                        Додати нове ключове слово для уточнення
+                        Додати нове значення у список
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

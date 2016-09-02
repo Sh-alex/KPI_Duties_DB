@@ -18,10 +18,6 @@ import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
 } from '../constants/addingInfoFromAnotherOccup'
 
-import {
-    ADD_NEW_CLARIFICATION_SUCCESS
-} from '../constants/occupationNameInfo'
-
 function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
     if(clarifiedOccupTextVal && clarificationTextVal)
         return clarifiedOccupTextVal + " " + clarificationTextVal;

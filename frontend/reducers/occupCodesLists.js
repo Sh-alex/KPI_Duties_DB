@@ -3,6 +3,8 @@ import * as aTypes from '../constants/occupCodesLists'
 const initialState = {
     DKHPCodesList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
         // items : []
         items : [
@@ -30,6 +32,8 @@ const initialState = {
     },
     ETDKCodesList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
         // items : []
         items : [
@@ -57,6 +61,8 @@ const initialState = {
     },
     ZKPPTRCodesList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
         //      items : []
         items : [
@@ -84,6 +90,8 @@ const initialState = {
     },
     KPCodesList: {
         isFetching: false,
+        isAddingNewVal: false,
+        addingErrors: [],
         errors: [],
         //      items : []
         items : [
@@ -224,6 +232,156 @@ export default function occupCodesList(state = initialState, action) {
                     errors: [...state.KPCodesList.errors, action.error]
                 }
             };
+
+        case aTypes.ADD_NEW_KP_CODE_REQUEST:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_KP_CODE_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.KPCodesList,
+                    items: [...state.KPCodesList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_KP_CODE_FAIL:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.KPCodesList.addingErrors, action.error]
+                }
+            };
+        case aTypes.ADD_NEW_KP_CODE_CLEAR_ERROR:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    addingErrors: []
+                }
+            };
+
+        case aTypes.ADD_NEW_DKHP_CODE_REQUEST:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_DKHP_CODE_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.DKHPCodesList,
+                    items: [...state.DKHPCodesList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_DKHP_CODE_FAIL:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.DKHPCodesList.addingErrors, action.error]
+                }
+            };
+        case aTypes.ADD_NEW_DKHP_CODE_CLEAR_ERROR:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    addingErrors: []
+                }
+            };
+
+        case aTypes.ADD_NEW_ETDK_CODE_REQUEST:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_ETDK_CODE_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.ETDKCodesList,
+                    items: [...state.ETDKCodesList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_ETDK_CODE_FAIL:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.ETDKCodesList.addingErrors, action.error]
+                }
+            };
+        case aTypes.ADD_NEW_ETDK_CODE_CLEAR_ERROR:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    addingErrors: []
+                }
+            };
+
+        case aTypes.ADD_NEW_ZKPPTR_CODE_REQUEST:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    isAddingNewVal: true,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_ZKPPTR_CODE_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.ZKPPTRCodesList,
+                    items: [...state.ZKPPTRCodesList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingErrors: []
+                }
+            };
+        case aTypes.ADD_NEW_ZKPPTR_CODE_FAIL:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    isAddingNewVal: false,
+                    addingErrors: [...state.ZKPPTRCodesList.addingErrors, action.error]
+                }
+            };
+
+        case aTypes.ADD_NEW_ZKPPTR_CODE_CLEAR_ERROR:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    addingErrors: []
+                }
+            };
+
         default:
             return state
     }
