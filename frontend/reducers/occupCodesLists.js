@@ -245,7 +245,7 @@ export default function occupCodesList(state = initialState, action) {
         case aTypes.ADD_NEW_KP_CODE_SUCCESS:
             return {
                 ...state,
-                clarificationList: {
+                KPCodesList: {
                     ...state.KPCodesList,
                     items: [...state.KPCodesList.items, action.newItem],
                     isAddingNewVal: false,
@@ -282,7 +282,7 @@ export default function occupCodesList(state = initialState, action) {
         case aTypes.ADD_NEW_DKHP_CODE_SUCCESS:
             return {
                 ...state,
-                clarificationList: {
+                DKHPCodesList: {
                     ...state.DKHPCodesList,
                     items: [...state.DKHPCodesList.items, action.newItem],
                     isAddingNewVal: false,
@@ -319,7 +319,7 @@ export default function occupCodesList(state = initialState, action) {
         case aTypes.ADD_NEW_ETDK_CODE_SUCCESS:
             return {
                 ...state,
-                clarificationList: {
+                ETDKCodesList: {
                     ...state.ETDKCodesList,
                     items: [...state.ETDKCodesList.items, action.newItem],
                     isAddingNewVal: false,
@@ -356,7 +356,7 @@ export default function occupCodesList(state = initialState, action) {
         case aTypes.ADD_NEW_ZKPPTR_CODE_SUCCESS:
             return {
                 ...state,
-                clarificationList: {
+                ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
                     items: [...state.ZKPPTRCodesList.items, action.newItem],
                     isAddingNewVal: false,

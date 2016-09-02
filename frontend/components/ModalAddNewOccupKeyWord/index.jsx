@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, Alert } from 'react-bootstrap'
-
 import classNames from 'classnames';
+
+import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import './styles.less'
 
@@ -42,7 +43,7 @@ export default class ModalAddNewOccupKeyWord extends Component {
                                 type="text" 
                                 className="form-control"
                                 value={this.props.inpVal} 
-                                onChange={e => this.props.onInpValChange(e.target.value)}
+                                onChange={e => this.props.onInpValChange( replaceApostrophe(e.target.value) ) }
                                 id="inp-add-new-occup-key-word" 
                                 placeholder="Нове ключове слово у назвах посад" />
                         </div>
