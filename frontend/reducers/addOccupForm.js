@@ -7,7 +7,9 @@ import {
 
     ADD_FORM_OCCUPATION_GROUP_INP_CHANGE,
     ADD_FORM_CLARIFICATION_INP_CHANGE,
-    ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE
+    ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE,
+
+    CHANGE_ADD_FORM_INP_IS_VIRTUAL
 } from '../constants/AddOccupBox'
 
 import {
@@ -96,6 +98,56 @@ export default function addOccupForm(state, action) {
                 default:
                     return state;
             }
+
+        case CHANGE_ADD_FORM_INP_IS_VIRTUAL:
+            //якщо не обрано варіант "є віртуальною посадою"
+            if(!action.newVal || action.newVal == "false") {
+                if(state.codes && state.codes.length)
+                    return state;
+                else
+                    return {
+                        ...state,
+                        codes: [
+                            {
+                                "portionStartDate": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                },
+                                "portionEndDate": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                },
+                                "codeKP": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                },
+                                "codeETDK": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                },
+                                "codeZKPPTR": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                },
+                                "codeDKHP": {
+                                    "initial": null,
+                                    "value": null,
+                                    "_isFieldValue": true
+                                }
+                            }
+                        ]
+                    };
+            }
+            else
+                return {
+                    ...state,
+                    codes: []
+                };
 
         case ADD_FORM_CLARIFICATION_INP_CHANGE:
             return {

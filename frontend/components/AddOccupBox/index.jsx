@@ -41,7 +41,8 @@ import {
     hideAddFormServerRespMsg,
     occupationGroupInpChange,
     clarificationInpChange,
-    clarifiedOccupInpChange
+    clarifiedOccupInpChange,
+    changeAddFormInpIsVirtual
 } from "../../actions/addOccupBox"
 
 import {
@@ -321,11 +322,15 @@ class AddOccupBox extends Component {
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
                             openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
-                        <AddOccupBoxFeaturesSection featuresFields={features} />
+                        <AddOccupBoxFeaturesSection
+                            featuresFields={features}
+                            changeAddFormInpIsVirtual={this.props.changeAddFormInpIsVirtual}
+                        />
                         <AddOccupBoxDurationSection durationFields={duration} />
                         <AddOccupBoxCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
+                            noCodesMsg="Для віртуальних посад не може бути кодів"
                             openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
                             openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
                             openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
@@ -467,6 +472,9 @@ export default reduxForm(
             },
             dismissModalAddNewETDKCodeAlert() {
                 return dispatch( clearETDKCodeAddingError() );
+            },
+            changeAddFormInpIsVirtual(newVal){
+                return dispatch( changeAddFormInpIsVirtual(newVal) );
             }
         }
     }
