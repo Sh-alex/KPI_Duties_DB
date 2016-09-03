@@ -54,7 +54,7 @@ import './styles.less'
 let initialFormState = {
     name: {
         'occupationGroup': null,
-        'clarifiedOccup': null,
+        'clarifiedOccup': -1,
         'clarification': null,
         'occupationName': '',
         'occupationNameMin': ''

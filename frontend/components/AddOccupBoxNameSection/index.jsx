@@ -42,10 +42,16 @@ export default class extends Component {
                         {...nameFields.clarifiedOccup}
                         id="select-clarified-occup"
                         placeholder="Оберіть варіант зі списку"
-                        data={clarifiedOccupationList.items}
+                        data={[
+                            {
+                                "id": -1,
+                                "textValue": "-(Відсутня)-"
+                            },
+                            ...this.props.clarifiedOccupationList.items
+                        ]}
+                        defaultValue={-1}
                         valueField='id'
                         textField='textValue'
-                        defaultValue={null}
                         onChange={ this.props.handleClarifiedOccupInpChange }
                         caseSensitive={false}
                         busy={clarifiedOccupationList.isFetching}
