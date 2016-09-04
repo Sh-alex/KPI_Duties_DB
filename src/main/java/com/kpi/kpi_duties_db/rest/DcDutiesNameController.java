@@ -2,9 +2,9 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesNameService;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
+import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ import java.util.List;
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 @Component
-public class DcDutiesСlarificationController {
+public class DcDutiesNameController {
 
     @Autowired
     DcDutiesNameService dcDutiesNameEntityService;

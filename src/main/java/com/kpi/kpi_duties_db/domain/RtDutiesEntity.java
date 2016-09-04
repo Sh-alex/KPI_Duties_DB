@@ -35,26 +35,28 @@ public class RtDutiesEntity {
     private Timestamp vcChangeDate;
 
 
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ParentId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
-    @ManyToOne
-    @JoinColumn( name = "ParentId")
-    private RtDutiesEntity rtDutiesEntity;
-
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
     private Set<DutiesValidityDateEntity> dutiesValidityDateEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 
-    @OneToMany(mappedBy = "rtDutiesEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
 
     public Integer getId() {
@@ -113,13 +115,6 @@ public class RtDutiesEntity {
         this.rtDutiesEntities = rtDutiesEntities;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
-    }
-
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
-    }
 
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
         return rtDutiesCodeEntities;

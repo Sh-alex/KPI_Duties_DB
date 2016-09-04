@@ -2,9 +2,9 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcCodeDkhpEntity;
 import com.kpi.kpi_duties_db.service.DcCodeDkhpService;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
+import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

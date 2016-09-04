@@ -1,6 +1,6 @@
-package com.kpi.kpi_duties_db.shared.addingoccupation.response;
+package com.kpi.kpi_duties_db.shared.response;
 
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 
 import java.util.List;
 

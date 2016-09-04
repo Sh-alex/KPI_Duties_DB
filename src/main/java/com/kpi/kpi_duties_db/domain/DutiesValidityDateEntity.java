@@ -31,9 +31,8 @@ public class DutiesValidityDateEntity {
     @Column(name = "isVirtual")
     private Boolean isVirtual;
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
-    RtDutiesEntity rtDutiesEntity;
+    @Column(name = "RtDutiesId")
+    private Integer rtDutiesId;
 
     public DutiesValidityDateEntity() {
     }
@@ -79,12 +78,12 @@ public class DutiesValidityDateEntity {
         isVirtual = virtual;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
     }
 
     @Override
@@ -96,11 +95,12 @@ public class DutiesValidityDateEntity {
                 Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getStart(), that.getStart()) &&
                 Objects.equals(getStop(), that.getStop()) &&
-                Objects.equals(isVirtual, that.isVirtual);
+                Objects.equals(isVirtual, that.isVirtual) &&
+                Objects.equals(getRtDutiesId(), that.getRtDutiesId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), isInKpi(), getStart(), getStop(), isVirtual);
+        return Objects.hash(getId(), isInKpi(), getStart(), getStop(), isVirtual, getRtDutiesId());
     }
 }
