@@ -5,7 +5,8 @@ import {
     HIDE_ADD_FORM_SERVER_RESP_MSG,
     ADD_FORM_OCCUPATION_GROUP_INP_CHANGE,
     ADD_FORM_CLARIFICATION_INP_CHANGE,
-    ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE
+    ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE,
+    CHANGE_ADD_FORM_INP_IS_VIRTUAL
 } from '../constants/AddOccupBox'
 
 import * as API_URIs from '../constants/API_URIs';
@@ -114,6 +115,13 @@ export function clarificationInpChange(newVal) {
 export function clarifiedOccupInpChange(newVal) {
     return {
         type: ADD_FORM_CLARIFIED_OCCUP_INP_CHANGE,
+        newVal
+    }
+}
+
+export function changeAddFormInpIsVirtual(newVal) {
+    return {
+        type: CHANGE_ADD_FORM_INP_IS_VIRTUAL,
         newVal
     }
 }

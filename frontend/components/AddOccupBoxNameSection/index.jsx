@@ -1,15 +1,18 @@
 import React, {Component} from "react";
 import {DropdownList} from "react-widgets";
+
+import replaceApostrophe from "../../utils/replaceApostrophe"
+
 import "./styles.less";
 
 export default class extends Component {
     render() {
         let {
-                nameFields,
-                occupationGroupList,
-                clarifiedOccupationList,
-                clarificationList
-            } = this.props;
+            nameFields,
+            occupationGroupList,
+            clarifiedOccupationList,
+            clarificationList
+        } = this.props;
 
         return <div>
             <h4> Назва посади </h4>
@@ -39,10 +42,16 @@ export default class extends Component {
                         {...nameFields.clarifiedOccup}
                         id="select-clarified-occup"
                         placeholder="Оберіть варіант зі списку"
-                        data={clarifiedOccupationList.items}
+                        data={[
+                            {
+                                "id": -1,
+                                "textValue": "-(Відсутня)-"
+                            },
+                            ...this.props.clarifiedOccupationList.items
+                        ]}
+                        defaultValue={-1}
                         valueField='id'
                         textField='textValue'
-                        defaultValue={null}
                         onChange={ this.props.handleClarifiedOccupInpChange }
                         caseSensitive={false}
                         busy={clarifiedOccupationList.isFetching}
@@ -75,7 +84,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове ключове слово для уточнення"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewClarification} >
                                 +1
                             </button>
                         </div>
@@ -87,6 +96,11 @@ export default class extends Component {
                 <div className="col-sm-10">
                     <input
                         {...nameFields.occupationName}
+                        onChange={ e => {
+                                nameFields.occupationName.onChange(
+                                    replaceApostrophe(e.target.value)
+                                )
+                            }}
                         type="text"
                         className="form-control"
                         id="inp-occupation-name"
@@ -100,6 +114,11 @@ export default class extends Component {
                 <div className="col-sm-10">
                     <input
                         {...nameFields.occupationNameMin}
+                        onChange={ e => {
+                                nameFields.occupationNameMin.onChange(
+                                    replaceApostrophe(e.target.value)
+                                )
+                            }}
                         type="text"
                         className="form-control"
                         id="inp-occupation-name-min"

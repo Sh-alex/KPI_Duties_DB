@@ -207,13 +207,7 @@ export default function occupationNameInfo(state = initialState, action) {
             return {
                 ...state,
                 clarifiedOccupationList: {
-                    items: [
-                        {
-                            "id": -1,
-                            "textValue": "-(Відсутня)-"
-                        },
-                        ...action.data
-                    ],
+                    items: action.data,
                     isFetching: false,
                     errors: []
                 }

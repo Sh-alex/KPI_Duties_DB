@@ -1,42 +1,59 @@
 import React, {Component} from "react";
 import {DateTimePicker} from "react-widgets";
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
+import replaceApostrophe from "../../utils/replaceApostrophe"
+import debounce from "../../utils/debounce"
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 import "./styles.less";
 
-export default class extends Component {
-    render() {
-        let topCtrlPart = this.props.showDelBtn ? (
-                <div>
-                    <hr />
-                    <button
-                        type="button"
-                        className="close inp-portions__btn-amount-ctrl--del"
-                        onClick={this.props.handleDelResponsibPortionBtnClick} >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            ) : "";
+// let handleTextareaChange = function (newVal, reduxChangeHandler) {
+//         reduxChangeHandler( replaceApostrophe(newVal) );
+//     },
+//     debouncedHandleTextareaChange = debounce(handleTextareaChange, 500),
+//     persistedHandler = function (e, reduxChangeHandler) {
+//         //e.persist();
+//         let newVal = e.target.value;
+//         debouncedHandleTextareaChange(newVal, reduxChangeHandler);
+//     };
 
-        return <div className={`inp-portions__item ${this.props.portionItemClassName}`}>
+export default function AddOccupBoxResponsibPortion(props) {
+    let topCtrlPart = props.showDelBtn ? (
+        <div>
+            <hr />
+            <button
+                type="button"
+                className="close inp-portions__btn-amount-ctrl--del"
+                onClick={props.handleDelResponsibPortionBtnClick} >
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    ) : "";
+
+    return (
+        <div className={`inp-portions__item ${props.portionItemClassName}`}>
             {topCtrlPart}
             <div className="form-group">
                 <div className="col-sm-8">
                     <div className="input-group">
-                        <input 
+                        <input
                             type="hidden"
-                            {...this.props.responsibPortionFields.id} />
+                            {...props.responsibPortionFields.id} />
                         <textarea
-                            {...this.props.responsibPortionFields.text}
-                            className="form-control" 
-                            placeholder="Завдання, обов'язки та повноваження" 
+                            {...props.responsibPortionFields.text}
+                            onChange={ e => {
+                                props.responsibPortionFields.text.onChange(
+                                    replaceApostrophe(e.target.value)
+                                )
+                            }}
+                            className="form-control"
+                            placeholder="Завдання, обов'язки та повноваження"
                             rows="6" />
                         <div className="input-group-btn">
-                            <button 
-                                type="button" 
-                                title="Додати інформацію з аналогічної посади" 
-                                className="btn btn-default btn-flat" 
-                                onClick={this.props.handleBtnAddInfoFromAnotherOccupClick}
+                            <button
+                                type="button"
+                                title="Додати інформацію з аналогічної посади"
+                                className="btn btn-default btn-flat"
+                                onClick={props.handleBtnAddInfoFromAnotherOccupClick}
                             >
                                 <i className="fa fa-link" />
                             </button>
@@ -47,12 +64,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата прийняття тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionStartDate}
+                            {...props.responsibPortionFields.portionStartDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionStartDate.value}
+                            value={props.responsibPortionFields.portionStartDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionStartDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionStartDate)}
+                            onChange={props.responsibPortionFields.portionStartDate.onChange}
+                            onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionStartDate)}
                             placeholder="Дата прийняття тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}
@@ -61,12 +78,12 @@ export default class extends Component {
                     <label className="center-block">
                         Дата припинення дії тексту <br />
                         <DateTimePicker
-                            {...this.props.responsibPortionFields.portionEndDate}
+                            {...props.responsibPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
-                            value={this.props.responsibPortionFields.portionEndDate.value}
+                            value={props.responsibPortionFields.portionEndDate.value}
                             defaultValue={null}
-                            onChange={this.props.responsibPortionFields.portionEndDate.onChange}
-                            onBlur={(event) => fixBlur(event, this.props.responsibPortionFields.portionEndDate)}
+                            onChange={props.responsibPortionFields.portionEndDate.onChange}
+                            onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionEndDate)}
                             placeholder="Дата припинення дії тексту"
                             time={false}
                             min={OCCUPATION_MIN_DATE}
@@ -75,5 +92,5 @@ export default class extends Component {
                 </div>
             </div>
         </div>
-    }
+    )
 }

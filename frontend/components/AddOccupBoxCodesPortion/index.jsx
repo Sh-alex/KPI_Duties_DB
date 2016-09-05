@@ -80,7 +80,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове значення у цей список кодів"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewKPCode} >
                                 +1
                             </button>
                         </div>
@@ -108,7 +108,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове значення у цей список кодів"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewZKPPTRCode} >
                                 +1
                             </button>
                         </div>
@@ -138,7 +138,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове значення у цей список кодів"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewETDKCode} >
                                 +1
                             </button>
                         </div>
@@ -166,7 +166,7 @@ export default class extends Component {
                                 type="button"
                                 title="Додати нове значення у цей список кодів"
                                 className="btn btn-default btn-flat"
-                                onClick={this.props.openModalAddNewOccupKeyWord} >
+                                onClick={this.props.openModalAddNewDKHPCode} >
                                 +1
                             </button>
                         </div>

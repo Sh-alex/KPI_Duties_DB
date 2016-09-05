@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import {DateTimePicker} from "react-widgets";
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
+import replaceApostrophe from "../../utils/replaceApostrophe"
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 import "./styles.less";
 
-export default class extends Component {
+export default class AddOccupBoxQualiffRequirPortion extends Component {
     render() {
         let topCtrlPart = this.props.showDelBtn ? (
             <div>
@@ -28,6 +29,11 @@ export default class extends Component {
                             {...this.props.qualiffRequirPortionFields.id} />
                         <textarea
                             {...this.props.qualiffRequirPortionFields.text}
+                            onChange={ e => {
+                                this.props.qualiffRequirPortionFields.text.onChange(
+                                    replaceApostrophe(e.target.value)
+                                )
+                            }}
                             className="form-control"
                             placeholder="Кваліфікаційні вимоги"
                             rows="6" />
