@@ -1,7 +1,9 @@
 package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity;
+import com.kpi.kpi_duties_db.repository.DcDutiesTasksAndResponsibilitiesRepository;
 import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,4 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DcDutiesTaskAndResponsibilitiesServiceImpl extends BaseServiceImpl<DcDutiesTasksAndResponsibilitiesEntity> implements DcDutiesTaskAndResponsibilitiesService {
 
+    @Autowired
+    DcDutiesTasksAndResponsibilitiesRepository repository;
+
+    @Override
+    public DcDutiesTasksAndResponsibilitiesEntity getById(Integer id) {
+        return repository.getById(id);
+    }
 }

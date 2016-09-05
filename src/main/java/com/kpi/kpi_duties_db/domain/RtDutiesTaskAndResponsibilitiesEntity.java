@@ -27,9 +27,12 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
     @Column(name = "DateEnd")
     private Date dateEnd;
 
+    @Column(name = "RtDutiesId")
+    private Integer rtDutiesId;
+
     @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
-    RtDutiesEntity rtDutiesEntity;
+    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId", insertable = false, updatable = false)
+    private DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity;
 
     public Integer getId() {
         return id;
@@ -63,12 +66,20 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         this.dateEnd = dateEnd;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
+    }
+
+    public DcDutiesTasksAndResponsibilitiesEntity getDcDutiesTasksAndResponsibilitiesEntity() {
+        return dcDutiesTasksAndResponsibilitiesEntity;
+    }
+
+    public void setDcDutiesTasksAndResponsibilitiesEntity(DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity) {
+        this.dcDutiesTasksAndResponsibilitiesEntity = dcDutiesTasksAndResponsibilitiesEntity;
     }
 
     @Override
@@ -79,11 +90,12 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesTasksAndResponsibilitiesId(), that.getDcDutiesTasksAndResponsibilitiesId()) &&
                 Objects.equals(getDateStart(), that.getDateStart()) &&
-                Objects.equals(getDateEnd(), that.getDateEnd());
+                Objects.equals(getDateEnd(), that.getDateEnd()) &&
+                Objects.equals(getRtDutiesId(), that.getRtDutiesId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesTasksAndResponsibilitiesId(), getDateStart(), getDateEnd());
+        return Objects.hash(getId(), getDcDutiesTasksAndResponsibilitiesId(), getDateStart(), getDateEnd(), getRtDutiesId());
     }
 }

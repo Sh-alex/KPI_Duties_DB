@@ -10,7 +10,6 @@ app/bower_components
 ios
 .yo-rc.json
 .jshintrc
-.gitattributes
 .editorconfig
 npm-debug.log
 .idea_modules/

@@ -1,4 +1,4 @@
-package com.kpi.kpi_duties_db.shared.addingoccupation.response.support;
+package com.kpi.kpi_duties_db.shared.response.support;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

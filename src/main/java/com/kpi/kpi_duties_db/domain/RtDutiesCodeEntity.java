@@ -21,7 +21,6 @@ public class RtDutiesCodeEntity {
     @Column(name = "RtDutiesCodeId")
     private Integer rtDutiesCodeId;
 
-
     @Column(name = "DateStart")
     private Date dateStart;
 
@@ -31,13 +30,15 @@ public class RtDutiesCodeEntity {
     @Column(name = "GUID")
     private String guid;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "RtDutiesId")
-    RtDutiesEntity rtDutiesEntity;
+    @Column(name = "RtDutiesId")
+    private Integer rtDutiesId;
+
+    @Column(name = "RtCodeId")
+    private Integer rtCodeId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "RtCodeId")
-    RtCodeEntity rtCodeEntity;
+    @JoinColumn(name = "RtCodeId", insertable = false, updatable = false)
+    private RtCodeEntity rtCodeEntity;
 
     public Integer getId() {
         return id;
@@ -79,12 +80,20 @@ public class RtDutiesCodeEntity {
         this.guid = guid;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
+    }
+
+    public Integer getRtCodeId() {
+        return rtCodeId;
+    }
+
+    public void setRtCodeId(Integer rtCodeId) {
+        this.rtCodeId = rtCodeId;
     }
 
     public RtCodeEntity getRtCodeEntity() {
@@ -104,11 +113,13 @@ public class RtDutiesCodeEntity {
                 Objects.equals(getRtDutiesCodeId(), entity.getRtDutiesCodeId()) &&
                 Objects.equals(getDateStart(), entity.getDateStart()) &&
                 Objects.equals(getDateStop(), entity.getDateStop()) &&
-                Objects.equals(getGuid(), entity.getGuid());
+                Objects.equals(getGuid(), entity.getGuid()) &&
+                Objects.equals(getRtDutiesId(), entity.getRtDutiesId()) &&
+                Objects.equals(getRtCodeId(), entity.getRtCodeId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRtDutiesCodeId(), getDateStart(), getDateStop(), getGuid());
+        return Objects.hash(getId(), getRtDutiesCodeId(), getDateStart(), getDateStop(), getGuid(), getRtDutiesId(), getRtCodeId());
     }
 }

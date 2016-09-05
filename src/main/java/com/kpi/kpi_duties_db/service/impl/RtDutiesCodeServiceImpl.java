@@ -37,9 +37,8 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
         for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
 
-            entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
-
-            entity.setRtCodeEntity(rtCodeRepository.findOne(rtCodeEntity.getId()));
+            entity.setRtCodeId(rtCodeEntity.getId());
+            entity.setRtDutiesId(rtDutiesId);
 
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
@@ -54,9 +53,9 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
         for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
 
-            entity.setRtDutiesEntity(rtDutiesEntity.findOne(rtDutiesId));
+            entity.setRtCodeId(rtCodeEntity.getId());
+            entity.setRtDutiesId(rtDutiesId);
 
-            entity.setRtCodeEntity(rtCodeRepository.findOne(rtCodeEntity.getId()));
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
             list.add(repository.saveAndFlush(entity));

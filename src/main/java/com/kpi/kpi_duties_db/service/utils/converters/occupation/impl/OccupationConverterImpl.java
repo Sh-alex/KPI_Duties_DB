@@ -1,19 +1,21 @@
 package com.kpi.kpi_duties_db.service.utils.converters.occupation.impl;
 
 import com.kpi.kpi_duties_db.domain.*;
-import com.kpi.kpi_duties_db.service.DcDutiesMustKnowService;
-import com.kpi.kpi_duties_db.service.DcDutiesQualificationRequirementsService;
-import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
+import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
-import com.kpi.kpi_duties_db.shared.addingoccupation.request.OccupationRequest;
-import com.kpi.kpi_duties_db.shared.addingoccupation.request.support.CodeOccupation;
-import com.kpi.kpi_duties_db.shared.addingoccupation.request.support.NameOccupation;
-import com.kpi.kpi_duties_db.shared.addingoccupation.request.support.RequirementsOccupation;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
+import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Olexandr Shevchenko
@@ -33,6 +35,12 @@ public class OccupationConverterImpl implements OccupationConverter {
     @Autowired
     DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
 
+    @Autowired
+    DcDutiesPartitionService dcDutiesPartitionService;
+
+    @Autowired
+    DcDutiesNameService dcDutiesNameService;
+
     @Override
     public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request) {
 
@@ -46,7 +54,6 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(nameOccupation.getRtDutiesParentId());
-            entity.setRtDutiesEntity(rtDutiesEntity);
         }
         entity.setRtDutiesName(nameOccupation.getRtDutiesName());
         entity.setRtDutiesNameShort(nameOccupation.getRtDutiesNameShort());
@@ -75,7 +82,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setVirtual(request.getFeaturesOccupation().getVirtual());
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
-            entity.setRtDutiesEntity(rtDutiesEntity);
+            entity.setRtDutiesId(rtDutiesEntity.getId());
 
             list.add(entity);
         }
@@ -124,7 +131,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
-            entity.setRtDutiesEntity(rtDutiesEntity);
+            entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
@@ -154,7 +161,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
-            entity.setRtDutiesEntity(rtDutiesEntity);
+            entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
@@ -185,7 +192,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
-            entity.setRtDutiesEntity(rtDutiesEntity);
+            entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
@@ -195,4 +202,74 @@ public class OccupationConverterImpl implements OccupationConverter {
         return list;
     }
 
+    @Override
+    public OccupationGetDto toOccupationDtoFromOccupationGetRequest(OccupationGetRequest request) {
+        if (request == null) {
+            return null;
+        }
+        OccupationGetDto occupationGetDto = new OccupationGetDto();
+
+        if (request.getSearchType() != null && !request.getSearchType().isEmpty()) {
+            occupationGetDto.setSearchType(request.getSearchType().get(0));
+        }
+        if (request.getDcDutiesPartitionId() != null && !request.getDcDutiesPartitionId().isEmpty()) {
+            occupationGetDto.setDcDutiesPartitionId(request.getDcDutiesPartitionId().get(0));
+        }
+        if (request.getRtDutiesName() != null && !request.getRtDutiesName().isEmpty()) {
+            occupationGetDto.setRtDutiesName(request.getRtDutiesName().get(0));
+        }
+        if (request.getDcDutiesNameId() != null && !request.getDcDutiesNameId().isEmpty()) {
+            occupationGetDto.setDcDutiesNameId(request.getDcDutiesNameId().get(0));
+        }
+        if (request.getCreatingInStateDate_from() != null && !request.getCreatingInStateDate_from().isEmpty()) {
+            occupationGetDto.setCreatingInStateDate_from(request.getCreatingInStateDate_from().get(0));
+        }
+        if (request.getCreatingInStateDate_to() != null && !request.getCreatingInStateDate_to().isEmpty()) {
+            occupationGetDto.setCreatingInStateDate_to(request.getCreatingInStateDate_to().get(0));
+        }
+        if (request.getCancelingInStateDate_from() != null && !request.getCancelingInStateDate_from().isEmpty()) {
+            occupationGetDto.setCancelingInStateDate_from(request.getCancelingInStateDate_from().get(0));
+        }
+        if (request.getCancelingInStateDate_to() != null && !request.getCancelingInStateDate_to().isEmpty()) {
+            occupationGetDto.setCancelingInStateDate_to(request.getCancelingInStateDate_to().get(0));
+        }
+        if (request.getCreatingInKPIDate_from() != null && !request.getCreatingInKPIDate_from().isEmpty()) {
+            occupationGetDto.setCreatingInKPIDate_from(request.getCreatingInKPIDate_from().get(0));
+        }
+        if (request.getCreatingInKPIDate_to() != null && !request.getCreatingInKPIDate_to().isEmpty()) {
+            occupationGetDto.setCreatingInKPIDate_to(request.getCreatingInKPIDate_to().get(0));
+        }
+        if (request.getCancelingInKPIDate_from() != null && !request.getCancelingInKPIDate_from().isEmpty()) {
+            occupationGetDto.setCancelingInKPIDate_from(request.getCancelingInKPIDate_from().get(0));
+        }
+        if (request.getCancelingInKPIDate_to() != null && !request.getCancelingInKPIDate_to().isEmpty()) {
+            occupationGetDto.setCancelingInKPIDate_to(request.getCancelingInKPIDate_to().get(0));
+        }
+
+        return occupationGetDto;
+    }
+
+    @Override
+    public Map<String, Object> toParamMapFromOccupationGetDto(OccupationGetDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        Map<String, Object> params = new HashMap<>();
+
+            params.put("searchType", dto.getSearchType());
+            params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionId());
+            params.put("rtDutiesName", dto.getRtDutiesName());
+            params.put("dcDutiesNameId", dto.getDcDutiesNameId());
+            params.put("creatingInStateDate_from", dto.getCreatingInStateDate_from());
+            params.put("creatingInStateDate_to", dto.getCreatingInStateDate_to());
+            params.put("cancelingInStateDate_from", dto.getCancelingInStateDate_from());
+            params.put("cancelingInStateDate_to", dto.getCancelingInStateDate_to());
+            params.put("creatingInKPIDate_from", dto.getCreatingInKPIDate_from());
+            params.put("creatingInKPIDate_to", dto.getCreatingInKPIDate_to());
+            params.put("cancelingInKPIDate_from", dto.getCancelingInKPIDate_from());
+            params.put("cancelingInKPIDate_to", dto.getCancelingInKPIDate_to());
+
+        return params;
+    }
 }

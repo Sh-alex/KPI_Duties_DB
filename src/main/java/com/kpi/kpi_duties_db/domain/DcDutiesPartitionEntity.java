@@ -1,7 +1,7 @@
 package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * @author Olexandr Shevchenko
@@ -17,13 +17,8 @@ public class DcDutiesPartitionEntity {
     @Column(name = "DcDutiesPartitionId")
     private Integer id;
 
-    @Basic
     @Column(name = "DcDutiesPartitionName")
     private String name;
-
-    @OneToMany
-    @JoinColumn(name="DcDutiesPartitionId")
-    private Set<RtDutiesEntity> rtDutiesEntities;
 
 
     public Integer getId() {
@@ -34,7 +29,6 @@ public class DcDutiesPartitionEntity {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -43,33 +37,17 @@ public class DcDutiesPartitionEntity {
         this.name = name;
     }
 
-
-    public Set<RtDutiesEntity> getRtDutiesEntities() {
-        return rtDutiesEntities;
-    }
-
-    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
-        this.rtDutiesEntities = rtDutiesEntities;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DcDutiesPartitionEntity that = (DcDutiesPartitionEntity) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null)
-            return false;
-
-        return true;
+        if (!(o instanceof DcDutiesPartitionEntity)) return false;
+        DcDutiesPartitionEntity entity = (DcDutiesPartitionEntity) o;
+        return Objects.equals(getId(), entity.getId()) &&
+                Objects.equals(getName(), entity.getName());
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getName());
     }
 }

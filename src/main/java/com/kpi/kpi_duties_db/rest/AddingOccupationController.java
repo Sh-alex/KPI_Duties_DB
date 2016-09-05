@@ -4,8 +4,8 @@ import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
 import com.kpi.kpi_duties_db.service.RtDutiesService;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

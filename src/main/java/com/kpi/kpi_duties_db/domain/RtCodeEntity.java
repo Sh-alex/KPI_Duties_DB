@@ -3,7 +3,6 @@ package com.kpi.kpi_duties_db.domain;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Olexandr Shevchenko
@@ -40,8 +39,21 @@ public class RtCodeEntity {
     @Column(name = "CodeZKPPTRId")
     private Integer codeZKPPTRId;
 
-    @OneToMany(mappedBy = "rtCodeEntity", cascade = CascadeType.ALL)
-    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
+    @ManyToOne
+    @JoinColumn(name = "CodeDKHPId", insertable = false, updatable = false)
+    DcCodeDkhpEntity codeDkhpEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeETKDId", insertable = false, updatable = false)
+    DcCodeEtkdEntity codeEtkdEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeKPId", insertable = false, updatable = false)
+    DcCodeKpEntity codeKpEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "CodeZKPPTRId", insertable = false, updatable = false)
+    DcCodeZkpptrEntity codeZkpptrEntity;
 
 
     public int getId() {
@@ -108,12 +120,36 @@ public class RtCodeEntity {
         this.codeZKPPTRId = codeZKPPTRId;
     }
 
-    public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
-        return rtDutiesCodeEntities;
+    public DcCodeDkhpEntity getCodeDkhpEntity() {
+        return codeDkhpEntity;
     }
 
-    public void setRtDutiesCodeEntities(Set<RtDutiesCodeEntity> rtDutiesCodeEntities) {
-        this.rtDutiesCodeEntities = rtDutiesCodeEntities;
+    public void setCodeDkhpEntity(DcCodeDkhpEntity codeDkhpEntity) {
+        this.codeDkhpEntity = codeDkhpEntity;
+    }
+
+    public DcCodeEtkdEntity getCodeEtkdEntity() {
+        return codeEtkdEntity;
+    }
+
+    public void setCodeEtkdEntity(DcCodeEtkdEntity codeEtkdEntity) {
+        this.codeEtkdEntity = codeEtkdEntity;
+    }
+
+    public DcCodeKpEntity getCodeKpEntity() {
+        return codeKpEntity;
+    }
+
+    public void setCodeKpEntity(DcCodeKpEntity codeKpEntity) {
+        this.codeKpEntity = codeKpEntity;
+    }
+
+    public DcCodeZkpptrEntity getCodeZkpptrEntity() {
+        return codeZkpptrEntity;
+    }
+
+    public void setCodeZkpptrEntity(DcCodeZkpptrEntity codeZkpptrEntity) {
+        this.codeZkpptrEntity = codeZkpptrEntity;
     }
 
     @Override
@@ -128,12 +164,11 @@ public class RtCodeEntity {
                 Objects.equals(getCodeDKHPId(), that.getCodeDKHPId()) &&
                 Objects.equals(getCodeETKDId(), that.getCodeETKDId()) &&
                 Objects.equals(getCodeKPId(), that.getCodeKPId()) &&
-                Objects.equals(getCodeZKPPTRId(), that.getCodeZKPPTRId()) &&
-                Objects.equals(getRtDutiesCodeEntities(), that.getRtDutiesCodeEntities());
+                Objects.equals(getCodeZKPPTRId(), that.getCodeZKPPTRId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNewId(), getDateStart(), getDateStop(), getCodeDKHPId(), getCodeETKDId(), getCodeKPId(), getCodeZKPPTRId(), getRtDutiesCodeEntities());
+        return Objects.hash(getId(), getNewId(), getDateStart(), getDateStop(), getCodeDKHPId(), getCodeETKDId(), getCodeKPId(), getCodeZKPPTRId());
     }
 }

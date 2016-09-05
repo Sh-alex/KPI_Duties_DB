@@ -27,9 +27,12 @@ public class RtDutiesMustKnowEntity {
     @Column(name = "DateEnd")
     private Date dateEnd;
 
+    @Column(name = "RtDutiesId")
+    private Integer rtDutiesId;
+
     @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
-    RtDutiesEntity rtDutiesEntity;
+    @JoinColumn(name = "DcDuties_MustKnowId", insertable = false, updatable = false)
+    private DcDutiesMustKnowEntity dcDutiesMustKnowEntity;
 
     public Integer getId() {
         return id;
@@ -63,12 +66,20 @@ public class RtDutiesMustKnowEntity {
         this.dateEnd = dateEnd;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
+    }
+
+    public DcDutiesMustKnowEntity getDcDutiesMustKnowEntity() {
+        return dcDutiesMustKnowEntity;
+    }
+
+    public void setDcDutiesMustKnowEntity(DcDutiesMustKnowEntity dcDutiesMustKnowEntity) {
+        this.dcDutiesMustKnowEntity = dcDutiesMustKnowEntity;
     }
 
     @Override
@@ -79,11 +90,12 @@ public class RtDutiesMustKnowEntity {
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesMustKnowId(), that.getDcDutiesMustKnowId()) &&
                 Objects.equals(getDateStart(), that.getDateStart()) &&
-                Objects.equals(getDateEnd(), that.getDateEnd());
+                Objects.equals(getDateEnd(), that.getDateEnd()) &&
+                Objects.equals(getRtDutiesId(), that.getRtDutiesId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesMustKnowId(), getDateStart(), getDateEnd());
+        return Objects.hash(getId(), getDcDutiesMustKnowId(), getDateStart(), getDateEnd(), getRtDutiesId());
     }
 }
