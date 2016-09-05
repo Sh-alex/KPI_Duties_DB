@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DcDutiesMustKnowRepository extends JpaRepository<DcDutiesMustKnowEntity, Integer> {
 
-    @Query("select b from DcCodeKpEntity b where b.name = :name")
-    DcDutiesMustKnowEntity getByName(@Param("name") String name);
+    @Query("select b from DcDutiesMustKnowEntity b where b.id = :id")
+    DcDutiesMustKnowEntity getById(@Param("id") Integer id);
+
 }

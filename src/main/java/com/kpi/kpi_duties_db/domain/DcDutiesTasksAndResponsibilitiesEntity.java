@@ -20,7 +20,7 @@ public class DcDutiesTasksAndResponsibilitiesEntity {
     @Column(name = "Text")
     private String text;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
 

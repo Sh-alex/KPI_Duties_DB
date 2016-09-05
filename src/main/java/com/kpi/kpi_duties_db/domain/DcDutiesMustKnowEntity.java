@@ -20,7 +20,7 @@ public class DcDutiesMustKnowEntity {
     @Column(name = "Text")
     private String text;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "DcDuties_MustKnowId")
     private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 

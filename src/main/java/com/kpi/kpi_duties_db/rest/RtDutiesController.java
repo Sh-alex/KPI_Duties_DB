@@ -1,9 +1,7 @@
 package com.kpi.kpi_duties_db.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
-import com.kpi.kpi_duties_db.domain.RtCodeEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.domain.*;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
@@ -55,6 +53,15 @@ public class RtDutiesController {
     @Autowired
     RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
+    @Autowired
+    DcDutiesMustKnowService dcDutiesMustKnowService;
+
+    @Autowired
+    DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
+
+    @Autowired
+    DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+
 
     @POST
     @Transactional
@@ -100,9 +107,36 @@ public class RtDutiesController {
 
     @DELETE
     @Path("/{id}")
+    @Transactional
     public Response delete(@PathParam("id") Integer id) {
+        RtDutiesEntity entity = rtDutiesService.getById(id);
+
+        for (RtDutiesCodeEntity rtDutiesCodeEntity : entity.getRtDutiesCodeEntities()) {
+           rtCodeService.delete(rtDutiesCodeEntity.getRtCodeId());
+        }
 
         rtDutiesService.delete(id);
+
+        for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
+            DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
+            if (dcDutiesMustKnowEntity.getRtDutiesMustKnowEntities().size() <= 1) {
+                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getId());
+            }
+        }
+        for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
+            DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity =
+                    dcDutiesTaskAndResponsibilitiesService.getById(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
+            if (dcDutiesTasksAndResponsibilitiesEntity.getRtDutiesTaskAndResponsibilitiesEntities().size() <= 1) {
+                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getId());
+            }
+        }
+        for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
+            DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
+                    dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
+            if (dcDutiesQualificationRequirementsEntity.getRtDutiesQualificationRequirementsEntities().size() <= 1) {
+                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getId());
+            }
+        }
 
         return Response.ok().build();
     }

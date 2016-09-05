@@ -4,6 +4,7 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             criteria.add(Restrictions.eq("DcDutiesPartitionId", value));
                             break;
                         case "rtDutiesName":
-                            if(paramsMap.get("searchType").equals("MATCH_STRING")){
+                            if (paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.eq("rtDutiesName", value));
                             }
-                            if(paramsMap.get("searchType").equals("CONTAINS_STRING")){
+                            if (paramsMap.get("searchType").equals("CONTAINS_STRING")) {
                                 criteria.add(Restrictions.ilike("rtDutiesName", (String) value, MatchMode.ANYWHERE));
                             }
                             break;
@@ -66,35 +67,35 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             break;
                         case "creatingInStateDate_from":
                             criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.Start", value));
+                            criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "creatingInStateDate_to":
                             criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.Start", value));
+                            criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "cancelingInStateDate_from":
                             criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.Stop", value));
+                            criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "cancelingInStateDate_to":
                             criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.Stop", value));
+                            criteria.add(Restrictions.le("dates.stop", value));
                             break;
                         case "creatingInKPIDate_from":
                             criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.Start", value));
+                            criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "creatingInKPIDate_to":
                             criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.Start", value));
+                            criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "cancelingInKPIDate_from":
                             criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.Stop", value));
+                            criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "cancelingInKPIDate_to":
                             criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.Stop", value));
+                            criteria.add(Restrictions.le("dates.stop", value));
                             break;
                         /*case "offset":
                             offset = (Integer) value;
@@ -112,6 +113,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             if (limit >= 0) {
                 criteria.setMaxResults(limit);
             }*/
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
             return criteria.list();
         }
     }

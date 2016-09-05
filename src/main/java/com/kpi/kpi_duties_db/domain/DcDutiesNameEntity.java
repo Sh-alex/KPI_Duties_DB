@@ -29,7 +29,7 @@ public class DcDutiesNameEntity {
     private DcDutiesTypeEntity dcDutiesTypeEntity;
 
     @OneToMany
-    @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId")
+    @JoinColumn(name = "DcDutiesNameId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
     public int getId() {
