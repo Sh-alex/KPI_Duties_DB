@@ -1,3 +1,2 @@
-$ cat .gitattributes
 src/* linguist-vendored
 frontend/* linguist-vendored=false
