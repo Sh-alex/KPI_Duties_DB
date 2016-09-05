@@ -1,7 +1,9 @@
 package com.kpi.kpi_duties_db.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kpi.kpi_duties_db.domain.*;
+import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
+import com.kpi.kpi_duties_db.domain.RtCodeEntity;
+import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
@@ -107,15 +109,8 @@ public class RtDutiesController {
 
     @DELETE
     @Path("/{id}")
-    @Transactional
     public Response delete(@PathParam("id") Integer id) {
-        RtDutiesEntity entity = rtDutiesService.getById(id);
-
-        for (RtDutiesCodeEntity rtDutiesCodeEntity : entity.getRtDutiesCodeEntities()) {
-           rtCodeService.delete(rtDutiesCodeEntity.getRtCodeId());
-        }
-
-        rtDutiesService.delete(id);
+       /* RtDutiesEntity entity = rtDutiesService.getById(id);
 
         for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
             DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
@@ -131,12 +126,22 @@ public class RtDutiesController {
             }
         }
         for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
-            DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
-                    dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
-            if (dcDutiesQualificationRequirementsEntity.getRtDutiesQualificationRequirementsEntities().size() <= 1) {
+            try {
+                DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
+                        dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
+
                 dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
+
+        }*/
+
+        rtDutiesService.delete(id);
+
+        /*for (RtDutiesCodeEntity rtDutiesCodeEntity : entity.getRtDutiesCodeEntities()) {
+            rtCodeService.delete(rtDutiesCodeEntity.getRtCodeId());
+        }*/
 
         return Response.ok().build();
     }
@@ -146,7 +151,7 @@ public class RtDutiesController {
     public Response getAll(@Context UriInfo uriInfo) {
         MultivaluedMap parameters = uriInfo.getQueryParameters();
         OccupationGetRequest occupationRequest = null;
-        if(parameters.size() != 0){
+        if (parameters.size() != 0) {
             final ObjectMapper mapper = new ObjectMapper();
             occupationRequest = mapper.convertValue(parameters, OccupationGetRequest.class);
         }

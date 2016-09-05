@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DcDutiesNameRepository extends JpaRepository<DcDutiesNameEntity, Integer> {
 
+    @Query("select b from DcDutiesNameEntity b where b.name = :id")
+    DcDutiesNameEntity getById(@Param("id") Integer id);
+
     @Query("select b from DcDutiesNameEntity b where b.name = :name")
     DcDutiesNameEntity getByName(@Param("name") String name);
 

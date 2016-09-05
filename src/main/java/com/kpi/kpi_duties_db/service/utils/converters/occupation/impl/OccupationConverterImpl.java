@@ -1,9 +1,7 @@
 package com.kpi.kpi_duties_db.service.utils.converters.occupation.impl;
 
 import com.kpi.kpi_duties_db.domain.*;
-import com.kpi.kpi_duties_db.service.DcDutiesMustKnowService;
-import com.kpi.kpi_duties_db.service.DcDutiesQualificationRequirementsService;
-import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
+import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
@@ -36,6 +34,12 @@ public class OccupationConverterImpl implements OccupationConverter {
 
     @Autowired
     DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+
+    @Autowired
+    DcDutiesPartitionService dcDutiesPartitionService;
+
+    @Autowired
+    DcDutiesNameService dcDutiesNameService;
 
     @Override
     public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request) {

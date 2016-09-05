@@ -30,6 +30,10 @@ public class RtDutiesQualificationRequirementsEntity {
     @Column(name = "RtDutiesId")
     private Integer rtDutiesId;
 
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_QualificationRequirementsId", insertable = false, updatable = false)
+    private DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity;
+
     public Integer getId() {
         return id;
     }
@@ -68,6 +72,14 @@ public class RtDutiesQualificationRequirementsEntity {
 
     public void setRtDutiesId(Integer rtDutiesId) {
         this.rtDutiesId = rtDutiesId;
+    }
+
+    public DcDutiesQualificationRequirementsEntity getDcDutiesQualificationRequirementsEntity() {
+        return dcDutiesQualificationRequirementsEntity;
+    }
+
+    public void setDcDutiesQualificationRequirementsEntity(DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity) {
+        this.dcDutiesQualificationRequirementsEntity = dcDutiesQualificationRequirementsEntity;
     }
 
     @Override

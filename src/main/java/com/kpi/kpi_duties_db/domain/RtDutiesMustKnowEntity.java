@@ -30,6 +30,10 @@ public class RtDutiesMustKnowEntity {
     @Column(name = "RtDutiesId")
     private Integer rtDutiesId;
 
+    @ManyToOne
+    @JoinColumn(name = "DcDuties_MustKnowId", insertable = false, updatable = false)
+    private DcDutiesMustKnowEntity dcDutiesMustKnowEntity;
+
     public Integer getId() {
         return id;
     }
@@ -68,6 +72,14 @@ public class RtDutiesMustKnowEntity {
 
     public void setRtDutiesId(Integer rtDutiesId) {
         this.rtDutiesId = rtDutiesId;
+    }
+
+    public DcDutiesMustKnowEntity getDcDutiesMustKnowEntity() {
+        return dcDutiesMustKnowEntity;
+    }
+
+    public void setDcDutiesMustKnowEntity(DcDutiesMustKnowEntity dcDutiesMustKnowEntity) {
+        this.dcDutiesMustKnowEntity = dcDutiesMustKnowEntity;
     }
 
     @Override

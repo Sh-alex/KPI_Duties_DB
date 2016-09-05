@@ -36,6 +36,10 @@ public class RtDutiesCodeEntity {
     @Column(name = "RtCodeId")
     private Integer rtCodeId;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "RtCodeId", insertable = false, updatable = false)
+    private RtCodeEntity rtCodeEntity;
+
     public Integer getId() {
         return id;
     }
@@ -92,6 +96,14 @@ public class RtDutiesCodeEntity {
         this.rtCodeId = rtCodeId;
     }
 
+    public RtCodeEntity getRtCodeEntity() {
+        return rtCodeEntity;
+    }
+
+    public void setRtCodeEntity(RtCodeEntity rtCodeEntity) {
+        this.rtCodeEntity = rtCodeEntity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,11 +114,12 @@ public class RtDutiesCodeEntity {
                 Objects.equals(getDateStart(), entity.getDateStart()) &&
                 Objects.equals(getDateStop(), entity.getDateStop()) &&
                 Objects.equals(getGuid(), entity.getGuid()) &&
-                Objects.equals(getRtDutiesId(), entity.getRtDutiesId());
+                Objects.equals(getRtDutiesId(), entity.getRtDutiesId()) &&
+                Objects.equals(getRtCodeId(), entity.getRtCodeId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRtDutiesCodeId(), getDateStart(), getDateStop(), getGuid(), getRtDutiesId());
+        return Objects.hash(getId(), getRtDutiesCodeId(), getDateStart(), getDateStop(), getGuid(), getRtDutiesId(), getRtCodeId());
     }
 }

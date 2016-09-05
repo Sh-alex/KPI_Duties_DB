@@ -34,6 +34,14 @@ public class RtDutiesEntity {
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
+    @ManyToOne
+    @JoinColumn(name = "DcDutiesNameId", insertable = false, updatable = false)
+    private DcDutiesNameEntity dcDutiesNameEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "DcDutiesPartitionId", insertable = false, updatable = false)
+    private DcDutiesPartitionEntity dcDutiesPartitionEntity;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ParentId")
@@ -107,6 +115,22 @@ public class RtDutiesEntity {
         this.vcChangeDate = vcChangeDate;
     }
 
+    public DcDutiesNameEntity getDcDutiesNameEntity() {
+        return dcDutiesNameEntity;
+    }
+
+    public void setDcDutiesNameEntity(DcDutiesNameEntity dcDutiesNameEntity) {
+        this.dcDutiesNameEntity = dcDutiesNameEntity;
+    }
+
+    public DcDutiesPartitionEntity getDcDutiesPartitionEntity() {
+        return dcDutiesPartitionEntity;
+    }
+
+    public void setDcDutiesPartitionEntity(DcDutiesPartitionEntity dcDutiesPartitionEntity) {
+        this.dcDutiesPartitionEntity = dcDutiesPartitionEntity;
+    }
+
     public Set<RtDutiesEntity> getRtDutiesEntities() {
         return rtDutiesEntities;
     }
@@ -114,7 +138,6 @@ public class RtDutiesEntity {
     public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
         this.rtDutiesEntities = rtDutiesEntities;
     }
-
 
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
         return rtDutiesCodeEntities;
@@ -165,12 +188,11 @@ public class RtDutiesEntity {
                 Objects.equals(getDcDutiesPartitionId(), that.getDcDutiesPartitionId()) &&
                 Objects.equals(getRtDutiesName(), that.getRtDutiesName()) &&
                 Objects.equals(getRtDutiesNameShort(), that.getRtDutiesNameShort()) &&
-                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId()) &&
-                Objects.equals(getVcChangeDate(), that.getVcChangeDate());
+                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getDcDutiesNameId(), getVcChangeDate());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getDcDutiesNameId());
     }
 }
