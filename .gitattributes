@@ -1,2 +1,2 @@
-src/* linguist-vendored
+src/main/* linguist-vendored
 frontend/* linguist-vendored=false
