@@ -1,3 +1,3 @@
 $ cat .gitattributes
-special-vendored-path/src linguist-vendored
-frontend/components linguist-vendored=false
+src/* linguist-vendored
+frontend/* linguist-vendored=false
