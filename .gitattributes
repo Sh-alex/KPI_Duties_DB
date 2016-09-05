@@ -1,0 +1,4 @@
+$ cat .gitattributes
+*.rb linguist-language=Java
+
+vim: syntax=java
