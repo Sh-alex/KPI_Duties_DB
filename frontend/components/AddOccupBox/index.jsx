@@ -239,144 +239,193 @@ class AddOccupBox extends Component {
         } = this.props;
 
         let formAlert = !shouldShowServerRespMsg ?
-            "" :
-            this.props.error ? (
-                <Alert bsStyle="danger" onDismiss={handleServerRespMsgDismiss}>
-                    <h4>
-                        <i className="icon fa fa-warning" />
-                        Помилка! :(
-                    </h4>
-                    <p>
-                        {this.props.error._error || this.props.error || 'Сталася невідома помилка при додаванні посади!'}
-                    </p>
-                </Alert>
-            ) : (
-                <Alert bsStyle="success" onDismiss={handleServerRespMsgDismiss}>
-                    <h4>
-                        <i className="icon fa fa-check" />
-                        Успішно
-                    </h4>
-                    <p>
-                        Посаду успішно додано
-                    </p>
-                </Alert>
-            );
+                "" :
+                this.props.error ? (
+                    <Alert bsStyle="danger" onDismiss={handleServerRespMsgDismiss}>
+                        <h4>
+                            <i className="icon fa fa-warning" />
+                            Помилка! :(
+                        </h4>
+                        <p>
+                            {this.props.error._error || this.props.error || 'Сталася невідома помилка при додаванні посади!'}
+                        </p>
+                    </Alert>
+                ) : (
+                    <Alert bsStyle="success" onDismiss={handleServerRespMsgDismiss}>
+                        <h4>
+                            <i className="icon fa fa-check" />
+                            Успішно
+                        </h4>
+                        <p>
+                            Посаду успішно додано
+                        </p>
+                    </Alert>
+                ),
+        //перевіряємо чи показувати загальне повідомлення про те що є помилки валідації
+            validationError = name.occupationGroup.touched && name.occupationGroup.error ||
+                name.clarification.touched && name.clarification.error ||
+                name.occupationName.touched && name.occupationName.error ||
+                name.occupationNameMin.touched && name.occupationNameMin.error ||
+                features.isIndependent.touched && features.isIndependent.error ||
+                features.isVirtual.touched && features.isVirtual.error ||
+                duration.creatingInStateDate.touched &&  duration.creatingInStateDate.error ||
+                duration.creatingInKPIDate.touched &&  duration.creatingInKPIDate.error ||
+                codes.reduce(function(res, portion, portionIndex, fullArr) {
+                    return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
+                        portion.portionEndDate.touched &&  portion.portionEndDate.error ||
+                        portion.codeDKHP.touched &&  portion.codeDKHP.error ||
+                        portion.codeKP.touched &&  portion.codeKP.error ||
+                        portion.codeETDK.touched &&  portion.codeETDK.error ||
+                        portion.codeZKPPTR.touched &&  portion.codeZKPPTR.error;
+                }, false) ||
+                responsibilities.reduce(function(res, portion, portionIndex, fullArr) {
+                    return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
+                        portion.portionEndDate.touched &&  portion.portionEndDate.error ||
+                        portion.text.touched &&  portion.text.error ||
+                        portion.id.touched &&  portion.id.error;
+                }, false) ||
+                haveToKnow.reduce(function(res, portion, portionIndex, fullArr) {
+                    return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
+                        portion.portionEndDate.touched &&  portion.portionEndDate.error ||
+                        portion.text.touched &&  portion.text.error ||
+                        portion.id.touched &&  portion.id.error;
+                }, false) ||
+                qualiffRequir.reduce(function(res, portion, portionIndex, fullArr) {
+                    return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
+                        portion.portionEndDate.touched &&  portion.portionEndDate.error ||
+                        portion.text.touched &&  portion.text.error ||
+                        portion.id.touched &&  portion.id.error;
+                }, false);
 
-        return <div className="box box-default">
-            <div className="box-header with-border text-center">
-                <h3 className="box-title"> Додавання посади </h3>
-            </div>
-            <div className="box-body">
-                <ModalAddInfoFromAnotherOccup />
-                <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newClarificationInpVal}
-                    onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
-                    show={this.state.showModalAddNewClarification}
-                    errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
-                    isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
-                    onSave={this.props.addNewClarification}
-                    onAlertDismiss={ this.props.dismissModalAddNewClarificationAlert }
-                    onHide={() => this.setState({ showModalAddNewClarification: false })} />
-                <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newKPCodeInpVal}
-                    onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
-                    show={this.state.showModalAddNewKPCode}
-                    errors={this.props.occupCodesLists.KPCodesList.addingErrors}
-                    isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
-                    onSave={this.props.addNewKPCode}
-                    onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
-                    onHide={() => this.setState({ showModalAddNewKPCode: false })} />
-                <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newETDKCodeInpVal}
-                    onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
-                    show={this.state.showModalAddNewETDKCode}
-                    errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
-                    isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
-                    onSave={this.props.addNewETDKCode}
-                    onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
-                    onHide={() => this.setState({ showModalAddNewETDKCode: false })} />
-                <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newDKHPCodeInpVal}
-                    onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
-                    show={this.state.showModalAddNewDKHPCode}
-                    errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
-                    isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
-                    onSave={this.props.addNewDKHPCode}
-                    onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
-                    onHide={() => this.setState({ showModalAddNewDKHPCode: false })} />
-                <ModalAddNewOccupKeyWord
-                    inpVal={this.state.newZKPPTRCodeInpVal}
-                    onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
-                    show={this.state.showModalAddNewZKPPTRCode}
-                    errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
-                    isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
-                    onSave={this.props.addNewZKPPTRCode}
-                    onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
-                    onHide={() => this.setState({ showModalAddNewZKPPTRCode: false })} />
-                <form id="add-form" className="form-horizontal add-form" onSubmit={handleSubmit} role="form">
-                    <div className="form-inner">
-                        <AddOccupBoxNameSection
-                            nameFields={name}
-                            {...this.props.occupNameInfoLists}
-                            handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
-                            handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
-                            handleClarificationInpChange={this.handleClarificationInpChange}
-                            openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
-                        <AddOccupBoxFeaturesSection
-                            featuresFields={features}
-                            changeAddFormInpIsVirtual={this.props.changeAddFormInpIsVirtual}
-                        />
-                        <AddOccupBoxDurationSection durationFields={duration} />
-                        <AddOccupBoxCodesSection
-                            codesFields={codes}
-                            {...this.props.occupCodesLists}
-                            noCodesMsg="Для віртуальних посад не може бути кодів"
-                            openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
-                            openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
-                            openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
-                            openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
-                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
-                            handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
-                        <AddOccupBoxResponsibSection
-                            responsibFields={responsibilities}
-                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
-                            handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
-                        <AddOccupBoxHaveToKnowSection
-                            haveToKnowFields={haveToKnow}
-                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
-                            handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
-                        <AddOccupBoxQualiffRequirSection
-                            qualiffRequirFields={qualiffRequir}
-                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
-                            handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
-                        <div>
-                            { formAlert }
+        return (
+            <div className="box box-default">
+                <div className="box-header with-border text-center">
+                    <h3 className="box-title"> Додавання посади </h3>
+                </div>
+                <div className="box-body">
+                    <ModalAddInfoFromAnotherOccup />
+                    <ModalAddNewOccupKeyWord
+                        inpVal={this.state.newClarificationInpVal}
+                        onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
+                        show={this.state.showModalAddNewClarification}
+                        errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
+                        isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
+                        onSave={this.props.addNewClarification}
+                        onAlertDismiss={ this.props.dismissModalAddNewClarificationAlert }
+                        onHide={() => this.setState({ showModalAddNewClarification: false })} />
+                    <ModalAddNewOccupKeyWord
+                        inpVal={this.state.newKPCodeInpVal}
+                        onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
+                        show={this.state.showModalAddNewKPCode}
+                        errors={this.props.occupCodesLists.KPCodesList.addingErrors}
+                        isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
+                        onSave={this.props.addNewKPCode}
+                        onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
+                        onHide={() => this.setState({ showModalAddNewKPCode: false })} />
+                    <ModalAddNewOccupKeyWord
+                        inpVal={this.state.newETDKCodeInpVal}
+                        onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
+                        show={this.state.showModalAddNewETDKCode}
+                        errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
+                        isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
+                        onSave={this.props.addNewETDKCode}
+                        onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
+                        onHide={() => this.setState({ showModalAddNewETDKCode: false })} />
+                    <ModalAddNewOccupKeyWord
+                        inpVal={this.state.newDKHPCodeInpVal}
+                        onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
+                        show={this.state.showModalAddNewDKHPCode}
+                        errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
+                        isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
+                        onSave={this.props.addNewDKHPCode}
+                        onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
+                        onHide={() => this.setState({ showModalAddNewDKHPCode: false })} />
+                    <ModalAddNewOccupKeyWord
+                        inpVal={this.state.newZKPPTRCodeInpVal}
+                        onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
+                        show={this.state.showModalAddNewZKPPTRCode}
+                        errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
+                        isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
+                        onSave={this.props.addNewZKPPTRCode}
+                        onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
+                        onHide={() => this.setState({ showModalAddNewZKPPTRCode: false })} />
+                    <form id="add-form" className="form-horizontal add-form" onSubmit={handleSubmit} role="form">
+                        <div className="form-inner">
+                            <AddOccupBoxNameSection
+                                nameFields={name}
+                                {...this.props.occupNameInfoLists}
+                                handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
+                                handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
+                                handleClarificationInpChange={this.handleClarificationInpChange}
+                                openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
+                            <AddOccupBoxFeaturesSection
+                                featuresFields={features}
+                                changeAddFormInpIsVirtual={this.props.changeAddFormInpIsVirtual}
+                            />
+                            <AddOccupBoxDurationSection durationFields={duration} />
+                            <AddOccupBoxCodesSection
+                                codesFields={codes}
+                                {...this.props.occupCodesLists}
+                                noCodesMsg="Для віртуальних посад не може бути кодів"
+                                openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
+                                openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
+                                openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
+                                openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
+                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                                handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
+                                handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
+                            <AddOccupBoxResponsibSection
+                                responsibFields={responsibilities}
+                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                                handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
+                                handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
+                            <AddOccupBoxHaveToKnowSection
+                                haveToKnowFields={haveToKnow}
+                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                                handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
+                                handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
+                            <AddOccupBoxQualiffRequirSection
+                                qualiffRequirFields={qualiffRequir}
+                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                                handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
+                                handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
+                            <div>
+                                { formAlert }
+                                { validationError && (
+                                    <Alert bsStyle="danger">
+                                        <h4>
+                                            <i className="icon fa fa-warning"/>
+                                            От халепа! :(
+                                        </h4>
+                                        <p>
+                                            {'Виправте помилки на формі!'}
+                                        </p>
+                                    </Alert>
+                                )
+                                }
+                            </div>
+                            <div className="form-group text-center">
+                                <button
+                                    type="reset"
+                                    onClick={resetForm}
+                                    disabled={submitting}
+                                    className="btn btn-default add-form__btn-form-action add-form__btn-form-action--reset"
+                                >
+                                    Очистити форму <i className="fa fa-refresh" aria-hidden="true" />
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={submitting}
+                                    className="btn btn-primary add-form__btn-form-action add-form__btn-form-action--submit"
+                                >
+                                    Додати нову посаду  <i className="fa fa-plus" aria-hidden="true" />
+                                </button>
+                            </div>
                         </div>
-                        <div className="form-group text-center">
-                            <button
-                                type="reset"
-                                onClick={resetForm}
-                                disabled={submitting}
-                                className="btn btn-default add-form__btn-form-action add-form__btn-form-action--reset"
-                            >
-                                Очистити форму <i className="fa fa-refresh" aria-hidden="true" />
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={submitting || invalid}
-                                className="btn btn-primary add-form__btn-form-action add-form__btn-form-action--submit"
-                            >
-                                Додати нову посаду  <i className="fa fa-plus" aria-hidden="true" />
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        )
     }
 }
 
@@ -413,16 +462,77 @@ export default reduxForm(
             'qualiffRequir[].portionEndDate'
         ],
         touchOnChange: true,
-        validate(travel) {
-            var errors = {};
-            // if (!travel.startDate) errors.startDate = 'Please enter a start date.'
-            // if (!travel.endDate) errors.endDate = 'Please enter an end date.'
-            // if (travel.startDate && travel.endDate &&
-            //     zeroTime(travel.endDate) < zeroTime(travel.startDate)) {
-            //   errors.endDate = 'End date must not be earlier than start date.'
-            // }
-            // if (!travel.origin) errors.origin = 'Please enter an origin.'
-            // if (!travel.destination) errors.destination = 'Please enter a destination.'
+        validate(formFields, props) {
+            var errors = {
+                name: {
+                    'occupationGroup': null,
+                    'clarifiedOccup': null,
+                    'clarification': null,
+                    'occupationName': null,
+                    'occupationNameMin': null
+                },
+                features: {
+                    'isIndependent': null,
+                    'isVirtual': null
+                },
+                duration: {
+                    'creatingInStateDate': null,
+                    'creatingInKPIDate': null
+                },
+                codes: [ ],
+                responsibilities: [ ],
+                haveToKnow: [ ],
+                qualiffRequir: [ ]
+            };
+            if(!formFields.name.occupationGroup)
+                errors.name.occupationGroup = "Це поле є обов'язковим!";
+            if(!formFields.name.clarification)
+                errors.name.clarification = "Це поле є обов'язковим!";
+            if(!formFields.name.occupationName)
+                errors.name.occupationName = "Це поле є обов'язковим!";
+            if(!formFields.name.occupationNameMin)
+                errors.name.occupationNameMin = "Це поле є обов'язковим!";
+            /*
+             if(!formFields.duration.creatingInStateDate && !formFields.duration.creatingInKPIDate)
+             errors.duration = "Не обрано дат створення посади!";
+             */
+            errors.codes = formFields.codes.map( (portion, portionIndex, fullArr) => {
+                return {
+                    'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+                    'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
+                    'codeKP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+                    'codeETDK': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+                    'codeZKPPTR': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+                    'codeDKHP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+                }
+            });
+
+            errors.responsibilities = formFields.responsibilities.map( (portion, portionIndex, fullArr) => {
+                return {
+                    'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+                    //'portionEndDate': (fullArr.length > 1 && portionIndex < fullArr.length && !portion.portionEndDate) ? "Для попередніх наборів має бути встановлена дата припинення дії тексту!" : null,
+                    'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
+                    'text': !portion.text && "Не введено тексту!",
+                    'id': null
+                };
+            });
+            errors.haveToKnow = formFields.haveToKnow.map( (portion, portionIndex, fullArr) => {
+                return {
+                    'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+                    'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
+                    'text': !portion.text && "Не введено тексту!",
+                    'id': null
+                };
+            });
+            errors.qualiffRequir = formFields.qualiffRequir.map( (portion, portionIndex, fullArr) => {
+                return {
+                    'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+                    'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
+                    'text': !portion.text && "Не введено тексту!",
+                    'id': null
+                };
+            });
+
             return errors
         },
         onSubmit: submitAddForm
@@ -460,7 +570,6 @@ export default reduxForm(
             handleBtnAddInfoFromAnotherOccupClick(data){
                 return dispatch(showModalAddInfoFromAnotherOccup(data));
             },
-            
             dismissModalAddNewKPCodeAlert() {
                 return dispatch( clearKPCodeAddingError() );
             },
