@@ -95,6 +95,44 @@ export default function addOccupForm(state, action) {
                                 }
                             })
                         };
+                    break;
+                case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES:
+                    if(!action.data)
+                        return state;
+                    else
+                        return {
+                            ...state,
+                            responsibilities: state.responsibilities.map( (portion, portionIndex) => {
+                                if(portionIndex != action.resPortionIndex)
+                                    return portion;
+                                return {
+                                    "portionStartDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "portionEndDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "text": {
+                                        "initial": null,
+                                        "value": action.data.text,
+                                        "_isFieldValue": true
+                                    },
+                                    "id": {
+                                        "initial": null,
+                                        "value": action.data.id,
+                                        "_isFieldValue": true
+                                    }
+                                }
+                            })
+                        };
+                    break;
+                // case
+                //         ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
+                //         ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
                 default:
                     return state;
             }

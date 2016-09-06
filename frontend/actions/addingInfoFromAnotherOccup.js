@@ -36,12 +36,33 @@ export function submitFormAddInfoFromAnotherOccup(data, dispatch) {
     return function (dispatch) {
         dispatch(submitFormRequest(data));
 
+        let searchGetParams = "search?" +
+        "searchType=" + data.searchType +
+        "&occupGroupVal=" + data.occupGroupVal +
+        "&searchText=" + data.searchText +
+        "&searchTags=" + data.searchTags;
+        if(data.creatingInStateDate)
+            searchGetParams += "&creatingInStateDate_takeIntoAccount=" + data.creatingInStateDate.takeIntoAccount +
+            "&creatingInStateDate_from=" + data.creatingInStateDate.from +
+            "&creatingInStateDate_to=" + data.creatingInStateDate.to;
+        if(data.creatingInKPIDate)
+            searchGetParams += "&creatingInKPIDate_takeIntoAccount=" + data.creatingInKPIDate.takeIntoAccount +
+            "&creatingInKPIDate_from=" + data.creatingInKPIDate.from +
+            "&creatingInKPIDate_to=" + data.creatingInKPIDate.to;
+        if(data.cancelingInStateDate)
+            searchGetParams += "&cancelingInStateDate_takeIntoAccount=" + data.cancelingInStateDate.takeIntoAccount +
+            "&cancelingInStateDate_from=" + data.cancelingInStateDate.from +
+            "&cancelingInStateDate_to=" + data.cancelingInStateDate.to;
+        if(data.cancelingInKPIDate)
+            searchGetParams += "&cancelingInKPIDate_takeIntoAccount=" + data.cancelingInKPIDate.takeIntoAccount +
+            "&cancelingInKPIDate_from=" + data.cancelingInKPIDate.from +
+            "&cancelingInKPIDate_to=" + data.cancelingInKPIDate.to;
+
         //TODO: виділити у окремий action для пошуку посад
-        return fetch(SEARCH_OCCUPATION, {
+        return fetch(SEARCH_OCCUPATION + searchGetParams, {
             credentials: 'include',
             mode: 'cors',
-            method: 'post',
-            body: JSON.stringify(data),
+            method: 'get',
             headers: {
                 'Content-Type': 'application/json',
                 //'X-CSRFToken': CSRF_TOKEN
@@ -120,13 +141,18 @@ export function goBackToAddInfoFromAnotherOccupForm() {
     }
 }
 
-export function addInfoFromAnotherOccupation(data, dispatch) {
-    dispatch(hideModalAddInfoFromAnotherOccup());
-    
+function addInfoFromAnotherOccupation_itself(data) {
     return {
         type: ADD_INFO_FROM_ANOTHER_OCCUPATION,
         data: data.data,
         resultsType: data.resultsType,
         resPortionIndex: data.resPortionIndex
+    }
+}
+
+export function addInfoFromAnotherOccupation(data, dispatch) {
+    return function (dispatch) {
+        dispatch( addInfoFromAnotherOccupation_itself(data) );
+        dispatch( hideModalAddInfoFromAnotherOccup() );
     }
 }
