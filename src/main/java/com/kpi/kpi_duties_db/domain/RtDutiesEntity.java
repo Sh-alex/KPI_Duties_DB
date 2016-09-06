@@ -23,10 +23,10 @@ public class RtDutiesEntity {
     private Integer dcDutiesPartitionId;
 
     @Column(name = "RtDutiesName")
-    private String rtDutiesName;
+    private String name;
 
     @Column(name = "RtDutiesNameShort")
-    private String rtDutiesNameShort;
+    private String nameShort;
 
     @Column(name = "DcDutiesNameId")
     private Integer dcDutiesNameId;
@@ -83,20 +83,20 @@ public class RtDutiesEntity {
         this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public String getRtDutiesName() {
-        return rtDutiesName;
+    public String getName() {
+        return name;
     }
 
-    public void setRtDutiesName(String rtDutiesName) {
-        this.rtDutiesName = rtDutiesName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRtDutiesNameShort() {
-        return rtDutiesNameShort;
+    public String getNameShort() {
+        return nameShort;
     }
 
-    public void setRtDutiesNameShort(String rtDutiesNameShort) {
-        this.rtDutiesNameShort = rtDutiesNameShort;
+    public void setNameShort(String nameShort) {
+        this.nameShort = nameShort;
     }
 
     public Integer getDcDutiesNameId() {
@@ -186,13 +186,13 @@ public class RtDutiesEntity {
         RtDutiesEntity that = (RtDutiesEntity) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesPartitionId(), that.getDcDutiesPartitionId()) &&
-                Objects.equals(getRtDutiesName(), that.getRtDutiesName()) &&
-                Objects.equals(getRtDutiesNameShort(), that.getRtDutiesNameShort()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getNameShort(), that.getNameShort()) &&
                 Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getDcDutiesNameId());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId());
     }
 }

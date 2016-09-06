@@ -1,5 +1,6 @@
 package com.kpi.kpi_duties_db.rest;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.domain.RtCodeEntity;
@@ -9,7 +10,7 @@ import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConve
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
-import com.kpi.kpi_duties_db.shared.response.occupation.OccupationGetResponse;
+import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -152,15 +153,15 @@ public class RtDutiesController {
         MultivaluedMap parameters = uriInfo.getQueryParameters();
         OccupationGetRequest occupationRequest = null;
         if (parameters.size() != 0) {
-            final ObjectMapper mapper = new ObjectMapper();
+            final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
             occupationRequest = mapper.convertValue(parameters, OccupationGetRequest.class);
         }
 
         OccupationGetDto occupationGetDto = converter.toOccupationDtoFromOccupationGetRequest(occupationRequest);
         List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
 
-        OccupationGetResponse response = new OccupationGetResponse();
-        response.setOccupations(result);
+
+        OccupationsGetResponse response = converter.toOccupationsGetResponseFromRtDutiesEntityList(result);
 
         return Response.ok().entity(response).build();
     }

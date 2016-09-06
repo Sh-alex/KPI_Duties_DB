@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RtDutiesRepository extends JpaRepository<RtDutiesEntity, Integer> {
 
-    @Query("select b from RtDutiesEntity b where b.rtDutiesName = :name")
+    @Query("select b from RtDutiesEntity b where b.name = :name")
     RtDutiesEntity getByName(@Param("name") String name);
 }

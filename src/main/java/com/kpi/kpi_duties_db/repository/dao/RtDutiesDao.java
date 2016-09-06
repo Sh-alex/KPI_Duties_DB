@@ -14,5 +14,6 @@ import java.util.Map;
 public interface RtDutiesDao {
 
     RtDutiesEntity findById(Integer id);
+
     List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap);
 }

@@ -4,9 +4,7 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -56,15 +54,30 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             break;
                         case "rtDutiesName":
                             if (paramsMap.get("searchType").equals("MATCH_STRING")) {
-                                criteria.add(Restrictions.eq("rtDutiesName", value));
+                                criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
                             }
                             if (paramsMap.get("searchType").equals("CONTAINS_STRING")) {
-                                criteria.add(Restrictions.ilike("rtDutiesName", (String) value, MatchMode.ANYWHERE));
+                                criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
                             }
                             break;
-                        case "dcDutiesNameId":
-                            criteria.add(Restrictions.eq("dcDutiesNameId", value));
-                            break;
+                        case "dcDutiesNames":
+                            //OR LIKE
+                            if (paramsMap.get("searchType").equals("SOME_TAGS")) {
+                            Disjunction disjunction = Restrictions.disjunction();
+                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                            }
+                            criteria.add(disjunction);
+                        }
+                        //AND LIKE
+                        if (paramsMap.get("searchType").equals("ALL_TAGS")) {
+                            Conjunction conjunction = Restrictions.conjunction();
+                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                            }
+                            criteria.add(conjunction);
+                        }
+                        break;
                         case "creatingInStateDate_from":
                             criteria.add(Restrictions.eq("dates.isInKpi", false));
                             criteria.add(Restrictions.ge("dates.start", value));

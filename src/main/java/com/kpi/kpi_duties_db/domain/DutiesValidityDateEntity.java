@@ -20,7 +20,7 @@ public class DutiesValidityDateEntity {
 
 
     @Column(name = "isInKPI")
-    private boolean isInKpi;
+    private Boolean isInKpi;
 
     @Column(name = "Start")
     private Date start;
@@ -46,11 +46,11 @@ public class DutiesValidityDateEntity {
         this.id = id;
     }
 
-    public boolean isInKpi() {
+    public Boolean getInKpi() {
         return isInKpi;
     }
 
-    public void setInKpi(boolean inKpi) {
+    public void setInKpi(Boolean inKpi) {
         isInKpi = inKpi;
     }
 
@@ -91,8 +91,8 @@ public class DutiesValidityDateEntity {
         if (this == o) return true;
         if (!(o instanceof DutiesValidityDateEntity)) return false;
         DutiesValidityDateEntity that = (DutiesValidityDateEntity) o;
-        return isInKpi() == that.isInKpi() &&
-                Objects.equals(getId(), that.getId()) &&
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(isInKpi, that.isInKpi) &&
                 Objects.equals(getStart(), that.getStart()) &&
                 Objects.equals(getStop(), that.getStop()) &&
                 Objects.equals(isVirtual, that.isVirtual) &&
@@ -101,6 +101,6 @@ public class DutiesValidityDateEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), isInKpi(), getStart(), getStop(), isVirtual, getRtDutiesId());
+        return Objects.hash(getId(), isInKpi, getStart(), getStop(), isVirtual, getRtDutiesId());
     }
 }

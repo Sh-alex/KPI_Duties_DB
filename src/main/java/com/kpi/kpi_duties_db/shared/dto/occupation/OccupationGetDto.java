@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -20,7 +21,7 @@ public class OccupationGetDto {
 
     private String rtDutiesName;
 
-    private Integer dcDutiesNameId;
+    private List<String> dcDutiesNames;
 
     private Date creatingInStateDate_from;
 
@@ -62,12 +63,12 @@ public class OccupationGetDto {
         this.rtDutiesName = rtDutiesName;
     }
 
-    public Integer getDcDutiesNameId() {
-        return dcDutiesNameId;
+    public List<String> getDcDutiesNames() {
+        return dcDutiesNames;
     }
 
-    public void setDcDutiesNameId(Integer dcDutiesNameId) {
-        this.dcDutiesNameId = dcDutiesNameId;
+    public void setDcDutiesNames(List<String> dcDutiesNames) {
+        this.dcDutiesNames = dcDutiesNames;
     }
 
     public Date getCreatingInStateDate_from() {

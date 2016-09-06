@@ -9,13 +9,13 @@ import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
+import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
+import com.kpi.kpi_duties_db.shared.response.occupation.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -55,8 +55,8 @@ public class OccupationConverterImpl implements OccupationConverter {
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(nameOccupation.getRtDutiesParentId());
         }
-        entity.setRtDutiesName(nameOccupation.getRtDutiesName());
-        entity.setRtDutiesNameShort(nameOccupation.getRtDutiesNameShort());
+        entity.setName(nameOccupation.getRtDutiesName());
+        entity.setNameShort(nameOccupation.getRtDutiesNameShort());
         entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
 
@@ -218,8 +218,8 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getRtDutiesName() != null && !request.getRtDutiesName().isEmpty()) {
             occupationGetDto.setRtDutiesName(request.getRtDutiesName().get(0));
         }
-        if (request.getDcDutiesNameId() != null && !request.getDcDutiesNameId().isEmpty()) {
-            occupationGetDto.setDcDutiesNameId(request.getDcDutiesNameId().get(0));
+        if (request.getDcDutiesNames() != null && !request.getDcDutiesNames().isEmpty()) {
+            occupationGetDto.setDcDutiesNames(request.getDcDutiesNames().get(0));
         }
         if (request.getCreatingInStateDate_from() != null && !request.getCreatingInStateDate_from().isEmpty()) {
             occupationGetDto.setCreatingInStateDate_from(request.getCreatingInStateDate_from().get(0));
@@ -257,19 +257,155 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         Map<String, Object> params = new HashMap<>();
 
-            params.put("searchType", dto.getSearchType());
-            params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionId());
-            params.put("rtDutiesName", dto.getRtDutiesName());
-            params.put("dcDutiesNameId", dto.getDcDutiesNameId());
-            params.put("creatingInStateDate_from", dto.getCreatingInStateDate_from());
-            params.put("creatingInStateDate_to", dto.getCreatingInStateDate_to());
-            params.put("cancelingInStateDate_from", dto.getCancelingInStateDate_from());
-            params.put("cancelingInStateDate_to", dto.getCancelingInStateDate_to());
-            params.put("creatingInKPIDate_from", dto.getCreatingInKPIDate_from());
-            params.put("creatingInKPIDate_to", dto.getCreatingInKPIDate_to());
-            params.put("cancelingInKPIDate_from", dto.getCancelingInKPIDate_from());
-            params.put("cancelingInKPIDate_to", dto.getCancelingInKPIDate_to());
+        params.put("searchType", dto.getSearchType());
+        params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionId());
+        params.put("rtDutiesName", dto.getRtDutiesName());
+        params.put("dcDutiesNames", dto.getDcDutiesNames());
+        params.put("creatingInStateDate_from", dto.getCreatingInStateDate_from());
+        params.put("creatingInStateDate_to", dto.getCreatingInStateDate_to());
+        params.put("cancelingInStateDate_from", dto.getCancelingInStateDate_from());
+        params.put("cancelingInStateDate_to", dto.getCancelingInStateDate_to());
+        params.put("creatingInKPIDate_from", dto.getCreatingInKPIDate_from());
+        params.put("creatingInKPIDate_to", dto.getCreatingInKPIDate_to());
+        params.put("cancelingInKPIDate_from", dto.getCancelingInKPIDate_from());
+        params.put("cancelingInKPIDate_to", dto.getCancelingInKPIDate_to());
 
         return params;
+    }
+
+    @Override
+    public OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list) {
+
+        OccupationsGetResponse response = new OccupationsGetResponse();
+
+        Map<Integer, ItemById> itemsById = new HashMap<>();
+        List<Integer> itemsList = new ArrayList<>();
+        for (RtDutiesEntity entity : list) {
+            ItemById itemById = new ItemById();
+
+            DataInItem dataInItem = new DataInItem();
+            Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
+            if (dutiesValidityDateEntities != null) {
+                List<DutiesValidityDateEntity> dateInKpi = dutiesValidityDateEntities.stream().filter(date -> date.getInKpi() == true).collect(Collectors.toList());
+                List<DutiesValidityDateEntity> dateInState = dutiesValidityDateEntities.stream().filter(date -> date.getInKpi() == false).collect(Collectors.toList());
+
+                dataInItem.setCancelingInKPIDate(dateInKpi == null ? null : dateInKpi.get(0).getStop());
+                dataInItem.setCreatingInKPIDate(dateInKpi == null ? null : dateInKpi.get(0).getStart());
+                dataInItem.setCancelingInStateDate(dateInState == null ? null : dateInState.get(0).getStop());
+                dataInItem.setCreatingInStateDate(dateInState == null ? null : dateInState.get(0).getStart());
+
+                Boolean isVirtual = null;
+
+                if (dateInKpi != null) {
+                    isVirtual = dateInKpi.get(0).getVirtual();
+                } else {
+                    isVirtual = dateInState == null ? null : dateInState.get(0).getVirtual();
+                }
+
+                dataInItem.setVirtual(isVirtual);
+
+                dataInItem.setInKPI(dateInKpi == null ? false : true);
+            }
+
+            DcDutiesPartitionEntity dcDutiesPartitionEntity = entity.getDcDutiesPartitionEntity();
+            if (dcDutiesPartitionEntity != null) {
+                dataInItem.setOccupationGroup(dcDutiesPartitionEntity.getName());
+            }
+
+            dataInItem.setOccupationName(entity.getName());
+            dataInItem.setOccupationNameMin(entity.getNameShort());
+
+            List<CodesInData> codes = new ArrayList<>();
+            for (RtDutiesCodeEntity rtDutiesCodeEntity : entity.getRtDutiesCodeEntities()) {
+
+                RtCodeEntity rtCodeEntity = rtDutiesCodeEntity.getRtCodeEntity();
+
+                if (rtCodeEntity != null) {
+                    CodesInData codesInData = new CodesInData();
+                    Code code = new Code();
+                    DcCodeDkhpEntity dkhpEntity = rtCodeEntity.getCodeDkhpEntity();
+                    if (dkhpEntity != null) {
+                        code.setId(dkhpEntity.getId());
+                        code.setVal(dkhpEntity.getName());
+                        codesInData.setCodeDKHP(code);
+                    }
+
+                    DcCodeEtkdEntity etkdEntity = rtCodeEntity.getCodeEtkdEntity();
+                    if (etkdEntity != null) {
+                        code.setId(etkdEntity.getId());
+                        code.setVal(etkdEntity.getName());
+                        codesInData.setCodeETDK(code);
+                    }
+
+                    DcCodeKpEntity kpEntity = rtCodeEntity.getCodeKpEntity();
+                    if (kpEntity != null) {
+                        code.setId(kpEntity.getId());
+                        code.setVal(kpEntity.getName());
+                        codesInData.setCodeKP(code);
+                    }
+
+                    DcCodeZkpptrEntity zkpptrEntity = rtCodeEntity.getCodeZkpptrEntity();
+                    if (zkpptrEntity != null) {
+                        code.setId(zkpptrEntity.getId());
+                        code.setVal(zkpptrEntity.getName());
+                        codesInData.setCodeZKPPTR(code);
+                    }
+
+                    codesInData.setPortionStartDate(rtCodeEntity.getDateStart());
+                    codesInData.setPortionEndDate(rtCodeEntity.getDateStop());
+                    codes.add(codesInData);
+                }
+            }
+
+            dataInItem.setCodes(codes);
+
+            List<Requirement> haveToKnowList = new ArrayList<>();
+            for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
+                Requirement haveToKnow = new Requirement();
+                haveToKnow.setId(rtDutiesMustKnowEntity.getId());
+                haveToKnow.setText(rtDutiesMustKnowEntity.getDcDutiesMustKnowEntity().getText());
+                haveToKnow.setPortionStartDate(rtDutiesMustKnowEntity.getDateStart());
+                haveToKnow.setPortionEndDate(rtDutiesMustKnowEntity.getDateEnd());
+
+                haveToKnowList.add(haveToKnow);
+            }
+            dataInItem.setHaveToKnow(haveToKnowList);
+
+            List<Requirement> responsibilitiesList = new ArrayList<>();
+            for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
+                Requirement responsibilities = new Requirement();
+                responsibilities.setId(rtDutiesTaskAndResponsibilitiesEntity.getId());
+                responsibilities.setText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity().getText());
+                responsibilities.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
+                responsibilities.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
+
+                responsibilitiesList.add(responsibilities);
+            }
+            dataInItem.setResponsibilities(responsibilitiesList);
+
+            List<Requirement> qualiffRequirList = new ArrayList<>();
+            for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
+                Requirement qualiffRequir = new Requirement();
+                qualiffRequir.setId(rtDutiesQualificationRequirementsEntity.getId());
+                qualiffRequir.setText(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsEntity().getText());
+                qualiffRequir.setPortionStartDate(rtDutiesQualificationRequirementsEntity.getDateStart());
+                qualiffRequir.setPortionEndDate(rtDutiesQualificationRequirementsEntity.getDateEnd());
+
+                qualiffRequirList.add(qualiffRequir);
+            }
+            dataInItem.setQualiffRequir(qualiffRequirList);
+
+            itemById.setId(entity.getId());
+            itemById.setData(dataInItem);
+
+            itemsById.put(entity.getId(), itemById);
+            itemsList.add(entity.getId());
+        }
+
+        FoundOccupations foundOccupations = new FoundOccupations();
+        response.setFoundOccupations(foundOccupations);
+        response.getFoundOccupations().setItemsList(itemsList);
+        response.getFoundOccupations().setItemsById(itemsById);
+        return response;
     }
 }
