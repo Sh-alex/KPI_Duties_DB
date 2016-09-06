@@ -61,31 +61,29 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                         <td>
                             {
                                 props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeKP ? portion.codeKP.val + ",   " : "- ,   "
+                                    return portion.codeKP ? <div> {portion.codeKP.val} </div> : <div> - </div>
                                 })
                             }
                         </td>
                         <td>
                             {
                                 props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeZKPPTR ? portion.codeZKPPTR.val + ",   " : "- ,   "
+                                    return portion.codeZKPPTR ? <div> {portion.codeZKPPTR.val} </div> : <div> - </div>
                                 })
                             }
                         </td>
                         <td>
                             {
                                 props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeDKHP ? portion.codeDKHP.val + ",   " : "- ,   "
+                                    return portion.codeDKHP ? <div> {portion.codeDKHP.val} </div> : <div> - </div>
                                 })
                             }
                         </td>
                         <td>
                             {
                                 props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeETDK ? portion.codeETDK.val + ",   " : "- ,   "
-                                })/*.reduce(function (code, resArr) {
-                             resArr.push(code, pu)
-                             })*/
+                                    return portion.codeETDK ? <div> {portion.codeETDK.val} </div> : <div> - </div>
+                                })
                             }
                         </td>
                     </tr>
