@@ -32,9 +32,9 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
     }
 
     handleToggleExpandItem(itemIndex, portionIndex) {
-        if(this.state.expandedItems[itemIndex+(itemIndex+1)*portionIndex]) {
-            let newExpandedItemsState = Object.assin({}, this.state.expandedItems);
-            delete newExpandedItemsState[itemIndex+(itemIndex+1)*portionIndex];
+        if(this.state.expandedItems[itemIndex+"_"+portionIndex]) {
+            let newExpandedItemsState = Object.assign({}, this.state.expandedItems);
+            delete newExpandedItemsState[itemIndex+"_"+portionIndex];
             this.setState({
                 expandedItems: newExpandedItemsState
             });
@@ -42,7 +42,7 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
             this.setState({
                 expandedItems: {
                     ...this.state.expandedItems,
-                    [itemIndex+(itemIndex+1)*portionIndex]: itemIndex+(itemIndex+1)*portionIndex
+                    [itemIndex+"_"+portionIndex]: true
                 }
             });    
         }
@@ -57,6 +57,7 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                         selectedItemIndex={this.state.selectedItemIndex}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
+                        onToggleExpandItem={this.handleToggleExpandItem}
                         searchResData={this.props.searchResData}
                     />
                 )
@@ -67,6 +68,7 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                         selectedItemIndex={this.state.selectedItemIndex}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
+                        onToggleExpandItem={this.handleToggleExpandItem}
                         searchResData={this.props.searchResData}
                     />
                 )
@@ -77,9 +79,10 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                         selectedItemIndex={this.state.selectedItemIndex}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
+                        onToggleExpandItem={this.handleToggleExpandItem}
                         searchResData={this.props.searchResData}
                     />
-                )
+                );
                 break;
             case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                 resultsTable = (
@@ -120,7 +123,13 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                     </div>
                     <div className="text-right">
                         <button 
-                            onClick={() => this.props.handleAddInfoBtnClick({data: this.state.selectedItemData, resultsType: this.props.resultsType, resPortionIndex: this.props.resPortionIndex} )}
+                            onClick={() => {
+                                this.props.handleAddInfoBtnClick({
+                                    data: this.state.selectedItemData, 
+                                    resultsType: this.props.resultsType, 
+                                    resPortionIndex: this.props.resPortionIndex
+                                })
+                            }}
                             type="button"
                             disabled={!this.state.selectedItemData}
                             form="search-similar-results" 

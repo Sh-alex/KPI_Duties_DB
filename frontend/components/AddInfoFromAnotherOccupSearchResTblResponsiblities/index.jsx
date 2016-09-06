@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Alert} from 'react-bootstrap'
+import classNames from 'classnames'
 import "./styles.less";
 
 function bindHandleItemsSelect(itemId, itemIndex, portionIndex, props) {
@@ -17,7 +18,7 @@ function bindToggleExpandItem(itemIndex, portionIndex, props) {
     }
 }
 
-export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
+export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props) {
     let tblRows;
     try {
         tblRows = !props.searchResData.itemsList.length ?
@@ -34,8 +35,17 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
             :
             props.searchResData.itemsList.map( (itemId,itemIndex) => {
                 return props.searchResData.itemsById[itemId].data.responsibilities.map((portion, portionIndex) => {
+                    let itemIsExpanded = props.expandedItems[itemIndex+"_"+portionIndex],
+                        bigTextCellClassName = classNames({
+                            "search-similar-table__big-text-cell": true,
+                            "search-similar-table__big-text-cell--expanded": itemIsExpanded
+                        });
+                    
                     return (
-                        <tr onClick={bindHandleItemsSelect(itemId, itemIndex, portionIndex, props)} key={itemIndex+(itemIndex+1)*portionIndex}>
+                        <tr 
+                            onClick={bindHandleItemsSelect(itemId, itemIndex, portionIndex, props)} 
+                            key={itemIndex+"_"+portionIndex}
+                        >
                             <td>
                                 <input
                                     checked={props.selectedItemIndex == itemIndex}
@@ -46,21 +56,19 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                             <td title="Номер в списку"> { itemIndex+1 } </td>
                             <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
                             <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
-                            <td className="search-similar-table__big-text-cell search-similar-table__big-text-cell--expanded">
+                            <td className={bigTextCellClassName} >
                                 {portion.text}
                             </td>
                             <td>
                                 <a className="pull-right occup-table__btn-expand"
                                    href="javascript:void(0)"
-                                   onclick={bindToggleExpandItem(itemIndex, portionIndex)}
+                                   onClick={bindToggleExpandItem(itemIndex, portionIndex, props)}
                                    title="Переглянути деталі"
                                 >
                                     {
-                                        props.expandedItems[itemIndex+(itemIndex+1)*portionIndex] ? (
-                                            <i className='fa fa-chevron-up' />
-                                        ) : (
-                                            <i className="fa fa-chevron-down" aria-hidden="true" />
-                                        )
+                                        itemIsExpanded ?
+                                            (<i className='fa fa-chevron-up' />) :
+                                            (<i className="fa fa-chevron-down" />)
                                     }
                                 </a>
                             </td>

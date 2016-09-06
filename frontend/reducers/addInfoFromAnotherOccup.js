@@ -17,6 +17,7 @@ const initialState = {
     typeText: "це поле",
     showResults: false,     //показується пошукова форма чи таблиця з результатами пошуку
     isSubmittngSearchForm: false,
+    resPortionIndex: null,
     searchResData: null,
     resultsType: null,
     searchError: null
@@ -31,7 +32,7 @@ export default function (state = initialState, action) {
                 typeText: action.data.typeText || "це поле",
                 show: true,
                 resultsType: action.data.typeId,
-                resPortionIndex: action.resPortionIndex,
+                resPortionIndex: action.data.resPortionIndex,
                 searchError: null
             };
         case HIDE_MODAL_ADD_INFO_FROM_ANOTHER_OCCUP:
@@ -113,6 +114,12 @@ export default function (state = initialState, action) {
                                         "text": "wefwefwefwefwefwefwefwefwef",
                                         "id": 67,
                                         "portionStartDate": "2016-08-10T21:07:51.718Z",
+                                        "portionEndDate": "2016-09-10T21:07:51.718Z"
+                                    },
+                                    {
+                                        "text": "fffffffffferfwefwefwefwefwefjjjjjjjjjjjjjjjjjeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeekkkkkkkkkkkkkkkkkkkkkkkkkk kkkkkkkkkkkkkkkkkkkkweffffffffffffffffwwwwwwwwwwwwwwwww hjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+                                        "id": 13,
+                                        "portionStartDate": "2016-09-10T21:07:51.718Z",
                                         "portionEndDate": null
                                     }
                                 ],
