@@ -322,9 +322,9 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                 if (rtCodeEntity != null) {
                     CodesInData codesInData = new CodesInData();
-                    Code code = new Code();
                     DcCodeDkhpEntity dkhpEntity = rtCodeEntity.getCodeDkhpEntity();
                     if (dkhpEntity != null) {
+                        Code code = new Code();
                         code.setId(dkhpEntity.getId());
                         code.setVal(dkhpEntity.getName());
                         codesInData.setCodeDKHP(code);
@@ -332,6 +332,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                     DcCodeEtkdEntity etkdEntity = rtCodeEntity.getCodeEtkdEntity();
                     if (etkdEntity != null) {
+                        Code code = new Code();
                         code.setId(etkdEntity.getId());
                         code.setVal(etkdEntity.getName());
                         codesInData.setCodeETDK(code);
@@ -339,6 +340,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                     DcCodeKpEntity kpEntity = rtCodeEntity.getCodeKpEntity();
                     if (kpEntity != null) {
+                        Code code = new Code();
                         code.setId(kpEntity.getId());
                         code.setVal(kpEntity.getName());
                         codesInData.setCodeKP(code);
@@ -346,6 +348,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                     DcCodeZkpptrEntity zkpptrEntity = rtCodeEntity.getCodeZkpptrEntity();
                     if (zkpptrEntity != null) {
+                        Code code = new Code();
                         code.setId(zkpptrEntity.getId());
                         code.setVal(zkpptrEntity.getName());
                         codesInData.setCodeZKPPTR(code);
