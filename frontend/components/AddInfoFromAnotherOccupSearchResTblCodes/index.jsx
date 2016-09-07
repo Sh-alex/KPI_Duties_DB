@@ -4,10 +4,11 @@ import "./styles.less";
 
 function bindHandleItemsSelect(itemId, itemIndex, props) {
     return () => {
-        return props.onSelectItem(
+        return props.onSelectItem({
             itemIndex,
-            props.searchResData.itemsById[itemId].data
-        )
+            portionIndex: 0,
+            data: props.searchResData.itemsById[itemId].data
+        })
     }
 }
 
@@ -16,7 +17,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
     try {
         tblRows = !props.searchResData.itemsList.length ?
             (
-                <tr colSpan="100">
+                <tr colSpan="100" className="text-center">
                     <Alert bsStyle="warning">
                         <p>
                             За вказаними критеріями не знайдено жодної посади.<br />
@@ -49,7 +50,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                     >
                         <td>
                             <input
-                                checked={props.selectedItemIndex == itemIndex}
+                                checked={props.selectedItem.itemIndex == itemIndex}
                                 type="radio"
                                 name="radio-selected-similar-occup"
                                 className="minimal"
@@ -92,7 +93,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
     } catch(err) {
         console.error(err);
         tblRows = (
-            <tr colSpan="100">
+            <tr colSpan="100" className="text-center">
                 <Alert bsStyle="danger">
                     <p>
                         Сталася помилка при побутові таблиці з результатами пошуку

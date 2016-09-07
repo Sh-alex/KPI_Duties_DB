@@ -20,13 +20,14 @@ export default class FormAddInfoFromAnotherOccup extends Component {
 
         this.resetState = this.resetState.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.handleTagsChange = this.handleTagsChange.bind(this);
 
         this.state = {
             form: {
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
                 occupGroupVal: -1,     // 8
                 searchText: "",        //"інженер"
-                searchTags: [],      // [4, 7, 19] => ["Старший", "Інженер", "1 розряду"]
+                searchTags: [],      // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
             }
         };
@@ -38,7 +39,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
                 occupGroupVal: -1,     // 8
                 searchText: "",        //"інженер"
-                searchTags: [],      // [4, 7, 19] => ["Старший", "Інженер", "1 розряду"]
+                searchTags: [],      // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
             }
         });
@@ -48,8 +49,17 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         e.preventDefault();
         this.props.onSubmitSearchForm({
             ...this.state.form,
-            searchTags: this.state.form.searchTags.map(tag => tag.id)
+            searchTags: this.state.form.searchTags
         });
+    }
+
+    handleTagsChange(newVal) {
+        this.setState({
+            form: {
+                ...this.state.form,
+                searchTags: [...this.state.form.searchTags, newVal]
+            }
+        })
     }
 
     render() {
@@ -160,23 +170,18 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                     (
                                         <Multiselect
                                             id="form-search-similar__inp-occupation-name"
-                                            placeholder="Оберіть теги зі списку"
-                                            data={this.props.clarificationList.items}
-                                            valueField='id'
-                                            textField='textValue'
-                                            defaultValue={null}
+                                            placeholder="Введіть тут теги"
+                                            messages={{emptyList: "Список пустий", createNew: "Додати новий тег"}}
+                                            defaultValue={""}
                                             value={this.state.form.searchTags}
-                                            onChange={ newVal => {
-                                                this.setState({
-                                                    form: { ...this.state.form, searchTags: newVal }
-                                                })
-                                            }}
-                                            busy={this.props.occupationGroupList.isFetching}
+                                            onChange={this.handleTagsChange}
+                                            onCreate={this.handleTagsChange}
                                             caseSensitive={false}
                                             filter='contains' />
                                     ) : ""
                             }
-                        </div>
+                            {/*                                            data={this.props.clarificationList.items} */}
+ </div>
                     </div>
                     <div className="form-group">
                         <div className="col-sm-offset-3 col-sm-9 checkbox">
