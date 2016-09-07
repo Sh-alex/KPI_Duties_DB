@@ -8,7 +8,7 @@ function bindHandleItemsSelect(itemId, itemIndex, portionIndex, props) {
         return props.onSelectItem({
             itemIndex,
             portionIndex,
-            data: props.searchResData.itemsById[itemId].data.responsibilities[portionIndex]
+            data: props.searchResData.itemsById[itemId].data.qualiffRequir[portionIndex]
         })
     }
 }
@@ -19,7 +19,7 @@ function bindToggleExpandItem(itemIndex, portionIndex, props) {
     }
 }
 
-export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props) {
+export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) {
     let tblRows;
     try {
         tblRows = !props.searchResData.itemsList.length ?
@@ -35,7 +35,7 @@ export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props
             )
             :
             props.searchResData.itemsList.map( (itemId,itemIndex) => {
-                return props.searchResData.itemsById[itemId].data.responsibilities.map((portion, portionIndex) => {
+                return props.searchResData.itemsById[itemId].data.qualiffRequir.map((portion, portionIndex) => {
                     let itemIsExpanded = props.expandedItems[itemIndex+"_"+portionIndex],
                         itemIsSelected = (props.selectedItem.itemIndex == itemIndex) && (props.selectedItem.portionIndex == portionIndex),
                         bigTextCellClassName = classNames({
@@ -98,7 +98,7 @@ export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props
                 <th colSpan="2" title="Номер в списку"> № </th>
                 <th> Назва посади </th>
                 <th> Приналежн. до КПІ </th>
-                <th colSpan="2"> Завдання, обов'язки та повноваження </th>
+                <th colSpan="2"> Кваліфікаційні вимоги </th>
             </tr>
             </thead>
             <tbody>

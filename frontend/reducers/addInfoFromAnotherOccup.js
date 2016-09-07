@@ -131,7 +131,7 @@ export default function (state = initialState, action) {
                                         "portionEndDate": null
                                     }
                                 ],
-                                "ualiffRequir": [
+                                "qualiffRequir": [
                                     {
                                         "text": "tyttyjty",
                                         "id": 4,
@@ -177,7 +177,7 @@ export default function (state = initialState, action) {
                                         "portionEndDate": null
                                     }
                                 ],
-                                "ualiffRequir": [
+                                "qualiffRequir": [
                                     {
                                         "text": "wegrgweg",
                                         "id": 1,
