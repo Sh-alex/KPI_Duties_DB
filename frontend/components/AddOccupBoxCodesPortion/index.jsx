@@ -113,6 +113,7 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeKP}
                                 id={"inp-code-KP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
+                                messages={{emptyList:"Список пустий"}}
                                 data={props.KPCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -151,6 +152,7 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeZKPPTR}
                                 id={"inp-code-ZKPPTR"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
+                                messages={{emptyList:"Список пустий"}}
                                 data={props.ZKPPTRCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -192,6 +194,7 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeETDK}
                                 id={"inp-code-ETDK"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
+                                messages={{emptyList:"Список пустий"}}
                                 data={props.ETDKCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -230,6 +233,7 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeDKHP}
                                 id={"inp-code-DKHP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
+                                messages={{emptyList:"Список пустий"}}
                                 data={props.DKHPCodesList.items}
                                 valueField='id'
                                 textField='textValue'

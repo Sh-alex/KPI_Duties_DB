@@ -82,6 +82,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                             <DropdownList
                                 id="inp-occupation-group"
                                 placeholder="Оберіть варіант зі списку"
+                                messages={{emptyList:"Список пустий"}}
                                 data={[
                                     {
                                         "id": -1,
