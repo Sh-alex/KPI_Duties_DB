@@ -25,7 +25,9 @@
     ]
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "font-awesome": "^4.6.3",
     "jquery": "^2.2.1",
     "less": "^2.6.0",
     "moment": "^2.14.1",
