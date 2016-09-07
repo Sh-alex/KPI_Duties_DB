@@ -1,6 +1,5 @@
 package com.kpi.kpi_duties_db.rest;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.domain.RtCodeEntity;
@@ -153,13 +152,13 @@ public class RtDutiesController {
         MultivaluedMap parameters = uriInfo.getQueryParameters();
         OccupationGetRequest occupationRequest = null;
         if (parameters.size() != 0) {
-            final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            final ObjectMapper mapper = new ObjectMapper();
             occupationRequest = mapper.convertValue(parameters, OccupationGetRequest.class);
         }
 
         OccupationGetDto occupationGetDto = converter.toOccupationDtoFromOccupationGetRequest(occupationRequest);
-        List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
 
+        List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
 
         OccupationsGetResponse response = converter.toOccupationsGetResponseFromRtDutiesEntityList(result);
 
