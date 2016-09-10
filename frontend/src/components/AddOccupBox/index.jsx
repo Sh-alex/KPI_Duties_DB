@@ -74,9 +74,13 @@ let initialFormState = {
             'portionStartDate': null,
             'portionEndDate': null,
             'codeKP': null,
+            'codeKPText': "",
             'codeETDK': null,
+            'codeETDKText': "",
             'codeZKPPTR': null,
-            'codeDKHP': null
+            'codeZKPPTRText': "",
+            'codeDKHP': null,
+            'codeDKHPText': ""
         }
     ],
     responsibilities: [

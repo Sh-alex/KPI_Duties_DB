@@ -7,11 +7,11 @@ var webpack = require('webpack'),
 module.exports = {
     entry: ([
         'babel-polyfill',
-        "./frontend/main.jsx"
+        "./frontend/src/main.jsx"
     ]),
     output: {
-        path: __dirname + '/frontend-public/build/',
-        publicPath: "/frontend-public/build/",
+        path: __dirname + '/frontend/public/build/',
+        publicPath: "build/",
         filename: "bundle.js"
     },
     watch: isDev,
@@ -115,11 +115,11 @@ module.exports = {
     ]),
     devServer: !isDev ? null : {
         historyApiFallback: {
-            index: '/frontend-public/index.html'
+            index: '/frontend/public/index.html'
         },
-      //  publicPath: "/frontend-public/",
+      //  publicPath: "/frontend/public/",
         proxy: {
-            "/api*": {
+            "/api": {
                 target : `http://localhost:${API_PORT}`,
                 changeOrigin: true,
                 secure: false
