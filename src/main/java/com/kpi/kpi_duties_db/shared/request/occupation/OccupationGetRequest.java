@@ -25,7 +25,7 @@ public class OccupationGetRequest {
     private List<String> rtDutiesName;
 
     @JsonProperty("searchTags")
-    private List<List<String>> dcDutiesNames;
+    private List<String> dcDutiesNames;
 
     private List<Date> creatingInStateDate_from;
 
@@ -68,11 +68,11 @@ public class OccupationGetRequest {
         this.rtDutiesName = rtDutiesName;
     }
 
-    public List<List<String>> getDcDutiesNames() {
+    public List<String> getDcDutiesNames() {
         return dcDutiesNames;
     }
 
-    public void setDcDutiesNames(List<List<String>> dcDutiesNames) {
+    public void setDcDutiesNames(List<String> dcDutiesNames) {
         this.dcDutiesNames = dcDutiesNames;
     }
 

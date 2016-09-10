@@ -219,7 +219,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             occupationGetDto.setRtDutiesName(request.getRtDutiesName().get(0));
         }
         if (request.getDcDutiesNames() != null && !request.getDcDutiesNames().isEmpty()) {
-            occupationGetDto.setDcDutiesNames(request.getDcDutiesNames().get(0));
+            occupationGetDto.setDcDutiesNames(request.getDcDutiesNames());
         }
         if (request.getCreatingInStateDate_from() != null && !request.getCreatingInStateDate_from().isEmpty()) {
             occupationGetDto.setCreatingInStateDate_from(request.getCreatingInStateDate_from().get(0));
@@ -244,6 +244,14 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
         if (request.getCancelingInKPIDate_to() != null && !request.getCancelingInKPIDate_to().isEmpty()) {
             occupationGetDto.setCancelingInKPIDate_to(request.getCancelingInKPIDate_to().get(0));
+        }
+
+        if (occupationGetDto.getDcDutiesNames() != null && !occupationGetDto.getDcDutiesNames().isEmpty()) {
+            String[] split = occupationGetDto.getDcDutiesNames().get(0).split(",");
+            occupationGetDto.getDcDutiesNames().clear();
+            for (String tag : split) {
+                occupationGetDto.getDcDutiesNames().add(tag);
+            }
         }
 
         return occupationGetDto;
