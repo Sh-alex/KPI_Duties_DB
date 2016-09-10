@@ -109,8 +109,11 @@ export default function AddOccupBoxCodesPortion(props) {
                     </label>
                     <div className="col-sm-8">
                         <div className="input-group">
+                            <input
+                                type="hidden"
+                                {...props.codesPortionFields.codeKP} />
                             <DropdownList
-                                {...props.codesPortionFields.codeKP}
+                                {...props.codesPortionFields.codeKPText}
                                 id={"inp-code-KP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{emptyList:"Список пустий"}}
@@ -118,7 +121,12 @@ export default function AddOccupBoxCodesPortion(props) {
                                 valueField='id'
                                 textField='textValue'
                                 defaultValue={null}
-                                onChange={ newVal => props.codesPortionFields.codeKP.onChange(newVal.id) }
+                                onChange={
+                                    newVal => {
+                                        props.codesPortionFields.codeKP.onChange(newVal.id);
+                                        props.codesPortionFields.codeKPText.onChange(newVal.textValue);
+                                    }
+                                }
                                 busy={props.KPCodesList.isFetching}
                                 caseSensitive={false}
                                 filter='startsWith' />
@@ -148,8 +156,11 @@ export default function AddOccupBoxCodesPortion(props) {
                     </label>
                     <div className="col-sm-8">
                         <div className="input-group">
+                            <input
+                                type="hidden"
+                                {...props.codesPortionFields.codeZKPPTR} />
                             <DropdownList
-                                {...props.codesPortionFields.codeZKPPTR}
+                                {...props.codesPortionFields.codeZKPPTRText}
                                 id={"inp-code-ZKPPTR"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{emptyList:"Список пустий"}}
@@ -157,7 +168,12 @@ export default function AddOccupBoxCodesPortion(props) {
                                 valueField='id'
                                 textField='textValue'
                                 defaultValue={null}
-                                onChange={ newVal => props.codesPortionFields.codeZKPPTR.onChange(newVal.id) }
+                                onChange={
+                                    newVal => {
+                                        props.codesPortionFields.codeZKPPTR.onChange(newVal.id);
+                                        props.codesPortionFields.codeZKPPTRText.onChange(newVal.textValue);
+                                    }
+                                }
                                 busy={props.ZKPPTRCodesList.isFetching}
                                 caseSensitive={false}
                                 filter='startsWith' />
@@ -190,8 +206,11 @@ export default function AddOccupBoxCodesPortion(props) {
                     </label>
                     <div className="col-sm-8">
                         <div className="input-group">
+                            <input
+                                type="hidden"
+                                {...props.codesPortionFields.codeETDK} />
                             <DropdownList
-                                {...props.codesPortionFields.codeETDK}
+                                {...props.codesPortionFields.codeETDKText}
                                 id={"inp-code-ETDK"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{emptyList:"Список пустий"}}
@@ -199,7 +218,12 @@ export default function AddOccupBoxCodesPortion(props) {
                                 valueField='id'
                                 textField='textValue'
                                 defaultValue={null}
-                                onChange={ newVal => props.codesPortionFields.codeETDK.onChange(newVal.id) }
+                                onChange={
+                                    newVal => {
+                                        props.codesPortionFields.codeETDK.onChange(newVal.id);
+                                        props.codesPortionFields.codeETDKText.onChange(newVal.textValue);
+                                    }
+                                }
                                 busy={props.ETDKCodesList.isFetching}
                                 caseSensitive={false}
                                 filter='startsWith' />
@@ -229,8 +253,11 @@ export default function AddOccupBoxCodesPortion(props) {
                     </label>
                     <div className="col-sm-8">
                         <div className="input-group">
+                            <input
+                                type="hidden"
+                                {...props.codesPortionFields.codeDKHP} />
                             <DropdownList
-                                {...props.codesPortionFields.codeDKHP}
+                                {...props.codesPortionFields.codeDKHPText}
                                 id={"inp-code-DKHP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{emptyList:"Список пустий"}}
@@ -238,7 +265,12 @@ export default function AddOccupBoxCodesPortion(props) {
                                 valueField='id'
                                 textField='textValue'
                                 defaultValue={null}
-                                onChange={ newVal => props.codesPortionFields.codeDKHP.onChange(newVal.id) }
+                                onChange={
+                                    newVal => {
+                                        props.codesPortionFields.codeDKHP.onChange(newVal.id);
+                                        props.codesPortionFields.codeDKHPText.onChange(newVal.textValue);
+                                    }
+                                }
                                 busy={props.DKHPCodesList.isFetching}
                                 caseSensitive={false}
                                 filter='startsWith' />

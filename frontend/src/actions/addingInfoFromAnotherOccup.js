@@ -36,7 +36,7 @@ export function submitFormAddInfoFromAnotherOccup(data, dispatch) {
     return function (dispatch) {
         dispatch(submitFormRequest(data));
 
-        let searchGetParams = "search?" +
+        let searchGetParams = "?" +
         "searchType=" + data.searchType +
         "&occupGroupVal=" + data.occupGroupVal +
         "&searchText=" + data.searchText +
@@ -73,7 +73,7 @@ export function submitFormAddInfoFromAnotherOccup(data, dispatch) {
                 var contentType = response.headers.get("content-type");
                 if (response.status == 200 || response.status == 400) {
                     if (contentType && contentType.indexOf("application/json") !== -1)
-                        return {status: response.status, json: response.json()};
+                        return response.json();
                     else
                         throw {_error: 'Отримано некоректну відповідь із результатами пошуку від сервера: очікувався JSON'}
                 }
@@ -84,28 +84,18 @@ export function submitFormAddInfoFromAnotherOccup(data, dispatch) {
                 else
                     throw( {_error: 'Сталася невідома помилка при пошуку посад!'} );
             })
-            .then(({status, json}) => {
-                if (status === 200) {
-                    if (json && json.foundOccupations)
-                        return dispatch(submitFormSuccess(json.foundOccupations));
-                    else
-                        throw ( {_error: 'Отримано некоректну відповідь із результатами пошуку від сервера'} );
-                }
-                else if (status === 400) {
-                    // here I expect that the server will return
-                    // { _error: 'Some error text' }
-                    if (json && json._error)
-                        throw json;
-                    else
-                        throw ({_error: 'Отримано некоректну відповідь про помилку від сервера'});
-                }
+            .then(json => {
+                if (json && json.foundOccupations)
+                    return dispatch(submitFormSuccess(json.foundOccupations));
+                // here I expect that the server will return
+                // { _error: 'Some error text' }
+                else if (json && json._error)
+                    throw json;
+                else
+                    throw ( {_error: 'Отримано некоректний результат від сервера'} );
             })
             .catch(error => {
-                let errorText;
-                if (!error || !error._error)
-                    errorText = 'Сталася невідома помилка при пошуку посад!';
-                else
-                    errorText = error._error;
+                let errorText = error && error._error || 'Сталася невідома помилка при пошуку посад!';
                 return dispatch(submitFormFail(errorText));
             });
     }

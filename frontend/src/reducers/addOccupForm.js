@@ -91,6 +91,26 @@ export default function addOccupForm(state, action) {
                                         "initial": null,
                                         "value": portion.codeDKHP ? portion.codeDKHP.id : null,
                                         "_isFieldValue": true
+                                    },
+                                    "codeKPText": {
+                                        "initial": null,
+                                        "value": portion.codeKP ? portion.codeKP.val : null,
+                                        "_isFieldValue": true,
+                                    },
+                                    "codeETDKText": {
+                                        "initial": null,
+                                        "value": portion.codeETDK ? portion.codeETDK.val : null,
+                                        "_isFieldValue": true
+                                    },
+                                    "codeZKPPTRText": {
+                                        "initial": null,
+                                        "value": portion.codeZKPPTR ? portion.codeZKPPTR.val : null,
+                                        "_isFieldValue": true
+                                    },
+                                    "codeDKHPText": {
+                                        "initial": null,
+                                        "value": portion.codeDKHP ? portion.codeDKHP.val : null,
+                                        "_isFieldValue": true
                                     }
                                 }
                             })
