@@ -1,5 +1,6 @@
 package com.kpi.kpi_duties_db.shared.request.occupation.support;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.joda.time.DateTime;
 
 /**
@@ -7,7 +8,7 @@ import org.joda.time.DateTime;
  * @version 1.0
  * @since 04.09.2016
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DateSearche {
 
     private Boolean takeIntoAccount;

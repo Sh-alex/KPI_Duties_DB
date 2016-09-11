@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.shared.request.occupation.support;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -12,8 +13,10 @@ import java.sql.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DurationOccupation {
 
+    @NotNull
     private Date creatingInStateDate;
 
+    @NotNull
     private Date creatingInKPIDate;
 
     public Date getCreatingInStateDate() {

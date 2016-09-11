@@ -10,10 +10,14 @@ import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
+import com.kpi.kpi_duties_db.shared.validator.ValidatorObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -64,11 +68,16 @@ public class RtDutiesController {
     @Autowired
     DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
 
+    @Autowired
+    private Validator validator;
+
+    private final static Logger logger = LoggerFactory.getLogger(RtDutiesController.class);
+
 
     @POST
     @Transactional
     public Response create(@NotNull OccupationRequest request) {
-
+        ValidatorObject.validate(request, logger, validator);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.add(converter.toRtDutiesEntityFromOccupationRequest(request));
 
         dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
@@ -164,4 +173,5 @@ public class RtDutiesController {
 
         return Response.ok().entity(response).build();
     }
+
 }
