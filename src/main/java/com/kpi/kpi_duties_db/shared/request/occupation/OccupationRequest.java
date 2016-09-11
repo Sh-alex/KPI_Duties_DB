@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,6 +17,8 @@ import java.util.List;
 public class OccupationRequest {
 
     @JsonProperty("name")
+    @NotNull
+    @Valid
     private NameOccupation nameOccupation;
 
     @JsonProperty("features")

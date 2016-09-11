@@ -3,6 +3,8 @@ package com.kpi.kpi_duties_db.shared.request.occupation.support;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Olexandr Shevchenko
  * @version 1.0
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NameOccupation {
 
     @JsonProperty("occupationGroup")
+    @NotNull
     private Integer dcDutiesPartitionId;
 
     @JsonProperty("clarifiedOccup")
