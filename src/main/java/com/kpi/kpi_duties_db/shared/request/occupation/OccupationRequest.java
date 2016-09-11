@@ -1,5 +1,6 @@
 package com.kpi.kpi_duties_db.shared.request.occupation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @version 1.0
  * @since 24.08.2016
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OccupationRequest {
 
     @JsonProperty("name")
@@ -31,7 +32,7 @@ public class OccupationRequest {
     @JsonProperty("haveToKnow")
     private List<RequirementsOccupation> mustKnow;
 
-    @JsonProperty("ualiffRequir")
+    @JsonProperty("qualiffRequir")
     private List<RequirementsOccupation> qualificationRequirements;
 
     public NameOccupation getNameOccupation() {

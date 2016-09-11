@@ -1,5 +1,7 @@
 package com.kpi.kpi_duties_db.shared.request.occupation.support;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.sql.Date;
  * @version 1.0
  * @since 24.08.2016
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DurationOccupation {
 
     private Date creatingInStateDate;
