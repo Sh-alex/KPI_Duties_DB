@@ -49,6 +49,7 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
                                 {...props.qualiffRequirPortionFields.id} />
                             <textarea
                                 {...props.qualiffRequirPortionFields.text}
+                                value={props.qualiffRequirPortionFields.text.value || ""}
                                 onChange={ e => {
                                     props.qualiffRequirPortionFields.text.onChange(
                                         replaceApostrophe(e.target.value)

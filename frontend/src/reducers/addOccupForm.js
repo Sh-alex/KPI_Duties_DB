@@ -45,6 +45,7 @@ export default function addOccupForm(state, action) {
             };
         case HIDE_ADD_FORM_SERVER_RESP_MSG:
         case ADD_FORM_SUBMIT_REQUEST:
+        case "redux-form/RESET":
             return {
                 ...state,
                 _error: "",
