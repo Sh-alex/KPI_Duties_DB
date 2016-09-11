@@ -1,24 +1,24 @@
 var webpack = require('webpack'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     isDev = process.env.NODE_ENV != "production",
-    WDS_PORT = 2016,
-    BE_PORT = 52300;
+    WDS_PORT = isDev && 2016,
+    API_PORT = 52300;
 
 module.exports = {
     entry: ([
         'babel-polyfill',
-        "./frontend/main.jsx"
+        "./frontend/src/main.jsx"
     ]),
     output: {
-        path: __dirname + '/frontend-build/',
-        publicPath: "/frontend-build/",
+        path: __dirname + '/frontend/public/build/',
+        publicPath: "build/",
         filename: "bundle.js"
     },
     watch: isDev,
     watchOptions: {
         aggregateTimeout: 100
     },
-    cache: isDev,
+//    cache: !isDev,
     debug: isDev,
     devtool: isDev ? "source-map" : null,
     resolve: {
@@ -34,66 +34,66 @@ module.exports = {
         ],
         loaders: [
             {
-                test: /\.css$/,
+                test: /\.css(\?.*)?$/,
                 loader: ExtractTextPlugin.extract("style", "css!autoprefixer"),
                 exclude: [/node_modules/]
             },
             {
-                test: /\.css$/,
+                test: /\.css(\?.*)?$/,
                 loader: ExtractTextPlugin.extract("style", "css"),
                 include: [/node_modules/]
             },
             {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style", isDev? "css?sourceMap!autoprefixer!less?sourceMap" : "css!autoprefixer!less")
+                test: /\.less(\?.*)?$/,
+                loader: ExtractTextPlugin.extract("style", isDev ? "css?sourceMap!autoprefixer!less?sourceMap" : "css!autoprefixer!less")
             },
             {
                 test: /\.(jsx|js)?$/,
                 exclude: [/node_modules/],
                 loader: "babel-loader",
                 query: {
-                    plugins: isDev ? ['transform-runtime'] : null,
-                    presets: ['es2015', 'stage-0', 'react']
+                    plugins: /*isDev ? */['transform-runtime'] /*: null*/,
+                    presets: isDev ? ['es2015', 'stage-0', 'react', "react-hmre"] : ['es2015', 'stage-0', 'react']
                 }
             },
             {
-                test: /\.woff(\?[a-z0-9=\.]+)?$/,
+                test: /\.woff(\?.*)?$/,
                 loader: 'url?limit=10000000&mimetype=application/font-woff'
             },
             {
-                test: /\.woff2(\?[a-z0-9=\.]+)?$/,
+                test: /\.woff2(\?.*)?$/,
                 loader: 'url?limit=10000000&mimetype=application/font-woff2'
             },
             {
-                test: /\.ttf(\?[a-z0-9=\.]+)?$/,
+                test: /\.ttf(\?.*)?$/,
                 loader: 'url?limit=10000000&mimetype=application/octet-stream'
             },
             {
-                test: /\.otf(\?[a-z0-9=\.]+)?$/,
+                test: /\.otf(\?.*)?$/,
                 loader: 'url?limit=10000000&mimetype=application/font-otf'
             },
             {
-                test: /\.svg(\?[a-z0-9=\.]+)?$/,
+                test: /\.svg(\?.*)?$/,
                 loader: 'url?limit=10000&mimetype=image/svg+xml'
             },
             {
-                test: /\.gif$/,
+                test: /\.gif(\?.*)?$/,
                 loader: "url-loader?limit=10000&mimetype=image/gif"
             },
             // {
-            //     test: /\.jpe?g$/,
+            //     test: /\.jpe?g(\?.*)?$/,
             //     loader: "url-loader?limit=10000&mimetype=image/jpg"
             // },
             {
-                test: /\.png$/,
+                test: /\.png(\?.*)?$/,
                 loader: "url-loader?limit=10000&mimetype=image/png"
             },
             {
-            	test: /.(png|jpg|jpeg|gif|eot|svg)(\?[a-z0-9=\.]+)?$/,
+            	test: /.(png|jpg|jpeg|gif|eot|svg)(\?.*)?$/,
                 loader: 'file-loader?name=[path][name].[ext]\?[hash]'
             },
             {
-                test: /\.json$/,
+                test: /\.json(\?.*)?$/,
                 loader: "json-loader"
             }
         ]
@@ -114,10 +114,13 @@ module.exports = {
         })
     ]),
     devServer: !isDev ? null : {
-        historyApiFallback: { index: '/src/main/webapp/WEB-INF/views/index.html' },
+        historyApiFallback: {
+            index: '/frontend/public/index.html'
+        },
+      //  publicPath: "/frontend/public/",
         proxy: {
-            "/api*": {
-                target : `http://localhost:${BE_PORT}`,
+            "/api": {
+                target : `http://localhost:${API_PORT}`,
                 changeOrigin: true,
                 secure: false
             }

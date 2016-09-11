@@ -18,7 +18,6 @@ import "./main.less";
 //require.context("./common-assets/", true, /.*/);  //перетащити всі common-assets у папку з білдом
 
 //налаштовуємо локалізацію у react-widgets
-console.log(moment.locale());
 moment.locale('uk');
 momentLocalizer(moment);
 

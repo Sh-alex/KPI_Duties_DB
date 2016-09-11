@@ -74,9 +74,13 @@ let initialFormState = {
             'portionStartDate': null,
             'portionEndDate': null,
             'codeKP': null,
+            'codeKPText': "",
             'codeETDK': null,
+            'codeETDKText': "",
             'codeZKPPTR': null,
-            'codeDKHP': null
+            'codeZKPPTRText': "",
+            'codeDKHP': null,
+            'codeDKHPText': ""
         }
     ],
     responsibilities: [
@@ -450,6 +454,10 @@ export default reduxForm(
             'codes[].codeETDK',
             'codes[].codeZKPPTR',
             'codes[].codeDKHP',
+            'codes[].codeKPText',
+            'codes[].codeETDKText',
+            'codes[].codeZKPPTRText',
+            'codes[].codeDKHPText',
             'responsibilities[].text',
             'responsibilities[].id',
             'responsibilities[].portionStartDate',

@@ -60,7 +60,7 @@ export default function (state = initialState, action) {
                 ...state,
                 isSubmittngSearchForm: false,
                 searchError: action.error,
-                /*WARNING FOR TEST ONLY: */
+                /* FOR TESTING:
                 searchResData: {
                     itemsById: {
                         1: {
@@ -197,7 +197,7 @@ export default function (state = initialState, action) {
                     itemsList: [1, 2]
                 },
                 showResults: true,
-                /*WARNING FOR TEST ONLY: */
+                */
             };
 
         case DISMISS_FORM_ADD_INFO_FROM_ANOTHER_OCCUP_ALERT:

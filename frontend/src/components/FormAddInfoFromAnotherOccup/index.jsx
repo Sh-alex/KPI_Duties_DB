@@ -25,9 +25,9 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         this.state = {
             form: {
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
-                occupGroupVal: -1,     // 8
+                occupGroupVal: null,   // 8
                 searchText: "",        //"інженер"
-                searchTags: [],      // ["Старший", "Інженер", "1 розряду"]
+                searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
             }
         };
@@ -37,9 +37,9 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         this.setState({
             form: {
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
-                occupGroupVal: -1,     // 8
+                occupGroupVal: null,   // 8
                 searchText: "",        //"інженер"
-                searchTags: [],      // ["Старший", "Інженер", "1 розряду"]
+                searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
             }
         });
@@ -95,7 +95,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                 messages={{emptyList:"Список пустий"}}
                                 data={[
                                     {
-                                        "id": -1,
+                                        "id": null,
                                         "textValue": "Будь-який"
                                     },
                                     ...this.props.occupationGroupList.items
@@ -180,8 +180,8 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                             filter='contains' />
                                     ) : ""
                             }
-                            {/*                                            data={this.props.clarificationList.items} */}
- </div>
+                            {/* data={this.props.clarificationList.items} */}
+                        </div>
                     </div>
                     <div className="form-group">
                         <div className="col-sm-offset-3 col-sm-9 checkbox">
