@@ -373,7 +373,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> haveToKnowList = new ArrayList<>();
             for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
                 Requirement haveToKnow = new Requirement();
-                haveToKnow.setId(rtDutiesMustKnowEntity.getId());
+                haveToKnow.setId(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
                 haveToKnow.setText(rtDutiesMustKnowEntity.getDcDutiesMustKnowEntity().getText());
                 haveToKnow.setPortionStartDate(rtDutiesMustKnowEntity.getDateStart());
                 haveToKnow.setPortionEndDate(rtDutiesMustKnowEntity.getDateEnd());
@@ -385,7 +385,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> responsibilitiesList = new ArrayList<>();
             for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
                 Requirement responsibilities = new Requirement();
-                responsibilities.setId(rtDutiesTaskAndResponsibilitiesEntity.getId());
+                responsibilities.setId(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
                 responsibilities.setText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity().getText());
                 responsibilities.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
                 responsibilities.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
@@ -397,7 +397,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> qualiffRequirList = new ArrayList<>();
             for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
                 Requirement qualiffRequir = new Requirement();
-                qualiffRequir.setId(rtDutiesQualificationRequirementsEntity.getId());
+                qualiffRequir.setId(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
                 qualiffRequir.setText(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsEntity().getText());
                 qualiffRequir.setPortionStartDate(rtDutiesQualificationRequirementsEntity.getDateStart());
                 qualiffRequir.setPortionEndDate(rtDutiesQualificationRequirementsEntity.getDateEnd());
