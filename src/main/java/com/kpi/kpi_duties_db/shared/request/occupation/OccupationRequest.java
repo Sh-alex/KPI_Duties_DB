@@ -16,14 +16,18 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OccupationRequest {
 
-    @JsonProperty("name")
     @NotNull
     @Valid
+    @JsonProperty("name")
     private NameOccupation nameOccupation;
 
+    @NotNull
+    @Valid
     @JsonProperty("features")
     private FeaturesOccupation featuresOccupation;
 
+    @NotNull
+    @Valid
     @JsonProperty("duration")
     private DurationOccupation durationOccupation;
 

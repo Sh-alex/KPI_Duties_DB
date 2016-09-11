@@ -7,23 +7,21 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
-import com.kpi.kpi_duties_db.shared.message.error.ValidationException;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
+import com.kpi.kpi_duties_db.shared.validator.ValidatorObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Olexandr Shevchenko
@@ -79,7 +77,7 @@ public class RtDutiesController {
     @POST
     @Transactional
     public Response create(@NotNull OccupationRequest request) {
-        validate(request);
+        ValidatorObject.validate(request, logger, validator);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.add(converter.toRtDutiesEntityFromOccupationRequest(request));
 
         dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
@@ -176,11 +174,4 @@ public class RtDutiesController {
         return Response.ok().entity(response).build();
     }
 
-    private void validate(Object request) {
-        Set<? extends ConstraintViolation<?>> constraintViolations = validator.validate(request);
-        if (constraintViolations.size() > 0) {
-            logger.error("Validation error:"+constraintViolations.toString());
-            throw new ValidationException(constraintViolations);
-        }
-    }
 }
