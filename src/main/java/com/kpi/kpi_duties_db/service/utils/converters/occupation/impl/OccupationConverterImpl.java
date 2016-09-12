@@ -9,8 +9,10 @@ import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.support.*;
+import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -418,5 +420,22 @@ public class OccupationConverterImpl implements OccupationConverter {
         response.getFoundOccupations().setItemsList(itemsList);
         response.getFoundOccupations().setItemsById(itemsById);
         return response;
+    }
+
+    @Override
+    public IdNameListResponse toIdNameListResponseFromRtDutiesEntityList(List<RtDutiesEntity> list) {
+        IdNameListResponse response = new IdNameListResponse();
+
+        response.setIdNameResponses(new ArrayList<>());
+        List<IdNameResponse> idNameResponses = response.getIdNameResponses();
+
+        for (RtDutiesEntity entity : list) {
+            IdNameResponse idNameResponse = new IdNameResponse();
+            idNameResponse.setId(entity.getId());
+            idNameResponse.setName(entity.getName());
+
+            idNameResponses.add(idNameResponse);
+        }
+        return  response;
     }
 }

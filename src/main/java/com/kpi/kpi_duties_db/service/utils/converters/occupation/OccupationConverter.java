@@ -4,6 +4,7 @@ import com.kpi.kpi_duties_db.domain.*;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
 
 import java.util.List;
@@ -34,5 +35,7 @@ public interface OccupationConverter {
     Map<String, Object> toParamMapFromOccupationGetDto(OccupationGetDto dto);
 
    OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list);
+
+    IdNameListResponse toIdNameListResponseFromRtDutiesEntityList(List<RtDutiesEntity> list);
 
 }

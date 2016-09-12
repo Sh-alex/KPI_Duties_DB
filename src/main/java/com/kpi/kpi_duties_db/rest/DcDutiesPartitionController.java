@@ -2,7 +2,7 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
-import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,11 +31,11 @@ public class DcDutiesPartitionController {
     DcDutiesPartitionService dcDutiesPartitionEntityService;
 
     @GET
-    public ListIdNameResponse getAllPartitionsNames() {
+    public IdNameListResponse getAllPartitionsNames() {
 
         List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
 
-        ListIdNameResponse response = new ListIdNameResponse();
+        IdNameListResponse response = new IdNameListResponse();
 
         response.setIdNameResponses(new ArrayList<>());
 

@@ -3,7 +3,7 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcCodeZkpptrEntity;
 import com.kpi.kpi_duties_db.service.DcCodeZkpptrService;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
-import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,11 +31,11 @@ public class DcCodeZkpptrController {
     DcCodeZkpptrService dcCodeZkpptrService;
 
     @GET
-    public ListIdNameResponse getAll() {
+    public IdNameListResponse getAll() {
 
         List<DcCodeZkpptrEntity> all = dcCodeZkpptrService.getAll();
 
-        ListIdNameResponse response = new ListIdNameResponse();
+        IdNameListResponse response = new IdNameListResponse();
 
         response.setIdNameResponses(new ArrayList<>());
 

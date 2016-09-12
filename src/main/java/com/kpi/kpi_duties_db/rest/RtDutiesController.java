@@ -9,9 +9,8 @@ import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConve
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
-import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
-import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import com.kpi.kpi_duties_db.shared.validator.ValidatorObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,6 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -175,21 +173,12 @@ public class RtDutiesController {
 
     @GET
     @Path("/clarifiedOccup")
-    public ListIdNameResponse getAllDutiesNames() {
+    public IdNameListResponse getAllDutiesNames() {
 
         List<RtDutiesEntity> all = rtDutiesService.getAll();
 
-        ListIdNameResponse response = new ListIdNameResponse();
+        IdNameListResponse response = converter.toIdNameListResponseFromRtDutiesEntityList(all);
 
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (RtDutiesEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
         return response;
     }
 }

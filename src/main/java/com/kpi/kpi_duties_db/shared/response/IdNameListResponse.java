@@ -10,7 +10,7 @@ import java.util.List;
  * @since 24.08.2016
  */
 
-public class ListIdNameResponse {
+public class IdNameListResponse {
 
     List<IdNameResponse> idNameResponses;
 
