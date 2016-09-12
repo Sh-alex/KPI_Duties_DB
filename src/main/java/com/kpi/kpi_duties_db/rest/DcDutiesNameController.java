@@ -58,7 +58,7 @@ public class DcDutiesNameController {
         DcDutiesNameEntity entity = new DcDutiesNameEntity();
         entity.setId(id);
         entity.setName(request.getNewVal());
-        dcDutiesNameEntityService.edit(entity);
+        dcDutiesNameEntityService.update(entity);
 
         return Response.ok().build();
     }

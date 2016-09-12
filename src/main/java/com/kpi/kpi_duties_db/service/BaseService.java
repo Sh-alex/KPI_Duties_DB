@@ -12,7 +12,8 @@ public interface BaseService<T> {
     T add(T entity);
     List<T> add(List<T> entity);
     void delete(Integer id);
-    T edit(T entity);
-    List<T> edit(List<T> entity);
+    T update(T entity);
+    List<T> update(List<T> entity);
+    T getById(Integer id);
     List<T> getAll();
 }

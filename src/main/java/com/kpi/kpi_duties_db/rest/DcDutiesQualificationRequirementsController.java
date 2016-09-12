@@ -47,7 +47,7 @@ public class DcDutiesQualificationRequirementsController {
         DcDutiesQualificationRequirementsEntity entity = new DcDutiesQualificationRequirementsEntity();
         entity.setId(id);
         entity.setText(request.getNewVal());
-        dcDutiesQualificationRequirementsService.edit(entity);
+        dcDutiesQualificationRequirementsService.update(entity);
 
         return Response.ok().build();
     }

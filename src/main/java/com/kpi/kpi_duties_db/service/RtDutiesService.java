@@ -13,7 +13,5 @@ import java.util.List;
 
 public interface RtDutiesService extends BaseService<RtDutiesEntity> {
 
-    RtDutiesEntity getById(Integer id);
-
     List<RtDutiesEntity> getByParams(OccupationGetDto dto);
 }

@@ -47,7 +47,7 @@ public class DcDutiesResponsibilitiesController {
         DcDutiesTasksAndResponsibilitiesEntity entity = new DcDutiesTasksAndResponsibilitiesEntity();
         entity.setId(id);
         entity.setText(request.getNewVal());
-        dcDutiesTaskAndResponsibilitiesService.edit(entity);
+        dcDutiesTaskAndResponsibilitiesService.update(entity);
 
         return Response.ok().build();
     }

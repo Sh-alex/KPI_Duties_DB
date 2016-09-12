@@ -10,5 +10,4 @@ import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 
 public interface DcDutiesPartitionService extends BaseService<DcDutiesPartitionEntity> {
 
-    DcDutiesPartitionEntity getById(Integer id);
 }

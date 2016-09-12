@@ -47,7 +47,7 @@ public class DcDutiesMustKnowController {
         DcDutiesMustKnowEntity entity = new DcDutiesMustKnowEntity();
         entity.setId(id);
         entity.setText(request.getNewVal());
-        dcDutiesMustKnowService.edit(entity);
+        dcDutiesMustKnowService.update(entity);
 
         return Response.ok().build();
     }

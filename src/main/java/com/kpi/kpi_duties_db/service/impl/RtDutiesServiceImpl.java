@@ -27,12 +27,6 @@ public class RtDutiesServiceImpl extends BaseServiceImpl<RtDutiesEntity> impleme
 
 
     @Override
-    public RtDutiesEntity getById(Integer id) {
-
-        return dao.findById(id);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public List<RtDutiesEntity> getByParams(OccupationGetDto dto) {
         List<RtDutiesEntity> occupations = dao.findByFields(converter.toParamMapFromOccupationGetDto(dto));

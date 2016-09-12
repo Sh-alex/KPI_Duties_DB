@@ -10,5 +10,4 @@ import com.kpi.kpi_duties_db.domain.DcDutiesMustKnowEntity;
 
 public interface DcDutiesMustKnowService extends BaseService<DcDutiesMustKnowEntity> {
 
-    DcDutiesMustKnowEntity getById(Integer id);
 }
