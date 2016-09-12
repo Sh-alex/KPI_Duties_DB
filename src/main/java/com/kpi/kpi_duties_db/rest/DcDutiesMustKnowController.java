@@ -25,10 +25,10 @@ import javax.ws.rs.core.Response;
 public class DcDutiesMustKnowController {
 
     @Autowired
-    DcDutiesMustKnowService dcDutiesMustKnowService;
+    private DcDutiesMustKnowService dcDutiesMustKnowService;
 
     @Autowired
-    EntityManager em;
+    private EntityManager em;
 
     @POST
     public Response add(@NotNull NewValueRequest request) {

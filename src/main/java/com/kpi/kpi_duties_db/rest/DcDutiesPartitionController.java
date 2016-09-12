@@ -2,8 +2,8 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
-import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -28,24 +28,17 @@ import java.util.List;
 public class DcDutiesPartitionController {
 
     @Autowired
-    DcDutiesPartitionService dcDutiesPartitionEntityService;
+    private DcDutiesPartitionService dcDutiesPartitionEntityService;
+
+    @Autowired
+    private IdNameConverter idNameConverter;
 
     @GET
-    public IdNameListResponse getAllPartitionsNames() {
+    public Response getAllPartitionsNames() {
 
         List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
 
-        IdNameListResponse response = new IdNameListResponse();
-
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (DcDutiesPartitionEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
-        return response;
+        return Response.ok(response).build();
     }
 }

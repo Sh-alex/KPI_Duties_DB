@@ -5,6 +5,7 @@ import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.domain.RtCodeEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.*;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
@@ -37,40 +38,43 @@ import java.util.List;
 public class RtDutiesController {
 
     @Autowired
-    OccupationConverter converter;
+    private OccupationConverter converter;
 
     @Autowired
-    RtDutiesService rtDutiesService;
+    private RtDutiesService rtDutiesService;
 
     @Autowired
-    DutiesValidityDateService dutiesValidityDateService;
+    private DutiesValidityDateService dutiesValidityDateService;
 
     @Autowired
-    RtCodeService rtCodeService;
+    private RtCodeService rtCodeService;
 
     @Autowired
-    RtDutiesCodeService rtDutiesCodeService;
+    private RtDutiesCodeService rtDutiesCodeService;
 
     @Autowired
-    RtDutiesTaskAndResponsibilitiesService rtDutiesTaskAndResponsibilitiesService;
+    private RtDutiesTaskAndResponsibilitiesService rtDutiesTaskAndResponsibilitiesService;
 
     @Autowired
-    RtDutiesMustKnowService rtDutiesMustKnowService;
+    private RtDutiesMustKnowService rtDutiesMustKnowService;
 
     @Autowired
-    RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
+    private RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
-    DcDutiesMustKnowService dcDutiesMustKnowService;
+    private DcDutiesMustKnowService dcDutiesMustKnowService;
 
     @Autowired
-    DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
+    private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
 
     @Autowired
-    DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+    private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
 
     @Autowired
     private Validator validator;
+
+    @Autowired
+    private IdNameConverter idNameConverter;
 
     private final static Logger logger = LoggerFactory.getLogger(RtDutiesController.class);
 
@@ -177,7 +181,7 @@ public class RtDutiesController {
 
         List<RtDutiesEntity> all = rtDutiesService.getAll();
 
-        IdNameListResponse response = converter.toIdNameListResponseFromRtDutiesEntityList(all);
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
 
         return response;
     }

@@ -24,10 +24,10 @@ import javax.ws.rs.core.Response;
 public class DcDutiesQualificationRequirementsController {
 
     @Autowired
-    EntityManager em;
+    private EntityManager em;
 
     @Autowired
-    DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+    private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
 
     @POST
     public Response add(@NotNull NewValueRequest request) {

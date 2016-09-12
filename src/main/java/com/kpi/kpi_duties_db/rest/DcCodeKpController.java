@@ -2,9 +2,9 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcCodeKpEntity;
 import com.kpi.kpi_duties_db.service.DcCodeKpService;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
-import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,24 +27,17 @@ import java.util.List;
 public class DcCodeKpController {
 
     @Autowired
-    DcCodeKpService dcCodeKpEntityService;
+    private DcCodeKpService dcCodeKpEntityService;
+
+    @Autowired
+    private IdNameConverter idNameConverter;
 
     @GET
     public Response getAll() {
 
         List<DcCodeKpEntity> all = dcCodeKpEntityService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
 
-        IdNameListResponse response = new IdNameListResponse();
-
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (DcCodeKpEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
         return Response.ok(response).build();
     }
 
