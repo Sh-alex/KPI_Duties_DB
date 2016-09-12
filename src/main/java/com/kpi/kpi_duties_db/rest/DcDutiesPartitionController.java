@@ -1,9 +1,7 @@
 package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
-import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.shared.response.ListIdNameResponse;
 import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +18,19 @@ import java.util.List;
 /**
  * @author Olexandr Shevchenko
  * @version 1.0
- * @since 24.08.2016
+ * @since 12.09.2016
  */
-@Path("/adding")
+
+@Path("/partition")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
-public class AddingOccupationController {
+public class DcDutiesPartitionController {
 
     @Autowired
     DcDutiesPartitionService dcDutiesPartitionEntityService;
 
-    @Autowired
-    RtDutiesService rtDutiesEntityService;
-
     @GET
-    @Path("/occupGroup")
     public ListIdNameResponse getAllPartitionsNames() {
 
         List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
@@ -53,25 +48,4 @@ public class AddingOccupationController {
         }
         return response;
     }
-
-    @GET
-    @Path("/clarifiedOccup")
-    public ListIdNameResponse getAllDutiesNames() {
-
-        List<RtDutiesEntity> all = rtDutiesEntityService.getAll();
-
-        ListIdNameResponse response = new ListIdNameResponse();
-
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (RtDutiesEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
-        return response;
-    }
-
 }
