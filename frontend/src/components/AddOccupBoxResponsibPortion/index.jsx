@@ -58,6 +58,8 @@ export default function AddOccupBoxResponsibPortion(props) {
                                 {...props.responsibPortionFields.id} />
                             <textarea
                                 {...props.responsibPortionFields.text}
+                                value={props.responsibPortionFields.text.value || ""}
+
                                 onChange={ e => {
                                     props.responsibPortionFields.text.onChange(
                                         replaceApostrophe(e.target.value)

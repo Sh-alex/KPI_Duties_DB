@@ -57,13 +57,8 @@ export function submitAddForm(data, dispatch) {
                     resolve();
                 }
                 else if (response.status === 400) {
-                    // here I expect that the server will return the shape:
-                    // {
-                    //   field1: 'error text',
-                    //   field2: 'error text',
-                    //   _error: 'Overall error text'
-                    // }
-
+                    throw(new Error("Передано некоректні дані на сервер!"));
+                    /*
                     //перевіряємо щоб сервер поверув JSON з інформацією про помилку
                     var errorsObj,
                         contentType = response.headers.get("content-type");
@@ -72,6 +67,7 @@ export function submitAddForm(data, dispatch) {
                     } else {
                         throw(new Error("Отримано некоректну відповідь від сервера!"));
                     }
+                    */
                 } else if(response.status === 404) {
                     throw(new Error('Не знайдено відповідного методу на сервері!'));
                 } else if( 499 < response.status && response.status < 600 ) {

@@ -18,31 +18,25 @@ export default class FormAddInfoFromAnotherOccup extends Component {
     constructor(props) {
         super(props);
 
-        this.resetState = this.resetState.bind(this);
+        this.getInitState = this.getInitState.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
+        this.handleTagsCreate = this.handleTagsCreate.bind(this);
 
-        this.state = {
-            form: {
-                searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
-                occupGroupVal: null,   // 8
-                searchText: "",        //"інженер"
-                searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
-                inKpi: true,
-            }
-        };
+        this.state = this.getInitState();
     }
 
-    resetState() {
-        this.setState({
+    getInitState() {
+        return {
             form: {
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
                 occupGroupVal: null,   // 8
                 searchText: "",        //"інженер"
                 searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
-            }
-        });
+            },
+            tagsList: this.props.clarificationList.items.map(item => item.textValue)
+        };
     }
 
     submitForm(e) {
@@ -57,7 +51,16 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         this.setState({
             form: {
                 ...this.state.form,
-                searchTags: [...this.state.form.searchTags, newVal]
+                searchTags: newVal
+            }
+        })
+    }
+
+    handleTagsCreate(newVal) {
+        this.setState({
+            form: {
+                ...this.state.form,
+                searchTags: this.state.form.searchTags.concat(newVal)
             }
         })
     }
@@ -102,7 +105,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                 ]}
                                 valueField='id'
                                 textField='textValue'
-                                defaultValue={-1}
+                                defaultValue={null}
                                 value={this.state.form.occupGroupVal}
                                 onChange={ newVal => {
                                     this.setState({
@@ -173,9 +176,10 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                             placeholder="Введіть тут теги"
                                             messages={{emptyList: "Список пустий", createNew: "Додати новий тег"}}
                                             defaultValue={""}
+                                            data={ this.state.tagsList }
                                             value={this.state.form.searchTags}
                                             onChange={this.handleTagsChange}
-                                            onCreate={this.handleTagsChange}
+                                            onCreate={this.handleTagsCreate}
                                             caseSensitive={false}
                                             filter='contains' />
                                     ) : ""
@@ -191,7 +195,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                     checked={this.state.form.inKpi}
                                     onChange={ e => {
                                         this.setState({
-                                            form: { ...this.state.form, inKpi: e.currentTarget.value}
+                                            form: { ...this.state.form, inKpi: e.currentTarget.checked}
                                         })
                                     }} />
                                 Приналежність до КПІ
@@ -209,7 +213,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                         <button
                             type="reset"
                             className="btn btn-default"
-                            onClick={this.resetState}
+                            onClick={() => this.setState(this.getInitState())}
                         >
                             Очистити поля {" "}
                             <i className="fa fa-refresh" aria-hidden="true" title="Очистити поля форми" />

@@ -41,7 +41,7 @@ class ModalAddInfoFromAnotherOccup extends Component {
             );
 
         return (
-            <Modal show={this.props.show} onHide={this.props.onClose} bsSize="large">
+            <Modal show={this.props.show} onHide={this.props.onHide} bsSize="large">
                 <Modal.Header closeButton>
                     <Modal.Title className="text-center">
                         Додати інформацію про { this.props.typeText } з аналогічної посади
@@ -65,7 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onClose() {
+        onHide() {
             dispatch(hideModalAddInfoFromAnotherOccup());
         },
         onSubmitSearchForm(data) {

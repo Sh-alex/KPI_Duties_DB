@@ -50,6 +50,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                                 {...props.haveToKnowPortionFields.id} />
                             <textarea
                                 {...props.haveToKnowPortionFields.text}
+                                value={props.haveToKnowPortionFields.text.value || ""}
                                 onChange={ e => {
                                     props.haveToKnowPortionFields.text.onChange(
                                         replaceApostrophe(e.target.value)
