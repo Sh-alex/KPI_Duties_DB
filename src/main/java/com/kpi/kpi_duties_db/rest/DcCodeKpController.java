@@ -20,7 +20,7 @@ import java.util.List;
  * @since 25.08.2016
  */
 
-@Path("/kp_code")
+@Path("/code/kp")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component

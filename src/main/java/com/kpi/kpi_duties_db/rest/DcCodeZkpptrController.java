@@ -20,7 +20,7 @@ import java.util.List;
  * @since 25.08.2016
  */
 
-@Path("/zkpptr_code")
+@Path("/code/zkpptr")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
