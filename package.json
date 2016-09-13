@@ -12,9 +12,11 @@
     "Galchenko Yaroslav (https://github.com/GalchenkoYaroslav)"
   ],
   "scripts": {
-    "build-prod": "rimraf '/frontend/public/build' && set NODE_ENV=production&& webpack",
+    "build-prod-win": "rimraf '/frontend/public/build' && set NODE_ENV=production&& webpack",
+    "build-prod-linux": "rimraf '/frontend/public/build' && NODE_ENV=production&& webpack",
     "start-prod": "npm run build-prod && node frontend/server.js",
-    "start-dev": "set NODE_ENV=development&& webpack-dev-server --debug --output-pathinfo--colors --colors --inline --hot --open",
+    "start-dev-win": "set NODE_ENV=development&& webpack-dev-server --debug --output-pathinfo--colors --colors --inline --hot --open",
+    "start-dev-linux": "NODE_ENV=development&& webpack-dev-server --debug --output-pathinfo--colors --colors --inline --hot --open",
     "inst-dependencies": "npm i"
   },
   "dependencies": {
