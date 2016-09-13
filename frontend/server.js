@@ -8,7 +8,7 @@ const app = new Express();
 const server = new http.Server(app);
 const proxy = require('http-proxy').createProxyServer({});
 
-const STATICS_SERVER_PORT = 80,
+const STATICS_SERVER_PORT = 4000,
     API_PORT = 52300,
     SERVER_ADDRESS = "http://occupations.azurewebsites.net";
 //    SERVER_ADDRESS = "http://localhost";
