@@ -5,6 +5,11 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Entity
 @Table(name = "RtDuties", schema = "dbo", catalog = "DcDuties")
 public class RtDutiesEntity {
@@ -12,68 +17,62 @@ public class RtDutiesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RtDutiesId")
-    private Integer rtDutiesId;
+    private Integer id;
 
-    @Column(name = "DcDutiesPartitionId", insertable = false, updatable = false)
+    @Column(name = "DcDutiesPartitionId")
     private Integer dcDutiesPartitionId;
 
     @Column(name = "RtDutiesName")
-    private String rtDutiesName;
+    private String name;
 
     @Column(name = "RtDutiesNameShort")
-    private String rtDutiesNameShort;
+    private String nameShort;
 
-    @Column(name = "ParentId", insertable = false, updatable = false)
-    private Integer parentId;
-
-    @Column(name = "DcDutiesNameId", insertable = false, updatable = false)
+    @Column(name = "DcDutiesNameId")
     private Integer dcDutiesNameId;
 
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
-    @Column(name = "vcPreviosId")
-    private Integer vcPreviosId;
-
-    @Column(name = "vcActualityComment")
-    private String vcActualityComment;
-
     @ManyToOne
-    @JoinColumn(name = "DcDutiesNameId")
+    @JoinColumn(name = "DcDutiesNameId", insertable = false, updatable = false)
     private DcDutiesNameEntity dcDutiesNameEntity;
 
     @ManyToOne
-    @JoinColumn(name = "DcDutiesPartitionId")
+    @JoinColumn(name = "DcDutiesPartitionId", insertable = false, updatable = false)
     private DcDutiesPartitionEntity dcDutiesPartitionEntity;
 
-    @ManyToOne
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ParentId")
-    private RtDutiesEntity rtDutiesEntity;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
-    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
-    private Set<DutiesValidityDateEntity> dutiesValidityDateEntities;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
-    private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
-    private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
-    private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
-
-    @OneToMany(mappedBy = "rtDutiesEntity")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
-    public Integer getRtDutiesId() {
-        return rtDutiesId;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
+    private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
+    private Set<DutiesValidityDateEntity> dutiesValidityDateEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
+    private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
+    private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "RtDutiesId")
+    private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setRtDutiesId(Integer rtDutiesId) {
-        this.rtDutiesId = rtDutiesId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getDcDutiesPartitionId() {
@@ -84,28 +83,20 @@ public class RtDutiesEntity {
         this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public String getRtDutiesName() {
-        return rtDutiesName;
+    public String getName() {
+        return name;
     }
 
-    public void setRtDutiesName(String rtDutiesName) {
-        this.rtDutiesName = rtDutiesName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRtDutiesNameShort() {
-        return rtDutiesNameShort;
+    public String getNameShort() {
+        return nameShort;
     }
 
-    public void setRtDutiesNameShort(String rtDutiesNameShort) {
-        this.rtDutiesNameShort = rtDutiesNameShort;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setNameShort(String nameShort) {
+        this.nameShort = nameShort;
     }
 
     public Integer getDcDutiesNameId() {
@@ -124,22 +115,6 @@ public class RtDutiesEntity {
         this.vcChangeDate = vcChangeDate;
     }
 
-    public Integer getVcPreviosId() {
-        return vcPreviosId;
-    }
-
-    public void setVcPreviosId(Integer vcPreviosId) {
-        this.vcPreviosId = vcPreviosId;
-    }
-
-    public String getVcActualityComment() {
-        return vcActualityComment;
-    }
-
-    public void setVcActualityComment(String vcActualityComment) {
-        this.vcActualityComment = vcActualityComment;
-    }
-
     public DcDutiesNameEntity getDcDutiesNameEntity() {
         return dcDutiesNameEntity;
     }
@@ -156,12 +131,12 @@ public class RtDutiesEntity {
         this.dcDutiesPartitionEntity = dcDutiesPartitionEntity;
     }
 
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Set<RtDutiesEntity> getRtDutiesEntities() {
+        return rtDutiesEntities;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
+        this.rtDutiesEntities = rtDutiesEntities;
     }
 
     public Set<RtDutiesCodeEntity> getRtDutiesCodeEntities() {
@@ -204,32 +179,20 @@ public class RtDutiesEntity {
         this.rtDutiesTaskAndResponsibilitiesEntities = rtDutiesTaskAndResponsibilitiesEntities;
     }
 
-    public Set<RtDutiesEntity> getRtDutiesEntities() {
-        return rtDutiesEntities;
-    }
-
-    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
-        this.rtDutiesEntities = rtDutiesEntities;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RtDutiesEntity)) return false;
         RtDutiesEntity that = (RtDutiesEntity) o;
-        return Objects.equals(getRtDutiesId(), that.getRtDutiesId()) &&
+        return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getDcDutiesPartitionId(), that.getDcDutiesPartitionId()) &&
-                Objects.equals(getRtDutiesName(), that.getRtDutiesName()) &&
-                Objects.equals(getRtDutiesNameShort(), that.getRtDutiesNameShort()) &&
-                Objects.equals(getParentId(), that.getParentId()) &&
-                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId()) &&
-                Objects.equals(getVcChangeDate(), that.getVcChangeDate()) &&
-                Objects.equals(getVcPreviosId(), that.getVcPreviosId()) &&
-                Objects.equals(getVcActualityComment(), that.getVcActualityComment());
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getNameShort(), that.getNameShort()) &&
+                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRtDutiesId(), getDcDutiesPartitionId(), getRtDutiesName(), getRtDutiesNameShort(), getParentId(), getDcDutiesNameId(), getVcChangeDate(), getVcPreviosId(), getVcActualityComment());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId());
     }
 }

@@ -2,7 +2,11 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
+
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
 
 @Entity
 @Table(name = "DcDutiesName", schema = "dbo", catalog = "DcDuties")
@@ -23,8 +27,6 @@ public class DcDutiesNameEntity {
     @JoinColumn(name = "TypeId", insertable = false, updatable = false)
     private DcDutiesTypeEntity dcDutiesTypeEntity;
 
-    @OneToMany(mappedBy = "dcDutiesNameEntity")
-    private Set<RtDutiesEntity> rtDutiesEntities;
 
     public int getId() {
         return id;
@@ -56,14 +58,6 @@ public class DcDutiesNameEntity {
 
     public void setDcDutiesTypeEntity(DcDutiesTypeEntity dcDutiesTypeEntity) {
         this.dcDutiesTypeEntity = dcDutiesTypeEntity;
-    }
-
-    public Set<RtDutiesEntity> getRtDutiesEntities() {
-        return rtDutiesEntities;
-    }
-
-    public void setRtDutiesEntities(Set<RtDutiesEntity> rtDutiesEntities) {
-        this.rtDutiesEntities = rtDutiesEntities;
     }
 
     @Override

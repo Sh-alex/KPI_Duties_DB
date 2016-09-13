@@ -1,60 +1,42 @@
 package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
-import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
+import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import com.kpi.kpi_duties_db.service.RtDutiesService;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
+import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Service
-public class RtDutiesServiceImpl implements RtDutiesService {
+public class RtDutiesServiceImpl extends BaseServiceImpl<RtDutiesEntity> implements RtDutiesService {
 
     @Autowired
-    private RtDutiesRepository rtDutiesRepository;
+    RtDutiesDao dao;
 
     @Autowired
-    EntityManager em;
+    OccupationConverter converter;
+
 
     @Override
-    public RtDutiesEntity add(RtDutiesEntity entity) {
-        return rtDutiesRepository.saveAndFlush(entity);
-    }
+    public RtDutiesEntity getById(Integer id) {
 
-    @Override
-    public void delete(int id) {
-        rtDutiesRepository.delete(id);
-    }
-
-    public RtDutiesEntity getByName(String name) {
-        return rtDutiesRepository.getByName(name);
+        return dao.findById(id);
     }
 
     @Override
-    public RtDutiesEntity edit(RtDutiesEntity entity) {
-        return rtDutiesRepository.saveAndFlush(entity);
-    }
+    @Transactional(readOnly = true)
+    public List<RtDutiesEntity> getByParams(OccupationGetDto dto) {
+        List<RtDutiesEntity> occupations = dao.findByFields(converter.toParamMapFromOccupationGetDto(dto));
 
-    @Override
-    @Transactional
-    public List<RtDutiesEntity> getAll() {
-        return rtDutiesRepository.findAll();
-    }
-
-    public List getAllRtDutiesNames(){
-        Session session = ((Session) em.getDelegate()).getSessionFactory().openSession();
-
-        Criteria criteria = session.createCriteria(RtDutiesEntity.class);
-
-        criteria.setProjection(Projections.property("rtDutiesName"));
-        criteria.setProjection(Projections.property("rtDutiesId"));
-
-        return criteria.list();
+        return occupations;
     }
 }

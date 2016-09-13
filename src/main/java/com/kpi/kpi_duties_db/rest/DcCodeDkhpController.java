@@ -2,9 +2,9 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcCodeDkhpEntity;
 import com.kpi.kpi_duties_db.service.DcCodeDkhpService;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.ListIdNameResponse;
-import com.kpi.kpi_duties_db.shared.addingoccupation.response.support.IdNameResponse;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,32 +20,25 @@ import java.util.List;
  * @since 25.08.2016
  */
 
-@Path("/dkhp_code")
+@Path("/code/dkhp")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
 public class DcCodeDkhpController {
 
     @Autowired
-    DcCodeDkhpService dcCodeDkhpService;
+    private DcCodeDkhpService dcCodeDkhpService;
+
+    @Autowired
+    private IdNameConverter idNameConverter;
 
     @GET
-    public ListIdNameResponse getAll() {
+    public Response getAll() {
 
         List<DcCodeDkhpEntity> all = dcCodeDkhpService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
 
-        ListIdNameResponse response = new ListIdNameResponse();
-
-        response.setIdNameResponses(new ArrayList<>());
-
-        for (DcCodeDkhpEntity entity : all) {
-            IdNameResponse idNameResponse = new IdNameResponse();
-            idNameResponse.setId(entity.getId());
-            idNameResponse.setName(entity.getName());
-
-            response.getIdNameResponses().add(idNameResponse);
-        }
-        return response;
+        return Response.ok(response).build();
     }
 
     @POST

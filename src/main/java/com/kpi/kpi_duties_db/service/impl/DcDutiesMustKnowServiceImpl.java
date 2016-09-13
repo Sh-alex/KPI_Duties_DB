@@ -6,8 +6,6 @@ import com.kpi.kpi_duties_db.service.DcDutiesMustKnowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author Olexandr Shevchenko
  * @version 1.0
@@ -15,28 +13,13 @@ import java.util.List;
  */
 
 @Service
-public class DcDutiesMustKnowServiceImpl implements DcDutiesMustKnowService{
+public class DcDutiesMustKnowServiceImpl extends BaseServiceImpl<DcDutiesMustKnowEntity> implements DcDutiesMustKnowService{
 
     @Autowired
-    DcDutiesMustKnowRepository dcDutiesMustKnowRepository;
+    DcDutiesMustKnowRepository repository;
 
     @Override
-    public DcDutiesMustKnowEntity add(DcDutiesMustKnowEntity entity) {
-        return dcDutiesMustKnowRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public void delete(int id) {
-        dcDutiesMustKnowRepository.delete(id);
-    }
-
-    @Override
-    public DcDutiesMustKnowEntity edit(DcDutiesMustKnowEntity entity) {
-        return dcDutiesMustKnowRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public List<DcDutiesMustKnowEntity> getAll() {
-        return null;
+    public DcDutiesMustKnowEntity getById(Integer id) {
+        return repository.getById(id);
     }
 }

@@ -1,6 +1,9 @@
 package com.kpi.kpi_duties_db.service;
 
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -9,4 +12,8 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
  */
 
 public interface RtDutiesService extends BaseService<RtDutiesEntity> {
+
+    RtDutiesEntity getById(Integer id);
+
+    List<RtDutiesEntity> getByParams(OccupationGetDto dto);
 }

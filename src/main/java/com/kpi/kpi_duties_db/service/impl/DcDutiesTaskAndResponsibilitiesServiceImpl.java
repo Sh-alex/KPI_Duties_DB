@@ -6,8 +6,6 @@ import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author Olexandr Shevchenko
  * @version 1.0
@@ -15,28 +13,13 @@ import java.util.List;
  */
 
 @Service
-public class DcDutiesTaskAndResponsibilitiesServiceImpl implements DcDutiesTaskAndResponsibilitiesService {
+public class DcDutiesTaskAndResponsibilitiesServiceImpl extends BaseServiceImpl<DcDutiesTasksAndResponsibilitiesEntity> implements DcDutiesTaskAndResponsibilitiesService {
 
     @Autowired
-    private DcDutiesTasksAndResponsibilitiesRepository dcDutiesTasksAndResponsibilitiesRepository;
+    DcDutiesTasksAndResponsibilitiesRepository repository;
 
     @Override
-    public DcDutiesTasksAndResponsibilitiesEntity add(DcDutiesTasksAndResponsibilitiesEntity entity) {
-        return dcDutiesTasksAndResponsibilitiesRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public void delete(int id) {
-        dcDutiesTasksAndResponsibilitiesRepository.delete(id);
-    }
-
-    @Override
-    public DcDutiesTasksAndResponsibilitiesEntity edit(DcDutiesTasksAndResponsibilitiesEntity entity) {
-        return dcDutiesTasksAndResponsibilitiesRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public List<DcDutiesTasksAndResponsibilitiesEntity> getAll() {
-        return null;
+    public DcDutiesTasksAndResponsibilitiesEntity getById(Integer id) {
+        return repository.getById(id);
     }
 }

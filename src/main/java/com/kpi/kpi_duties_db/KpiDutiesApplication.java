@@ -6,6 +6,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @SpringBootApplication(scanBasePackages = {"com.kpi.kpi_duties_db"})
 @EnableTransactionManagement
 public class KpiDutiesApplication extends SpringBootServletInitializer {

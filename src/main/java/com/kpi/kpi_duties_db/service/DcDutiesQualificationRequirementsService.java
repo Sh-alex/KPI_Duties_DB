@@ -9,4 +9,5 @@ import com.kpi.kpi_duties_db.domain.DcDutiesQualificationRequirementsEntity;
  */
 
 public interface DcDutiesQualificationRequirementsService extends BaseService<DcDutiesQualificationRequirementsEntity> {
+    DcDutiesQualificationRequirementsEntity getById(Integer id);
 }

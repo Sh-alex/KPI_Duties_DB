@@ -3,9 +3,6 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcDutiesMustKnowEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesMustKnowService;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,25 +25,16 @@ import javax.ws.rs.core.Response;
 public class DcDutiesMustKnowController {
 
     @Autowired
-    DcDutiesMustKnowService dcDutiesMustKnowService;
+    private DcDutiesMustKnowService dcDutiesMustKnowService;
 
     @Autowired
-    EntityManager em;
+    private EntityManager em;
 
     @POST
     public Response add(@NotNull NewValueRequest request) {
-        //TODO: Пофіксить цей костиль і додати автоінкремент для сутності
         DcDutiesMustKnowEntity entity = new DcDutiesMustKnowEntity();
 
-        Session session = ((Session) em.getDelegate()).getSessionFactory().openSession();
-
-        Criteria criteria = session.createCriteria(DcDutiesMustKnowEntity.class);
-        criteria.setProjection(Projections.max("id"));
-
-        Integer entityMaxId = (Integer)criteria.uniqueResult();
-
         entity.setText(request.getNewVal());
-        entity.setId(++entityMaxId);
         dcDutiesMustKnowService.add(entity);
 
         return Response.ok().entity(entity).build();

@@ -2,6 +2,12 @@ package com.kpi.kpi_duties_db.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
+
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
 
 @Entity
 @Table(name = "DutiesValidityDate", schema = "dbo", catalog = "DcDuties")
@@ -10,10 +16,11 @@ public class DutiesValidityDateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
+
 
     @Column(name = "isInKPI")
-    private boolean isInKpi;
+    private Boolean isInKpi;
 
     @Column(name = "Start")
     private Date start;
@@ -24,24 +31,26 @@ public class DutiesValidityDateEntity {
     @Column(name = "isVirtual")
     private Boolean isVirtual;
 
-    @ManyToOne
-    @JoinColumn(name = "RtDutiesId")
-    private RtDutiesEntity rtDutiesEntity;
+    @Column(name = "RtDutiesId")
+    private Integer rtDutiesId;
+
+    public DutiesValidityDateEntity() {
+    }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public boolean isInKpi() {
+    public Boolean getInKpi() {
         return isInKpi;
     }
 
-    public void setInKpi(boolean inKpi) {
+    public void setInKpi(Boolean inKpi) {
         isInKpi = inKpi;
     }
 
@@ -52,7 +61,6 @@ public class DutiesValidityDateEntity {
     public void setStart(Date start) {
         this.start = start;
     }
-
 
     public Date getStop() {
         return stop;
@@ -70,38 +78,29 @@ public class DutiesValidityDateEntity {
         isVirtual = virtual;
     }
 
-
-    public RtDutiesEntity getRtDutiesEntity() {
-        return rtDutiesEntity;
+    public Integer getRtDutiesId() {
+        return rtDutiesId;
     }
 
-    public void setRtDutiesEntity(RtDutiesEntity rtDutiesEntity) {
-        this.rtDutiesEntity = rtDutiesEntity;
+    public void setRtDutiesId(Integer rtDutiesId) {
+        this.rtDutiesId = rtDutiesId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof DutiesValidityDateEntity)) return false;
         DutiesValidityDateEntity that = (DutiesValidityDateEntity) o;
-
-        if (id != that.id) return false;
-        if (isInKpi != that.isInKpi) return false;
-        if (start != null ? !start.equals(that.start) : that.start != null) return false;
-        if (stop != null ? !stop.equals(that.stop) : that.stop != null) return false;
-        if (isVirtual != null ? !isVirtual.equals(that.isVirtual) : that.isVirtual != null) return false;
-
-        return true;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(isInKpi, that.isInKpi) &&
+                Objects.equals(getStart(), that.getStart()) &&
+                Objects.equals(getStop(), that.getStop()) &&
+                Objects.equals(isVirtual, that.isVirtual) &&
+                Objects.equals(getRtDutiesId(), that.getRtDutiesId());
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (isInKpi ? 1 : 0);
-        result = 31 * result + (start != null ? start.hashCode() : 0);
-        result = 31 * result + (stop != null ? stop.hashCode() : 0);
-        result = 31 * result + (isVirtual != null ? isVirtual.hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), isInKpi, getStart(), getStop(), isVirtual, getRtDutiesId());
     }
 }

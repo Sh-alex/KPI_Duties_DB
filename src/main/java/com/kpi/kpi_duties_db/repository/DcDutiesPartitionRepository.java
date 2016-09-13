@@ -6,9 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Olexandr Shevchenko
+ * @version 1.0
+ */
+
 @Repository
 public interface DcDutiesPartitionRepository extends JpaRepository<DcDutiesPartitionEntity, Integer> {
 
-    @Query("select b from DcDutiesPartitionEntity b where b.dcDutiesPartitionName = :name")
+    @Query("select b from DcDutiesPartitionEntity b where b.id = :id")
+    DcDutiesPartitionEntity getById(@Param("id") Integer id);
+
+    @Query("select b from DcDutiesPartitionEntity b where b.name = :name")
     DcDutiesPartitionEntity getByName(@Param("name") String name);
 }

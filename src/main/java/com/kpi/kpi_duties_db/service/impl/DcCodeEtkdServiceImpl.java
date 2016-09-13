@@ -1,12 +1,8 @@
 package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcCodeEtkdEntity;
-import com.kpi.kpi_duties_db.repository.DcCodeEtkdRepository;
 import com.kpi.kpi_duties_db.service.DcCodeEtkdService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -15,28 +11,6 @@ import java.util.List;
  */
 
 @Service
-public class DcCodeEtkdServiceImpl implements DcCodeEtkdService {
+public class DcCodeEtkdServiceImpl extends BaseServiceImpl<DcCodeEtkdEntity> implements DcCodeEtkdService {
 
-    @Autowired
-    DcCodeEtkdRepository dcCodeEtkdRepository;
-
-    @Override
-    public DcCodeEtkdEntity add(DcCodeEtkdEntity entity) {
-        return dcCodeEtkdRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public void delete(int id) {
-        dcCodeEtkdRepository.delete(id);
-    }
-
-    @Override
-    public DcCodeEtkdEntity edit(DcCodeEtkdEntity entity) {
-        return dcCodeEtkdRepository.saveAndFlush(entity);
-    }
-
-    @Override
-    public List<DcCodeEtkdEntity> getAll() {
-        return dcCodeEtkdRepository.findAll();
-    }
 }
