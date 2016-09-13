@@ -10,8 +10,8 @@ const proxy = require('http-proxy').createProxyServer({});
 
 const STATICS_SERVER_PORT = 80,
     API_PORT = 52300,
-//  SERVER_ADDRESS = "http://occupations.azurewebsites.net";
-    SERVER_ADDRESS = "http://localhost";
+    SERVER_ADDRESS = "http://occupations.azurewebsites.net";
+//    SERVER_ADDRESS = "http://localhost";
 
 app.use(require('morgan')('short'));
 /*  не використовується, бо WDS запускається із npm-скріпта
