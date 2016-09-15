@@ -29,10 +29,8 @@ app.use(function(req, res, next) {
 
 
 function handleAPIResp (apiServerResp, frontEndReq, frontEndRes) {
-    console.log("PROXY:\n  " + frontEndReq.method + " " + apiServerResp.url + " - " + apiServerResp.status);
+    console.log("PROXY:\n  " + frontEndReq.method + " " + apiServerResp.url + " - " + apiServerResp.status + "\n  frontEndReq.body = ", frontEndReq.body);
     frontEndRes.status(apiServerResp.status);
-
-    console.log("frontEndReq.body = ", frontEndReq.body);
 
     var contentType = apiServerResp.headers.get("content-type");
     if (contentType && contentType.indexOf("application/json") !== -1)
