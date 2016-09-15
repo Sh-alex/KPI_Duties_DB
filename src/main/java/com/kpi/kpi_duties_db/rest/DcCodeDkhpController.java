@@ -58,7 +58,7 @@ public class DcCodeDkhpController {
         DcCodeDkhpEntity entity = new DcCodeDkhpEntity();
         entity.setId(id);
         entity.setName(request.getNewVal());
-        dcCodeDkhpService.edit(entity);
+        dcCodeDkhpService.update(entity);
 
         return Response.ok().build();
     }

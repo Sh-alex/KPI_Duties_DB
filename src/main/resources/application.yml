@@ -7,7 +7,7 @@ logging:
   level:
     org.springframework: INFO
 #    org.hibernate: DEBUG
-    itt.store.product: INFO
+    com.kpi.kpi_duties_db: INFO
 
 #Base path to jersey controller endpoint
 
@@ -16,7 +16,3 @@ spring:
       application-path: /api
   profiles:
     active: dev
-defaults:
-  entity-status-id: 1
-  delete-status-id: 2
-

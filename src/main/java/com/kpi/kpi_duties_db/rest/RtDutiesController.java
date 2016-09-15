@@ -105,18 +105,18 @@ public class RtDutiesController {
         //TODO
         RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request);
         entity.setId(id);
-        RtDutiesEntity rtDutiesEntity = rtDutiesService.edit(entity);
+        RtDutiesEntity rtDutiesEntity = rtDutiesService.update(entity);
 
         List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
-        dutiesValidityDateService.edit(entities);
+        dutiesValidityDateService.update(entities);
 
-        List<RtCodeEntity> rtCodes = rtCodeService.edit(converter.toRtCodeEntityListFromOccupationRequest(request));
+        List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
 
         rtDutiesCodeService.edit(rtDutiesEntity.getId(), rtCodes);
 
-        rtDutiesTaskAndResponsibilitiesService.edit(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
-        rtDutiesMustKnowService.edit(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
-        rtDutiesQualificationRequirementsService.edit(converter.toRtDutiesQualificationRequirementsEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+        rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+        rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+        rtDutiesQualificationRequirementsService.update(converter.toRtDutiesQualificationRequirementsEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
         return Response.ok().build();
     }

@@ -9,6 +9,4 @@ import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
 
 public interface DcDutiesNameService extends BaseService<DcDutiesNameEntity> {
 
-    DcDutiesNameEntity getById(Integer id);
-
 }

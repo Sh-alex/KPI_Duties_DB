@@ -29,15 +29,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
     HibernateTemplate hibernateTemplate;
 
     @Override
-    public RtDutiesEntity findById(Integer id) {
-        Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class);
-
-        criteria.add(Restrictions.eq("id", id));
-
-        return (RtDutiesEntity) criteria.uniqueResult();
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap) {
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");

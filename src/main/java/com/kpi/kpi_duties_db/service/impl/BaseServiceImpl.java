@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
  * @since 01.09.2016
  */
 
-@Transactional(propagation= Propagation.REQUIRED)
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
@@ -64,17 +62,23 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     @Transactional
-    public T edit(T entity) {
+    public T update(T entity) {
         return repository.saveAndFlush(entity);
     }
 
     @Override
     @Transactional
-    public List<T> edit(List<T> entities) {
+    public List<T> update(List<T> entities) {
         List<T> list = repository.save(entities);
         repository.flush();
 
         return list;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public T getById(Integer id) {
+        return repository.getOne(id);
     }
 
     @Override

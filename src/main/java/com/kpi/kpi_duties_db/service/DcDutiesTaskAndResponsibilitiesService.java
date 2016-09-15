@@ -10,5 +10,4 @@ import com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity;
 
 public interface DcDutiesTaskAndResponsibilitiesService extends BaseService<DcDutiesTasksAndResponsibilitiesEntity> {
 
-    DcDutiesTasksAndResponsibilitiesEntity getById(Integer id);
 }

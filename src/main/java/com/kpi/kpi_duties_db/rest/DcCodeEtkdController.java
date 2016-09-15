@@ -58,7 +58,7 @@ public class DcCodeEtkdController {
         DcCodeEtkdEntity entity = new DcCodeEtkdEntity();
         entity.setId(id);
         entity.setName(request.getNewVal());
-        dcCodeEtkdService.edit(entity);
+        dcCodeEtkdService.update(entity);
 
         return Response.ok().build();
     }

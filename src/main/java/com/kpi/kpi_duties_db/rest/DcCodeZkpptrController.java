@@ -58,7 +58,7 @@ public class DcCodeZkpptrController {
         DcCodeZkpptrEntity entity = new DcCodeZkpptrEntity();
         entity.setId(id);
         entity.setName(request.getNewVal());
-        dcCodeZkpptrService.edit(entity);
+        dcCodeZkpptrService.update(entity);
 
         return Response.ok().build();
     }
