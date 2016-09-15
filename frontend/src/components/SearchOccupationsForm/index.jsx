@@ -14,7 +14,7 @@ import {
 import './styles.less'
 
 
-export default class FormAddInfoFromAnotherOccup extends Component {
+export default class SearchOccupationsForm extends Component {
     constructor(props) {
         super(props);
 
@@ -28,14 +28,35 @@ export default class FormAddInfoFromAnotherOccup extends Component {
 
     getInitState() {
         return {
-            form: {
+            form: Object.assign({
                 searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
                 occupGroupVal: null,   // 8
                 searchText: "",        //"інженер"
                 searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
                 inKpi: true,
-            },
-            tagsList: this.props.clarificationList.items.map(item => item.textValue)
+                "creatingInStateDate": {
+                    "takeIntoAccount": false,
+                    "from": null,
+                    "to": null
+                },
+                "creatingInKPIDate": {
+                    "takeIntoAccount": false,
+                    "from": null,
+                    "to": null
+                },
+                "cancelingInStateDate": {
+                    "takeIntoAccount": false,
+                    "from": null,
+                    "to": null
+                },
+                "cancelingInKPIDate": {
+                    "takeIntoAccount": false,
+                    "from": null,
+                    "to": null
+                }
+            }, this.props.formFields),
+            //описали окремо в store, а не просто юзаємо через props на випадок якщо треба буде не показувати у підсказці вже обрані елементи
+            tagsList: this.props.tagsList && this.props.tagsList.items && this.props.tagsList.items.map(item => item.textValue) || []
         };
     }
 
@@ -43,7 +64,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         e.preventDefault();
         this.props.onSubmitSearchForm({
             ...this.state.form,
-            searchTags: this.state.form.searchTags
+            searchTags: this.state.form.searchTags  //перевірити втф!!!!!!!!!!!!!
         });
     }
 
@@ -85,12 +106,13 @@ export default class FormAddInfoFromAnotherOccup extends Component {
         return (
             <form
                 onSubmit={this.submitForm}
-                className="form-horizontal search-form form-search-similar"
-                id="form-search-similar"
+                className="form-horizontal ssearch-occup-form"
                 role="form">
                 <div className="form-inner">
                     <div className="form-group">
-                        <label htmlFor="form-search-similar__inp-occupation-group" className="col-sm-3 control-label"> Посадовий склад </label>
+                        <label htmlFor="search-occup-form__inp-occupation-group" className="col-sm-3 control-label">
+                            Посадовий склад
+                        </label>
                         <div className="col-sm-9">
                             <DropdownList
                                 id="inp-occupation-group"
@@ -118,7 +140,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="form-search-similar__select-occupation-name" className="col-sm-3 control-label">
+                        <label htmlFor="search-occup-form__select-occupation-name" className="col-sm-3 control-label">
                             Назва посади
                         </label>
                         <div className="col-sm-9">
@@ -130,7 +152,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                     })
                                 }}
                                 className="form-control"
-                                id="form-search-similar__select-occupation-name"
+                                id="search-occup-form__select-occupation-name"
                             >
                                 <option value={ANY} >
                                     Будь-яка
@@ -158,7 +180,7 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="form-search-similar__inp-occupation-name"
+                                            id="search-occup-form__inp-occupation-name"
                                             placeholder="Введіть текст"
                                             value={this.state.form.searchText}
                                             onChange={ e => {
@@ -172,19 +194,19 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                                 this.state.form.searchType === ALL_TAGS || this.state.form.searchType === SOME_TAGS ?
                                     (
                                         <Multiselect
-                                            id="form-search-similar__inp-occupation-name"
+                                            id="search-occup-form__inp-occupation-name"
                                             placeholder="Введіть тут теги"
                                             messages={{emptyList: "Список пустий", createNew: "Додати новий тег"}}
                                             defaultValue={""}
                                             data={ this.state.tagsList }
                                             value={this.state.form.searchTags}
+                                            busy={this.props.tagsList.isFetching}
                                             onChange={this.handleTagsChange}
                                             onCreate={this.handleTagsCreate}
                                             caseSensitive={false}
                                             filter='contains' />
                                     ) : ""
                             }
-                            {/* data={this.props.clarificationList.items} */}
                         </div>
                     </div>
                     <div className="form-group">
@@ -204,12 +226,14 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                     </div>
                 </div>
                 { errorAlert }
-                <div className="clearfix search-similar__bottom-btns-part">
-                    <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
-                        Відміна
-                    </button>
+                <div className="clearfix search-occup-form__bottom-btns-part">
+                    {this.props.cancelSearch && (
+                        <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
+                            Відміна
+                        </button>
+                    )}
 
-                    <div className="pull-right">
+                    <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
                         <button
                             type="reset"
                             className="btn btn-default"
@@ -224,13 +248,13 @@ export default class FormAddInfoFromAnotherOccup extends Component {
                             title="Шукати посаду"
                             disabled={this.props.isSubmittng || this.props.errors}
                         >
-                            <span className="btn-label"> 
-                                Шукати {" "}
-                                <i className="fa fa-search" aria-hidden="true" />
-                            </span>
+                        <span className="btn-label">
+                            Шукати {" "}
+                            <i className="fa fa-search" aria-hidden="true" />
+                        </span>
                             <span className={btnSpinnerClass}>
-                                <i className="fa fa-spinner fa-pulse" />
-                            </span>
+                            <i className="fa fa-spinner fa-pulse" />
+                        </span>
                         </button>
                     </div>
                 </div>

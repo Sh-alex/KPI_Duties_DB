@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 
-import FormAddInfoFromAnotherOccup from '../FormAddInfoFromAnotherOccup'
+import SearchOccupationsForm from '../SearchOccupationsForm'
 import AddInfoFromAnotherOccupSearchRes from '../AddInfoFromAnotherOccupSearchRes'
 
 import {
@@ -19,13 +19,13 @@ import './styles.less'
 class ModalAddInfoFromAnotherOccup extends Component {
     render() {
         let searchForm = (
-                <FormAddInfoFromAnotherOccup
+                <SearchOccupationsForm
                     searchError={this.props.searchError}
                     onSubmitSearchForm={this.props.onSubmitSearchForm}
                     onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                     isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                     cancelSearch={this.props.onHide}
-                    clarificationList={this.props.clarificationList}
+                    tagsList={this.props.clarificationList}
                     occupationGroupList={this.props.occupationGroupList}
                 />
             ),
