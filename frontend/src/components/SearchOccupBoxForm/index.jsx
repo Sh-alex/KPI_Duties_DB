@@ -48,7 +48,7 @@ export default function SearchOccupBoxForm(props) {
     }
 
     return (
-        <div className={`box box-default box--search-form ${props.expanded ? "" : "collapsed-box"}`} >
+        <div className={`box box-default box--search-form ${props.boxIsExpanded ? "" : "collapsed-box"}`} >
             <div className="box-header with-border text-center">
                 <h3 className="box-title">
                     Пошук посад
@@ -56,7 +56,7 @@ export default function SearchOccupBoxForm(props) {
                 <div className="box-tools pull-right">
                     <BoxExpandBtn
                         toggleExpand={props.toggleExpand}
-                        expanded={props.expanded}
+                        expanded={props.boxIsExpanded}
                     />
                 </div>
             </div>

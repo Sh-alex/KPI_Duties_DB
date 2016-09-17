@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { connect } from 'react-redux'
 
 import SearchOccupBoxForm from "../SearchOccupBoxForm";
-import SearchOccupBoxResults from "../SearchOccupBoxResults";
+import SearchOccupBoxRes from "../SearchOccupBoxRes";
 
 import {
     searchOccupBoxFormSubmit,
@@ -59,12 +59,14 @@ class SearchOccupBox extends Component {
                         tagsList={this.props.clarificationList}
                         occupationGroupList={this.props.occupationGroupList}
                         searchQuery={this.props.location.query}
-                        expanded={this.state.searchFormIsExpanded}
+                        boxIsExpanded={this.state.searchFormIsExpanded}
                         toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
                     />
-                    <SearchOccupBoxResults
+                    <SearchOccupBoxRes
                         searchResData={this.props.searchResData}
-                        expanded={this.state.searchResultsIsExpanded}
+                        boxIsExpanded={this.state.searchResultsIsExpanded}
+                        onEditItem={this.props.handleEditItem}
+                        onDeleteItem={this.props.handleDeleteItem}
                         toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
                     />
                 </div>
@@ -80,7 +82,7 @@ class SearchOccupBox extends Component {
                         tagsList={this.props.clarificationList}
                         occupationGroupList={this.props.occupationGroupList}
                         searchQuery={this.props.location.query}
-                        expanded={this.state.searchFormIsExpanded}
+                        boxIsExpanded={this.state.searchFormIsExpanded}
                         toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
                     />
                 </div>
@@ -102,17 +104,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(fetchOccupGroupList());
             dispatch(fetchClarifiedOccupList());
             dispatch(fetchClarificationList());
-
-            // dispatch(fetchKPCodesList());
-            // dispatch(fetchZKPPTRCodesList());
-            // dispatch(fetchETDKCodesList());
-            // dispatch(fetchDKHPCodesList());
         },
         onSubmitSearchForm(data) {
             dispatch(searchOccupBoxFormSubmit(data, dispatch))
         },
         handleSearchFormAlertDismiss() {
             dispatch(dismissSearchOccupBoxFormAlert())
+        },
+        handleEditItem(itemId) {
+            alert("Редагувати, id = " + itemId)
+        },
+        handleDeleteItem(itemId) {
+            alert("Видалити, id = " + itemId)
         }
     }
 };
