@@ -25,12 +25,14 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
         tblRows = !props.searchResData.itemsList.length ?
             (
                 <tr colSpan="100" className="text-center">
-                    <Alert bsStyle="warning">
-                        <p>
-                            За вказаними критеріями не знайдено жодної посади.<br />
-                            Спробуйте змінити критерії пошуку у формі.
-                        </p>
-                    </Alert>
+                    <td>
+                        <Alert bsStyle="warning alert-sm">
+                            <p>
+                                За вказаними критеріями не знайдено жодної посади.<br />
+                                Спробуйте змінити критерії пошуку у формі.
+                            </p>
+                        </Alert>
+                    </td>
                 </tr>
             )
             :

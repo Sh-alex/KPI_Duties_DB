@@ -18,12 +18,14 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
         tblRows = !props.searchResData.itemsList.length ?
             (
                 <tr colSpan="100" className="text-center">
-                    <Alert bsStyle="warning">
-                        <p>
-                            За вказаними критеріями не знайдено жодної посади.<br />
-                            Спробуйте змінити критерії пошуку у формі.
-                        </p>
-                    </Alert>
+                    <td>
+                        <Alert bsStyle="warning alert-sm">
+                            <p>
+                                За вказаними критеріями не знайдено жодної посади.<br />
+                                Спробуйте змінити критерії пошуку у формі.
+                            </p>
+                        </Alert>
+                    </td>
                 </tr>
             )
             : props.searchResData.itemsList.map( (itemId,itemIndex) => {
@@ -46,7 +48,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                 return (
                     <tr
                         key={itemIndex}
-                        onClick={bindHandleItemsSelect(itemId, itemIndex, props)} 
+                        onClick={bindHandleItemsSelect(itemId, itemIndex, props)}
                     >
                         <td>
                             <input
