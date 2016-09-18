@@ -1,4 +1,4 @@
 frontend/* linguist-vendored
 frontend/public/* linguist-vendored
-frontend/src/* linguist-vendored
+frontend/src/actions/* linguist-vendored
 psd_templates/* linguist-vendored
