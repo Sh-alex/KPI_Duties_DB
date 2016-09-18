@@ -1,2 +1,4 @@
-frontend/ linguist-vendored
-psd_templates/ linguist-vendored
+frontend/* linguist-vendored
+frontend/public/* linguist-vendored
+frontend/src/* linguist-vendored
+psd_templates/* linguist-vendored
