@@ -1,4 +1,3 @@
 $ cat .gitattributes
-*.rb linguist-language=Java
 src/* linguist-vendored
 frontend/* linguist-vendored=false
