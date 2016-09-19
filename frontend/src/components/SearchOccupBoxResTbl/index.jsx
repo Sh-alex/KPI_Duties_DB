@@ -32,6 +32,7 @@ export default function SearchOccupBoxResTbl(props) {
                     onDeleteItem={bindOnDeleteItem(props.onDeleteItem, itemId)}
                     onToggleExpandItem={bindOnExpandItem(props.onToggleExpandItem, itemId)}
                     isExpanded={props.expandedItems[itemId]}
+                    showDelSpinner={props.isDeletingOccupation && (props.deletingItem === itemId)}
                 />,
                 <SearchOccupBoxResTblRowDetails
                     key={itemId+"_1"}
@@ -54,9 +55,11 @@ export default function SearchOccupBoxResTbl(props) {
         console.error(err);
         tblRows = (
             <tr colSpan="100" className="text-center">
-                <Alert bsStyle="danger">
-                    <p> Сталася помилка при побудові таблиці з результатами пошуку </p>
-                </Alert>
+                <td>
+                    <Alert bsStyle="danger">
+                        <p> Сталася помилка при побудові таблиці з результатами пошуку </p>
+                    </Alert>
+                </td>
             </tr>
         );
     }

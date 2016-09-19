@@ -5,6 +5,8 @@ import {
     DISMISS_SEARCH_OCCUP_BOX_FORM_ALERT
 } from '../constants/searchOccupBox'
 
+import { DEL_OCCUP_SUCCESS } from "../constants/delOccupation"
+
 const initialState = {
     isSubmittngSearchForm: false,
     searchResData: null,
@@ -39,6 +41,18 @@ export default function (state = initialState, action) {
                 ...state,
                 searchError: null
             };
+
+        case DEL_OCCUP_SUCCESS:
+            let newSearchResData = Object.assign({}, state.searchResData),
+                index = newSearchResData.itemsList.indexOf(action.occupId);
+            delete newSearchResData.itemsById[action.occupId];
+            if(index !== -1)     //якщо знайшовся видаляємий id посади
+                newSearchResData.itemsList.splice(index, 1);
+            return {
+                ...state,
+                searchResData: newSearchResData
+            };
+
         default:
             return state;
     }

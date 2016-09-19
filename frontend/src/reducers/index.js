@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import modals from './modals'
 import user from './user'
 import addOccupForm from './addOccupForm'
+import delOccupation from "./delOccupation"
 import occupationNameInfo from './occupationNameInfo'
 import occupCodesLists from './occupCodesLists'
 import searchOccupBox from './searchOccupBox'
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
     modals,
     user,
     searchOccupBox,
+    delOccupation,
     occupationNameInfo,
     occupCodesLists,
     form: formReducer.plugin({

@@ -4,6 +4,8 @@ import "./styles.less";
 
 import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
+import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
+
 
 export default class SearchOccupBoxRes extends Component {
     constructor(props) {
@@ -19,9 +21,16 @@ export default class SearchOccupBoxRes extends Component {
             portionSizesArr,                            //масив розмірів порцій
             portionIndex: 0,                            //номер порції яку показуємо
             expandedItems: {},                          //які елементи розкриті(показуються деталі про посаду)
+
+            dontShowAgainDelModal: false,
+            showModalConfirmDelOccup: false,
         };
 
         this.handleToggleExpandItem = this.handleToggleExpandItem.bind(this);
+        this.hideModalConfirmDelOccup = this.hideModalConfirmDelOccup.bind(this);
+        this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
+        this.handleDeleteItem = this.handleDeleteItem.bind(this);
+        this.handleDeleteItemShowingModal = this.handleDeleteItemShowingModal.bind(this);
     }
 
     handleToggleExpandItem(itemId) {
@@ -41,9 +50,46 @@ export default class SearchOccupBoxRes extends Component {
         }
     }
 
+    hideModalConfirmDelOccup () {
+        this.setState({
+            showModalConfirmDelOccup: false,
+            deletingItem: null
+        });
+        this.props.dismissDelOccupationAlert(this.state.deletingItem);
+    }
+
+    triggerDontShowAgainDel() {
+        this.setState({ dontShowAgainDelModal: !this.state.dontShowAgainDelModal });
+    }
+
+    handleDeleteItem(itemId) {
+        this.props.onDeleteItem(itemId || this.state.deletingItem);
+    }
+
+    handleDeleteItemShowingModal(itemId) {
+        if(!this.state.dontShowAgainDelModal) {
+            this.setState({
+                showModalConfirmDelOccup: true,
+                deletingItem: itemId
+            });
+        } else {
+            this.setState({
+                deletingItem: itemId
+            });
+            this.handleDeleteItem(itemId);
+        }
+    }
+
     render() {
         //TODO: обраховувати(на основі обраного індекса порції) які дані показувати у таблиці
-        let performedSearchResData = this.props.searchResData;
+        let performedSearchResData = this.props.searchResData,
+            modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null && this.state.deletingItem !== undefined &&
+                this.props.searchResData.itemsById[this.state.deletingItem] &&
+                this.props.searchResData.itemsById[this.state.deletingItem].data &&
+                this.props.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
+
+        if(this.state.dontShowAgainDelModal && this.props.delOccupationError)
+            alert(this.props.delOccupationError);
 
         return (
             <div className={`box box-default ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
@@ -59,6 +105,17 @@ export default class SearchOccupBoxRes extends Component {
                     </div>
                 </div>
                 <div className="box-body">
+                    <ModalConfirmDelOccup
+                        additionalTitle={modalConfirmDelOccupAdditionalTitle}
+                        onTriggerDontShowAgain={this.triggerDontShowAgainDel}
+                        dontShowAgain={this.state.dontShowAgainDelModal}
+                        show={this.state.showModalConfirmDelOccup}
+                        error={this.props.delOccupationError}
+                        onAlertDismiss={this.props.dismissDelOccupationAlert}
+                        isDeletingOccupation={this.props.isDeletingOccupation}
+                        onSubmit={this.handleDeleteItem}
+                        onHide={ this.hideModalConfirmDelOccup }
+                    />
                     {
                         !performedSearchResData.itemsList.length ? (
                             <div className="text-center">
@@ -76,8 +133,10 @@ export default class SearchOccupBoxRes extends Component {
                                 sortField={this.state.sortField}
                                 expandedItems={this.state.expandedItems}
                                 onEditItem={this.props.onEditItem}
-                                onDeleteItem={this.props.onDeleteItem}
+                                onDeleteItem={this.handleDeleteItemShowingModal}
                                 onToggleExpandItem={this.handleToggleExpandItem}
+                                isDeletingOccupation={this.props.isDeletingOccupation}
+                                deletingItem={this.state.deletingItem}
                             />
                         )
                     }

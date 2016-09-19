@@ -14,13 +14,11 @@ import {
     fetchClarifiedOccupList,
     fetchClarificationList,
 } from "../../actions/occupationNameInfo"
-//
-// import {
-//     fetchKPCodesList,
-//     fetchZKPPTRCodesList,
-//     fetchETDKCodesList,
-//     fetchDKHPCodesList
-// } from "../../actions/occupCodesLists"
+
+import {
+    delOccupation,
+    dismissDelOccupationAlert
+} from "../../actions/delOccupation"
 
 class SearchOccupBox extends Component {
     constructor(props) {
@@ -68,6 +66,10 @@ class SearchOccupBox extends Component {
                         onEditItem={this.props.handleEditItem}
                         onDeleteItem={this.props.handleDeleteItem}
                         toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
+
+                        dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
+                        delOccupationError={this.props.delOccupationError}
+                        isDeletingOccupation={this.props.isDeletingOccupation}
                     />
                 </div>
             );
@@ -94,6 +96,7 @@ class SearchOccupBox extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         ...state.occupationNameInfo,
+        ...state.delOccupation,
         ...state.searchOccupBox
     };
 };
@@ -114,8 +117,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleEditItem(itemId) {
             alert("Редагувати, id = " + itemId)
         },
+        dismissDelOccupationAlert() {
+            dispatch(dismissDelOccupationAlert())
+        },
         handleDeleteItem(itemId) {
-            alert("Видалити, id = " + itemId)
+            dispatch(delOccupation(itemId, dispatch))
         }
     }
 };

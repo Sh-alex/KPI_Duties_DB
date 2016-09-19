@@ -34,8 +34,9 @@ export default function SearchOccupBoxResTblRowShort(props) {
                     className="action-btns-cell__btn text-danger btn--btn-sm--btn-danger"
                     title="Видалити посаду"
                     onClick={props.onDeleteItem}
+                    disabled={props.showDelSpinner}
                 >
-                    <i className="fa fa-trash" />
+                    <i className={`fa fa-${props.showDelSpinner ? 'spinner fa-pulse' : 'trash'}`} />
                 </a> {" "}
                 <a
                     className="action-btns-cell__btn occup-table__btn-expand"
