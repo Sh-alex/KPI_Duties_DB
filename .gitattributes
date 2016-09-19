@@ -1,2 +1,2 @@
-src/* linguist-vendored
-frontend/* linguist-vendored=false
+frontend/* linguist-vendored
+psd_templates/* linguist-vendored
