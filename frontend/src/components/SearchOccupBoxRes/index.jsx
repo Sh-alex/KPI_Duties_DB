@@ -111,6 +111,7 @@ export default class SearchOccupBoxRes extends Component {
                         dontShowAgain={this.state.dontShowAgainDelModal}
                         show={this.state.showModalConfirmDelOccup}
                         error={this.props.delOccupationError}
+                        success={this.props.delOccupationSuccess}
                         onAlertDismiss={this.props.dismissDelOccupationAlert}
                         isDeletingOccupation={this.props.isDeletingOccupation}
                         onSubmit={this.handleDeleteItem}

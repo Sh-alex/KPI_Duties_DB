@@ -6,67 +6,80 @@ import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import './styles.less'
 
-export default class ModalAddNewOccupKeyWord extends Component {
-    render() {
-        const submitHandler = e => {
-            e.preventDefault();
-            this.props.onSave(this.props.inpVal);
-        };
+export default function ModalAddNewOccupKeyWord(props) {
+    const submitHandler = e => {
+        e.preventDefault();
+        props.onSave(props.inpVal);
+    };
 
-        let errorAlert = (!this.props.errors || (this.props.errors.length < 1)) ? "" : (
-                <Alert bsStyle="danger" onDismiss={this.props.onAlertDismiss}>
-                    <h4>
-                        <i className="icon fa fa-warning" />
-                        Помилка! :(
-                    </h4>
-                    <p>
-                        { this.props.errors.map(error => (<p> {error} </p>)) }
-                    </p>
-                </Alert>
-            ),
-            btnSpinnerClass = classNames({
-                'btn-spinner': true,
-                'hidden': !this.props.isLoading
-            });
+    let msgAlert,
+        btnSpinnerClass = classNames({
+            'btn-spinner': true,
+            'hidden': !props.isLoading
+        });
 
-        return (
-            <Modal {...this.props} bsSize="small">
-                <Modal.Header closeButton>
-                    <Modal.Title className="text-center">
-                        Додати нове значення у список
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form role="form" onSubmit={submitHandler} id="modal-add-new-occup-key-word__form">
-                        <div className="form-group">
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                value={this.props.inpVal} 
-                                onChange={e => this.props.onInpValChange( replaceApostrophe(e.target.value) ) }
-                                id="inp-add-new-occup-key-word" 
-                                placeholder="Нове ключове слово у назвах посад" />
-                        </div>
-                    </form>
-                    { errorAlert }
-                </Modal.Body>
-                <Modal.Footer>
-                    <button type="button" className="btn btn-default pull-left" onClick={this.props.onHide}>
-                        Відміна
-                    </button>
-                    <button
-                        type="submit"
-                        form="modal-add-new-occup-key-word__form"
-                        className="btn btn-primary"
-                        disabled={this.props.isLoading || !this.props.inpVal}
-                    >
-                        <span className="btn-label"> Додати </span>
-                        <span className={btnSpinnerClass}>
+    if(props.errors && (props.errors.length)) {
+        msgAlert = (
+            <Alert bsStyle="danger" onDismiss={props.onAlertDismiss}>
+                <h4>
+                    <i className="icon fa fa-warning" />
+                    Помилка! :(
+                </h4>
+                <p>
+                    { props.errors.map(error => (<p> {error} </p>)) }
+                </p>
+            </Alert>
+        );
+    } else if(props.success) {
+        msgAlert = (
+            <Alert bsStyle="success" onDismiss={props.onAlertDismiss}>
+                <h4>
+                    <i className="icon fa fa-check" />
+                    Успіх!
+                </h4>
+                <p> Нове значення успішно додано. </p>
+            </Alert>
+        );
+        setTimeout(() => props.onHide(), 1000);
+    }
+
+    return (
+        <Modal {...props} bsSize="small">
+            <Modal.Header closeButton>
+                <Modal.Title className="text-center">
+                    Додати нове значення у список
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <form role="form" onSubmit={submitHandler} id="modal-add-new-occup-key-word__form">
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={props.inpVal}
+                            onChange={e => props.onInpValChange( replaceApostrophe(e.target.value) ) }
+                            id="inp-add-new-occup-key-word"
+                            placeholder="Нове ключове слово у назвах посад" />
+                    </div>
+                </form>
+                { msgAlert }
+            </Modal.Body>
+            <Modal.Footer>
+                <button type="button" className="btn btn-default pull-left" onClick={props.onHide}>
+                    Відміна
+                </button>
+                <button
+                    type="submit"
+                    form="modal-add-new-occup-key-word__form"
+                    className="btn btn-primary"
+                    disabled={props.isLoading || !props.inpVal}
+                >
+                    <span className="btn-label"> Додати </span>
+                    <span className={btnSpinnerClass}>
                             <i className="fa fa-spinner fa-pulse" />
                         </span>
-                    </button>
-                </Modal.Footer>
-            </Modal>
-        );
-    }
+                </button>
+            </Modal.Footer>
+        </Modal>
+    );
 }

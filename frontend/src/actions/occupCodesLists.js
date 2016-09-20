@@ -18,22 +18,22 @@ import {
     ADD_NEW_KP_CODE_REQUEST,
     ADD_NEW_KP_CODE_SUCCESS,
     ADD_NEW_KP_CODE_FAIL,
-    ADD_NEW_KP_CODE_CLEAR_ERROR,
+    ADD_NEW_KP_CODE_CLEAR_MSG,
 
     ADD_NEW_ZKPPTR_CODE_REQUEST,
     ADD_NEW_ZKPPTR_CODE_SUCCESS,
     ADD_NEW_ZKPPTR_CODE_FAIL,
-    ADD_NEW_ZKPPTR_CODE_CLEAR_ERROR,
+    ADD_NEW_ZKPPTR_CODE_CLEAR_MSG,
 
     ADD_NEW_ETDK_CODE_REQUEST,
     ADD_NEW_ETDK_CODE_SUCCESS,
     ADD_NEW_ETDK_CODE_FAIL,
-    ADD_NEW_ETDK_CODE_CLEAR_ERROR,
+    ADD_NEW_ETDK_CODE_CLEAR_MSG,
 
     ADD_NEW_DKHP_CODE_REQUEST,
     ADD_NEW_DKHP_CODE_SUCCESS,
     ADD_NEW_DKHP_CODE_FAIL,
-    ADD_NEW_DKHP_CODE_CLEAR_ERROR,
+    ADD_NEW_DKHP_CODE_CLEAR_MSG,
 } from '../constants/occupCodesLists'
 
 import * as API_URIs from '../constants/API_URIs';
@@ -241,7 +241,6 @@ export function addNewKPCode(newVal) {
     }
 }
 
-
 export function addNewETDKCode(newVal) {
     return function (dispatch) {
         dispatch({
@@ -295,7 +294,6 @@ export function addNewETDKCode(newVal) {
             }))
     }
 }
-
 
 export function addNewDKHPCode(newVal) {
     return function (dispatch) {
@@ -406,26 +404,26 @@ export function addNewZKPPTRCode(newVal) {
 }
 
 
-export function clearKPCodeAddingError() {
+export function clearKPCodeAddingMsg() {
     return {
-        type: ADD_NEW_KP_CODE_CLEAR_ERROR
+        type: ADD_NEW_KP_CODE_CLEAR_MSG
     }
 }
 
-export function clearDKHPCodeAddingError() {
+export function clearDKHPCodeAddingMsg() {
     return {
-        type: ADD_NEW_DKHP_CODE_CLEAR_ERROR
+        type: ADD_NEW_DKHP_CODE_CLEAR_MSG
     }
 }
 
-export function clearETDKCodeAddingError() {
+export function clearETDKCodeAddingMsg() {
     return {
-        type: ADD_NEW_ETDK_CODE_CLEAR_ERROR
+        type: ADD_NEW_ETDK_CODE_CLEAR_MSG
     }
 }
 
-export function clearZKPPTRCodeAddingError() {
+export function clearZKPPTRCodeAddingMsg() {
     return {
-        type: ADD_NEW_ZKPPTR_CODE_CLEAR_ERROR
+        type: ADD_NEW_ZKPPTR_CODE_CLEAR_MSG
     }
 }

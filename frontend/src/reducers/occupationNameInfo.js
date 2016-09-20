@@ -67,6 +67,7 @@ const initialState = {
         isFetching: false,
         isAddingNewVal: false,
         addingErrors: [],
+        addingSuccess: false,
         errors: [],
         items : []
         // items : [
@@ -106,6 +107,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarificationList: {
                     ...state.clarificationList,
                     isAddingNewVal: true,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -116,6 +118,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     ...state.clarificationList,
                     items: [...state.clarificationList.items, action.newItem],
                     isAddingNewVal: false,
+                    addingSuccess: true,
                     addingErrors: []
                 }
             };
@@ -125,6 +128,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarificationList: {
                     ...state.clarificationList,
                     isAddingNewVal: false,
+                    addingSuccess: false,
                     addingErrors: [...state.clarificationList.addingErrors, action.error]
                 }
             };
@@ -134,6 +138,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 ...state,
                 clarificationList: {
                     ...state.clarificationList,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
