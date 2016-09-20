@@ -1,1 +1,3 @@
 node_modules/* linguist-vendored
+frontend/src/_old/scripts/jquery-1.10.2.js linguist-vendored
+frontend/src/_old/scripts/bootstrap.min.js linguist-vendored
