@@ -117,7 +117,10 @@ export default class SearchOccupationsForm extends Component {
                             <DropdownList
                                 id="inp-occupation-group"
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={[
                                     {
                                         "id": null,
@@ -196,7 +199,11 @@ export default class SearchOccupationsForm extends Component {
                                         <Multiselect
                                             id="search-occup-form__inp-occupation-name"
                                             placeholder="Введіть тут теги"
-                                            messages={{emptyList: "Список пустий", createNew: "Додати новий тег"}}
+                                            messages={{
+                                                emptyList: "Список пустий",
+                                                emptyFilter: "Не знайдено жодного елементу",
+                                                createNew: "Додати новий тег"
+                                            }}
                                             defaultValue={""}
                                             data={ this.state.tagsList }
                                             value={this.state.form.searchTags}
