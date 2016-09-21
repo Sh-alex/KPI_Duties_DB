@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {DateTimePicker} from "react-widgets";
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
-import replaceApostrophe from "../../utils/replaceApostrophe"
 import classNames from "classnames"
 import debounce from "../../utils/debounce"
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
@@ -59,12 +58,7 @@ export default function AddOccupBoxResponsibPortion(props) {
                             <textarea
                                 {...props.responsibPortionFields.text}
                                 value={props.responsibPortionFields.text.value || ""}
-
-                                onChange={ e => {
-                                    props.responsibPortionFields.text.onChange(
-                                        replaceApostrophe(e.target.value)
-                                    )
-                                }}
+                                onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
                                 placeholder="Завдання, обов'язки та повноваження"
                                 rows="6" />

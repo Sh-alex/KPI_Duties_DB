@@ -3,7 +3,6 @@ import {DateTimePicker} from "react-widgets";
 import classNames from "classnames"
 
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
-import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
@@ -50,11 +49,7 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
                             <textarea
                                 {...props.qualiffRequirPortionFields.text}
                                 value={props.qualiffRequirPortionFields.text.value || ""}
-                                onChange={ e => {
-                                    props.qualiffRequirPortionFields.text.onChange(
-                                        replaceApostrophe(e.target.value)
-                                    )
-                                }}
+                                onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
                                 placeholder="Кваліфікаційні вимоги"
                                 rows="6" />

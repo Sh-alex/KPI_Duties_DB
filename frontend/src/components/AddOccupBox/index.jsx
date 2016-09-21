@@ -51,6 +51,8 @@ import {
 
 import validateAddOccupForm from "./validateAddOccupForm"
 
+import replaceApostrophe from "../../utils/replaceApostrophe"
+
 import './styles.less'
 
 let initialFormState = {
@@ -138,6 +140,10 @@ class AddOccupBox extends Component {
         this.handleOccupationGroupInpChange = this.handleOccupationGroupInpChange.bind(this);
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
         this.handleClarificationInpChange = this.handleClarificationInpChange.bind(this);
+
+        this.handleQualiffRequirTextChange = this.handleQualiffRequirTextChange.bind(this);
+        this.handleHaveToKnowTextChange = this.handleHaveToKnowTextChange.bind(this);
+        this.handleResponsibTextChange = this.handleResponsibTextChange.bind(this);
 
         this.props.initializeForm(initialFormState);
     }
@@ -231,6 +237,43 @@ class AddOccupBox extends Component {
         this.props.fields.name.clarification.onChange(newVal.id);
         this.props.dispatch(clarificationInpChange(newVal));
     }
+
+    handleResponsibTextChange(newVal, resPortionIndex) {
+        //обробляємо зміни саме тут,
+        // а не всередині відповідного компонента щоб тей компонент був більш універсальним
+        // а не всередині action-а чи reducer-a щоб не писати лишніх екшнів та редьюсерів, бо у нас і так для цього викоритосуується redux-form
+
+        newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
+        this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
+        //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
+        this.props.fields.responsibilities[resPortionIndex].id.value &&
+            this.props.fields.responsibilities[resPortionIndex].id.onChange(null);
+    }
+
+    handleHaveToKnowTextChange(newVal, resPortionIndex) {
+        //обробляємо зміни саме тут,
+        // а не всередині відповідного компонента щоб тей компонент був більш універсальним
+        // а не всередині action-а чи reducer-a щоб не писати лишніх екшнів та редьюсерів, бо у нас і так для цього викоритосуується redux-form
+
+        newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
+        this.props.fields.haveToKnow[resPortionIndex].text.onChange(newVal);
+        //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
+        this.props.fields.haveToKnow[resPortionIndex].id.value &&
+            this.props.fields.haveToKnow[resPortionIndex].id.onChange(null);
+    }
+
+    handleQualiffRequirTextChange(newVal, resPortionIndex) {
+        //обробляємо зміни саме тут,
+        // а не всередині відповідного компонента щоб тей компонент був більш універсальним
+        // а не всередині action-а чи reducer-a щоб не писати лишніх екшнів та редьюсерів, бо у нас і так для цього викоритосуується redux-form
+
+        newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
+        this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
+        //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
+        this.props.fields.responsibilities[resPortionIndex].id.value &&
+            this.props.fields.responsibilities[resPortionIndex].id.onChange(null);
+    }
+
 
     render() {
         const {
@@ -402,16 +445,19 @@ class AddOccupBox extends Component {
                                 handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
                             <AddOccupBoxResponsibSection
                                 responsibFields={responsibilities}
+                                handleTextChange={this.handleResponsibTextChange}
                                 handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                                 handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                                 handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
                             <AddOccupBoxHaveToKnowSection
                                 haveToKnowFields={haveToKnow}
+                                handleTextChange={this.handleHaveToKnowTextChange}
                                 handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                                 handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                                 handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
                             <AddOccupBoxQualiffRequirSection
                                 qualiffRequirFields={qualiffRequir}
+                                handleTextChange={this.handleQualiffRequirTextChange}
                                 handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                                 handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                                 handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
