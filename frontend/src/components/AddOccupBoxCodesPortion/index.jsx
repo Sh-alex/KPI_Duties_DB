@@ -92,7 +92,7 @@ export default function AddOccupBoxCodesPortion(props) {
                             id={"inp-codes-portion-stop-date"+props.portionKey}
                             placeholder="Дата припинення дії набору кодів"
                             time={false}
-                            min={OCCUPATION_MIN_DATE}
+                            min={props.codesPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                             max={new Date()} />
                         <span className="help-block">
                             { props.codesPortionFields.portionEndDate.touched && props.codesPortionFields.portionEndDate.error }

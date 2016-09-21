@@ -110,7 +110,7 @@ export default function AddOccupBoxResponsibPortion(props) {
                                 onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={OCCUPATION_MIN_DATE}
+                                min={props.responsibPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                             <span className="help-block">
                                 { props.responsibPortionFields.portionEndDate.touched && props.responsibPortionFields.portionEndDate.error }

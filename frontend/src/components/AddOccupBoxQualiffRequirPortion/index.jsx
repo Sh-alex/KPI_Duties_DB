@@ -101,7 +101,7 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
                                 onBlur={(event) => fixBlur(event, props.qualiffRequirPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={OCCUPATION_MIN_DATE}
+                                min={props.qualiffRequirPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
                         <span className="help-block">

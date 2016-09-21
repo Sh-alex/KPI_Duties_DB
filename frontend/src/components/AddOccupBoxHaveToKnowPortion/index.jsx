@@ -102,7 +102,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                                 onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={OCCUPATION_MIN_DATE}
+                                min={props.haveToKnowPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
                     <span className="help-block">
