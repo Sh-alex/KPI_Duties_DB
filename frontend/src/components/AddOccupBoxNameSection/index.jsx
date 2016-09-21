@@ -94,7 +94,10 @@ export default class AddOccupBoxNameSection extends Component {
                                     },
                                     ...this.props.clarifiedOccupationList.items
                                 ]}
-                                defaultValue={-1}
+                                defaultValue={{
+                                    "id": -1,
+                                    "textValue": "-(Відсутня)-"
+                                }}
                                 valueField='id'
                                 textField='textValue'
                                 onChange={ this.props.handleClarifiedOccupInpChange }

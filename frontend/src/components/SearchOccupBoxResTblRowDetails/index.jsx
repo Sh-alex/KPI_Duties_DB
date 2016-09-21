@@ -147,7 +147,9 @@ export default function SearchOccupBoxResTblRowDetails(props) {
                         </div>
                     </div>
                     <div className="row occupation-details__row">
-                        <div className="col-sm-12 occupation-details__title"> Коди: </div>
+                        <div className="col-sm-12 occupation-details__title">
+                            Коди: {!props.data.codes.length && " - "}
+                        </div>
                         <div className="col-sm-11 pull-right">
                             { codesPortions }
                         </div>
