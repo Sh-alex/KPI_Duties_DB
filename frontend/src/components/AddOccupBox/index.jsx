@@ -268,10 +268,10 @@ class AddOccupBox extends Component {
         // а не всередині action-а чи reducer-a щоб не писати лишніх екшнів та редьюсерів, бо у нас і так для цього викоритосуується redux-form
 
         newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
-        this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
+        this.props.fields.qualiffRequir[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
-        this.props.fields.responsibilities[resPortionIndex].id.value &&
-            this.props.fields.responsibilities[resPortionIndex].id.onChange(null);
+        this.props.fields.qualiffRequir[resPortionIndex].id.value &&
+            this.props.fields.qualiffRequir[resPortionIndex].id.onChange(null);
     }
 
 
