@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as UserActions from '../../actions/UserActions'
+import * as UserActions from '../../actions/user'
 
 export class LoginPage extends Component {
   handleSubmit(e) {
