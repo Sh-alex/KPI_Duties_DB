@@ -92,7 +92,7 @@ export default function AddOccupBoxCodesPortion(props) {
                             id={"inp-codes-portion-stop-date"+props.portionKey}
                             placeholder="Дата припинення дії набору кодів"
                             time={false}
-                            min={OCCUPATION_MIN_DATE}
+                            min={props.codesPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                             max={new Date()} />
                         <span className="help-block">
                             { props.codesPortionFields.portionEndDate.touched && props.codesPortionFields.portionEndDate.error }
@@ -116,7 +116,10 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeKPText}
                                 id={"inp-code-KP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={props.KPCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -163,7 +166,10 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeZKPPTRText}
                                 id={"inp-code-ZKPPTR"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={props.ZKPPTRCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -213,7 +219,10 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeETDKText}
                                 id={"inp-code-ETDK"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={props.ETDKCodesList.items}
                                 valueField='id'
                                 textField='textValue'
@@ -260,7 +269,10 @@ export default function AddOccupBoxCodesPortion(props) {
                                 {...props.codesPortionFields.codeDKHPText}
                                 id={"inp-code-DKHP"+props.portionKey}
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={props.DKHPCodesList.items}
                                 valueField='id'
                                 textField='textValue'

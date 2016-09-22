@@ -69,6 +69,7 @@ class SearchOccupBox extends Component {
 
                         dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
                         delOccupationError={this.props.delOccupationError}
+                        delOccupationSuccess={this.props.delOccupationSuccess}
                         isDeletingOccupation={this.props.isDeletingOccupation}
                     />
                 </div>

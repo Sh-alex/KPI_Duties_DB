@@ -5,6 +5,7 @@ const initialState = {
         isFetching: false,
         isAddingNewVal: false,
         addingErrors: [],
+        addingSuccess: false,
         errors: [],
         // items : []
         items : [
@@ -34,6 +35,7 @@ const initialState = {
         isFetching: false,
         isAddingNewVal: false,
         addingErrors: [],
+        addingSuccess: false,
         errors: [],
         // items : []
         items : [
@@ -63,6 +65,7 @@ const initialState = {
         isFetching: false,
         isAddingNewVal: false,
         addingErrors: [],
+        addingSuccess: false,
         errors: [],
         //      items : []
         items : [
@@ -92,6 +95,7 @@ const initialState = {
         isFetching: false,
         isAddingNewVal: false,
         addingErrors: [],
+        addingSuccess: false,
         errors: [],
         //      items : []
         items : [
@@ -239,6 +243,7 @@ export default function occupCodesList(state = initialState, action) {
                 KPCodesList: {
                     ...state.KPCodesList,
                     isAddingNewVal: true,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -249,6 +254,7 @@ export default function occupCodesList(state = initialState, action) {
                     ...state.KPCodesList,
                     items: [...state.KPCodesList.items, action.newItem],
                     isAddingNewVal: false,
+                    addingSuccess: true,
                     addingErrors: []
                 }
             };
@@ -258,14 +264,16 @@ export default function occupCodesList(state = initialState, action) {
                 KPCodesList: {
                     ...state.KPCodesList,
                     isAddingNewVal: false,
+                    addingSuccess: false,
                     addingErrors: [...state.KPCodesList.addingErrors, action.error]
                 }
             };
-        case aTypes.ADD_NEW_KP_CODE_CLEAR_ERROR:
+        case aTypes.ADD_NEW_KP_CODE_CLEAR_MSG:
             return {
                 ...state,
                 KPCodesList: {
                     ...state.KPCodesList,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -276,6 +284,7 @@ export default function occupCodesList(state = initialState, action) {
                 DKHPCodesList: {
                     ...state.DKHPCodesList,
                     isAddingNewVal: true,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -286,6 +295,7 @@ export default function occupCodesList(state = initialState, action) {
                     ...state.DKHPCodesList,
                     items: [...state.DKHPCodesList.items, action.newItem],
                     isAddingNewVal: false,
+                    addingSuccess: true,
                     addingErrors: []
                 }
             };
@@ -295,14 +305,16 @@ export default function occupCodesList(state = initialState, action) {
                 DKHPCodesList: {
                     ...state.DKHPCodesList,
                     isAddingNewVal: false,
+                    addingSuccess: false,
                     addingErrors: [...state.DKHPCodesList.addingErrors, action.error]
                 }
             };
-        case aTypes.ADD_NEW_DKHP_CODE_CLEAR_ERROR:
+        case aTypes.ADD_NEW_DKHP_CODE_CLEAR_MSG:
             return {
                 ...state,
                 DKHPCodesList: {
                     ...state.DKHPCodesList,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -313,6 +325,7 @@ export default function occupCodesList(state = initialState, action) {
                 ETDKCodesList: {
                     ...state.ETDKCodesList,
                     isAddingNewVal: true,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -323,6 +336,7 @@ export default function occupCodesList(state = initialState, action) {
                     ...state.ETDKCodesList,
                     items: [...state.ETDKCodesList.items, action.newItem],
                     isAddingNewVal: false,
+                    addingSuccess: true,
                     addingErrors: []
                 }
             };
@@ -332,14 +346,16 @@ export default function occupCodesList(state = initialState, action) {
                 ETDKCodesList: {
                     ...state.ETDKCodesList,
                     isAddingNewVal: false,
+                    addingSuccess: false,
                     addingErrors: [...state.ETDKCodesList.addingErrors, action.error]
                 }
             };
-        case aTypes.ADD_NEW_ETDK_CODE_CLEAR_ERROR:
+        case aTypes.ADD_NEW_ETDK_CODE_CLEAR_MSG:
             return {
                 ...state,
                 ETDKCodesList: {
                     ...state.ETDKCodesList,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -350,6 +366,7 @@ export default function occupCodesList(state = initialState, action) {
                 ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
                     isAddingNewVal: true,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };
@@ -360,6 +377,7 @@ export default function occupCodesList(state = initialState, action) {
                     ...state.ZKPPTRCodesList,
                     items: [...state.ZKPPTRCodesList.items, action.newItem],
                     isAddingNewVal: false,
+                    addingSuccess: true,
                     addingErrors: []
                 }
             };
@@ -369,15 +387,17 @@ export default function occupCodesList(state = initialState, action) {
                 ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
                     isAddingNewVal: false,
+                    addingSuccess: false,
                     addingErrors: [...state.ZKPPTRCodesList.addingErrors, action.error]
                 }
             };
 
-        case aTypes.ADD_NEW_ZKPPTR_CODE_CLEAR_ERROR:
+        case aTypes.ADD_NEW_ZKPPTR_CODE_CLEAR_MSG:
             return {
                 ...state,
                 ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
+                    addingSuccess: false,
                     addingErrors: []
                 }
             };

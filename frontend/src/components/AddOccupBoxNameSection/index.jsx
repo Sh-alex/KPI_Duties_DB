@@ -49,7 +49,10 @@ export default class AddOccupBoxNameSection extends Component {
                         id="inp-occupation-group"
                         className="form-control no-padding"
                         placeholder="Оберіть варіант зі списку"
-                        messages={{emptyList:"Список пустий"}}
+                        messages={{
+                            emptyList:"Список пустий",
+                            emptyFilter: "Не знайдено жодного елементу"
+                        }}
                         data={occupationGroupList.items}
                         valueField='id'
                         textField='textValue'
@@ -80,7 +83,10 @@ export default class AddOccupBoxNameSection extends Component {
                                 id="select-clarified-occup"
                                 className="form-control no-padding"
                                 placeholder="Оберіть варіант зі списку"
-                                messages={{emptyList:"Список пустий"}}
+                                messages={{
+                                    emptyList: "Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
                                 data={[
                                     {
                                         "id": -1,
@@ -88,7 +94,10 @@ export default class AddOccupBoxNameSection extends Component {
                                     },
                                     ...this.props.clarifiedOccupationList.items
                                 ]}
-                                defaultValue={-1}
+                                defaultValue={{
+                                    "id": -1,
+                                    "textValue": "-(Відсутня)-"
+                                }}
                                 valueField='id'
                                 textField='textValue'
                                 onChange={ this.props.handleClarifiedOccupInpChange }
@@ -121,7 +130,10 @@ export default class AddOccupBoxNameSection extends Component {
                                     id="select-clarification"
                                     className="form-control no-padding"
                                     placeholder="Оберіть варіант зі списку"
-                                    messages={{emptyList:"Список пустий"}}
+                                    messages={{
+                                        emptyList:"Список пустий",
+                                        emptyFilter: "Не знайдено жодного елементу"
+                                    }}
                                     data={clarificationList.items}
                                     valueField='id'
                                     textField='textValue'

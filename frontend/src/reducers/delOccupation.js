@@ -7,6 +7,7 @@ import {
 
 const initialState = {
     delOccupationError: null,
+    delOccupationSuccess: false,
     isDeletingOccupation: false,
 };
 
@@ -16,25 +17,29 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 delOccupationError: null,
+                delOccupationSuccess: false,
                 isDeletingOccupation: true,
             };
         case DEL_OCCUP_SUCCESS:
             return {
                 ...state,
                 delOccupationError: null,
+                delOccupationSuccess: true,
                 isDeletingOccupation: false
             };
         case DEL_OCCUP_FAIL:
             return {
                 ...state,
                 isDeletingOccupation: false,
+                delOccupationSuccess: false,
                 delOccupationError: action.error,
             };
 
         case DISMISS_DEL_OCCUP_ALERT:
             return {
                 ...state,
-                delOccupationError: null
+                delOccupationError: null,
+                delOccupationSuccess: false
             };
         default:
             return state;

@@ -3,7 +3,6 @@ import {DateTimePicker} from "react-widgets";
 import classNames from "classnames"
 
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
-import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
@@ -51,11 +50,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                             <textarea
                                 {...props.haveToKnowPortionFields.text}
                                 value={props.haveToKnowPortionFields.text.value || ""}
-                                onChange={ e => {
-                                    props.haveToKnowPortionFields.text.onChange(
-                                        replaceApostrophe(e.target.value)
-                                    )
-                                }}
+                                onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
                                 placeholder="Повинен знати"
                                 rows="6" />
@@ -107,7 +102,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                                 onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={OCCUPATION_MIN_DATE}
+                                min={props.haveToKnowPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
                     <span className="help-block">

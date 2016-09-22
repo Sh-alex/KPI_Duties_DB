@@ -111,6 +111,7 @@ export default class SearchOccupBoxRes extends Component {
                         dontShowAgain={this.state.dontShowAgainDelModal}
                         show={this.state.showModalConfirmDelOccup}
                         error={this.props.delOccupationError}
+                        success={this.props.delOccupationSuccess}
                         onAlertDismiss={this.props.dismissDelOccupationAlert}
                         isDeletingOccupation={this.props.isDeletingOccupation}
                         onSubmit={this.handleDeleteItem}
@@ -141,37 +142,41 @@ export default class SearchOccupBoxRes extends Component {
                         )
                     }
                 </div>
-                <div className="box-footer clearfix">
-                    <div className="col-sm-6">
-                        <label>
-                            Показувати по {" "}
-                            <select
-                                value={this.state.selectedPortionSize}
-                                onChange={ e => this.setState({
-                                        selectedPortionSize: Number.parseInt(e.currentTarget.value)
-                                    })
-                                }
-                                className="input-sm"
-                            >
-                                {
-                                    this.state.portionSizesArr.map( size => {
-                                        return <option value={size} > { size } </option>
-                                    })
-                                }
-                            </select>
-                            {" "} записів
-                        </label>
-                    </div>
-                    <div className="col-sm-6 text-right">
-                        <ul className="pagination no-margin">
-                            <li className="disabled"><a href="#">«</a></li>
-                            <li className="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
-                    </div>
-                </div>
+                {
+                    performedSearchResData.itemsList.length && (
+                        <div className="box-footer clearfix">
+                            <div className="col-sm-6">
+                                <label>
+                                    Показувати по {" "}
+                                    <select
+                                        value={this.state.selectedPortionSize}
+                                        onChange={ e => this.setState({
+                                            selectedPortionSize: Number.parseInt(e.currentTarget.value)
+                                        })
+                                        }
+                                        className="input-sm"
+                                    >
+                                        {
+                                            this.state.portionSizesArr.map(size => {
+                                                return <option value={size}> { size } </option>
+                                            })
+                                        }
+                                    </select>
+                                    {" "} записів
+                                </label>
+                            </div>
+                            <div className="col-sm-6 text-right">
+                                <ul className="pagination no-margin">
+                                    <li className="disabled"><a href="#">«</a></li>
+                                    <li className="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    ) || ""
+                }
             </div>
         );
     }

@@ -4,7 +4,9 @@ import { Modal, Alert } from 'react-bootstrap'
 import './styles.less'
 
 export default function ModalConfirmDelOccup(props) {
-    let errorAlert = !props.error ? "" : (
+    let msgAlert;
+    if(props.error) {
+        msgAlert = (
             <Alert bsStyle="danger" onDismiss={props.onAlertDismiss}>
                 <h4>
                     <i className="icon fa fa-warning" />
@@ -13,6 +15,18 @@ export default function ModalConfirmDelOccup(props) {
                 <p> { props.error } </p>
             </Alert>
         );
+    } else if(props.success) {
+        msgAlert = (
+            <Alert bsStyle="success" onDismiss={props.onAlertDismiss}>
+                <h4>
+                    <i className="icon fa fa-check" />
+                    Успіх!
+                </h4>
+                <p> Посаду успішно видалено. </p>
+            </Alert>
+        );
+        setTimeout(() => props.onHide(), 1000);
+    }
 
     return (
         <Modal show={props.show} onHide={props.onHide} bsSize="small" className="modal-danger modal--confirm-del">
@@ -39,7 +53,7 @@ export default function ModalConfirmDelOccup(props) {
                         <i> Більше не показувати попередження </i>
                     </label>
                 </p>
-                { errorAlert }
+                { msgAlert }
             </Modal.Body>
             <Modal.Footer>
                 <button type="button" className="btn btn-outline pull-left" onClick={props.onHide}>

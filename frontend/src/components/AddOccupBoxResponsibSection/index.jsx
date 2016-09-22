@@ -4,7 +4,7 @@ import "./styles.less";
 
 import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES } from '../../constants/addingInfoFromAnotherOccup';
 
-export default class extends Component {
+export default class AddOccupBoxResponsibSection extends Component {
     render() {
         let originalDelPortionHandler = this.props.handleDelResponsibPortionBtnClick,
             originalAddInfoFromAnotherOccupHandler = this.props.handleBtnAddInfoFromAnotherOccupClick,
@@ -13,6 +13,9 @@ export default class extends Component {
                 let decoratedDelHandler = (index => {
                         return () => originalDelPortionHandler(index)
                     })(i),
+                    decoratedTextChangeHandler = ((index, f) => {
+                        return newVal => f(newVal, index)
+                    })(i, this.props.handleTextChange),
                     decoratedAddInfoFromAnotherOccupHandler = (index => {
                         return () => originalAddInfoFromAnotherOccupHandler({
                             typeText: "завдання, обов'язки та повноваження",
@@ -27,6 +30,7 @@ export default class extends Component {
                         portionItemClassName={ i===0 ? "is-first-item" : "" }
                         key={i}
                         portionKey={i}
+                        handleTextChange={decoratedTextChangeHandler}
                         handleDelResponsibPortionBtnClick={decoratedDelHandler}
                         handleBtnAddInfoFromAnotherOccupClick={decoratedAddInfoFromAnotherOccupHandler}
                     />
