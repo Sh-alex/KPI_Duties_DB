@@ -8,33 +8,32 @@ import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
 import "./styles.less";
 
-export default function AddOccupBoxHaveToKnowPortion(props) {
+export default function FormEditOccupInfoQualiffRequirPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
-        <div>
-            <hr />
-            <button
-                type="button"
-                className="close inp-portions__btn-amount-ctrl--del"
-                onClick={props.handleDelHaveToKnowPortionBtnClick} >
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    ) : "";
-
-    let portionStartDateFormGroupClass = classNames({
+            <div>
+                <hr />
+                <button
+                    type="button"
+                    className="close inp-portions__btn-amount-ctrl--del"
+                    onClick={props.handleDelQualiffRequirPortionBtnClick} >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ) : "",
+        portionStartDateFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.haveToKnowPortionFields.portionStartDate.touched && props.haveToKnowPortionFields.portionStartDate.error,
-            'has-success': props.haveToKnowPortionFields.portionStartDate.touched && !props.haveToKnowPortionFields.portionStartDate.error
+            'has-error':  props.qualiffRequirPortionFields.portionStartDate.touched && props.qualiffRequirPortionFields.portionStartDate.error,
+            'has-success': props.qualiffRequirPortionFields.portionStartDate.touched && !props.qualiffRequirPortionFields.portionStartDate.error
         }),
         portionEndDateFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.haveToKnowPortionFields.portionEndDate.touched && props.haveToKnowPortionFields.portionEndDate.error,
-            'has-success': props.haveToKnowPortionFields.portionEndDate.touched && !props.haveToKnowPortionFields.portionEndDate.error
+            'has-error':  props.qualiffRequirPortionFields.portionEndDate.touched && props.qualiffRequirPortionFields.portionEndDate.error,
+            'has-success': props.qualiffRequirPortionFields.portionEndDate.touched && !props.qualiffRequirPortionFields.portionEndDate.error
         }),
         portionTextFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.haveToKnowPortionFields.text.touched && props.haveToKnowPortionFields.text.error,
-            'has-success': props.haveToKnowPortionFields.text.touched && !props.haveToKnowPortionFields.text.error
+            'has-error':  props.qualiffRequirPortionFields.text.touched && props.qualiffRequirPortionFields.text.error,
+            'has-success': props.qualiffRequirPortionFields.text.touched && !props.qualiffRequirPortionFields.text.error
         });
 
     return (
@@ -46,13 +45,13 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                         <div className="input-group">
                             <input
                                 type="hidden"
-                                {...props.haveToKnowPortionFields.id} />
+                                {...props.qualiffRequirPortionFields.id} />
                             <textarea
-                                {...props.haveToKnowPortionFields.text}
-                                value={props.haveToKnowPortionFields.text.value || ""}
+                                {...props.qualiffRequirPortionFields.text}
+                                value={props.qualiffRequirPortionFields.text.value || ""}
                                 onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
-                                placeholder="Повинен знати"
+                                placeholder="Кваліфікаційні вимоги"
                                 rows="6" />
                             <div className="input-group-btn">
                                 <button
@@ -66,7 +65,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                             </div>
                         </div>
                         <span className="help-block">
-                            { props.haveToKnowPortionFields.text.touched && props.haveToKnowPortionFields.text.error }
+                            { props.qualiffRequirPortionFields.text.touched && props.qualiffRequirPortionFields.text.error }
                         </span>
                     </div>
                 </div>
@@ -75,42 +74,42 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                         <label className="center-block">
                             Дата прийняття тексту <br />
                             <DateTimePicker
-                                {...props.haveToKnowPortionFields.portionStartDate}
+                                {...props.qualiffRequirPortionFields.portionStartDate}
                                 format="DD.MM.YYYY"
-                                value={props.haveToKnowPortionFields.portionStartDate.value}
+                                value={props.qualiffRequirPortionFields.portionStartDate.value}
                                 defaultValue={null}
-                                onChange={props.haveToKnowPortionFields.portionStartDate.onChange}
-                                onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionStartDate)}
+                                onChange={props.qualiffRequirPortionFields.portionStartDate.onChange}
+                                onBlur={(event) => fixBlur(event, props.qualiffRequirPortionFields.portionStartDate)}
                                 placeholder="Дата прийняття тексту"
                                 time={false}
                                 min={OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
-                    <span className="help-block">
-                        { props.haveToKnowPortionFields.portionStartDate.touched && props.haveToKnowPortionFields.portionStartDate.error }
-                    </span>
+                        <span className="help-block">
+                            { props.qualiffRequirPortionFields.portionStartDate.touched && props.qualiffRequirPortionFields.portionStartDate.error }
+                        </span>
                     </div>
                     <div className={portionEndDateFormGroupClass}>
                         <label className="center-block">
                             Дата припинення дії тексту <br />
                             <DateTimePicker
-                                {...props.haveToKnowPortionFields.portionEndDate}
+                                {...props.qualiffRequirPortionFields.portionEndDate}
                                 format="DD.MM.YYYY"
-                                value={props.haveToKnowPortionFields.portionEndDate.value}
+                                value={props.qualiffRequirPortionFields.portionEndDate.value}
                                 defaultValue={null}
-                                onChange={props.haveToKnowPortionFields.portionEndDate.onChange}
-                                onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionEndDate)}
+                                onChange={props.qualiffRequirPortionFields.portionEndDate.onChange}
+                                onBlur={(event) => fixBlur(event, props.qualiffRequirPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={props.haveToKnowPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
+                                min={props.qualiffRequirPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
-                    <span className="help-block">
-                        { props.haveToKnowPortionFields.portionEndDate.touched && props.haveToKnowPortionFields.portionEndDate.error }
-                    </span>
+                        <span className="help-block">
+                            { props.qualiffRequirPortionFields.portionEndDate.touched && props.qualiffRequirPortionFields.portionEndDate.error }
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }

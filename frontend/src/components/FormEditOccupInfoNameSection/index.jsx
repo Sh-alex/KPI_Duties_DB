@@ -5,7 +5,7 @@ import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import "./styles.less";
 
-export default class AddOccupBoxNameSection extends Component {
+export default class FormEditOccupInfoNameSection extends Component {
     render() {
         let {
                 nameFields,

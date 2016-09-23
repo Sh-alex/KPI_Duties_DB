@@ -16,7 +16,7 @@ import "./styles.less";
 //         debouncedHandleTextareaChange(newVal, reduxChangeHandler);
 //     };
 
-export default function AddOccupBoxResponsibPortion(props) {
+export default function FormEditOccupInfoResponsibPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
         <div>
             <hr />

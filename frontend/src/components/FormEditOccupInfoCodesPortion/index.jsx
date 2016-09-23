@@ -5,7 +5,7 @@ import classNames from "classnames"
 import { OCCUPATION_MIN_DATE } from "../../constants/common"
 import './styles.less'
 
-export default function AddOccupBoxCodesPortion(props) {
+export default function FormEditOccupInfoCodesPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
             <div>
                 <hr />

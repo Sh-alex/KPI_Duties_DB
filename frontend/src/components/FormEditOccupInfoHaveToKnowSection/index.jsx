@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import AddOccupBoxResponsibPortion from "../AddOccupBoxResponsibPortion";
+import FormEditOccupInfoHaveToKnowPortion from "../FormEditOccupInfoHaveToKnowPortion";
 import "./styles.less";
 
-import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES } from '../../constants/addingInfoFromAnotherOccup';
+import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW } from '../../constants/addingInfoFromAnotherOccup';
 
-export default class AddOccupBoxResponsibSection extends Component {
+export default class FormEditOccupInfoHaveToKnowSection extends Component {
     render() {
-        let originalDelPortionHandler = this.props.handleDelResponsibPortionBtnClick,
+        let originalDelPortionHandler = this.props.handleDelHaveToKnowPortionBtnClick,
             originalAddInfoFromAnotherOccupHandler = this.props.handleBtnAddInfoFromAnotherOccupClick,
-            portionsMarkup = this.props.responsibFields.map((fieldsItem, i, fieldsArr) => {
+            portionsMarkup = this.props.haveToKnowFields.map((fieldsItem, i, fieldsArr) => {
                 //прив'язуємо обробники до номера порції
                 let decoratedDelHandler = (index => {
                         return () => originalDelPortionHandler(index)
@@ -18,35 +18,35 @@ export default class AddOccupBoxResponsibSection extends Component {
                     })(i, this.props.handleTextChange),
                     decoratedAddInfoFromAnotherOccupHandler = (index => {
                         return () => originalAddInfoFromAnotherOccupHandler({
-                            typeText: "завдання, обов'язки та повноваження",
-                            typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES,
+                            typeText: "'Повинен знати'",
+                            typeId: ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW,
                             resPortionIndex: index
                         })
                     })(i);
                 return(
-                    <AddOccupBoxResponsibPortion
-                        responsibPortionFields={fieldsItem}
+                    <FormEditOccupInfoHaveToKnowPortion
+                        haveToKnowPortionFields={fieldsItem}
                         showDelBtn={ fieldsArr.length > 1 }
                         portionItemClassName={ i===0 ? "is-first-item" : "" }
                         key={i}
                         portionKey={i}
                         handleTextChange={decoratedTextChangeHandler}
-                        handleDelResponsibPortionBtnClick={decoratedDelHandler}
+                        handleDelHaveToKnowPortionBtnClick={decoratedDelHandler}
                         handleBtnAddInfoFromAnotherOccupClick={decoratedAddInfoFromAnotherOccupHandler}
                     />
                 )
             });
 
         return <div>
-            <h4> Завдання, обов'язки та повноваження </h4>
-            <div className="inp-portions responsiblities-portions">
+            <h4> Повинен знати </h4>
+            <div className="inp-portions have-to-know-portions">
                 { portionsMarkup }
                 <div className="inp-portions__btn-add-wrapper">
                     <hr />
                     <button
                         type="button"
                         className="btn btn-default inp-portions__btn-amount-ctrl--add"
-                        onClick={this.props.handleAddResponsibPortionBtnClick} >
+                        onClick={this.props.handleAddHaveToKnowPortionBtnClick} >
                         <i className="fa fa-plus" />
                     </button>
                 </div>

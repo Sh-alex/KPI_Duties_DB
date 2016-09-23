@@ -5,7 +5,7 @@ import classNames from "classnames"
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 import "./styles.less";
 
-export default function AddOccupBoxDurationSection(props){
+export default function FormEditOccupInfoDurationSection(props){
     let fixBlur = (event, input) => {
             event.target = {value: input.value};
             input.onBlur(event);

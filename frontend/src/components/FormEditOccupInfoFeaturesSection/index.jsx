@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./styles.less";
 
-export default function AddOccupBoxFeaturesSection(props) {
+export default function FormEditOccupInfoFeaturesSection(props) {
     function handleChange(e, props) {
         props.featuresFields.isVirtual.onChange(e);
         props.changeAddFormInpIsVirtual(e.target.checked);
