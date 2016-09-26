@@ -4,7 +4,10 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,7 +35,11 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
     @Transactional(readOnly = true)
     public List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap) {
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         if (paramsMap == null || paramsMap.isEmpty()) {
             return repository.findAll();
         } else {
@@ -41,7 +48,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 if (value != null) {
                     switch (paramName) {
                         case "dcDutiesPartitionId":
-                            criteria.add(Restrictions.eq("DcDutiesPartitionId", value));
+                            criteria.add(Restrictions.eq("dcDutiesPartitionId", value));
                             break;
                         case "rtDutiesName":
                             if (paramsMap.get("searchType").equals("MATCH_STRING")) {
@@ -70,36 +77,28 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                         }
                         break;
                         case "creatingInStateDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.start", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.start", value)));
                             break;
                         case "creatingInStateDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.start", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.start", value)));
                             break;
                         case "cancelingInStateDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.stop", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.stop", value)));
                             break;
                         case "cancelingInStateDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.stop", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.stop", value)));
                             break;
                         case "creatingInKPIDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.start", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.start", value)));
                             break;
                         case "creatingInKPIDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.start", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.start", value)));
                             break;
                         case "cancelingInKPIDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.stop", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.stop", value)));
                             break;
                         case "cancelingInKPIDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.stop", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.stop", value)));
                             break;
                         /*case "offset":
                             offset = (Integer) value;
@@ -117,7 +116,13 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             if (limit >= 0) {
                 criteria.setMaxResults(limit);
             }*/
-            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+           //TODO:Зробити  Restrictions.in("id", new long[])
+            /*criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+            List result = criteria.list();
+            List list = criteriaForDatesInState.list();
+            result.addAll(list);
+            result.addAll(criteriaForDatesInKpi.list());*/
+
             return criteria.list();
         }
     }
