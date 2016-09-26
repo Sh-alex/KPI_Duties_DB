@@ -495,9 +495,10 @@ export default class SearchOccupationsForm extends Component {
                             type="reset"
                             className="btn btn-default"
                             onClick={() => this.setState(this.getInitState())}
+                            disabled={this.props.isSubmittngSearchForm}
                         >
                             Очистити поля {" "}
-                            <i className="fa fa-refresh" aria-hidden="true" title="Очистити поля форми" />
+                            <i className="fa fa-refresh" title="Очистити поля форми" />
                         </button>
                         <button
                             type="submit"
