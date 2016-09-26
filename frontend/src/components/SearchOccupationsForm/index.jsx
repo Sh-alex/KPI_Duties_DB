@@ -24,6 +24,7 @@ export default class SearchOccupationsForm extends Component {
         this.submitForm = this.submitForm.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleTagsCreate = this.handleTagsCreate.bind(this);
+        this.handleOccupGroupChange = this.handleOccupGroupChange.bind(this);
 
         this.state = this.getInitState();
     }
@@ -58,6 +59,12 @@ export default class SearchOccupationsForm extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            tagsList: nextProps.tagsList && nextProps.tagsList.items && nextProps.tagsList.items.map(item => item.textValue) || []
+        })
+    }
+
     submitForm(e) {
         e.preventDefault();
         this.props.onSubmitSearchForm({
@@ -84,6 +91,13 @@ export default class SearchOccupationsForm extends Component {
         })
     }
 
+    handleOccupGroupChange(newVal) {
+        this.setState({
+            form: { ...this.state.form, occupGroupVal: newVal.id}
+        })
+    }
+
+
     render() {
         let
             // fixBlur = (event, input) => {
@@ -100,11 +114,7 @@ export default class SearchOccupationsForm extends Component {
                         { this.props.searchError }
                     </p>
                 </Alert>
-            ),
-            btnSpinnerClass = classNames({
-                'btn-spinner': true,
-                'hidden': !this.props.isSubmittngSearchForm
-            });
+            );
 
         return (
             <form
@@ -135,11 +145,7 @@ export default class SearchOccupationsForm extends Component {
                                 textField='textValue'
                                 defaultValue={null}
                                 value={this.state.form.occupGroupVal}
-                                onChange={ newVal => {
-                                    this.setState({
-                                        form: { ...this.state.form, occupGroupVal: newVal}
-                                    })
-                                }}
+                                onChange={this.handleOccupGroupChange}
                                 busy={this.props.occupationGroupList.isFetching}
                                 caseSensitive={false}
                                 filter='contains' />
@@ -497,15 +503,10 @@ export default class SearchOccupationsForm extends Component {
                             type="submit"
                             className="btn btn-primary"
                             title="Шукати посаду"
-                            disabled={this.props.isSubmittng || this.props.errors}
+                            disabled={this.props.isSubmittngSearchForm || this.props.errors}
                         >
-                            <span className="btn-label">
-                                Шукати {" "}
-                                <i className="fa fa-search" />
-                            </span>
-                            <span className={btnSpinnerClass}>
-                                <i className="fa fa-spinner fa-pulse" />
-                            </span>
+                            Шукати {" "}
+                            <i className={`fa ${this.props.isSubmittngSearchForm ? "fa-spinner fa-pulse" : "fa-search"}`} />
                         </button>
                     </div>
                 </div>
