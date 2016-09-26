@@ -15,4 +15,4 @@ spring:
   jersey:
       application-path: /api
   profiles:
-    active: deploy
+    active: dev
