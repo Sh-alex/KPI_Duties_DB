@@ -4,10 +4,7 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Conjunction;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -61,21 +58,21 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                         case "dcDutiesNames":
                             //OR LIKE
                             if (paramsMap.get("searchType").equals("SOME_TAGS")) {
-                            Disjunction disjunction = Restrictions.disjunction();
-                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
-                                disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                Disjunction disjunction = Restrictions.disjunction();
+                                for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                    disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                }
+                                criteria.add(disjunction);
                             }
-                            criteria.add(disjunction);
-                        }
-                        //AND LIKE
-                        if (paramsMap.get("searchType").equals("ALL_TAGS")) {
-                            Conjunction conjunction = Restrictions.conjunction();
-                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
-                                conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                            //AND LIKE
+                            if (paramsMap.get("searchType").equals("ALL_TAGS")) {
+                                Conjunction conjunction = Restrictions.conjunction();
+                                for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                    conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                }
+                                criteria.add(conjunction);
                             }
-                            criteria.add(conjunction);
-                        }
-                        break;
+                            break;
                         case "creatingInStateDate_from":
                             criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.start", value)));
                             break;
@@ -116,12 +113,20 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             if (limit >= 0) {
                 criteria.setMaxResults(limit);
             }*/
-           //TODO:Зробити  Restrictions.in("id", new long[])
-            /*criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-            List result = criteria.list();
-            List list = criteriaForDatesInState.list();
-            result.addAll(list);
-            result.addAll(criteriaForDatesInKpi.list());*/
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+            //Пошук по обмеженням дат в державі та КПІ, повертає id посад
+            criteriaForDatesInState.setProjection(Projections.distinct(Projections.property("id")));
+            criteriaForDatesInKpi.setProjection(Projections.distinct(Projections.property("id")));
+
+            List listByDates = criteriaForDatesInState.list();
+            //Перетин двох множин, які відповідають всім умовам
+            listByDates.retainAll(criteriaForDatesInKpi.list());
+
+            //Якщо не знайдено відповідних посад - не додаю обмеження
+            if (!listByDates.isEmpty()) {
+                criteria.add(Restrictions.in("id", listByDates));
+            }
 
             return criteria.list();
         }
