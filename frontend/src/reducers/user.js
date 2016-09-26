@@ -1,32 +1,61 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_FAIL,
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS
-} from '../constants/User'
+    LOGIN_REQUEST,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    LOGOUT_SUCCESS
+} from '../constants/user'
 
-const initialState = JSON.parse(window.localStorage.getItem('rr_user')) || {}
+const initialState = {
+    isAuthenticated: false,
+    isLoggingIn: false,
+    //loginSuccess: false,      поки що не треба, бо там просто міняються блоки, в залежності від isAuthenticated
+    loginError: "",
+    isLoggingOut: false,
+    //logoutSuccess: false,
+    logoutError: "",
+    userName: "",
+    userAvatar: "",
+    role: "guest",
+    permissions: {/**/}
+}; //JSON.parse(window.localStorage.getItem('rr_user')) || {}
 
 export default function userstate(state = initialState, action) {
+    switch (action.type) {
+        case LOGIN_REQUEST:
+            return {
+                isAuthenticated: false,
+                isLoggingIn: true,
+                isLoggingOut: false,
+            };
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: true,
+                isLoggingIn: false,
+                ...action.userInfo
+            };
+        case LOGIN_FAIL:
+            return {
+                isAuthenticated: false,
+                isLoggingIn: false,
+                loginError: action.errorMsg,
+                permissions: {}
+            };
 
-  switch (action.type) {
+        case LOGOUT_SUCCESS:
+            return {
+                isAuthenticated: false,
+                isLoggingIn: false,
+                loginError: "",
+                isLoggingOut: false,
+                logoutError: "",
+                userName: "",
+                userAvatar: "",
+                role: "guest",
+                permissions: {/**/}
+            };
 
-    case LOGIN_REQUEST:
-      // TODO
-      return state
-
-    case LOGIN_SUCCESS:
-      return {...state, name: action.payload.name, isAuthenticated: action.payload.isAuthenticated}
-
-    case LOGIN_FAIL:
-      // TODO
-      return state
-
-    case LOGOUT_SUCCESS:
-      // TODO
-      return state
-
-    default:
-      return state
+        default:
+            return state
     }
 }
