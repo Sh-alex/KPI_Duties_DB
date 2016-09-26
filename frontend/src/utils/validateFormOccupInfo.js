@@ -1,4 +1,4 @@
-export default function validateAddOccupForm(formFields, props) {
+export default function validateFormEditOccupInfo(formFields, props) {
     var errors = {
         name: {
             'occupationGroup': null,
@@ -22,7 +22,7 @@ export default function validateAddOccupForm(formFields, props) {
     };
     if(!formFields.name.occupationGroup)
         errors.name.occupationGroup = "Це поле є обов'язковим!";
-    if(!formFields.name.clarification)
+    if(!formFields.name.clarification && props.fields.includes('name.clarification'))
         errors.name.clarification = "Це поле є обов'язковим!";
     if(!formFields.name.occupationName)
         errors.name.occupationName = "Це поле є обов'язковим!";

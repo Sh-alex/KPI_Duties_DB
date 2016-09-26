@@ -17,4 +17,4 @@ export const ADD_NEW_DKHP_CODE = '/api/code/dkhp';
 export const ADD_OCCUPATION = '/api/occupations';
 export const SEARCH_OCCUPATION = '/api/occupations';
 export const DELETE_OCCUPATION = '/api/occupations/';
-export const EDIT_OCCUPATION = '/api/occupations';
+export const EDIT_OCCUPATION = '/api/occupations/';

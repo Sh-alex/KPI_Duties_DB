@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { reduxForm } from 'redux-form';
+import { Modal } from 'react-bootstrap'
 
-import FormEditOccupInfo from "../FormEditOccupInfo"
+import FormEditOccupInfo from '../FormEditOccupInfo'
+
+import {
+    hideModalEditOccup
+} from '../../actions/editOccup'
 
 import {
     fetchOccupGroupList,
@@ -27,13 +32,13 @@ import {
 } from "../../actions/occupCodesLists"
 
 import {
-    submitFormAddNewOccup,
-    addNewOccupHideServerRespMsg,
+    editOccup,
+    editOccupHideServerRespMsg,
     occupationGroupInpChange,
     clarificationInpChange,
     clarifiedOccupInpChange,
     inpIsVirtualChange
-} from "../../actions/addNewOccup"
+} from "../../actions/editOccup"
 
 import {
     showModalAddInfoFromAnotherOccup
@@ -43,100 +48,105 @@ import validateFormOccupInfo from "../../utils/validateFormOccupInfo"
 
 import './styles.less'
 
-let initialFormState = {
-    name: {
-        'occupationGroup': null,
-        'clarifiedOccup': -1,
-        'clarification': null,
-        'occupationName': '',
-        'occupationNameMin': ''
-    },
-    features: {
-        'isIndependent': false,
-        'isVirtual': false
-    },
-    duration: {
-        'creatingInStateDate': null,
-        'creatingInKPIDate': null
-    },
-    codes: [
-        {
-            'portionStartDate': null,
-            'portionEndDate': null,
-            'codeKP': null,
-            'codeKPText': "",
-            'codeETDK': null,
-            'codeETDKText': "",
-            'codeZKPPTR': null,
-            'codeZKPPTRText': "",
-            'codeDKHP': null,
-            'codeDKHPText': ""
-        }
-    ],
-    responsibilities: [
-        {
-            'portionStartDate': null,
-            'portionEndDate': null,
-            'text': "",
-            'id': null
-        }
-    ],
-    haveToKnow: [
-        {
-            'portionStartDate': null,
-            'portionEndDate': null,
-            'text': "",
-            'id': null
-        }
-    ],
-    qualiffRequir: [
-        {
-            'portionStartDate': null,
-            'portionEndDate': null,
-            'text': "",
-            'id': null
-        }
-    ]
-};
-
-class AddOccupBox extends Component {
-    constructor(props) {
-        super(props);
-
-        this.props.initializeForm(initialFormState);
+class ModalEditOccup extends Component {
+    componentWillMount() {
+        this.props.initializeForm({
+            name: {
+                'occupationGroup': null,
+                // 'clarifiedOccup': -1,        поки прибрав, бо ці поля не хочу показувати у формі редагування
+                // 'clarification': null,
+                'occupationName': '',
+                'occupationNameMin': ''
+            },
+            features: {
+                'isIndependent': false,
+                'isVirtual': false
+            },
+            duration: {
+                'creatingInStateDate': null,
+                'creatingInKPIDate': null,
+                'cancelingInStateDate': null,
+                'cancelingInKPIDate': null
+            },
+            codes: [
+                {
+                    'portionStartDate': null,
+                    'portionEndDate': null,
+                    'codeKP': null,
+                    'codeKPText': "",
+                    'codeETDK': null,
+                    'codeETDKText': "",
+                    'codeZKPPTR': null,
+                    'codeZKPPTRText': "",
+                    'codeDKHP': null,
+                    'codeDKHPText': ""
+                }
+            ],
+            responsibilities: [
+                {
+                    'portionStartDate': null,
+                    'portionEndDate': null,
+                    'text': "",
+                    'id': null
+                }
+            ],
+            haveToKnow: [
+                {
+                    'portionStartDate': null,
+                    'portionEndDate': null,
+                    'text': "",
+                    'id': null
+                }
+            ],
+            qualiffRequir: [
+                {
+                    'portionStartDate': null,
+                    'portionEndDate': null,
+                    'text': "",
+                    'id': null
+                }
+            ]
+        });
     }
 
     render() {
         return (
-            <div className="box box-default">
-                <div className="box-header with-border text-center">
-                    <h3 className="box-title"> Додавання посади </h3>
-                </div>
-                <div className="box-body">
+            <Modal show={this.props.modalState.show} onHide={this.props.onHideModalEditOccup} bsSize="large">
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-center">
+                        Редагувати інформацію про посаду
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <FormEditOccupInfo
                         {...this.props}
-                        submitBtnText={["Додати нову посаду ", <i className="fa fa-plus" key={Math.random()}/>]}
-                        successMsgText={"Посаду успішно додано"}
+                        occupData={this.props.editingOccupData}
+                        submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
+                        successMsgText={"Зміни успішно збережено"}
+                        cancelSearch={this.props.onHideModalEditOccup}
                     />
-                </div>
-            </div>
-        )
+                </Modal.Body>
+            </Modal>
+        );
     }
 }
 
+
 export default reduxForm(
     {
-        form: 'addForm',
+        form: 'formEditOccup',
         fields: [
             'name.occupationGroup',
-            'name.clarifiedOccup',
-            'name.clarification',
+            // 'name.clarifiedOccup',       поки прибрав, бо ці поля не хочу показувати у формі редагування
+            // 'name.clarification',
             'name.occupationName',
             'name.occupationNameMin',
             'features.isIndependent',
             'features.isVirtual',
             'duration.creatingInStateDate',
             'duration.creatingInKPIDate',
+            'duration.cancelingInStateDate',
+            'duration.cancelingInKPIDate',
             'codes[].portionStartDate',
             'codes[].portionEndDate',
             'codes[].codeKP',
@@ -162,17 +172,24 @@ export default reduxForm(
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,
-        onSubmit: submitFormAddNewOccup
+        onSubmit: (formData, dispatch, props) => editOccup(props.editingOccupId, formData, dispatch)
     },
     (state, ownProps) => {    //mapStateToProps
         return {
+            modalState: state.modals.editOccup,
+            editingOccupId: state.modals.editOccup.editingData && state.modals.editOccup.editingData.id || null,
+            editingOccupData: state.modals.editOccup.editingData && state.modals.editOccup.editingData.data || {},
             occupNameInfoLists: state.occupationNameInfo,
             occupCodesLists: state.occupCodesLists,
-            shouldShowServerRespMsg: state.form.addForm.shouldShowServerRespMsg
+            shouldShowServerRespMsg: state.form.formEditOccup.shouldShowServerRespMsg
         }
     },
     (dispatch, ownProps) => { //mapDispatchToProps
         return {
+            onHideModalEditOccup() {
+                dispatch(hideModalEditOccup());
+            },
+            
             fetchInitialData() {
                 dispatch(fetchOccupGroupList());
                 dispatch(fetchClarifiedOccupList());
@@ -183,8 +200,9 @@ export default reduxForm(
                 dispatch(fetchETDKCodesList());
                 dispatch(fetchDKHPCodesList());
             },
+
             handleServerRespMsgDismiss() {
-                return dispatch( addNewOccupHideServerRespMsg() );
+                return dispatch( editOccupHideServerRespMsg() );
             },
             dismissModalAddNewClarificationAlert() {
                 return dispatch( dismissModalAddNewClarificationAlert() );
@@ -236,4 +254,4 @@ export default reduxForm(
             }
         }
     }
-)(AddOccupBox)
+)(ModalEditOccup)

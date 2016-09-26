@@ -46,7 +46,13 @@ export default function FormEditOccupInfoCodesPortion(props) {
             'form-group': true,
             'has-error':  props.ZKPPTRCodesList.errors && props.ZKPPTRCodesList.errors.length || props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error,
             'has-success': props.codesPortionFields.codeZKPPTR.touched && !props.codesPortionFields.codeZKPPTR.error && !props.ZKPPTRCodesList.errors.length
-        });
+        }),
+        portionStartDateValue = props.codesPortionFields.portionStartDate.value &&
+            (new Date(props.codesPortionFields.portionStartDate.value) !== "Invalid Date") &&
+            new Date(props.codesPortionFields.portionStartDate.value) || null,
+        portionEndDateValue = props.codesPortionFields.portionEndDate.value &&
+            (new Date(props.codesPortionFields.portionEndDate.value) !== "Invalid Date") &&
+            new Date(props.codesPortionFields.portionEndDate.value) || null;
 
     return <div className={`inp-portions__item ${props.portionItemClassName}`}>
         {topCtrlPart}
@@ -61,7 +67,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                             {...props.codesPortionFields.portionStartDate}
                             type="date"
                             format="DD.MM.YYYY"
-                            value={props.codesPortionFields.portionStartDate.value}
+                            value={portionStartDateValue}
                             defaultValue={null}
                             onChange={props.codesPortionFields.portionStartDate.onChange}
                             onBlur={(event) => fixBlur(event, props.codesPortionFields.portionStartDate)}
@@ -85,14 +91,14 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         <DateTimePicker
                             {...props.codesPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
-                            value={props.codesPortionFields.portionEndDate.value}
+                            value={portionEndDateValue}
                             defaultValue={null}
                             onChange={props.codesPortionFields.portionEndDate.onChange}
                             onBlur={(event) => fixBlur(event, props.codesPortionFields.portionEndDate)}
                             id={"inp-codes-portion-stop-date"+props.portionKey}
                             placeholder="Дата припинення дії набору кодів"
                             time={false}
-                            min={props.codesPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
+                            min={portionStartDateValue || OCCUPATION_MIN_DATE}
                             max={new Date()} />
                         <span className="help-block">
                             { props.codesPortionFields.portionEndDate.touched && props.codesPortionFields.portionEndDate.error }

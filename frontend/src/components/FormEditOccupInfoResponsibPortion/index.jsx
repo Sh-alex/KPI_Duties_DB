@@ -43,7 +43,13 @@ export default function FormEditOccupInfoResponsibPortion(props) {
             'form-group': true,
             'has-error':  props.responsibPortionFields.text.touched && props.responsibPortionFields.text.error,
             'has-success': props.responsibPortionFields.text.touched && !props.responsibPortionFields.text.error
-        });
+        }),
+        portionStartDateValue = props.responsibPortionFields.portionStartDate.value &&
+            (new Date(props.responsibPortionFields.portionStartDate.value) !== "Invalid Date") &&
+            new Date(props.responsibPortionFields.portionStartDate.value) || null,
+        portionEndDateValue = props.responsibPortionFields.portionEndDate.value &&
+            (new Date(props.responsibPortionFields.portionEndDate.value) !== "Invalid Date") &&
+            new Date(props.responsibPortionFields.portionEndDate.value) || null;
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -85,7 +91,7 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                             <DateTimePicker
                                 {...props.responsibPortionFields.portionStartDate}
                                 format="DD.MM.YYYY"
-                                value={props.responsibPortionFields.portionStartDate.value}
+                                value={portionStartDateValue}
                                 defaultValue={null}
                                 onChange={props.responsibPortionFields.portionStartDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionStartDate)}
@@ -104,13 +110,13 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                             <DateTimePicker
                                 {...props.responsibPortionFields.portionEndDate}
                                 format="DD.MM.YYYY"
-                                value={props.responsibPortionFields.portionEndDate.value}
+                                value={portionEndDateValue}
                                 defaultValue={null}
                                 onChange={props.responsibPortionFields.portionEndDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={props.responsibPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
+                                min={portionStartDateValue || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                             <span className="help-block">
                                 { props.responsibPortionFields.portionEndDate.touched && props.responsibPortionFields.portionEndDate.error }

@@ -5,6 +5,7 @@ import "./styles.less";
 import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
+import ModalEditOccup from "../ModalEditOccup"
 
 
 export default class SearchOccupBoxRes extends Component {
@@ -117,6 +118,7 @@ export default class SearchOccupBoxRes extends Component {
                         onSubmit={this.handleDeleteItem}
                         onHide={ this.hideModalConfirmDelOccup }
                     />
+                    <ModalEditOccup />
                     {
                         !performedSearchResData.itemsList.length ? (
                             <div className="text-center">
@@ -157,8 +159,8 @@ export default class SearchOccupBoxRes extends Component {
                                         className="input-sm"
                                     >
                                         {
-                                            this.state.portionSizesArr.map(size => {
-                                                return <option value={size}> { size } </option>
+                                            this.state.portionSizesArr.map((size, i) => {
+                                                return <option value={size} key={i}> { size } </option>
                                             })
                                         }
                                     </select>

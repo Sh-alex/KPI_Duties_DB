@@ -125,12 +125,12 @@ export default class FormEditOccupInfo extends Component {
     }
 
     handleClarifiedOccupInpChange(newVal) {
-        this.props.fields.name.clarifiedOccup.onChange(newVal.id);
+        this.props.fields.name.clarifiedOccup && this.props.fields.name.clarifiedOccup.onChange(newVal.id);
         this.props.handleClarifiedOccupInpChange(newVal);
     }
 
     handleClarificationInpChange(newVal) {
-        this.props.fields.name.clarification.onChange(newVal.id);
+        this.props.fields.name.clarification && this.props.fields.name.clarification.onChange(newVal.id);
         this.props.handleClarificationInpChange(newVal);
     }
 
@@ -208,7 +208,7 @@ export default class FormEditOccupInfo extends Component {
                 ),
             //перевіряємо чи показувати загальне повідомлення про те що є помилки валідації
             validationError = name.occupationGroup.touched && name.occupationGroup.error ||
-                name.clarification.touched && name.clarification.error ||
+                name.clarification && name.clarification.touched && name.clarification.error ||
                 name.occupationName.touched && name.occupationName.error ||
                 name.occupationNameMin.touched && name.occupationNameMin.error ||
                 features.isIndependent.touched && features.isIndependent.error ||
@@ -369,22 +369,39 @@ export default class FormEditOccupInfo extends Component {
                                 )
                                 }
                             </div>
-                            <div className="form-group text-center">
-                                <button
-                                    type="reset"
-                                    onClick={resetForm}
-                                    disabled={submitting}
-                                    className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
-                                >
-                                    Очистити форму <i className="fa fa-refresh" />
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={submitting}
-                                    className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
-                                >
-                                    {this.props.submitBtnText}
-                                </button>
+                            <div className="form-group">
+                                {this.props.cancelSearch && (
+                                    <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
+                                        Відміна
+                                    </button>
+                                )}
+
+                                <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
+                                    <button
+                                        type="reset"
+                                        onClick={resetForm}
+                                        disabled={submitting}
+                                        className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
+                                    >
+                                        Очистити форму <i className="fa fa-refresh" />
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={submitting}
+                                        className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
+                                    >
+                                        {
+                                            submitting ? (
+                                                <span>
+                                                    Завантаження {" "}
+                                                    <i className="fa fa-spinner fa-pulse" />
+                                                </span>
+                                            ) : (
+                                                this.props.submitBtnText
+                                            )
+                                        }
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>

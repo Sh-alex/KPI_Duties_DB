@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import "./styles.less";
 
 export default function FormEditOccupInfoFeaturesSection(props) {
-    function handleChange(e, props) {
+    function handleIsVirtualChange(e, props) {
         props.featuresFields.isVirtual.onChange(e);
         props.changeAddFormInpIsVirtual(e.target.checked);
     }
@@ -13,7 +13,7 @@ export default function FormEditOccupInfoFeaturesSection(props) {
             <div className="col-sm-6">
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox" {...props.featuresFields.isIndependent} />
+                        <input {...props.featuresFields.isIndependent} type="checkbox" />
                         Є самостійною посадою
                     </label>
                 </div>
@@ -24,7 +24,7 @@ export default function FormEditOccupInfoFeaturesSection(props) {
                         <input
                             {...props.featuresFields.isVirtual}
                             type="checkbox"
-                            onChange={e => handleChange(e, props)}
+                            onChange={e => handleIsVirtualChange(e, props)}
                         />
                         Є "віртуальною посадою"
                     </label>

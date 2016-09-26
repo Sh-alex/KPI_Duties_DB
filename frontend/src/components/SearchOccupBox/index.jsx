@@ -16,6 +16,10 @@ import {
 } from "../../actions/occupationNameInfo"
 
 import {
+    showModalEditOccup
+} from "../../actions/editOccup"
+
+import {
     delOccupation,
     dismissDelOccupationAlert
 } from "../../actions/delOccupation"
@@ -115,8 +119,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleSearchFormAlertDismiss() {
             dispatch(dismissSearchOccupBoxFormAlert())
         },
-        handleEditItem(itemId) {
-            alert("Редагувати, id = " + itemId)
+        handleEditItem(editingOccupData) {
+            dispatch(showModalEditOccup(editingOccupData));
         },
         dismissDelOccupationAlert() {
             dispatch(dismissDelOccupationAlert())

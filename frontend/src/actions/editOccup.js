@@ -1,0 +1,142 @@
+import {
+    EDIT_OCCUP_SUBMIT_REQUEST,
+    EDIT_OCCUP_SUBMIT_FAIL,
+    EDIT_OCCUP_SUBMIT_SUCCESS,
+
+    EDIT_OCCUP_HIDE_SERVER_RESP_MSG,
+
+    EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
+    EDIT_OCCUP_CLARIFICATION_INP_CHANGE,
+    EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
+    EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE,
+
+    HIDE_MODAL_EDIT_OCCUP,
+    SHOW_MODAL_EDIT_OCCUP,
+} from '../constants/modalEditOccup'
+
+import { EDIT_OCCUPATION as API_EDIT_OCCUPATION} from '../constants/API_URIs';
+
+
+function submitFormRequest (data) {
+    return {
+        type: EDIT_OCCUP_SUBMIT_REQUEST,
+        data
+    }
+}
+
+function submitFormSuccess (response) {
+    return {
+        type: EDIT_OCCUP_SUBMIT_SUCCESS,
+        response
+    }
+}
+
+function submitFormFail (error) {
+    return {
+        type: EDIT_OCCUP_SUBMIT_FAIL,
+        error
+    }
+}
+
+export function editOccup(editingOccupId, data, dispatch) {
+    dispatch(submitFormRequest(data));
+
+    //тут проміс треба для redux-form
+    return new Promise((resolve, reject) => {
+        return fetch(
+            API_EDIT_OCCUPATION + editingOccupId,
+            {
+                credentials: 'include',
+                mode: 'cors',
+                method: 'put',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    //'X-CSRFToken': CSRF_TOKEN
+                }
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(submitFormSuccess(response));
+                    resolve();
+                }
+                else if (response.status === 400) {
+                    throw(new Error("Передано некоректні дані на сервер!"));
+                    /*
+                     //перевіряємо щоб сервер поверув JSON з інформацією про помилку
+                     var errorsObj,
+                     contentType = response.headers.get("content-type");
+                     if(contentType && contentType.indexOf("application/json") !== -1 && (errorsObj = response.json().errors instanceof Object)) {
+                     return reject(errorsObj);
+                     } else {
+                     throw(new Error("Отримано некоректну відповідь від сервера!"));
+                     }
+                     */
+                } else if(response.status === 404) {
+                    throw(new Error('Не знайдено відповідного методу на сервері!'));
+                } else if(response.status === 410) {
+                    throw {_error: `Посаду з таким id = ${editingOccupId} вже було видалено`};
+                } else if( 499 < response.status && response.status < 600 ) {
+                    throw(new Error(`Сталася помилка ${response.status} на сервері!`));
+                } else {
+                    // we're not sure what happened, but handle it:
+                    // our Error will get passed straight to `.catch()`
+                    throw(new Error('Сталася невідома помилка при редагуванні посади!'));
+                }
+            })
+            .catch( (error = 'Сталася невідома помилка при редагуванні посади!') => {
+                dispatch(submitFormFail(error));
+                reject({ _error: error.message || error });
+            });
+    });
+}
+
+
+export function editOccupHideServerRespMsg() {
+    return {
+        type: EDIT_OCCUP_HIDE_SERVER_RESP_MSG
+    }
+}
+
+
+export function occupationGroupInpChange(newVal) {
+    return {
+        type: EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
+        newVal
+    }
+}
+
+export function clarificationInpChange(newVal) {
+    return {
+        type: EDIT_OCCUP_CLARIFICATION_INP_CHANGE,
+        newVal
+    }
+}
+
+export function clarifiedOccupInpChange(newVal) {
+    return {
+        type: EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
+        newVal
+    }
+}
+
+export function inpIsVirtualChange(newVal) {
+    return {
+        type: EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE,
+        newVal
+    }
+}
+
+
+export function hideModalEditOccup() {
+    return {
+        type: HIDE_MODAL_EDIT_OCCUP
+    }
+}
+
+export function showModalEditOccup(editingData) {
+    return {
+        type: SHOW_MODAL_EDIT_OCCUP,
+        editingData
+    }
+}
