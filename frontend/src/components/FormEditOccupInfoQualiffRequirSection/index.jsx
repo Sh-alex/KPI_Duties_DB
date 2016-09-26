@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import AddOccupBoxQualiffRequirPortion from "../AddOccupBoxQualiffRequirPortion";
+import FormEditOccupInfoQualiffRequirPortion from "../FormEditOccupInfoQualiffRequirPortion";
 import "./styles.less";
 
 import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR } from '../../constants/addingInfoFromAnotherOccup';
 
-export default class AddOccupBoxQualiffRequirSection extends Component {
+export default class FormEditOccupInfoQualiffRequirSection extends Component {
     render() {
         let originalDelPortionHandler = this.props.handleDelQualiffRequirPortionBtnClick,
             originalAddInfoFromAnotherOccupHandler = this.props.handleBtnAddInfoFromAnotherOccupClick,
@@ -24,7 +24,7 @@ export default class AddOccupBoxQualiffRequirSection extends Component {
                         })
                     })(i);
                 return(
-                    <AddOccupBoxQualiffRequirPortion
+                    <FormEditOccupInfoQualiffRequirPortion
                         qualiffRequirPortionFields={fieldsItem}
                         showDelBtn={ fieldsArr.length > 1 }
                         portionItemClassName={ i===0 ? "is-first-item" : "" }

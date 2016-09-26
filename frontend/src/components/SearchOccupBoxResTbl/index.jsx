@@ -7,8 +7,8 @@ import SearchOccupBoxResTblRowShort from "../SearchOccupBoxResTblRowShort"
 import "./styles.less";
 
 
-function bindOnEditItem(onEditItem, itemId) {
-    return () => onEditItem(itemId)
+function bindOnEditItem(onEditItem, itemData) {
+    return () => onEditItem(itemData)
 }
 
 function bindOnDeleteItem(onDeleteItem, itemId) {
@@ -28,7 +28,7 @@ export default function SearchOccupBoxResTbl(props) {
                     key={itemId+"_0"}
                     itemIndex={itemIndex}
                     data={props.searchResData.itemsById[itemId].data}
-                    onEditItem={bindOnEditItem(props.onEditItem, itemId)}
+                    onEditItem={bindOnEditItem(props.onEditItem, props.searchResData.itemsById[itemId])}
                     onDeleteItem={bindOnDeleteItem(props.onDeleteItem, itemId)}
                     onToggleExpandItem={bindOnExpandItem(props.onToggleExpandItem, itemId)}
                     isExpanded={props.expandedItems[itemId]}

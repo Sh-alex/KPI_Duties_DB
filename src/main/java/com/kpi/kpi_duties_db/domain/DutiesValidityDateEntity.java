@@ -18,7 +18,6 @@ public class DutiesValidityDateEntity {
     @Column(name = "Id")
     private Integer id;
 
-
     @Column(name = "isInKPI")
     private Boolean isInKpi;
 

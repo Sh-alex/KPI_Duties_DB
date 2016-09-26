@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import AddOccupBoxCodesPortion from "../AddOccupBoxCodesPortion";
+import FormEditOccupInfoCodesPortion from "../FormEditOccupInfoCodesPortion";
 import "./styles.less";
 
 import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES } from '../../constants/addingInfoFromAnotherOccup';
 
-export default class AddOccupBoxCodesSection extends Component {
+export default class FormEditOccupInfoCodesSection extends Component {
     render() {
         if(this.props.codesFields && this.props.codesFields.length) {
             let originalHandler = this.props.handleDelCodesPortionBtnClick,
@@ -21,7 +21,7 @@ export default class AddOccupBoxCodesSection extends Component {
                         return () => originalHandler(index)
                     })(i);
                     return(
-                        <AddOccupBoxCodesPortion
+                        <FormEditOccupInfoCodesPortion
                             codesPortionFields={codesFieldsItem}
                             showDelBtn={ codesFieldsArr.length > 1 }
                             portionItemClassName={ i===0 ? "is-first-item" : "" }

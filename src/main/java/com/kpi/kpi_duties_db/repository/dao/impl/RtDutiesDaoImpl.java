@@ -32,7 +32,11 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
     @Transactional(readOnly = true)
     public List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap) {
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         if (paramsMap == null || paramsMap.isEmpty()) {
             return repository.findAll();
         } else {
@@ -41,7 +45,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 if (value != null) {
                     switch (paramName) {
                         case "dcDutiesPartitionId":
-                            criteria.add(Restrictions.eq("DcDutiesPartitionId", value));
+                            criteria.add(Restrictions.eq("dcDutiesPartitionId", value));
                             break;
                         case "rtDutiesName":
                             if (paramsMap.get("searchType").equals("MATCH_STRING")) {
@@ -54,52 +58,44 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                         case "dcDutiesNames":
                             //OR LIKE
                             if (paramsMap.get("searchType").equals("SOME_TAGS")) {
-                            Disjunction disjunction = Restrictions.disjunction();
-                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
-                                disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                Disjunction disjunction = Restrictions.disjunction();
+                                for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                    disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                }
+                                criteria.add(disjunction);
                             }
-                            criteria.add(disjunction);
-                        }
-                        //AND LIKE
-                        if (paramsMap.get("searchType").equals("ALL_TAGS")) {
-                            Conjunction conjunction = Restrictions.conjunction();
-                            for (String keyword : (List<String>) paramsMap.get(paramName)) {
-                                conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                            //AND LIKE
+                            if (paramsMap.get("searchType").equals("ALL_TAGS")) {
+                                Conjunction conjunction = Restrictions.conjunction();
+                                for (String keyword : (List<String>) paramsMap.get(paramName)) {
+                                    conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
+                                }
+                                criteria.add(conjunction);
                             }
-                            criteria.add(conjunction);
-                        }
-                        break;
+                            break;
                         case "creatingInStateDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.start", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.start", value)));
                             break;
                         case "creatingInStateDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.start", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.start", value)));
                             break;
                         case "cancelingInStateDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.ge("dates.stop", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.stop", value)));
                             break;
                         case "cancelingInStateDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", false));
-                            criteria.add(Restrictions.le("dates.stop", value));
+                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.stop", value)));
                             break;
                         case "creatingInKPIDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.start", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.start", value)));
                             break;
                         case "creatingInKPIDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.start", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.start", value)));
                             break;
                         case "cancelingInKPIDate_from":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.ge("dates.stop", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.stop", value)));
                             break;
                         case "cancelingInKPIDate_to":
-                            criteria.add(Restrictions.eq("dates.isInKpi", true));
-                            criteria.add(Restrictions.le("dates.stop", value));
+                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.stop", value)));
                             break;
                         /*case "offset":
                             offset = (Integer) value;
@@ -118,6 +114,20 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 criteria.setMaxResults(limit);
             }*/
             criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+            //Пошук по обмеженням дат в державі та КПІ, повертає id посад
+            criteriaForDatesInState.setProjection(Projections.distinct(Projections.property("id")));
+            criteriaForDatesInKpi.setProjection(Projections.distinct(Projections.property("id")));
+
+            List listByDates = criteriaForDatesInState.list();
+            //Перетин двох множин, які відповідають всім умовам
+            listByDates.retainAll(criteriaForDatesInKpi.list());
+
+            //Якщо не знайдено відповідних посад - не додаю обмеження
+            if (!listByDates.isEmpty()) {
+                criteria.add(Restrictions.in("id", listByDates));
+            }
+
             return criteria.list();
         }
     }

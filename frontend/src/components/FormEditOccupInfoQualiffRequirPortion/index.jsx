@@ -8,7 +8,7 @@ import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
 import "./styles.less";
 
-export default function AddOccupBoxQualiffRequirPortion(props) {
+export default function FormEditOccupInfoQualiffRequirPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
             <div>
                 <hr />
@@ -34,7 +34,13 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
             'form-group': true,
             'has-error':  props.qualiffRequirPortionFields.text.touched && props.qualiffRequirPortionFields.text.error,
             'has-success': props.qualiffRequirPortionFields.text.touched && !props.qualiffRequirPortionFields.text.error
-        });
+        }),
+        portionStartDateValue = props.qualiffRequirPortionFields.portionStartDate.value &&
+            (new Date(props.qualiffRequirPortionFields.portionStartDate.value) !== "Invalid Date") &&
+            new Date(props.qualiffRequirPortionFields.portionStartDate.value) || null,
+        portionEndDateValue = props.qualiffRequirPortionFields.portionEndDate.value &&
+            (new Date(props.qualiffRequirPortionFields.portionEndDate.value) !== "Invalid Date") &&
+            new Date(props.qualiffRequirPortionFields.portionEndDate.value) || null;
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -76,7 +82,7 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
                             <DateTimePicker
                                 {...props.qualiffRequirPortionFields.portionStartDate}
                                 format="DD.MM.YYYY"
-                                value={props.qualiffRequirPortionFields.portionStartDate.value}
+                                value={portionStartDateValue}
                                 defaultValue={null}
                                 onChange={props.qualiffRequirPortionFields.portionStartDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.qualiffRequirPortionFields.portionStartDate)}
@@ -95,13 +101,13 @@ export default function AddOccupBoxQualiffRequirPortion(props) {
                             <DateTimePicker
                                 {...props.qualiffRequirPortionFields.portionEndDate}
                                 format="DD.MM.YYYY"
-                                value={props.qualiffRequirPortionFields.portionEndDate.value}
+                                value={portionEndDateValue}
                                 defaultValue={null}
                                 onChange={props.qualiffRequirPortionFields.portionEndDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.qualiffRequirPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={props.qualiffRequirPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
+                                min={portionStartDateValue || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
                         <span className="help-block">

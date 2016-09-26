@@ -19,7 +19,7 @@ import {
     DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
 } from '../constants/occupationNameInfo'
 
-import { clarificationInpChange } from './addOccupBox'
+import { clarificationInpChange } from './addNewOccup'
 
 import * as API_URIs from '../constants/API_URIs';
 

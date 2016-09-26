@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import modals from './modals'
 import user from './user'
-import addOccupForm from './addOccupForm'
+import formAddNewOccup from './formAddNewOccup'
+import formEditOccup from './formEditOccup'
 import delOccupation from "./delOccupation"
 import occupationNameInfo from './occupationNameInfo'
 import occupCodesLists from './occupCodesLists'
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
     occupationNameInfo,
     occupCodesLists,
     form: formReducer.plugin({
-        addForm: addOccupForm
+        addForm: formAddNewOccup,
+        formEditOccup: formEditOccup
     })
 });
 
@@ -24,7 +26,7 @@ export const rootReducer = combineReducers({
 //     return {
 //         user: user(state.user, action),
 //         occupationNameInfo: occupationNameInfo(state.occupationNameInfo, action),
-//         form: addOccupForm(formReducer(state.form, action), action)
+//         form: formAddNewOccup(formReducer(state.form, action), action)
 //     }
 // }
 

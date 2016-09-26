@@ -8,7 +8,7 @@ import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
 import "./styles.less";
 
-export default function AddOccupBoxHaveToKnowPortion(props) {
+export default function FormEditOccupInfoHaveToKnowPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
         <div>
             <hr />
@@ -35,7 +35,13 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
             'form-group': true,
             'has-error':  props.haveToKnowPortionFields.text.touched && props.haveToKnowPortionFields.text.error,
             'has-success': props.haveToKnowPortionFields.text.touched && !props.haveToKnowPortionFields.text.error
-        });
+        }),
+        portionStartDateValue = props.haveToKnowPortionFields.portionStartDate.value &&
+            (new Date(props.haveToKnowPortionFields.portionStartDate.value) !== "Invalid Date") &&
+            new Date(props.haveToKnowPortionFields.portionStartDate.value) || null,
+        portionEndDateValue = props.haveToKnowPortionFields.portionEndDate.value &&
+            (new Date(props.haveToKnowPortionFields.portionEndDate.value) !== "Invalid Date") &&
+            new Date(props.haveToKnowPortionFields.portionEndDate.value) || null;
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -77,7 +83,7 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                             <DateTimePicker
                                 {...props.haveToKnowPortionFields.portionStartDate}
                                 format="DD.MM.YYYY"
-                                value={props.haveToKnowPortionFields.portionStartDate.value}
+                                value={portionStartDateValue}
                                 defaultValue={null}
                                 onChange={props.haveToKnowPortionFields.portionStartDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionStartDate)}
@@ -96,13 +102,13 @@ export default function AddOccupBoxHaveToKnowPortion(props) {
                             <DateTimePicker
                                 {...props.haveToKnowPortionFields.portionEndDate}
                                 format="DD.MM.YYYY"
-                                value={props.haveToKnowPortionFields.portionEndDate.value}
+                                value={portionEndDateValue}
                                 defaultValue={null}
                                 onChange={props.haveToKnowPortionFields.portionEndDate.onChange}
                                 onBlur={(event) => fixBlur(event, props.haveToKnowPortionFields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
-                                min={props.haveToKnowPortionFields.portionStartDate.value || OCCUPATION_MIN_DATE}
+                                min={portionStartDateValue || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                         </label>
                     <span className="help-block">
