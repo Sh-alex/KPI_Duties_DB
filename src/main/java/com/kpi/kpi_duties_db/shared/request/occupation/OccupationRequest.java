@@ -26,7 +26,6 @@ public class OccupationRequest {
     @JsonProperty("features")
     private FeaturesOccupation featuresOccupation;
 
-    @NotNull
     @Valid
     @JsonProperty("duration")
     private DurationOccupation durationOccupation;
