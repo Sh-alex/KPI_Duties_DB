@@ -131,7 +131,8 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                                 this.props.handleAddInfoBtnClick({
                                     data: this.state.selectedItem.data,
                                     resultsType: this.props.resultsType, 
-                                    resPortionIndex: this.props.resPortionIndex
+                                    resPortionIndex: this.props.resPortionIndex,
+                                    resForm: this.props.resForm
                                 })
                             }}
                             type="button"

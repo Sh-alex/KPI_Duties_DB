@@ -31,6 +31,7 @@ class ModalAddInfoFromAnotherOccup extends Component {
             ),
             resultsBlock = (
                 <AddInfoFromAnotherOccupSearchRes
+                    resForm={this.props.resForm}
                     cancelSearch={this.props.onHide}
                     searchResData={this.props.searchResData}
                     resultsType={this.props.resultsType}

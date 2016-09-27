@@ -20,6 +20,7 @@ const initialState = {
     resPortionIndex: null,
     searchResData: null,
     resultsType: null,
+    resForm: 'addForm',
     searchError: null
 };
 
@@ -33,6 +34,7 @@ export default function (state = initialState, action) {
                 show: true,
                 resultsType: action.data.typeId,
                 resPortionIndex: action.data.resPortionIndex,
+                resForm: action.data.resForm,
                 searchError: null
             };
         case HIDE_MODAL_ADD_INFO_FROM_ANOTHER_OCCUP:

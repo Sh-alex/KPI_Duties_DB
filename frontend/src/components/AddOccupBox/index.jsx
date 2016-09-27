@@ -209,7 +209,10 @@ export default reduxForm(
                 return dispatch(addNewZKPPTRCode(val));
             },
             handleBtnAddInfoFromAnotherOccupClick(data){
-                return dispatch(showModalAddInfoFromAnotherOccup(data));
+                return dispatch(showModalAddInfoFromAnotherOccup({
+                    ...data,
+                    resForm: 'addForm'
+                }));
             },
 
             handleOccupationGroupInpChange(newVal) {

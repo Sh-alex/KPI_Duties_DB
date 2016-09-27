@@ -53,7 +53,8 @@ export default function formEditOccupInfo(state, action) {
             };
 
         case ADD_INFO_FROM_ANOTHER_OCCUPATION:
-            // action.resPortionIndex
+            if(action.resForm !== 'addForm')
+                return state;
             switch(action.resultsType){
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                     if(!action.data || !action.data.codes instanceof Array)

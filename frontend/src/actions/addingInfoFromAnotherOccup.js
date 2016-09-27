@@ -74,10 +74,8 @@ export function goBackToAddInfoFromAnotherOccupForm() {
 
 function addInfoFromAnotherOccupation_itself(data) {
     return {
-        type: ADD_INFO_FROM_ANOTHER_OCCUPATION,
-        data: data.data,
-        resultsType: data.resultsType,
-        resPortionIndex: data.resPortionIndex
+        ...data,
+        type: ADD_INFO_FROM_ANOTHER_OCCUPATION
     }
 }
 
