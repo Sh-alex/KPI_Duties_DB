@@ -57,7 +57,9 @@ let initialFormState = {
     },
     duration: {
         'creatingInStateDate': null,
-        'creatingInKPIDate': null
+        'creatingInKPIDate': null,
+        'cancelingInStateDate': null,
+        'cancelingInKPIDate': null
     },
     codes: [
         {
@@ -137,6 +139,8 @@ export default reduxForm(
             'features.isVirtual',
             'duration.creatingInStateDate',
             'duration.creatingInKPIDate',
+            'duration.cancelingInStateDate',
+            'duration.cancelingInKPIDate',
             'codes[].portionStartDate',
             'codes[].portionEndDate',
             'codes[].codeKP',
