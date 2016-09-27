@@ -69,7 +69,8 @@ export default class FormEditOccupInfoNameSection extends Component {
                             filter='contains' />
                         <span className="help-block">
                         {
-                            occupationGroupList.errors && occupationGroupList.errors.length && occupationGroupList.errors.map( err => <span> {err} <br /> </span>)  ||
+                            occupationGroupList.errors && occupationGroupList.errors.length &&
+                            occupationGroupList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
                             nameFields.occupationGroup.touched && nameFields.occupationGroup.error
                         }
                     </span>
@@ -111,7 +112,8 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         filter='contains' />
                                     <span className="help-block">
                                 {
-                                    clarifiedOccupationList.errors && clarifiedOccupationList.errors.length && clarifiedOccupationList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                    clarifiedOccupationList.errors && clarifiedOccupationList.errors.length &&
+                                    clarifiedOccupationList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
                                     nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error
                                 }
                             </span>
@@ -159,7 +161,8 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     </div>
                                     <span className="help-block">
                                 {
-                                    clarificationList.errors && clarificationList.errors.length && clarificationList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                    clarificationList.errors && clarificationList.errors.length &&
+                                    clarificationList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
                                     nameFields.clarification.touched && nameFields.clarification.error
                                 }
                             </span>
