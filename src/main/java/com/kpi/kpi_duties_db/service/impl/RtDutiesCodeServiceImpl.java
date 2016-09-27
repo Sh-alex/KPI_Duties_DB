@@ -34,6 +34,7 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
 
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
+
             list.add(repository.saveAndFlush(entity));
         }
         return list;
@@ -50,6 +51,7 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
 
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
+
             list.add(repository.saveAndFlush(entity));
         }
         return list;

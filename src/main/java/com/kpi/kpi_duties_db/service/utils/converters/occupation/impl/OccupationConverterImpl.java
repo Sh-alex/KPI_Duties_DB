@@ -105,7 +105,9 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(codeOccupation.getPortionStartDate());
             entity.setDateStop(codeOccupation.getPortionEndDate());
 
-            list.add(entity);
+            if (codeOccupation.getCodeDKHPId() != null && codeOccupation.getCodeETDKId() != null && codeOccupation.getCodeKPId() != null &&  codeOccupation.getCodeZKPPTRId() != null) {
+                list.add(entity);//Не створювати сутність якщо не передано жодного коду
+            }
         }
         return list;
     }
@@ -120,7 +122,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesTaskAndResponsibilitiesEntity entity = new RtDutiesTaskAndResponsibilitiesEntity();
 
-            if (responsibility.getId() == null) {
+            if (responsibility.getId() == null && responsibility.getText() != null) {
                 DcDutiesTasksAndResponsibilitiesEntity tasksAndResponsibilitiesEntity = new DcDutiesTasksAndResponsibilitiesEntity();
                 tasksAndResponsibilitiesEntity.setText(responsibility.getText());
                 DcDutiesTasksAndResponsibilitiesEntity addedEntity = dcDutiesTaskAndResponsibilitiesService.add(tasksAndResponsibilitiesEntity);
@@ -135,7 +137,9 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            list.add(entity);
+            if (responsibility.getId() != null) {
+                list.add(entity);
+            }
         }
 
         return list;
@@ -150,7 +154,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesMustKnowEntity entity = new RtDutiesMustKnowEntity();
 
-            if (responsibility.getId() == null) {
+            if (responsibility.getId() == null && responsibility.getText() != null) {
                 DcDutiesMustKnowEntity dutiesMustKnowEntity = new DcDutiesMustKnowEntity();
                 dutiesMustKnowEntity.setText(responsibility.getText());
                 DcDutiesMustKnowEntity addedEntity = dcDutiesMustKnowService.add(dutiesMustKnowEntity);
@@ -165,7 +169,9 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            list.add(entity);
+            if (responsibility.getId() != null) {
+                list.add(entity);
+            }
         }
 
         return list;
@@ -181,7 +187,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesQualificationRequirementsEntity entity = new RtDutiesQualificationRequirementsEntity();
 
-            if (responsibility.getId() == null) {
+            if (responsibility.getId() == null && responsibility.getText() != null) {
                 DcDutiesQualificationRequirementsEntity requirementsEntity = new DcDutiesQualificationRequirementsEntity();
                 requirementsEntity.setText(responsibility.getText());
                 DcDutiesQualificationRequirementsEntity addedEntity = dcDutiesQualificationRequirementsService.add(requirementsEntity);
@@ -196,7 +202,9 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            list.add(entity);
+            if (responsibility.getId() != null) {
+                list.add(entity);
+            }
         }
 
         return list;
