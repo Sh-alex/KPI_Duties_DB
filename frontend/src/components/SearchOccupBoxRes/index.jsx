@@ -121,14 +121,12 @@ export default class SearchOccupBoxRes extends Component {
                     <ModalEditOccup />
                     {
                         !performedSearchResData.itemsList.length ? (
-                            <div className="text-center">
-                                <Alert bsStyle="warning alert-sm">
-                                    <p>
-                                        За вказаними критеріями не знайдено жодної посади.<br />
-                                        Спробуйте змінити критерії пошуку у формі.
-                                    </p>
-                                </Alert>
-                            </div>
+                            <Alert bsStyle="warning alert-sm alert--with-margin">
+                                <p>
+                                    За вказаними критеріями не знайдено жодної посади.<br />
+                                    Спробуйте змінити критерії пошуку у формі.
+                                </p>
+                            </Alert>
                         ) : (
                             <SearchOccupBoxResTbl
                                 searchResData={performedSearchResData}

@@ -13,114 +13,113 @@ function bindHandleItemsSelect(itemId, itemIndex, props) {
 }
 
 export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
-    let tblRows;
+    let tbl,
+        alert,
+        tblRows;
     try {
-        tblRows = !props.searchResData.itemsList.length ?
-            (
-                <tr colSpan="100" className="text-center">
-                    <td>
-                        <Alert bsStyle="warning alert-sm">
-                            <p>
-                                За вказаними критеріями не знайдено жодної посади.<br />
-                                Спробуйте змінити критерії пошуку у формі.
-                            </p>
-                        </Alert>
-                    </td>
-                </tr>
+        if(props.searchResData.itemsList.length) {
+            tblRows = props.searchResData.itemsList.map( (itemId,itemIndex) => {
+                if(!props.searchResData.itemsById[itemId].data.codes || !props.searchResData.itemsById[itemId].data.codes.length)
+                    return (
+                        <tr >
+                            <td>
+                                <input disabled type="radio" name="radio-selected-similar-occup" className="minimal" key={itemIndex} />
+                            </td>
+                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
+                            <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+                    )
+                else
+                    return (
+                        <tr
+                            key={itemIndex}
+                            onClick={bindHandleItemsSelect(itemId, itemIndex, props)}
+                        >
+                            <td>
+                                <input
+                                    checked={props.selectedItem.itemIndex == itemIndex}
+                                    type="radio"
+                                    name="radio-selected-similar-occup"
+                                    className="minimal"
+                                />
+                            </td>
+                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
+                            <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
+                            <td>
+                                {
+                                    props.searchResData.itemsById[itemId].data.codes.map(portion => {
+                                        return portion.codeKP ? <div> {portion.codeKP.val} </div> : <div> - </div>
+                                    })
+                                }
+                            </td>
+                            <td>
+                                {
+                                    props.searchResData.itemsById[itemId].data.codes.map(portion => {
+                                        return portion.codeZKPPTR ? <div> {portion.codeZKPPTR.val} </div> : <div> - </div>
+                                    })
+                                }
+                            </td>
+                            <td>
+                                {
+                                    props.searchResData.itemsById[itemId].data.codes.map(portion => {
+                                        return portion.codeDKHP ? <div> {portion.codeDKHP.val} </div> : <div> - </div>
+                                    })
+                                }
+                            </td>
+                            <td>
+                                {
+                                    props.searchResData.itemsById[itemId].data.codes.map(portion => {
+                                        return portion.codeETDK ? <div> {portion.codeETDK.val} </div> : <div> - </div>
+                                    })
+                                }
+                            </td>
+                        </tr>
+                    )
+            });
+            tbl = (
+                <table className="table table-hover occup-table search-similar-table">
+                    <thead>
+                    <tr>
+                        <th colSpan="2" title="Номер в списку"> № </th>
+                        <th> Назва посади </th>
+                        <th> Приналежн. до КПІ </th>
+                        <th> Код КП </th>
+                        <th> Код ЗКППТР </th>
+                        <th> Код ДКХП </th>
+                        <th> Код ЄТДК </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    { tblRows}
+                    </tbody>
+                </table>
             )
-            : props.searchResData.itemsList.map( (itemId,itemIndex) => {
-            if(!props.searchResData.itemsById[itemId].data.codes || !props.searchResData.itemsById[itemId].data.codes.length)
-                return (
-                    <tr >
-                        <td>
-                            <input disabled type="radio" name="radio-selected-similar-occup" className="minimal" key={itemIndex} />
-                        </td>
-                        <td title="Номер в списку"> { itemIndex+1 } </td>
-                        <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
-                        <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                    </tr>
-                )
-            else
-                return (
-                    <tr
-                        key={itemIndex}
-                        onClick={bindHandleItemsSelect(itemId, itemIndex, props)}
-                    >
-                        <td>
-                            <input
-                                checked={props.selectedItem.itemIndex == itemIndex}
-                                type="radio"
-                                name="radio-selected-similar-occup"
-                                className="minimal"
-                            />
-                        </td>
-                        <td title="Номер в списку"> { itemIndex+1 } </td>
-                        <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
-                        <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
-                        <td>
-                            {
-                                props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeKP ? <div> {portion.codeKP.val} </div> : <div> - </div>
-                                })
-                            }
-                        </td>
-                        <td>
-                            {
-                                props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeZKPPTR ? <div> {portion.codeZKPPTR.val} </div> : <div> - </div>
-                                })
-                            }
-                        </td>
-                        <td>
-                            {
-                                props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeDKHP ? <div> {portion.codeDKHP.val} </div> : <div> - </div>
-                                })
-                            }
-                        </td>
-                        <td>
-                            {
-                                props.searchResData.itemsById[itemId].data.codes.map(portion => {
-                                    return portion.codeETDK ? <div> {portion.codeETDK.val} </div> : <div> - </div>
-                                })
-                            }
-                        </td>
-                    </tr>
-                )
-        });
-    } catch(err) {
-        console.error(err);
-        tblRows = (
-            <tr colSpan="100" className="text-center">
-                <Alert bsStyle="danger">
+        }
+        else
+            alert = (
+                <Alert bsStyle="warning alert-sm alert--with-margin">
                     <p>
-                        Сталася помилка при побутові таблиці з результатами пошуку
+                        За вказаними критеріями не знайдено жодної посади.<br />
+                        Спробуйте змінити критерії пошуку у формі.
                     </p>
                 </Alert>
-            </tr>
+            );
+    } catch(err) {
+        console.error(err);
+        alert = (
+            <Alert bsStyle="danger alert-sm alert--with-margin">
+                <p>
+                    Сталася помилка при побутові таблиці з результатами пошуку
+                </p>
+            </Alert>
         );
     }
 
-    return (
-        <table className="table table-hover occup-table search-similar-table">
-            <thead>
-            <tr>
-                <th colSpan="2" title="Номер в списку"> № </th>
-                <th> Назва посади </th>
-                <th> Приналежн. до КПІ </th>
-                <th> Код КП </th>
-                <th> Код ЗКППТР </th>
-                <th> Код ДКХП </th>
-                <th> Код ЄТДК </th>
-            </tr>
-            </thead>
-            <tbody>
-            {tblRows}
-            </tbody>
-        </table>
-    )
+    return tbl || alert;
 }
