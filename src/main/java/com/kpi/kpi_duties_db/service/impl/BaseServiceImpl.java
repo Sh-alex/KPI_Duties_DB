@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.service.BaseService;
 import com.kpi.kpi_duties_db.shared.message.error.CreateEntityException;
+import com.kpi.kpi_duties_db.shared.message.error.UpdateEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     @Transactional
     public List<T> add(List<T> entities) {
-
         List<T> list = null;
         try {
             list = repository.save(entities);
@@ -69,7 +69,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     @Transactional
     public List<T> update(List<T> entities) {
-        List<T> list = repository.save(entities);
+        List<T> list = null;
+        try {
+            list = repository.save(entities);
+        } catch (Exception e) {
+            String msg = "Entity " + entities.getClass().getSimpleName() + " not updated, check the data";
+            logger.error(msg);
+            throw new UpdateEntityException(msg);
+        }
         repository.flush();
 
         return list;

@@ -14,7 +14,12 @@ public class DurationOccupation {
 
     private Date creatingInStateDate;
 
+    private Date cancelingInStateDate;
+
     private Date creatingInKPIDate;
+
+    private Date cancelingInKPIDate;
+
 
     public Date getCreatingInStateDate() {
         return creatingInStateDate;
@@ -30,5 +35,21 @@ public class DurationOccupation {
 
     public void setCreatingInKPIDate(Date creatingInKPIDate) {
         this.creatingInKPIDate = creatingInKPIDate;
+    }
+
+    public Date getCancelingInStateDate() {
+        return cancelingInStateDate;
+    }
+
+    public void setCancelingInStateDate(Date cancelingInStateDate) {
+        this.cancelingInStateDate = cancelingInStateDate;
+    }
+
+    public Date getCancelingInKPIDate() {
+        return cancelingInKPIDate;
+    }
+
+    public void setCancelingInKPIDate(Date cancelingInKPIDate) {
+        this.cancelingInKPIDate = cancelingInKPIDate;
     }
 }

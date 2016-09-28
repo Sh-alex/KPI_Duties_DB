@@ -41,7 +41,7 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
     }
 
     @Override
-    public List<RtDutiesCodeEntity> edit(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
+    public List<RtDutiesCodeEntity> update(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
         List<RtDutiesCodeEntity> list = new ArrayList<>();
         for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();

@@ -103,16 +103,17 @@ public class RtDutiesController {
     @Transactional
     public Response update(@NotNull OccupationRequest request, @PathParam("id") Integer id) {
         //TODO
+        ValidatorObject.validate(request, logger, validator);
         RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request);
         entity.setId(id);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.update(entity);
 
-        List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
+        List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityUpdateListFromOccupationRequest(request, rtDutiesEntity);
         dutiesValidityDateService.update(entities);
 
         List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
 
-        rtDutiesCodeService.edit(rtDutiesEntity.getId(), rtCodes);
+        rtDutiesCodeService.update(rtDutiesEntity.getId(), rtCodes);
 
         rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));

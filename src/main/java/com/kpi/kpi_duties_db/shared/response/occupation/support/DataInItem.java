@@ -1,5 +1,7 @@
 package com.kpi.kpi_duties_db.shared.response.occupation.support;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -11,23 +13,32 @@ import java.util.List;
 
 public class DataInItem {
 
-    private Date cancelingInKPIDate;
+    @JsonProperty("occupationName")
+    private String rtDutiesName;
 
-    private Date cancelingInStateDate;
+    @JsonProperty("occupationNameMin")
+    private String rtDutiesNameShort;
 
-    private Date creatingInKPIDate;
+    @JsonProperty("occupationGroup")
+    private Integer dcDutiesPartitionId;
 
-    private Date creatingInStateDate;
+    @JsonProperty("clarifiedOccup")
+    private Integer rtDutiesParentId;
+
+    @JsonProperty("clarification")
+    private Integer dcDutiesNameId;
 
     private Boolean isVirtual;
 
     private Boolean inKPI;
 
-    private String occupationGroup;
+    private Date creatingInStateDate;
 
-    private String occupationName;
+    private Date creatingInKPIDate;
 
-    private String occupationNameMin;
+    private Date cancelingInKPIDate;
+
+    private Date cancelingInStateDate;
 
     private List<CodesInData> codes;
 
@@ -37,36 +48,45 @@ public class DataInItem {
 
     private List<Requirement> qualiffRequir;
 
-    public Date getCancelingInKPIDate() {
-        return cancelingInKPIDate;
+    public Integer getDcDutiesPartitionId() {
+        return dcDutiesPartitionId;
     }
 
-    public void setCancelingInKPIDate(Date cancelingInKPIDate) {
-        this.cancelingInKPIDate = cancelingInKPIDate;
+    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
+        this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public Date getCancelingInStateDate() {
-        return cancelingInStateDate;
+
+    public String getRtDutiesName() {
+        return rtDutiesName;
     }
 
-    public void setCancelingInStateDate(Date cancelingInStateDate) {
-        this.cancelingInStateDate = cancelingInStateDate;
+    public void setRtDutiesName(String rtDutiesName) {
+        this.rtDutiesName = rtDutiesName;
     }
 
-    public Date getCreatingInKPIDate() {
-        return creatingInKPIDate;
+    public String getRtDutiesNameShort() {
+        return rtDutiesNameShort;
     }
 
-    public void setCreatingInKPIDate(Date creatingInKPIDate) {
-        this.creatingInKPIDate = creatingInKPIDate;
+    public void setRtDutiesNameShort(String rtDutiesNameShort) {
+        this.rtDutiesNameShort = rtDutiesNameShort;
     }
 
-    public Date getCreatingInStateDate() {
-        return creatingInStateDate;
+    public Integer getRtDutiesParentId() {
+        return rtDutiesParentId;
     }
 
-    public void setCreatingInStateDate(Date creatingInStateDate) {
-        this.creatingInStateDate = creatingInStateDate;
+    public void setRtDutiesParentId(Integer rtDutiesParentId) {
+        this.rtDutiesParentId = rtDutiesParentId;
+    }
+
+    public Integer getDcDutiesNameId() {
+        return dcDutiesNameId;
+    }
+
+    public void setDcDutiesNameId(Integer dcDutiesNameId) {
+        this.dcDutiesNameId = dcDutiesNameId;
     }
 
     public Boolean getVirtual() {
@@ -85,28 +105,36 @@ public class DataInItem {
         this.inKPI = inKPI;
     }
 
-    public String getOccupationGroup() {
-        return occupationGroup;
+    public Date getCreatingInStateDate() {
+        return creatingInStateDate;
     }
 
-    public void setOccupationGroup(String occupationGroup) {
-        this.occupationGroup = occupationGroup;
+    public void setCreatingInStateDate(Date creatingInStateDate) {
+        this.creatingInStateDate = creatingInStateDate;
     }
 
-    public String getOccupationName() {
-        return occupationName;
+    public Date getCreatingInKPIDate() {
+        return creatingInKPIDate;
     }
 
-    public void setOccupationName(String occupationName) {
-        this.occupationName = occupationName;
+    public void setCreatingInKPIDate(Date creatingInKPIDate) {
+        this.creatingInKPIDate = creatingInKPIDate;
     }
 
-    public String getOccupationNameMin() {
-        return occupationNameMin;
+    public Date getCancelingInKPIDate() {
+        return cancelingInKPIDate;
     }
 
-    public void setOccupationNameMin(String occupationNameMin) {
-        this.occupationNameMin = occupationNameMin;
+    public void setCancelingInKPIDate(Date cancelingInKPIDate) {
+        this.cancelingInKPIDate = cancelingInKPIDate;
+    }
+
+    public Date getCancelingInStateDate() {
+        return cancelingInStateDate;
+    }
+
+    public void setCancelingInStateDate(Date cancelingInStateDate) {
+        this.cancelingInStateDate = cancelingInStateDate;
     }
 
     public List<CodesInData> getCodes() {

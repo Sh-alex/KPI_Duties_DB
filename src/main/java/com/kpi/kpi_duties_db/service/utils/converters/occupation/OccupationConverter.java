@@ -21,6 +21,8 @@ public interface OccupationConverter {
 
     List<DutiesValidityDateEntity> toDutiesValidityDateEntityListFromOccupationRequest(OccupationRequest request, Integer rtDutiesId);
 
+    List<DutiesValidityDateEntity> toDutiesValidityDateEntityUpdateListFromOccupationRequest(OccupationRequest request, RtDutiesEntity  rtDutiesEntity);
+
     List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request);
 
     List<RtDutiesTaskAndResponsibilitiesEntity> toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(OccupationRequest request, Integer rtDutiesId);
