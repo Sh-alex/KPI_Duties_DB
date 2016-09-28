@@ -32,11 +32,21 @@
       flex-grow: 1;
     }
   }
+
+  .pagination-wrapper {
+    text-align: center;
+  }
 }
 
 
-@media (max-width: 768px) {
 
+@media (max-width: 768px) {
+  .search-similar-results {
+    .pagination-wrapper {
+      order: -1;
+      width: 100%;
+    }
+  }
 }
 @media (min-width: 768px) and (max-width: 992px) {
   .search-similar-table__big-text-cell {
