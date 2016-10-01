@@ -12,10 +12,8 @@ import java.sql.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequirementsOccupation {
 
-    @JsonProperty("idText")
-    private Integer id;
+    private Integer idText;
 
-    @JsonProperty("text")
     private String text;
 
     private Integer idDates;
@@ -26,12 +24,12 @@ public class RequirementsOccupation {
     @JsonProperty("portionEndDate")
     private Date dateEnd;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdText() {
+        return idText;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdText(Integer idText) {
+        this.idText = idText;
     }
 
     public String getText() {

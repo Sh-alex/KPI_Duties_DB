@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -71,6 +70,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (DurationOccupation date : request.getDurationOccupation()) {
             DutiesValidityDateEntity entity = new DutiesValidityDateEntity();
 
+            entity.setId(date.getId());
             entity.setStart(date.getStart());
             entity.setStop(date.getStop());
             entity.setInKpi(date.getInKpi());
@@ -83,35 +83,6 @@ public class OccupationConverterImpl implements OccupationConverter {
         return list;
     }
 
-    @Override
-    public List<DutiesValidityDateEntity> toDutiesValidityDateEntityUpdateListFromOccupationRequest(OccupationRequest request, RtDutiesEntity rtDutiesEntity) {
-        List<DutiesValidityDateEntity> dutiesValidityDateEntities = toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
-
-        //Знаходжу які саме дати були обновленні та задаю їм їх id
-        dutiesValidityDateEntities.forEach(item -> {
-
-            List<DutiesValidityDateEntity> date;
-            Integer id;
-            if (item.getInKpi()) {
-                //Яка це саме дата
-                date = rtDutiesEntity.getDutiesValidityDateEntities().stream().filter(i -> i.getInKpi()).collect(Collectors.toList());
-
-                if (!date.isEmpty()) {
-                    id = date.get(0).getId();
-                    item.setId(id);
-                }
-            } else {
-                date = rtDutiesEntity.getDutiesValidityDateEntities().stream().filter(i -> !i.getInKpi()).collect(Collectors.toList());
-                if (!date.isEmpty()) {
-                    id = date.get(0).getId();
-                    item.setId(id);
-                }
-            }
-        });
-
-
-        return dutiesValidityDateEntities.stream().filter(i -> i.getId() != null).collect(Collectors.toList());
-    }
 
     @Override
     public List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request) {
@@ -121,6 +92,8 @@ public class OccupationConverterImpl implements OccupationConverter {
         List<RtCodeEntity> list = new ArrayList<>();
         for (CodeOccupation codeOccupation : codes) {
             RtCodeEntity entity = new RtCodeEntity();
+
+            entity.setId(codeOccupation.getId());
             entity.setCodeDKHPId(codeOccupation.getCodeDKHPId());
             entity.setCodeETKDId(codeOccupation.getCodeETDKId());
             entity.setCodeKPId(codeOccupation.getCodeKPId());
@@ -145,22 +118,26 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesTaskAndResponsibilitiesEntity entity = new RtDutiesTaskAndResponsibilitiesEntity();
 
-            if (responsibility.getId() == null && responsibility.getText() != null) {
+            if (responsibility.getIdText() == null && responsibility.getText() != null) {
                 DcDutiesTasksAndResponsibilitiesEntity tasksAndResponsibilitiesEntity = new DcDutiesTasksAndResponsibilitiesEntity();
                 tasksAndResponsibilitiesEntity.setText(responsibility.getText());
                 DcDutiesTasksAndResponsibilitiesEntity addedEntity = dcDutiesTaskAndResponsibilitiesService.add(tasksAndResponsibilitiesEntity);
                 entity.setDcDutiesTasksAndResponsibilitiesId(addedEntity.getId());
             } else {
-                entity.setDcDutiesTasksAndResponsibilitiesId(responsibility.getId());
+                DcDutiesTasksAndResponsibilitiesEntity tasksAndResponsibilitiesEntity = dcDutiesTaskAndResponsibilitiesService.getById(responsibility.getIdText());
+                dcDutiesTaskAndResponsibilitiesService.update(tasksAndResponsibilitiesEntity);
+                entity.setDcDutiesTasksAndResponsibilitiesId(responsibility.getIdText());
             }
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
+
+            entity.setId(responsibility.getIdDates());
             entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getId() != null) {
+            if (responsibility.getIdText() != null) {
                 list.add(entity);
             }
         }
@@ -177,22 +154,26 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesMustKnowEntity entity = new RtDutiesMustKnowEntity();
 
-            if (responsibility.getId() == null && responsibility.getText() != null) {
+            if (responsibility.getIdText() == null && responsibility.getText() != null) {
                 DcDutiesMustKnowEntity dutiesMustKnowEntity = new DcDutiesMustKnowEntity();
                 dutiesMustKnowEntity.setText(responsibility.getText());
                 DcDutiesMustKnowEntity addedEntity = dcDutiesMustKnowService.add(dutiesMustKnowEntity);
                 entity.setDcDutiesMustKnowId(addedEntity.getId());
             } else {
-                entity.setDcDutiesMustKnowId(responsibility.getId());
+                DcDutiesMustKnowEntity dutiesMustKnowEntity = dcDutiesMustKnowService.getById(responsibility.getIdText());
+                dcDutiesMustKnowService.update(dutiesMustKnowEntity);
+                entity.setDcDutiesMustKnowId(responsibility.getIdText());
             }
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
+
+            entity.setId(responsibility.getIdDates());
             entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getId() != null) {
+            if (responsibility.getIdText() != null) {
                 list.add(entity);
             }
         }
@@ -210,22 +191,26 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (RequirementsOccupation responsibility : responsibilities) {
             RtDutiesQualificationRequirementsEntity entity = new RtDutiesQualificationRequirementsEntity();
 
-            if (responsibility.getId() == null && responsibility.getText() != null) {
+            if (responsibility.getIdText() == null && responsibility.getText() != null) {
                 DcDutiesQualificationRequirementsEntity requirementsEntity = new DcDutiesQualificationRequirementsEntity();
                 requirementsEntity.setText(responsibility.getText());
                 DcDutiesQualificationRequirementsEntity addedEntity = dcDutiesQualificationRequirementsService.add(requirementsEntity);
                 entity.setDcDutiesQualificationRequirementsId(addedEntity.getId());
             } else {
-                entity.setDcDutiesQualificationRequirementsId(responsibility.getId());
+                DcDutiesQualificationRequirementsEntity requirementsEntity = dcDutiesQualificationRequirementsService.getById(responsibility.getIdText());
+                dcDutiesQualificationRequirementsService.update(requirementsEntity);
+                entity.setDcDutiesQualificationRequirementsId(responsibility.getIdText());
             }
 
             RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
             rtDutiesEntity.setId(rtDutiesId);
+
+            entity.setId(responsibility.getIdDates());
             entity.setRtDutiesId(rtDutiesEntity.getId());
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getId() != null) {
+            if (responsibility.getIdText() != null) {
                 list.add(entity);
             }
         }

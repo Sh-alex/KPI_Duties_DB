@@ -108,12 +108,12 @@ public class RtDutiesController {
         entity.setId(id);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.update(entity);
 
-        List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityUpdateListFromOccupationRequest(request, rtDutiesEntity);
+        List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
         dutiesValidityDateService.update(entities);
 
         List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
 
-        rtDutiesCodeService.update(rtDutiesEntity.getId(), rtCodes);
+        //rtDutiesCodeService.update(rtDutiesEntity.getIdText(), rtCodes);
 
         rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
