@@ -15,7 +15,7 @@
     <link href='./styles/add.css' rel='stylesheet' type='text/css'>
 </head>
 <body class="skin-blue layout-top-nav">
-<div id="mount-point" class="wrapper">
+<div idText="mount-point" class="wrapper">
 
     <!-- modal із пошуковою формою для додавання інфи з аналогічних посад -->
     <div class="modal fade modal-add-info-from-related modal-add-info-from-related--search-form" tabindex="-1" role="dialog">
@@ -29,13 +29,13 @@
                 </div>
                 <div class="modal-body">
 
-                    <form id="form-search-similar" class="form-horizontal search-form form-search-similar" role="form">
+                    <form idText="form-search-similar" class="form-horizontal search-form form-search-similar" role="form">
                         <div class="form-inner">
                             <div class="form-group">
                                 <label for="form-search-similar__inp-occupation-group" class="col-sm-3 control-label"> Посадовий склад </label>
                                 <div class="col-sm-9">
                                     <!-- Combobox, дані підгружаються із сервера -->
-                                    <select class="form-control" id="form-search-similar__inp-occupation-group" placeholder="Посадовий склад">
+                                    <select class="form-control" idText="form-search-similar__inp-occupation-group" placeholder="Посадовий склад">
                                         <option> Керівники </option>
                                         <option> Професіонали </option>
                                         <option> Фахівці </option>
@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="form-search-similar__inp-occupation-name" class="col-sm-3 control-label"> Назва посади </label>
                                     <div class="col-sm-9 inp-name-block__input">
-                                        <input type="text" class="form-control" id="form-search-similar__inp-occupation-name" placeholder="Назва посади">
+                                        <input type="text" class="form-control" idText="form-search-similar__inp-occupation-name" placeholder="Назва посади">
                                     </div>
                                     <div class="col-sm-9 inp-name-block__multiselect">
                                         <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Оберіть або введіть ключові слова" aria-hidden="true">
@@ -120,20 +120,20 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9 checkbox">
                                     <label>
-                                        <input type="checkbox" checked="checked" id="form-search-similar__checkbox-exists-in-kpi"> Приналежність до КПІ
+                                        <input type="checkbox" checked="checked" idText="form-search-similar__checkbox-exists-in-kpi"> Приналежність до КПІ
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <form id="search-similar-results" class="search-similar-results">
+                    <form idText="search-similar-results" class="search-similar-results">
                         <a href="#" class="btn-back-to-search-form">
                             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                             <i> Повернутися до пошукової форми </i>
                         </a>
                         <div class="table-responsive">
-                            <table class="table table-hover occup-table search-similar-table" id="search-similar-table">
+                            <table class="table table-hover occup-table search-similar-table" idText="search-similar-table">
                                 <thead>
                                 <tr>
                                     <th colspan="2" title="Номер в списку"> № </th>
@@ -151,7 +151,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell search-similar-table__big-text-cell--expanded">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -168,7 +168,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -185,7 +185,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -202,7 +202,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -219,7 +219,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -236,7 +236,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -253,7 +253,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -270,7 +270,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -287,7 +287,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -304,7 +304,7 @@
                                     <td> Старший інженер 1 категорії </td>
                                     <td> + </td>
                                     <td class="search-similar-table__big-text-cell">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex id ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, dolor explicabo itaque, iusto minus nesciunt pariatur porro, quaerat quam quibusdam repellat reprehenderit voluptate. Commodi cumque fuga incidunt numquam officiis, quidem recusandae ut. Ab accusantium asperiores blanditiis, dicta eos excepturi exercitationem facere facilis nemo nihil optio, sed temporibus unde! Assumenda numquam praesentium quos ratione rerum ut, voluptate voluptatem. Ad deleniti dolore eaque eligendi eveniet natus sapiente tempore? Animi aspernatur consectetur et, exercitationem ipsam magni maxime nostrum omnis porro repellendus soluta tempore voluptate, voluptatibus. Consectetur deleniti deserunt, dolor natus nihil porro. Blanditiis dolor molestiae pariatur reiciendis sed temporibus voluptatibus? Culpa deserunt eveniet excepturi sint veritatis! Aliquid aspernatur autem consequatur cumque dolore dolores error, ex idText ipsam laboriosam minus molestias nulla obcaecati odit omnis reiciendis saepe! A beatae debitis dolore, molestias nemo nulla quaerat! Aliquid architecto beatae corporis deserunt dolorem doloribus eius enim ex excepturi fuga fugiat illum in ipsam laborum maxime molestiae mollitia nesciunt nisi nobis perspiciatis porro possimus provident quaerat quidem quis quo repellat reprehenderit rerum saepe sed soluta, suscipit temporibus unde voluptate voluptatem voluptates voluptatum. Amet delectus dolorem, dolorum eligendi esse ex expedita facere facilis ipsam iste nam nihil suscipit. Amet consequatur consequuntur dignissimos dolor iste, magni quidem quod! Cupiditate!
                                     </td>
                                     <td>
                                         <a class="pull-right occup-table__btn-expand" href="javascript:void(0)"  title="Переглянути деталі">
@@ -369,7 +369,7 @@
                     <form role="form">
                             <div class="form-group">
                                 <!--<label for="inp-add-new-occup-key-word"> Нове ключове слово у назвах посад </label>-->
-                                <input type="text" class="form-control" id="inp-add-new-occup-key-word" placeholder="Нове ключове слово у назвах посад">
+                                <input type="text" class="form-control" idText="inp-add-new-occup-key-word" placeholder="Нове ключове слово у назвах посад">
                             </div>
                     </form>
                 </div>
@@ -443,14 +443,14 @@
                         <h3 class="box-title"> Додавання посади </h3>
                     </div>
                     <div class="box-body">
-                        <form id="add-form" class="form-horizontal add-form" role="form">
+                        <form idText="add-form" class="form-horizontal add-form" role="form">
                             <div class="form-inner">
                                 <h4> Назва посади </h4>
                                 <div class="form-group">
                                     <label for="inp-occupation-group" class="col-sm-2 control-label"> Посадовий склад </label>
                                     <div class="col-sm-10">
                                         <!-- Combobox, дані підгружаються із сервера -->
-                                        <select class="form-control" id="inp-occupation-group" placeholder="Посадовий склад">
+                                        <select class="form-control" idText="inp-occupation-group" placeholder="Посадовий склад">
                                             <option> Керівники </option>
                                             <option> Професіонали </option>
                                             <option> Фахівці </option>
@@ -465,7 +465,7 @@
                                         Уточнювана посада
                                     </label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" id="select-clarified-occup">
+                                        <select class="form-control" idText="select-clarified-occup">
                                             <option> - (Відсутня) </option>
                                             <option> Інженер </option>
                                             <option> Інженер молодший </option>
@@ -480,7 +480,7 @@
                                     </label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
-                                            <select class="form-control" id="select-clarification">
+                                            <select class="form-control" idText="select-clarification">
                                                 <option> Патімейкер </option>
                                                 <option> Молодший </option>
                                                 <option> Замістник </option>
@@ -502,7 +502,7 @@
                                 <div class="form-group">
                                     <label for="inp-occupation-name" class="col-sm-2 control-label"> Повна назва посади </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control disabled" id="inp-occupation-name" placeholder="Повна назва посади" value="Старший інженер 1 категорії">
+                                        <input type="text" class="form-control disabled" idText="inp-occupation-name" placeholder="Повна назва посади" value="Старший інженер 1 категорії">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -510,7 +510,7 @@
                                         Скорочена назва посади
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Ст. інж. 1 кат.">
+                                        <input type="text" class="form-control" idText="inp-occupation-name-min" placeholder="Скорочена назва посади" value="Ст. інж. 1 кат.">
                                     </div>
                                 </div>
                                 <hr>
@@ -542,13 +542,13 @@
                                         Дата створення посади в державі
                                     </label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control" id="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
+                                        <input type="date" class="form-control" idText="inp-occupation-creating-in-state" placeholder="Дата створення посади в державі">
                                     </div>
                                     <label for="inp-occupation-creating-in-kpi" class="col-sm-2 control-label">
                                         Дата створення посади в КПІ
                                     </label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control" id="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
+                                        <input type="date" class="form-control" idText="inp-occupation-creating-in-kpi" placeholder="Дата створення посади в КПІ">
                                     </div>
                                 </div>
                                 <hr>
@@ -567,13 +567,13 @@
                                                 Дата прийняття набору кодів
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                                <input type="date" class="form-control" idText="inp-codes-portion-start-date">
                                             </div>
                                             <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
                                                 Дата припинення дії набору кодів
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                                <input type="date" class="form-control" idText="inp-codes-portion-stop-date">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -581,13 +581,13 @@
                                                 Код КП
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                                                <input type="text" class="form-control" idText="inp-code-KP" placeholder="Код КП">
                                             </div>
                                             <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
                                                 Код ЗКППТР
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                                                <input type="text" class="form-control" idText="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -595,13 +595,13 @@
                                                 Код ЄТДК
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                                                <input type="text" class="form-control" idText="inp-code-ETDK" placeholder="Код ЄТДК">
                                             </div>
                                             <label for="inp-code-DKHP" class="col-sm-2 control-label">
                                                 Код ДКХП
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                                                <input type="text" class="form-control" idText="inp-code-DKHP" placeholder="Код ДКХП">
                                             </div>
                                         </div>
                                     </div>
@@ -615,13 +615,13 @@
                                                 Дата прийняття набору кодів
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control" id="inp-codes-portion-start-date">
+                                                <input type="date" class="form-control" idText="inp-codes-portion-start-date">
                                             </div>
                                             <label for="inp-codes-portion-stop-date" class="col-sm-2 control-label">
                                                 Дата припинення дії набору кодів
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control" id="inp-codes-portion-stop-date">
+                                                <input type="date" class="form-control" idText="inp-codes-portion-stop-date">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -629,13 +629,13 @@
                                                 Код КП
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-KP" placeholder="Код КП">
+                                                <input type="text" class="form-control" idText="inp-code-KP" placeholder="Код КП">
                                             </div>
                                             <label for="inp-code-ZKPPTR" class="col-sm-2 control-label">
                                                 Код ЗКППТР
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
+                                                <input type="text" class="form-control" idText="inp-code-ZKPPTR" placeholder="Код ЗКППТР">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -643,13 +643,13 @@
                                                 Код ЄТДК
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-ETDK" placeholder="Код ЄТДК">
+                                                <input type="text" class="form-control" idText="inp-code-ETDK" placeholder="Код ЄТДК">
                                             </div>
                                             <label for="inp-code-DKHP" class="col-sm-2 control-label">
                                                 Код ДКХП
                                             </label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="inp-code-DKHP" placeholder="Код ДКХП">
+                                                <input type="text" class="form-control" idText="inp-code-DKHP" placeholder="Код ДКХП">
                                             </div>
                                         </div>
                                     </div>
@@ -680,7 +680,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <input type="hidden" value="78"> <!-- id тексту яке буде передано на сервер -->
+                                                <input type="hidden" value="78"> <!-- idText тексту яке буде передано на сервер -->
                                                 <textarea class="form-control add-form__occup-description-text-block" disabled placeholder="Оберіть текст з іншої посади, або введіть новий натиснувши кнопку 'Редагувати текст'" rows="6"></textarea>
                                             </div>
                                             <div class="col-sm-4">

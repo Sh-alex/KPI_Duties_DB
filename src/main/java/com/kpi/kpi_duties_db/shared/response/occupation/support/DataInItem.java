@@ -2,7 +2,6 @@ package com.kpi.kpi_duties_db.shared.response.occupation.support;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -28,17 +27,7 @@ public class DataInItem {
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
 
-    private Boolean isVirtual;
-
-    private Boolean inKPI;
-
-    private Date creatingInStateDate;
-
-    private Date creatingInKPIDate;
-
-    private Date cancelingInKPIDate;
-
-    private Date cancelingInStateDate;
+    private List<Duration> durations;
 
     private List<CodesInData> codes;
 
@@ -47,15 +36,6 @@ public class DataInItem {
     private List<Requirement> responsibilities;
 
     private List<Requirement> qualiffRequir;
-
-    public Integer getDcDutiesPartitionId() {
-        return dcDutiesPartitionId;
-    }
-
-    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
-        this.dcDutiesPartitionId = dcDutiesPartitionId;
-    }
-
 
     public String getRtDutiesName() {
         return rtDutiesName;
@@ -71,6 +51,14 @@ public class DataInItem {
 
     public void setRtDutiesNameShort(String rtDutiesNameShort) {
         this.rtDutiesNameShort = rtDutiesNameShort;
+    }
+
+    public Integer getDcDutiesPartitionId() {
+        return dcDutiesPartitionId;
+    }
+
+    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
+        this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
     public Integer getRtDutiesParentId() {
@@ -89,52 +77,12 @@ public class DataInItem {
         this.dcDutiesNameId = dcDutiesNameId;
     }
 
-    public Boolean getVirtual() {
-        return isVirtual;
+    public List<Duration> getDurations() {
+        return durations;
     }
 
-    public void setVirtual(Boolean virtual) {
-        isVirtual = virtual;
-    }
-
-    public Boolean getInKPI() {
-        return inKPI;
-    }
-
-    public void setInKPI(Boolean inKPI) {
-        this.inKPI = inKPI;
-    }
-
-    public Date getCreatingInStateDate() {
-        return creatingInStateDate;
-    }
-
-    public void setCreatingInStateDate(Date creatingInStateDate) {
-        this.creatingInStateDate = creatingInStateDate;
-    }
-
-    public Date getCreatingInKPIDate() {
-        return creatingInKPIDate;
-    }
-
-    public void setCreatingInKPIDate(Date creatingInKPIDate) {
-        this.creatingInKPIDate = creatingInKPIDate;
-    }
-
-    public Date getCancelingInKPIDate() {
-        return cancelingInKPIDate;
-    }
-
-    public void setCancelingInKPIDate(Date cancelingInKPIDate) {
-        this.cancelingInKPIDate = cancelingInKPIDate;
-    }
-
-    public Date getCancelingInStateDate() {
-        return cancelingInStateDate;
-    }
-
-    public void setCancelingInStateDate(Date cancelingInStateDate) {
-        this.cancelingInStateDate = cancelingInStateDate;
+    public void setDurations(List<Duration> durations) {
+        this.durations = durations;
     }
 
     public List<CodesInData> getCodes() {

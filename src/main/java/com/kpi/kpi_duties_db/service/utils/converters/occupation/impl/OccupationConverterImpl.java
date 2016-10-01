@@ -7,6 +7,7 @@ import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.DurationOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
@@ -67,25 +68,16 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         List<DutiesValidityDateEntity> list = new ArrayList<>();
 
-        for (int i = 0; i <= 1; i++) {
+        for (DurationOccupation date : request.getDurationOccupation()) {
             DutiesValidityDateEntity entity = new DutiesValidityDateEntity();
-            if (i == 0) {
-                entity.setStart(request.getDurationOccupation().getCreatingInStateDate());
-                entity.setStop(request.getDurationOccupation().getCancelingInStateDate());
-                entity.setInKpi(false);
 
-            } else {
-                entity.setStart(request.getDurationOccupation().getCreatingInKPIDate());
-                entity.setStop(request.getDurationOccupation().getCancelingInKPIDate());
-                entity.setInKpi(true);
-            }
-
-            entity.setVirtual(request.getFeaturesOccupation().getVirtual());
+            entity.setStart(date.getStart());
+            entity.setStop(date.getStop());
+            entity.setInKpi(date.getInKpi());
+            entity.setVirtual(date.getVirtual());
             entity.setRtDutiesId(rtDutiesId);
 
-            if (entity.getStart() != null) {
-                list.add(entity);
-            }
+            list.add(entity);
         }
 
         return list;
@@ -95,25 +87,28 @@ public class OccupationConverterImpl implements OccupationConverter {
     public List<DutiesValidityDateEntity> toDutiesValidityDateEntityUpdateListFromOccupationRequest(OccupationRequest request, RtDutiesEntity rtDutiesEntity) {
         List<DutiesValidityDateEntity> dutiesValidityDateEntities = toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
 
+        //Знаходжу які саме дати були обновленні та задаю їм їх id
         dutiesValidityDateEntities.forEach(item -> {
 
             List<DutiesValidityDateEntity> date;
             Integer id;
             if (item.getInKpi()) {
+                //Яка це саме дата
                 date = rtDutiesEntity.getDutiesValidityDateEntities().stream().filter(i -> i.getInKpi()).collect(Collectors.toList());
 
                 if (!date.isEmpty()) {
                     id = date.get(0).getId();
                     item.setId(id);
-                } else {
-                //TODO
                 }
             } else {
                 date = rtDutiesEntity.getDutiesValidityDateEntities().stream().filter(i -> !i.getInKpi()).collect(Collectors.toList());
-                id = date.isEmpty() ? null : date.get(0).getId();
-                item.setId(id);
+                if (!date.isEmpty()) {
+                    id = date.get(0).getId();
+                    item.setId(id);
+                }
             }
         });
+
 
         return dutiesValidityDateEntities.stream().filter(i -> i.getId() != null).collect(Collectors.toList());
     }
@@ -248,45 +243,43 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getSearchType() != null && !request.getSearchType().isEmpty()) {
             occupationGetDto.setSearchType(request.getSearchType().get(0));
         }
-        if (request.getDcDutiesPartitionId() != null && !request.getDcDutiesPartitionId().isEmpty()) {
-            occupationGetDto.setDcDutiesPartitionId(request.getDcDutiesPartitionId().get(0));
-        }
+
         if (request.getRtDutiesName() != null && !request.getRtDutiesName().isEmpty()) {
             occupationGetDto.setRtDutiesName(request.getRtDutiesName().get(0));
         }
-        if (request.getDcDutiesNames() != null && !request.getDcDutiesNames().isEmpty()) {
-            occupationGetDto.setDcDutiesNames(request.getDcDutiesNames());
+        if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
+            occupationGetDto.setRtDutiesNameTags(request.getRtDutiesNameTags());
         }
-        if (request.getCreatingInStateDate_from() != null && !request.getCreatingInStateDate_from().isEmpty()) {
-            occupationGetDto.setCreatingInStateDate_from(request.getCreatingInStateDate_from().get(0));
+        if (request.getStartFrom() != null && !request.getStartFrom().isEmpty()) {
+            occupationGetDto.setStartFrom(request.getStartFrom().get(0));
         }
-        if (request.getCreatingInStateDate_to() != null && !request.getCreatingInStateDate_to().isEmpty()) {
-            occupationGetDto.setCreatingInStateDate_to(request.getCreatingInStateDate_to().get(0));
+        if (request.getStartTo() != null && !request.getStartTo().isEmpty()) {
+            occupationGetDto.setStartTo(request.getStartTo().get(0));
         }
-        if (request.getCancelingInStateDate_from() != null && !request.getCancelingInStateDate_from().isEmpty()) {
-            occupationGetDto.setCancelingInStateDate_from(request.getCancelingInStateDate_from().get(0));
+        if (request.getStopFrom() != null && !request.getStopFrom().isEmpty()) {
+            occupationGetDto.setStartFrom(request.getStopFrom().get(0));
         }
-        if (request.getCancelingInStateDate_to() != null && !request.getCancelingInStateDate_to().isEmpty()) {
-            occupationGetDto.setCancelingInStateDate_to(request.getCancelingInStateDate_to().get(0));
+        if (request.getStopTo() != null && !request.getStopTo().isEmpty()) {
+            occupationGetDto.setStopTo(request.getStopTo().get(0));
         }
-        if (request.getCreatingInKPIDate_from() != null && !request.getCreatingInKPIDate_from().isEmpty()) {
-            occupationGetDto.setCreatingInKPIDate_from(request.getCreatingInKPIDate_from().get(0));
-        }
-        if (request.getCreatingInKPIDate_to() != null && !request.getCreatingInKPIDate_to().isEmpty()) {
-            occupationGetDto.setCreatingInKPIDate_to(request.getCreatingInKPIDate_to().get(0));
-        }
-        if (request.getCancelingInKPIDate_from() != null && !request.getCancelingInKPIDate_from().isEmpty()) {
-            occupationGetDto.setCancelingInKPIDate_from(request.getCancelingInKPIDate_from().get(0));
-        }
-        if (request.getCancelingInKPIDate_to() != null && !request.getCancelingInKPIDate_to().isEmpty()) {
-            occupationGetDto.setCancelingInKPIDate_to(request.getCancelingInKPIDate_to().get(0));
+        if (request.getInKpi() != null && !request.getInKpi().isEmpty()) {
+            occupationGetDto.setInKpi(request.getInKpi().get(0));
         }
 
-        if (occupationGetDto.getDcDutiesNames() != null && !occupationGetDto.getDcDutiesNames().isEmpty()) {
-            String[] split = occupationGetDto.getDcDutiesNames().get(0).split(",");
-            occupationGetDto.getDcDutiesNames().clear();
+        if (occupationGetDto.getDcDutiesPartitionIdList() != null && !occupationGetDto.getInKpi().isEmpty()) {
+            String[] split = occupationGetDto.getDcDutiesPartitionIdList().get(0).split(",");
+            occupationGetDto.getDcDutiesPartitionIdList().clear();
             for (String tag : split) {
-                occupationGetDto.getDcDutiesNames().add(tag);
+                occupationGetDto.getDcDutiesPartitionIdList().add(tag);
+            }
+        }
+
+
+        if (occupationGetDto.getRtDutiesNameTags() != null && !occupationGetDto.getRtDutiesNameTags().isEmpty()) {
+            String[] split = occupationGetDto.getRtDutiesNameTags().get(0).split(",");
+            occupationGetDto.getRtDutiesNameTags().clear();
+            for (String tag : split) {
+                occupationGetDto.getRtDutiesNameTags().add(tag);
             }
         }
 
@@ -302,17 +295,14 @@ public class OccupationConverterImpl implements OccupationConverter {
         Map<String, Object> params = new HashMap<>();
 
         params.put("searchType", dto.getSearchType());
-        params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionId());
         params.put("rtDutiesName", dto.getRtDutiesName());
-        params.put("dcDutiesNames", dto.getDcDutiesNames());
-        params.put("creatingInStateDate_from", dto.getCreatingInStateDate_from());
-        params.put("creatingInStateDate_to", dto.getCreatingInStateDate_to());
-        params.put("cancelingInStateDate_from", dto.getCancelingInStateDate_from());
-        params.put("cancelingInStateDate_to", dto.getCancelingInStateDate_to());
-        params.put("creatingInKPIDate_from", dto.getCreatingInKPIDate_from());
-        params.put("creatingInKPIDate_to", dto.getCreatingInKPIDate_to());
-        params.put("cancelingInKPIDate_from", dto.getCancelingInKPIDate_from());
-        params.put("cancelingInKPIDate_to", dto.getCancelingInKPIDate_to());
+        params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionIdList());
+        params.put("dcDutiesNames", dto.getRtDutiesNameTags());
+        params.put("startFrom", dto.getStartFrom());
+        params.put("startTo", dto.getStartTo());
+        params.put("stopFrom", dto.getStopFrom());
+        params.put("stopTo", dto.getStopTo());
+        params.put("inKpi", dto.getInKpi());
 
         return params;
     }
@@ -328,42 +318,33 @@ public class OccupationConverterImpl implements OccupationConverter {
             ItemById itemById = new ItemById();
 
             DataInItem dataInItem = new DataInItem();
-            Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
-            if (dutiesValidityDateEntities != null) {
-                List<DutiesValidityDateEntity> dateInKpi = dutiesValidityDateEntities.stream().filter(date -> date.getInKpi() == true).collect(Collectors.toList());
-                List<DutiesValidityDateEntity> dateInState = dutiesValidityDateEntities.stream().filter(date -> date.getInKpi() == false).collect(Collectors.toList());
-
-                dataInItem.setCancelingInKPIDate(dateInKpi.isEmpty() ? null : dateInKpi.get(0).getStop());
-                dataInItem.setCreatingInKPIDate(dateInKpi.isEmpty() ? null : dateInKpi.get(0).getStart());
-                dataInItem.setCancelingInStateDate(dateInState.isEmpty() ? null : dateInState.get(0).getStop());
-                dataInItem.setCreatingInStateDate(dateInState.isEmpty() ? null : dateInState.get(0).getStart());
-
-                Boolean isVirtual = null;
-
-                if (!dateInKpi.isEmpty()) {
-                    isVirtual = dateInKpi.get(0).getVirtual();
-                } else {
-                    isVirtual = dateInState.isEmpty() ? null : dateInState.get(0).getVirtual();
-                }
-
-                dataInItem.setVirtual(isVirtual);
-
-                dataInItem.setInKPI(dateInKpi.isEmpty() ? false : true);
-            }
-
-            DcDutiesPartitionEntity dcDutiesPartitionEntity = entity.getDcDutiesPartitionEntity();
-            if (dcDutiesPartitionEntity != null) {
-                dataInItem.setDcDutiesPartitionId(dcDutiesPartitionEntity.getId());
-            }
-
-            if (entity.getParentId() != null) {
-                dataInItem.setRtDutiesParentId(entity.getParentId());
-            }
-
-            dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
 
             dataInItem.setRtDutiesName(entity.getName());
             dataInItem.setRtDutiesNameShort(entity.getNameShort());
+
+            dataInItem.setDcDutiesPartitionId(entity.getDcDutiesPartitionId());
+
+            dataInItem.setRtDutiesParentId(entity.getParentId());
+
+            dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
+
+            Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
+            if (dutiesValidityDateEntities != null) {
+                List<Duration> durations = new ArrayList<>();
+                for (DutiesValidityDateEntity dutiesValidityDateEntity : dutiesValidityDateEntities) {
+                    Duration duration = new Duration();
+
+                    duration.setId(dutiesValidityDateEntity.getId());
+                    duration.setStart(dutiesValidityDateEntity.getStart());
+                    duration.setStop(dutiesValidityDateEntity.getStop());
+                    duration.setInKpi(dutiesValidityDateEntity.getInKpi());
+                    duration.setVirtual(dutiesValidityDateEntity.getVirtual());
+
+                    durations.add(duration);
+                }
+                dataInItem.setDurations(durations);
+            }
+
 
             List<CodesInData> codes = new ArrayList<>();
             for (RtDutiesCodeEntity rtDutiesCodeEntity : entity.getRtDutiesCodeEntities()) {
@@ -372,6 +353,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                 if (rtCodeEntity != null) {
                     CodesInData codesInData = new CodesInData();
+                    codesInData.setId(rtCodeEntity.getId());
                     DcCodeDkhpEntity dkhpEntity = rtCodeEntity.getCodeDkhpEntity();
                     if (dkhpEntity != null) {
                         Code code = new Code();
@@ -406,6 +388,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
                     codesInData.setPortionStartDate(rtCodeEntity.getDateStart());
                     codesInData.setPortionEndDate(rtCodeEntity.getDateStop());
+
                     codes.add(codesInData);
                 }
             }
@@ -415,8 +398,10 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> haveToKnowList = new ArrayList<>();
             for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
                 Requirement haveToKnow = new Requirement();
-                haveToKnow.setId(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
+                haveToKnow.setIdText(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
                 haveToKnow.setText(rtDutiesMustKnowEntity.getDcDutiesMustKnowEntity().getText());
+
+                haveToKnow.setIdDates(rtDutiesMustKnowEntity.getId());
                 haveToKnow.setPortionStartDate(rtDutiesMustKnowEntity.getDateStart());
                 haveToKnow.setPortionEndDate(rtDutiesMustKnowEntity.getDateEnd());
 
@@ -427,8 +412,10 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> responsibilitiesList = new ArrayList<>();
             for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
                 Requirement responsibilities = new Requirement();
-                responsibilities.setId(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
+                responsibilities.setIdText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
                 responsibilities.setText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity().getText());
+
+                responsibilities.setIdDates(rtDutiesTaskAndResponsibilitiesEntity.getId());
                 responsibilities.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
                 responsibilities.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
 
@@ -439,8 +426,10 @@ public class OccupationConverterImpl implements OccupationConverter {
             List<Requirement> qualiffRequirList = new ArrayList<>();
             for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
                 Requirement qualiffRequir = new Requirement();
-                qualiffRequir.setId(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
+                qualiffRequir.setIdText(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
                 qualiffRequir.setText(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsEntity().getText());
+
+                qualiffRequir.setIdDates(rtDutiesQualificationRequirementsEntity.getId());
                 qualiffRequir.setPortionStartDate(rtDutiesQualificationRequirementsEntity.getDateStart());
                 qualiffRequir.setPortionEndDate(rtDutiesQualificationRequirementsEntity.getDateEnd());
 

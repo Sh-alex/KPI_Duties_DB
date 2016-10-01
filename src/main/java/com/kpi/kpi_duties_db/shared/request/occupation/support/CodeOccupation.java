@@ -12,6 +12,8 @@ import java.sql.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CodeOccupation {
 
+    private Integer id;
+
     @JsonProperty("codeKP")
     private Integer codeKPId;
 
@@ -27,6 +29,14 @@ public class CodeOccupation {
     private Date portionStartDate;
 
     private Date portionEndDate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getCodeKPId() {
         return codeKPId;

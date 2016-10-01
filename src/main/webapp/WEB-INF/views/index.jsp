@@ -10,7 +10,7 @@
     <link href='/frontend-build/style.css' rel='stylesheet' type='text/css'>
 </head>
 <body class="skin-blue layout-top-nav">
-<div id="mount-point" class="wrapper">
+<div idText="mount-point" class="wrapper">
     mount-point
 </div>
 <%--<script type="text/javascript" src="frontend-build/bundle.js"></script>

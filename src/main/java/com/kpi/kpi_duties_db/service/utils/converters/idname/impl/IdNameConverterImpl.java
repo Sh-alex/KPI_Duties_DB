@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class IdNameConverterImpl implements IdNameConverter {
 
-    private final String GET_ID = "getId";
+    private final String GET_ID = "getIdText";
     private final String GET_NAME = "getName";
 
     private final static Logger logger = LoggerFactory.getLogger(IdNameConverterImpl.class);

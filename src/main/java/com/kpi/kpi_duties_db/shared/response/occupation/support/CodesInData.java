@@ -10,6 +10,8 @@ import java.sql.Date;
 
 public class CodesInData {
 
+    private Integer id;
+
     private Code codeDKHP;
 
     private Code codeETDK;
@@ -21,6 +23,14 @@ public class CodesInData {
     private Date portionStartDate;
 
     private Date portionEndDate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Code getCodeDKHP() {
         return codeDKHP;

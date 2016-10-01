@@ -130,14 +130,14 @@ public class RtDutiesController {
         for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
             DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
             if (dcDutiesMustKnowEntity.getRtDutiesMustKnowEntities().size() <= 1) {
-                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getId());
+                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getIdText());
             }
         }
         for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
             DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity =
                     dcDutiesTaskAndResponsibilitiesService.getById(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
             if (dcDutiesTasksAndResponsibilitiesEntity.getRtDutiesTaskAndResponsibilitiesEntities().size() <= 1) {
-                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getId());
+                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getIdText());
             }
         }
         for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
@@ -145,7 +145,7 @@ public class RtDutiesController {
                 DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
                         dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
 
-                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getId());
+                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getIdText());
             } catch (Exception e) {
                 e.printStackTrace();
             }
