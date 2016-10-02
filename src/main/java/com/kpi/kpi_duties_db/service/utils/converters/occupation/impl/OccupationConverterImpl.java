@@ -14,6 +14,8 @@ import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.support.*;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
@@ -47,6 +49,8 @@ public class OccupationConverterImpl implements OccupationConverter {
 
     @Autowired
     HibernateTemplate hibernateTemplate;
+
+    private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
 
     @Override
     public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request) {
@@ -239,9 +243,6 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getRtDutiesName() != null && !request.getRtDutiesName().isEmpty()) {
             occupationGetDto.setRtDutiesName(request.getRtDutiesName().get(0));
         }
-        if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
-            occupationGetDto.setRtDutiesNameTags(request.getRtDutiesNameTags());
-        }
         if (request.getStartFrom() != null && !request.getStartFrom().isEmpty()) {
             occupationGetDto.setStartFrom(request.getStartFrom().get(0));
         }
@@ -260,19 +261,31 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         if (request.getDcDutiesPartitionIdList() != null && !request.getDcDutiesPartitionIdList().isEmpty()) {
             String[] split = request.getDcDutiesPartitionIdList().get(0).split(",");
-            List<String> list = new ArrayList<>(Arrays.asList(split));
-            occupationGetDto.setDcDutiesPartitionIdList(new ArrayList<>());
-            for (Integer tag : list.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList())) {
-                occupationGetDto.getDcDutiesPartitionIdList().add(tag);
+            if (!split[0].equals("")) {
+                List<String> list = new ArrayList<>(Arrays.asList(split));
+                occupationGetDto.setDcDutiesPartitionIdList(new ArrayList<>());
+                List<Integer> collect;
+                try {
+                    collect = list.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+                } catch (Exception e) {
+                    String msg = "Illegal arguments in DcDutiesPartitionIdList. Must by array of integer";
+                    logger.error(msg);
+                    throw new IllegalArgumentException(msg);
+                }
+                for (Integer tag : collect) {
+                    occupationGetDto.getDcDutiesPartitionIdList().add(tag);
+                }
             }
         }
 
 
         if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
-            String[] split = occupationGetDto.getRtDutiesNameTags().get(0).split(",");
-            occupationGetDto.setRtDutiesNameTags(new ArrayList<>());
-            for (String tag : split) {
-                occupationGetDto.getRtDutiesNameTags().add(tag);
+            String[] split = request.getRtDutiesNameTags().get(0).split(",");
+            if (!split[0].equals("")) {
+                occupationGetDto.setRtDutiesNameTags(new ArrayList<>());
+                for (String tag : split) {
+                    occupationGetDto.getRtDutiesNameTags().add(tag);
+                }
             }
         }
 
