@@ -38,7 +38,37 @@ function submitFormFail (error) {
     }
 }
 
-export function editOccup(editingOccupId, data, dispatch) {
+export function editOccup(editingOccupId, formData, dispatch) {
+    /*
+     - якщо змінили описовий текст і треба зберегти зміни для усіх пов'язаних посад,
+       то передаємо новий текст у полі text та idText старого тексту
+     - якщо змінили описовий текст і треба зберегти зміни ЛИШЕ ДЛЯ ЦІЄЇ ПОСАДИ,
+       але для інших посад які використовують попередній текст, залишити його,
+       то передаємо новий текст, а idText=null
+     - якщо описовий текст залишили без змін, передаємо старі text і idText
+     */
+    let data = {
+        ...formData,
+        responsibilities: formData.responsibilities.map((item, i) => {
+            return {
+                ...item,
+                idText: !item.updateTextInRelativeOccup ? null : item.idText
+            };
+        }),
+        haveToKnow: formData.haveToKnow.map((item, i) => {
+            return {
+                ...item,
+                idText: !item.updateTextInRelativeOccup ? null : item.idText
+            };
+        }),
+        qualiffRequir: formData.qualiffRequir.map((item, i) => {
+            return {
+                ...item,
+                idText: !item.updateTextInRelativeOccup ? null : item.idText
+            };
+        })
+    };
+
     dispatch(submitFormRequest(data));
 
     //тут проміс треба для redux-form
@@ -116,13 +146,6 @@ export function clarificationInpChange(newVal) {
 export function clarifiedOccupInpChange(newVal) {
     return {
         type: EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
-        newVal
-    }
-}
-
-export function inpIsVirtualChange(newVal) {
-    return {
-        type: EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE,
         newVal
     }
 }

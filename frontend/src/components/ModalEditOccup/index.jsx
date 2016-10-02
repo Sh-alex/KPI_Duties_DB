@@ -37,7 +37,6 @@ import {
     occupationGroupInpChange,
     clarificationInpChange,
     clarifiedOccupInpChange,
-    inpIsVirtualChange
 } from "../../actions/editOccup"
 
 import {
@@ -58,18 +57,18 @@ class ModalEditOccup extends Component {
                 'occupationName': '',
                 'occupationNameMin': ''
             },
-            features: {
-                'isIndependent': false,
-                'isVirtual': false
-            },
-            duration: {
-                'creatingInStateDate': null,
-                'creatingInKPIDate': null,
-                'cancelingInStateDate': null,
-                'cancelingInKPIDate': null
-            },
+            durations: [
+                {
+                    "id": null,
+                    "start": null,
+                    "stop": null,
+                    "inKpi": false,
+                    "isVirtual": false
+                }
+            ],
             codes: [
                 {
+                    'id': null,
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'codeKP': null,
@@ -84,26 +83,32 @@ class ModalEditOccup extends Component {
             ],
             responsibilities: [
                 {
+                    'updateTextInRelativeOccup': -1,
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
-                    'id': null
+                    'idDates': null,
+                    'idText': null
                 }
             ],
             haveToKnow: [
                 {
+                    'updateTextInRelativeOccup': -1,
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
-                    'id': null
+                    'idDates': null,
+                    'idText': null
                 }
             ],
             qualiffRequir: [
                 {
+                    'updateTextInRelativeOccup': -1,
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
-                    'id': null
+                    'idDates': null,
+                    'idText': null
                 }
             ]
         });
@@ -141,12 +146,12 @@ export default reduxForm(
             // 'name.clarification',
             'name.occupationName',
             'name.occupationNameMin',
-            'features.isIndependent',
-            'features.isVirtual',
-            'duration.creatingInStateDate',
-            'duration.creatingInKPIDate',
-            'duration.cancelingInStateDate',
-            'duration.cancelingInKPIDate',
+            'durations[].id',
+            'durations[].start',
+            'durations[].stop',
+            'durations[].inKpi',
+            'durations[].isVirtual',
+            'codes[].id',
             'codes[].portionStartDate',
             'codes[].portionEndDate',
             'codes[].codeKP',
@@ -158,17 +163,23 @@ export default reduxForm(
             'codes[].codeZKPPTRText',
             'codes[].codeDKHPText',
             'responsibilities[].text',
-            'responsibilities[].id',
+            'responsibilities[].idText',
+            'responsibilities[].idDates',
+            'responsibilities[].updateTextInRelativeOccup',
             'responsibilities[].portionStartDate',
             'responsibilities[].portionEndDate',
             'haveToKnow[].text',
-            'haveToKnow[].id',
+            'haveToKnow[].idText',
+            'haveToKnow[].idDates',
+            'haveToKnow[].updateTextInRelativeOccup',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
             'qualiffRequir[].text',
-            'qualiffRequir[].id',
+            'qualiffRequir[].idText',
+            'qualiffRequir[].idDates',
+            'qualiffRequir[].updateTextInRelativeOccup',
             'qualiffRequir[].portionStartDate',
-            'qualiffRequir[].portionEndDate'
+            'qualiffRequir[].portionEndDate',
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,
@@ -250,10 +261,6 @@ export default reduxForm(
             },
             dismissModalAddNewETDKCodeAlert() {
                 return dispatch( clearETDKCodeAddingMsg() );
-            },
-
-            changeAddFormInpIsVirtual(newVal){
-                return dispatch( inpIsVirtualChange(newVal) );
             }
         }
     }

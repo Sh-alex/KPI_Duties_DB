@@ -57,6 +57,9 @@ export default function FormEditOccupInfoCodesPortion(props) {
     return <div className={`inp-portions__item ${props.portionItemClassName}`}>
         {topCtrlPart}
         <div className="row">
+            <input
+                type="hidden"
+                {...props.codesPortionFields.id} />
             <div className="col-sm-6">
                 <div className={portionStartDateFormGroupClass}>
                     <label htmlFor={"inp-codes-portion-start-date"+props.portionKey} className="col-sm-4 control-label">

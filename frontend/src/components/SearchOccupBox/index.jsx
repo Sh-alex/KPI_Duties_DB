@@ -65,6 +65,10 @@ class SearchOccupBox extends Component {
                         toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
                     />
                     <SearchOccupBoxRes
+                        occupationGroupList={this.props.occupationGroupList}
+                        clarifiedOccupationList={this.props.clarifiedOccupationList}
+                        clarificationList={this.props.clarificationList}
+
                         searchResData={this.props.searchResData}
                         boxIsExpanded={this.state.searchResultsIsExpanded}
                         onEditItem={this.props.handleEditItem}

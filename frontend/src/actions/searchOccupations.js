@@ -4,25 +4,15 @@ import { SEARCH_OCCUPATION } from '../constants/API_URIs';
 export default function searchOccupations({data, onRequest, onSucces, onFail}) {
     let searchGetParams = "?" +
         "searchType=" + data.searchType +
-        "&occupGroupVal=" + data.occupGroupVal +
+        "&occupGroupVal=" + (data.occupGroupVal || "") +
         "&searchText=" + data.searchText +
-        "&searchTags=" + data.searchTags;
-    if(data.creatingInStateDate)
-        searchGetParams += "" +
-            "&creatingInStateDate_from=" + (data.creatingInStateDate.from && moment(data.creatingInStateDate.from).format("YYYY-MM-DD")) +
-            "&creatingInStateDate_to=" + (data.creatingInStateDate.to && moment(data.creatingInStateDate.to).format("YYYY-MM-DD"));
-    if(data.creatingInKPIDate)
-        searchGetParams += "" +
-            "&creatingInKPIDate_from=" + (data.creatingInKPIDate.from && moment(data.creatingInKPIDate.from).format("YYYY-MM-DD")) +
-            "&creatingInKPIDate_to=" + (data.creatingInKPIDate.to && moment(data.creatingInKPIDate.to).format("YYYY-MM-DD"));
-    if(data.cancelingInStateDate)
-        searchGetParams += "" +
-            "&cancelingInStateDate_from=" + (data.cancelingInStateDate.from && new Date(data.cancelingInStateDate.from).format("YYYY-MM-DD")) +
-            "&cancelingInStateDate_to=" + (data.cancelingInStateDate.to && moment(data.cancelingInStateDate.to).format("YYYY-MM-DD"));
-    if(data.cancelingInKPIDate)
-        searchGetParams += "" +
-            "&cancelingInKPIDate_from=" + (data.cancelingInKPIDate.from && moment(data.cancelingInKPIDate.from).format("YYYY-MM-DD")) +
-            "&cancelingInKPIDate_to=" + (data.cancelingInKPIDate.to && moment(data.cancelingInKPIDate.to).format("YYYY-MM-DD"));
+        "&searchTags=" + data.searchTags +
+        "&inKpi=" + data.inKpi +
+        "&searchTags=" + data.searchTags +
+        "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
+        "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
+        "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +
+        "&stopTo=" + (data.stopTo && moment(data.stopTo).format("YYYY-MM-DD") || "");
 
     onRequest(data, searchGetParams);
 
