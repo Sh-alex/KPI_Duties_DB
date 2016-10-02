@@ -258,18 +258,19 @@ public class OccupationConverterImpl implements OccupationConverter {
             occupationGetDto.setInKpi(request.getInKpi().get(0));
         }
 
-        if (occupationGetDto.getDcDutiesPartitionIdList() != null && !occupationGetDto.getInKpi().isEmpty()) {
-            String[] split = occupationGetDto.getDcDutiesPartitionIdList().get(0).split(",");
-            occupationGetDto.getDcDutiesPartitionIdList().clear();
-            for (String tag : split) {
+        if (request.getDcDutiesPartitionIdList() != null && !request.getDcDutiesPartitionIdList().isEmpty()) {
+            String[] split = request.getDcDutiesPartitionIdList().get(0).split(",");
+            List<String> list = new ArrayList<>(Arrays.asList(split));
+            occupationGetDto.setDcDutiesPartitionIdList(new ArrayList<>());
+            for (Integer tag : list.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList())) {
                 occupationGetDto.getDcDutiesPartitionIdList().add(tag);
             }
         }
 
 
-        if (occupationGetDto.getRtDutiesNameTags() != null && !occupationGetDto.getRtDutiesNameTags().isEmpty()) {
+        if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
             String[] split = occupationGetDto.getRtDutiesNameTags().get(0).split(",");
-            occupationGetDto.getRtDutiesNameTags().clear();
+            occupationGetDto.setRtDutiesNameTags(new ArrayList<>());
             for (String tag : split) {
                 occupationGetDto.getRtDutiesNameTags().add(tag);
             }

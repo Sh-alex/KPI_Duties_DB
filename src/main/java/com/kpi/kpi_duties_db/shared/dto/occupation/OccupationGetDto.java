@@ -19,7 +19,7 @@ public class OccupationGetDto {
     @NotNull
     private String searchType;
 
-    private List<String> dcDutiesPartitionIdList;
+    private List<Integer> dcDutiesPartitionIdList;
 
     private String rtDutiesName;
 
@@ -43,11 +43,11 @@ public class OccupationGetDto {
         this.searchType = searchType;
     }
 
-    public List<String> getDcDutiesPartitionIdList() {
+    public List<Integer> getDcDutiesPartitionIdList() {
         return dcDutiesPartitionIdList;
     }
 
-    public void setDcDutiesPartitionIdList(List<String> dcDutiesPartitionIdList) {
+    public void setDcDutiesPartitionIdList(List<Integer> dcDutiesPartitionIdList) {
         this.dcDutiesPartitionIdList = dcDutiesPartitionIdList;
     }
 

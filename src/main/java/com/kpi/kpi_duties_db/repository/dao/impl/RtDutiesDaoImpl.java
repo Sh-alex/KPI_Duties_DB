@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "dcDutiesPartitionId":
-                            criteria.add(Restrictions.in("dcDutiesPartitionId", value));
+                            criteria.add(Restrictions.in("dcDutiesPartitionId", (ArrayList) value));
                             break;
                         case "dcDutiesNames":
                             //OR LIKE
