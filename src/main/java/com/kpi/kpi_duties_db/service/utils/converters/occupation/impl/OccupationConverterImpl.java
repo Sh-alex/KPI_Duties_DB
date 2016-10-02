@@ -12,10 +12,14 @@ import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
 import com.kpi.kpi_duties_db.shared.response.occupation.support.*;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -40,6 +44,9 @@ public class OccupationConverterImpl implements OccupationConverter {
 
     @Autowired
     DcDutiesNameService dcDutiesNameService;
+
+    @Autowired
+    HibernateTemplate hibernateTemplate;
 
     @Override
     public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request) {
@@ -390,21 +397,35 @@ public class OccupationConverterImpl implements OccupationConverter {
                 haveToKnow.setPortionStartDate(rtDutiesMustKnowEntity.getDateStart());
                 haveToKnow.setPortionEndDate(rtDutiesMustKnowEntity.getDateEnd());
 
+                //Знаходжу посади, в яких використовується даний текст
+                Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesMustKnowEntity.class);
+                criteria.add(Restrictions.eq("dcDutiesMustKnowId", rtDutiesMustKnowEntity.getDcDutiesMustKnowId()));
+                List<RtDutiesMustKnowEntity> usingText = criteria.list();
+                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                haveToKnow.setUsingOccupations(idDuties);
+
                 haveToKnowList.add(haveToKnow);
             }
             dataInItem.setHaveToKnow(haveToKnowList);
 
             List<Requirement> responsibilitiesList = new ArrayList<>();
             for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
-                Requirement responsibilities = new Requirement();
-                responsibilities.setIdText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
-                responsibilities.setText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity().getText());
+                Requirement responsibility = new Requirement();
+                responsibility.setIdText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
+                responsibility.setText(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity().getText());
 
-                responsibilities.setIdDates(rtDutiesTaskAndResponsibilitiesEntity.getId());
-                responsibilities.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
-                responsibilities.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
+                responsibility.setIdDates(rtDutiesTaskAndResponsibilitiesEntity.getId());
+                responsibility.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
+                responsibility.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
 
-                responsibilitiesList.add(responsibilities);
+                //Знаходжу посади, в яких використовується даний текст
+                Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesTaskAndResponsibilitiesEntity.class);
+                criteria.add(Restrictions.eq("dcDutiesTasksAndResponsibilitiesId", rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId()));
+                List<RtDutiesTaskAndResponsibilitiesEntity> usingText = criteria.list();
+                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                responsibility.setUsingOccupations(idDuties);
+
+                responsibilitiesList.add(responsibility);
             }
             dataInItem.setResponsibilities(responsibilitiesList);
 
@@ -417,6 +438,13 @@ public class OccupationConverterImpl implements OccupationConverter {
                 qualiffRequir.setIdDates(rtDutiesQualificationRequirementsEntity.getId());
                 qualiffRequir.setPortionStartDate(rtDutiesQualificationRequirementsEntity.getDateStart());
                 qualiffRequir.setPortionEndDate(rtDutiesQualificationRequirementsEntity.getDateEnd());
+
+                //Знаходжу посади, в яких використовується даний текст
+                Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesQualificationRequirementsEntity.class);
+                criteria.add(Restrictions.eq("dcDutiesQualificationRequirementsId", rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId()));
+                List<RtDutiesQualificationRequirementsEntity> usingText = criteria.list();
+                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                qualiffRequir.setUsingOccupations(idDuties);
 
                 qualiffRequirList.add(qualiffRequir);
             }
