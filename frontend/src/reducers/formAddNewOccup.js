@@ -150,7 +150,7 @@ export default function formEditOccupInfo(state, action) {
                                     },
                                     "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
                                         "_isFieldValue": true
                                     },
                                     "idDates": {
@@ -189,7 +189,7 @@ export default function formEditOccupInfo(state, action) {
                                      },
                                      "idText": {
                                          "initial": null,
-                                         "value": action.data.id,
+                                         "value": action.data.idText,
                                          "_isFieldValue": true
                                      },
                                      "idDates": {
@@ -228,7 +228,7 @@ export default function formEditOccupInfo(state, action) {
                                     },
                                     "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
                                         "_isFieldValue": true
                                     },
                                     "idDates": {
@@ -258,7 +258,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
                             action.newVal.textValue
                         )
                     },
@@ -266,7 +266,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
                             action.newVal.textValue
                         )
                     }
@@ -282,7 +282,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     },
@@ -290,7 +290,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     }

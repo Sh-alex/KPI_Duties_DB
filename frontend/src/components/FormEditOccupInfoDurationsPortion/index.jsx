@@ -113,7 +113,7 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                             <div className="col-xs-12 col-sm-offset-4 col-sm-8">
                                 <div className="checkbox">
                                     <label>
-                                        <input {...props.fields.isVirtual} type="checkbox" />
+                                        <input {...props.fields.virtual} type="checkbox" />
                                         Є "віртуальною посадою"
                                     </label>
                                 </div>

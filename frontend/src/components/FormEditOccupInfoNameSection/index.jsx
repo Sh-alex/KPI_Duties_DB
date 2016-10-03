@@ -89,13 +89,14 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     }}
                                     data={[
                                         {
-                                            "id": -1,
+                                            "id": null,
                                             "textValue": "-(Відсутня)-"
                                         },
                                         ...this.props.clarifiedOccupationList.items
                                     ]}
+                                    value={nameFields.clarifiedOccup.value || null}
                                     defaultValue={{
-                                        "id": -1,
+                                        "id": null,
                                         "textValue": "-(Відсутня)-"
                                     }}
                                     valueField='id'

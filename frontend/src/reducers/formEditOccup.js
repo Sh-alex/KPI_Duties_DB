@@ -152,7 +152,7 @@ export default function formEditOccup(state, action) {
                                     },
                                     "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
                                         "_isFieldValue": true
                                     },
                                     "idDates": {
@@ -191,7 +191,7 @@ export default function formEditOccup(state, action) {
                                     },
                                     "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
                                         "_isFieldValue": true
                                     },
                                     "idDates": {
@@ -230,7 +230,7 @@ export default function formEditOccup(state, action) {
                                     },
                                     "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
                                         "_isFieldValue": true
                                     },
                                     "idDates": {
@@ -258,7 +258,7 @@ export default function formEditOccup(state, action) {
                     },
                     'clarifiedOccup': {
                         "initial": null,
-                        "value": action.editingData.data.clarifiedOccup || -1,
+                        "value": action.editingData.data.clarifiedOccup || null,
                         "_isFieldValue": true
                     },
                     'clarification': {
@@ -299,9 +299,9 @@ export default function formEditOccup(state, action) {
                             "value": portion.inKpi || false,
                             "_isFieldValue": true
                         },
-                        'isVirtual': {
+                        'virtual': {
                             "initial": null,
-                            "value": portion.isVirtual || false,
+                            "value": portion.virtual || false,
                             "_isFieldValue": true
                         }
                     }
@@ -483,7 +483,7 @@ export default function formEditOccup(state, action) {
         //                 ...state.name.occupationName,
         //                 value: calcNewOccupationNameVal(
         //                     state.name.occupationName.value,
-        //                     state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+        //                     state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
         //                     action.newVal.textValue
         //                 )
         //             },
@@ -491,7 +491,7 @@ export default function formEditOccup(state, action) {
         //                 ...state.name.occupationNameMin,
         //                 value: calcNewOccupationNameVal(
         //                     state.name.occupationNameMin.value,
-        //                     state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
+        //                     state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
         //                     action.newVal.textValue
         //                 )
         //             }
@@ -507,7 +507,7 @@ export default function formEditOccup(state, action) {
         //                 ...state.name.occupationName,
         //                 value: calcNewOccupationNameVal(
         //                     state.name.occupationName.value,
-        //                     action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+        //                     action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
         //                     state.clarificationTextVal
         //                 )
         //             },
@@ -515,7 +515,7 @@ export default function formEditOccup(state, action) {
         //                 ...state.name.occupationNameMin,
         //                 value: calcNewOccupationNameVal(
         //                     state.name.occupationNameMin.value,
-        //                     action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+        //                     action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
         //                     state.clarificationTextVal
         //                 )
         //             }

@@ -45,7 +45,7 @@ import './styles.less'
 let initialFormState = {
     name: {
         'occupationGroup': null,
-        'clarifiedOccup': -1,
+        'clarifiedOccup': null,
         'clarification': null,
         'occupationName': '',
         'occupationNameMin': ''
@@ -56,7 +56,7 @@ let initialFormState = {
             "start": null,
             "stop": null,
             "inKpi": false,
-            "isVirtual": false
+            "virtual": false
         }
     ],
     codes: [
@@ -141,7 +141,7 @@ export default reduxForm(
             'durations[].start',
             'durations[].stop',
             'durations[].inKpi',
-            'durations[].isVirtual',
+            'durations[].virtual',
             'codes[].id',
             'codes[].portionStartDate',
             'codes[].portionEndDate',

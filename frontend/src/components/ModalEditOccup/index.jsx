@@ -52,7 +52,7 @@ class ModalEditOccup extends Component {
         this.props.initializeForm({
             name: {
                 'occupationGroup': null,
-                'clarifiedOccup': -1,
+                'clarifiedOccup': null,
                 'clarification': null,
                 'occupationName': '',
                 'occupationNameMin': ''
@@ -63,7 +63,7 @@ class ModalEditOccup extends Component {
                     "start": null,
                     "stop": null,
                     "inKpi": false,
-                    "isVirtual": false
+                    "virtual": false
                 }
             ],
             codes: [
@@ -150,7 +150,7 @@ export default reduxForm(
             'durations[].start',
             'durations[].stop',
             'durations[].inKpi',
-            'durations[].isVirtual',
+            'durations[].virtual',
             'codes[].id',
             'codes[].portionStartDate',
             'codes[].portionEndDate',

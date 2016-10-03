@@ -126,7 +126,7 @@ export default class FormEditOccupInfo extends Component {
             "start": null,
             "stop": null,
             "inKpi": false,
-            "isVirtual": false
+            "virtual": false
         });
     }
 
