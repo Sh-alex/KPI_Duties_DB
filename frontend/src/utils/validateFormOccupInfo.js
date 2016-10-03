@@ -7,14 +7,7 @@ export default function validateFormEditOccupInfo(formFields, props) {
             'occupationName': null,
             'occupationNameMin': null
         },
-        features: {
-            'isIndependent': null,
-            'isVirtual': null
-        },
-        duration: {
-            'creatingInStateDate': null,
-            'creatingInKPIDate': null
-        },
+        durations: [ ],
         codes: [ ],
         responsibilities: [ ],
         haveToKnow: [ ],
@@ -29,12 +22,13 @@ export default function validateFormEditOccupInfo(formFields, props) {
     if(!formFields.name.occupationNameMin)
         errors.name.occupationNameMin = "Це поле є обов'язковим!";
 
-    if(!formFields.duration.creatingInStateDate && !formFields.duration.creatingInKPIDate)
-        errors.duration = {
-            creatingInStateDate: "Не обрано жодної з дат створення посади!",
-            creatingInKPIDate: "Не обрано жодної з дат створення посади!"
-        };
-
+    errors.durations = formFields.durations.map( (portion, portionIndex, fullArr) => {
+        return {
+            start: !portion.start && "Не обрано дати створення посади!",
+            stop: portion.stop && (portion.stop > portion.start) && "Дата відміни має бути більшою за дату створення",
+        }
+    });
+    
     errors.codes = formFields.codes.map( (portion, portionIndex, fullArr) => {
         let inputedAnyCode = portion.codeKP || portion.codeETDK || portion.codeZKPPTR || portion.codeDKHP;
         return {
@@ -54,7 +48,6 @@ export default function validateFormEditOccupInfo(formFields, props) {
             //'portionEndDate': (fullArr.length > 1 && portionIndex < fullArr.length && !portion.portionEndDate) ? "Для попередніх наборів має бути встановлена дата припинення дії тексту!" : null,
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
             // 'text': !portion.text && "Не введено тексту!",
-            // 'id': null
         };
     });
     errors.haveToKnow = formFields.haveToKnow.map( (portion, portionIndex, fullArr) => {
@@ -62,7 +55,6 @@ export default function validateFormEditOccupInfo(formFields, props) {
             'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
             // 'text': !portion.text && "Не введено тексту!",
-            // 'id': null
         };
     });
     errors.qualiffRequir = formFields.qualiffRequir.map( (portion, portionIndex, fullArr) => {
@@ -70,7 +62,6 @@ export default function validateFormEditOccupInfo(formFields, props) {
             'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
             // 'text': !portion.text && "Не введено тексту!",
-            // 'id': null
         };
     });
 

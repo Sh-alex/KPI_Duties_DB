@@ -64,6 +64,11 @@ export default function formEditOccupInfo(state, action) {
                             ...state,
                             codes: action.data.codes.map(portion => {
                                 return {
+                                    "id": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
                                     "portionStartDate": {
                                         "initial": null,
                                         "value": null,
@@ -139,13 +144,18 @@ export default function formEditOccupInfo(state, action) {
                                         "_isFieldValue": true
                                     },
                                     "text": {
-                                        "initial": null,
+                                        "initial": "",
                                         "value": action.data.text,
                                         "_isFieldValue": true
                                     },
-                                    "id": {
+                                    "idText": {
                                         "initial": null,
                                         "value": action.data.id,
+                                        "_isFieldValue": true
+                                    },
+                                    "idDates": {
+                                        "initial": null,
+                                        "value": null,
                                         "_isFieldValue": true
                                     }
                                 }
@@ -173,13 +183,18 @@ export default function formEditOccupInfo(state, action) {
                                          "_isFieldValue": true
                                      },
                                      "text": {
-                                         "initial": null,
+                                         "initial": "",
                                          "value": action.data.text,
                                          "_isFieldValue": true
                                      },
-                                     "id": {
+                                     "idText": {
                                          "initial": null,
                                          "value": action.data.id,
+                                         "_isFieldValue": true
+                                     },
+                                     "idDates": {
+                                         "initial": null,
+                                         "value": null,
                                          "_isFieldValue": true
                                      }
                                  }
@@ -207,13 +222,18 @@ export default function formEditOccupInfo(state, action) {
                                         "_isFieldValue": true
                                     },
                                     "text": {
-                                        "initial": null,
+                                        "initial": "",
                                         "value": action.data.text,
                                         "_isFieldValue": true
                                     },
-                                    "id": {
+                                    "idText": {
                                         "initial": null,
                                         "value": action.data.id,
+                                        "_isFieldValue": true
+                                    },
+                                    "idDates": {
+                                        "initial": null,
+                                        "value": null,
                                         "_isFieldValue": true
                                     }
                                 }
@@ -224,55 +244,6 @@ export default function formEditOccupInfo(state, action) {
                     return state;
             }
 
-        case ADD_NEW_OCCUP_INP_IS_VIRTUAL_CHANGE:
-            //якщо не обрано варіант "є віртуальною посадою"
-            if(!action.newVal || action.newVal == "false") {
-                if(state.codes && state.codes.length)
-                    return state;
-                else
-                    return {
-                        ...state,
-                        codes: [
-                            {
-                                "portionStartDate": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "portionEndDate": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeKP": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeETDK": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeZKPPTR": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeDKHP": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                }
-                            }
-                        ]
-                    };
-            }
-            else
-                return {
-                    ...state,
-                    codes: []
-                };
 
         case ADD_NEW_OCCUP_CLARIFICATION_INP_CHANGE:
             return {

@@ -114,10 +114,3 @@ export function clarifiedOccupInpChange(newVal) {
         newVal
     }
 }
-
-export function inpIsVirtualChange(newVal) {
-    return {
-        type: ADD_NEW_OCCUP_INP_IS_VIRTUAL_CHANGE,
-        newVal
-    }
-}

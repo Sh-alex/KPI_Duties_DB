@@ -40,7 +40,11 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
             new Date(props.qualiffRequirPortionFields.portionStartDate.value) || null,
         portionEndDateValue = props.qualiffRequirPortionFields.portionEndDate.value &&
             (new Date(props.qualiffRequirPortionFields.portionEndDate.value) !== "Invalid Date") &&
-            new Date(props.qualiffRequirPortionFields.portionEndDate.value) || null;
+            new Date(props.qualiffRequirPortionFields.portionEndDate.value) || null,
+        showBtnUpdateRelative = props.qualiffRequirPortionFields.updateTextInRelativeOccup &&
+            (props.qualiffRequirPortionFields.updateTextInRelativeOccup.value !== -1),
+        updateRelative = props.qualiffRequirPortionFields.updateTextInRelativeOccup &&
+            props.qualiffRequirPortionFields.updateTextInRelativeOccup.value;
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -51,7 +55,7 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
                         <div className="input-group">
                             <input
                                 type="hidden"
-                                {...props.qualiffRequirPortionFields.id} />
+                                {...props.qualiffRequirPortionFields.idText} />
                             <textarea
                                 {...props.qualiffRequirPortionFields.text}
                                 value={props.qualiffRequirPortionFields.text.value || ""}
@@ -68,6 +72,24 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
                                 >
                                     <i className="fa fa-link" />
                                 </button>
+                                <br/>
+                                {
+                                    showBtnUpdateRelative && (
+                                        <label
+                                            className={`btn btn-default btn-flat should-update-in-other-occup ${updateRelative ? "active" : ""}`}
+                                            title="Оновити також цей текст у посадах які використвоують його"
+                                        >
+                                            <input
+                                                {...props.qualiffRequirPortionFields.updateTextInRelativeOccup}
+                                                type="checkbox"
+                                                autoComplete="off"
+                                                className="hidden"
+                                            />
+                                            {updateRelative ? [<i className="fa fa-check" key="213"/>, " "] : ""}
+                                            <i className="fa fa-fast-forward"/>
+                                        </label>
+                                    )
+                                }
                             </div>
                         </div>
                         <span className="help-block">
@@ -76,6 +98,9 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
                     </div>
                 </div>
                 <div className="col-sm-4">
+                    <input
+                        type="hidden"
+                        {...props.qualiffRequirPortionFields.idDates} />
                     <div className={portionStartDateFormGroupClass}>
                         <label className="center-block">
                             Дата прийняття тексту <br />

@@ -12,7 +12,7 @@ export default class Footer extends Component {
             "Київський політехнічний інститут" www.kpi.ua
           </a>
         </div>
-        <div>
+        <div className="footer-kpi-logo-wrapper">
           <img src={imgKpiLogo} className="footer-kpi-logo" alt="kpi logo" />
         </div>
         <div className="footer-info-block">

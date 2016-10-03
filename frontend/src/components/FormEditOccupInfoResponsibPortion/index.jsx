@@ -49,7 +49,11 @@ export default function FormEditOccupInfoResponsibPortion(props) {
             new Date(props.responsibPortionFields.portionStartDate.value) || null,
         portionEndDateValue = props.responsibPortionFields.portionEndDate.value &&
             (new Date(props.responsibPortionFields.portionEndDate.value) !== "Invalid Date") &&
-            new Date(props.responsibPortionFields.portionEndDate.value) || null;
+            new Date(props.responsibPortionFields.portionEndDate.value) || null,
+        showBtnUpdateRelative = props.responsibPortionFields.updateTextInRelativeOccup &&
+            (props.responsibPortionFields.updateTextInRelativeOccup.value !== -1),
+        updateRelative = props.responsibPortionFields.updateTextInRelativeOccup &&
+            props.responsibPortionFields.updateTextInRelativeOccup.value;
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -60,7 +64,7 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                         <div className="input-group">
                             <input
                                 type="hidden"
-                                {...props.responsibPortionFields.id} />
+                                {...props.responsibPortionFields.idText} />
                             <textarea
                                 {...props.responsibPortionFields.text}
                                 value={props.responsibPortionFields.text.value || ""}
@@ -77,6 +81,24 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                                 >
                                     <i className="fa fa-link" />
                                 </button>
+                                <br/>
+                                {
+                                    showBtnUpdateRelative && (
+                                        <label
+                                            className={`btn btn-default btn-flat should-update-in-other-occup ${updateRelative ? "active" : ""}`}
+                                            title="Оновити також цей текст у посадах які використвоують його"
+                                        >
+                                            <input
+                                                {...props.responsibPortionFields.updateTextInRelativeOccup}
+                                                type="checkbox"
+                                                autoComplete="off"
+                                                className="hidden"
+                                            />
+                                            {updateRelative ? [<i className="fa fa-check" key="321"/>, " "] : ""}
+                                            <i className="fa fa-fast-forward"/>
+                                        </label>
+                                    )
+                                }
                             </div>
                         </div>
                         <span className="help-block">
@@ -85,6 +107,9 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                     </div>
                 </div>
                 <div className="col-sm-4">
+                    <input
+                        type="hidden"
+                        {...props.responsibPortionFields.idDates} />
                     <div className={portionStartDateFormGroupClass}>
                         <label className="center-block">
                             Дата прийняття тексту <br />

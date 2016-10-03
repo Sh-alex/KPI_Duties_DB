@@ -130,6 +130,9 @@ export default class SearchOccupBoxRes extends Component {
                         ) : (
                             <SearchOccupBoxResTbl
                                 searchResData={performedSearchResData}
+                                occupationGroupList={this.props.occupationGroupList}
+                                clarifiedOccupationList={this.props.clarifiedOccupationList}
+                                clarificationList={this.props.clarificationList}
                                 sortDirection={this.state.sortDirection}
                                 sortField={this.state.sortField}
                                 expandedItems={this.state.expandedItems}
@@ -150,9 +153,10 @@ export default class SearchOccupBoxRes extends Component {
                                     Показувати по {" "}
                                     <select
                                         value={this.state.selectedPortionSize}
-                                        onChange={ e => this.setState({
-                                            selectedPortionSize: Number.parseInt(e.currentTarget.value)
-                                        })
+                                        onChange={ e =>
+                                            this.setState({
+                                                selectedPortionSize: Number.parseInt(e.currentTarget.value)
+                                            })
                                         }
                                         className="input-sm"
                                     >

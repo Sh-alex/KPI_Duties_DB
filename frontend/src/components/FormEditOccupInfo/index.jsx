@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import ModalAddInfoFromAnotherOccup from "../ModalAddInfoFromAnotherOccup"
 import ModalAddNewOccupKeyWord from "../ModalAddNewOccupKeyWord"
 import FormEditOccupInfoNameSection from "../FormEditOccupInfoNameSection"
-import FormEditOccupInfoFeaturesSection from "../FormEditOccupInfoFeaturesSection"
-import FormEditOccupInfoDurationSection from "../FormEditOccupInfoDurationSection"
+import FormEditOccupInfoDurationsSection from "../FormEditOccupInfoDurationsSection"
 import FormEditOccupInfoCodesSection from "../FormEditOccupInfoCodesSection"
 import FormEditOccupInfoResponsibSection from "../FormEditOccupInfoResponsibSection"
 import FormEditOccupInfoHaveToKnowSection from "../FormEditOccupInfoHaveToKnowSection"
@@ -41,6 +40,8 @@ export default class FormEditOccupInfo extends Component {
         this.handleAddHaveToKnowPortionBtnClick = this.handleAddHaveToKnowPortionBtnClick.bind(this);
         this.handleAddQualiffRequirPortionBtnClick = this.handleAddQualiffRequirPortionBtnClick.bind(this);
         this.handleDelQualiffRequirPortionBtnClick = this.handleDelQualiffRequirPortionBtnClick.bind(this);
+        this.handleAddDurationsPortionBtnClick = this.handleAddDurationsPortionBtnClick.bind(this);
+        this.handleDelDurationsPortionBtnClick = this.handleDelDurationsPortionBtnClick.bind(this);
 
         this.handleOccupationGroupInpChange = this.handleOccupationGroupInpChange.bind(this);
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
@@ -119,6 +120,20 @@ export default class FormEditOccupInfo extends Component {
         this.props.fields.qualiffRequir.removeField(index);
     }
 
+    handleAddDurationsPortionBtnClick() {
+        this.props.fields.durations.addField({
+            "id": null,
+            "start": null,
+            "stop": null,
+            "inKpi": false,
+            "isVirtual": false
+        });
+    }
+
+    handleDelDurationsPortionBtnClick(index) {
+        this.props.fields.durations.removeField(index);
+    }
+
     handleOccupationGroupInpChange(newVal) {
         this.props.fields.name.occupationGroup.onChange(newVal.id);
         this.props.handleOccupationGroupInpChange(newVal);
@@ -142,8 +157,12 @@ export default class FormEditOccupInfo extends Component {
         newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
         this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
-        this.props.fields.responsibilities[resPortionIndex].id.value &&
-            this.props.fields.responsibilities[resPortionIndex].id.onChange(null);
+
+        if(this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup)
+            this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup.onChange(0);
+
+        // this.props.fields.responsibilities[resPortionIndex].id.value &&
+        //     this.props.fields.responsibilities[resPortionIndex].id.onChange(null);
     }
 
     handleHaveToKnowTextChange(newVal, resPortionIndex) {
@@ -154,8 +173,16 @@ export default class FormEditOccupInfo extends Component {
         newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
         this.props.fields.haveToKnow[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
-        this.props.fields.haveToKnow[resPortionIndex].id.value &&
-            this.props.fields.haveToKnow[resPortionIndex].id.onChange(null);
+
+        if(
+            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations &&
+            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations.length &&
+            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup
+        )
+            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup.onChange(0);
+
+        // this.props.fields.haveToKnow[resPortionIndex].id.value &&
+        //     this.props.fields.haveToKnow[resPortionIndex].id.onChange(null);
     }
 
     handleQualiffRequirTextChange(newVal, resPortionIndex) {
@@ -166,22 +193,30 @@ export default class FormEditOccupInfo extends Component {
         newVal = replaceApostrophe(newVal);     //замінюємо апострофи у тексті
         this.props.fields.qualiffRequir[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
-        this.props.fields.qualiffRequir[resPortionIndex].id.value &&
-            this.props.fields.qualiffRequir[resPortionIndex].id.onChange(null);
+
+        if(this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup)
+            this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup.onChange(0);
+
+        // this.props.fields.qualiffRequir[resPortionIndex].id.value &&
+        //     this.props.fields.qualiffRequir[resPortionIndex].id.onChange(null);
     }
 
 
     render() {
         const {
-            fields: { name, features, duration, codes, responsibilities, haveToKnow, qualiffRequir},
+            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir},
             handleSubmit,
             resetForm,
-            invalid,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
             handleBtnAddInfoFromAnotherOccupClick,
             submitting
         } = this.props;
+
+        // if(this.props.occupData)
+        //     var occupUsingResponsibText = this.props.occupData.data.responsibilities.map( item => item.usingOccupations || []),
+        //         occupUsingHaveToKnowText = this.props.occupData.data.haveToKnow.map( item => item.usingOccupations || []),
+        //         occupUsingQualiffRequirText = this.props.occupData.data.qualiffRequir.map( item => item.usingOccupations || []);
 
         let formAlert = !shouldShowServerRespMsg ?
                 "" :
@@ -211,10 +246,10 @@ export default class FormEditOccupInfo extends Component {
                 name.clarification && name.clarification.touched && name.clarification.error ||
                 name.occupationName.touched && name.occupationName.error ||
                 name.occupationNameMin.touched && name.occupationNameMin.error ||
-                features.isIndependent.touched && features.isIndependent.error ||
-                features.isVirtual.touched && features.isVirtual.error ||
-                duration.creatingInStateDate.touched &&  duration.creatingInStateDate.error ||
-                duration.creatingInKPIDate.touched &&  duration.creatingInKPIDate.error ||
+                durations.reduce( (res, portion, fullArr) => {
+                    return res || portion.start.touched &&  portion.start.error ||
+                        portion.stop.touched &&  portion.stop.error;
+                }, false) ||
                 codes.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
@@ -226,186 +261,182 @@ export default class FormEditOccupInfo extends Component {
                 responsibilities.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
-                        portion.text.touched &&  portion.text.error ||
-                        portion.id.touched &&  portion.id.error;
+                        portion.text.touched &&  portion.text.error;
                 }, false) ||
                 haveToKnow.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
-                        portion.text.touched &&  portion.text.error ||
-                        portion.id.touched &&  portion.id.error;
+                        portion.text.touched &&  portion.text.error;
                 }, false) ||
                 qualiffRequir.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
-                        portion.text.touched &&  portion.text.error ||
-                        portion.id.touched &&  portion.id.error;
+                        portion.text.touched &&  portion.text.error;
                 }, false);
 
         return (
-                <div className="form-edit-occup-info-wrapper">
-                    <ModalAddInfoFromAnotherOccup />
-                    <ModalAddNewOccupKeyWord
-                        inpVal={this.state.newClarificationInpVal}
-                        onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
-                        show={this.state.showModalAddNewClarification}
-                        errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
-                        success={this.props.occupNameInfoLists.clarificationList.addingSuccess}
-                        isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
-                        onSave={this.props.addNewClarification}
-                        onAlertDismiss={ this.props.dismissModalAddNewClarificationAlert }
-                        onHide={ () => {
-                            this.setState({showModalAddNewClarification: false});
-                            this.props.dismissModalAddNewClarificationAlert()
-                        }} />
-                    <ModalAddNewOccupKeyWord
-                        inpVal={this.state.newKPCodeInpVal}
-                        onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
-                        show={this.state.showModalAddNewKPCode}
-                        errors={this.props.occupCodesLists.KPCodesList.addingErrors}
-                        success={this.props.occupCodesLists.KPCodesList.addingSuccess}
-                        isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
-                        onSave={this.props.addNewKPCode}
-                        onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
-                        onHide={ () => {
-                            this.setState({showModalAddNewKPCode: false});
-                            this.props.dismissModalAddNewKPCodeAlert()
-                        }} />
-                    <ModalAddNewOccupKeyWord
-                        inpVal={this.state.newETDKCodeInpVal}
-                        onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
-                        show={this.state.showModalAddNewETDKCode}
-                        errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
-                        success={this.props.occupCodesLists.ETDKCodesList.addingSuccess}
-                        isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
-                        onSave={this.props.addNewETDKCode}
-                        onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
-                            onHide={ () => {
-                            this.setState({showModalAddNewETDKCode: false});
-                            this.props.dismissModalAddNewETDKCodeAlert()
-                        }} />
-                    <ModalAddNewOccupKeyWord
-                        inpVal={this.state.newDKHPCodeInpVal}
-                        onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
-                        show={this.state.showModalAddNewDKHPCode}
-                        errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
-                        success={this.props.occupCodesLists.DKHPCodesList.addingSuccess}
-                        isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
-                        onSave={this.props.addNewDKHPCode}
-                        onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
-                            onHide={ () => {
-                            this.setState({showModalAddNewDKHPCode: false});
-                            this.props.dismissModalAddNewDKHPCodeAlert()
-                        }} />
-                    <ModalAddNewOccupKeyWord
-                        inpVal={this.state.newZKPPTRCodeInpVal}
-                        onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
-                        show={this.state.showModalAddNewZKPPTRCode}
-                        errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
-                        success={this.props.occupCodesLists.ZKPPTRCodesList.addingSuccess}
-                        isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
-                        onSave={this.props.addNewZKPPTRCode}
-                        onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
-                            onHide={ () => {
-                            this.setState({showModalAddNewZKPPTRCode: false});
-                            this.props.dismissModalAddNewZKPPTRCodeAlert()
-                        }} />
-                    {/*id="add-form" */}
-                    <form className="form-horizontal form-edit-occup-info" onSubmit={handleSubmit} role="form">
-                        <div className="form-inner">
-                            <FormEditOccupInfoNameSection
-                                nameFields={name}
-                                {...this.props.occupNameInfoLists}
-                                handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
-                                handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
-                                handleClarificationInpChange={this.handleClarificationInpChange}
-                                openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
-                            <FormEditOccupInfoFeaturesSection
-                                featuresFields={features}
-                                changeAddFormInpIsVirtual={this.props.changeAddFormInpIsVirtual}
-                            />
-                            <FormEditOccupInfoDurationSection durationFields={duration} />
-                            <FormEditOccupInfoCodesSection
-                                codesFields={codes}
-                                {...this.props.occupCodesLists}
-                                noCodesMsg="Для віртуальних посад не може бути кодів"
-                                openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
-                                openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
-                                openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
-                                openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
-                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                                handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
-                                handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
-                            <FormEditOccupInfoResponsibSection
-                                responsibFields={responsibilities}
-                                handleTextChange={this.handleResponsibTextChange}
-                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                                handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
-                                handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
-                            <FormEditOccupInfoHaveToKnowSection
-                                haveToKnowFields={haveToKnow}
-                                handleTextChange={this.handleHaveToKnowTextChange}
-                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                                handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
-                                handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
-                            <FormEditOccupInfoQualiffRequirSection
-                                qualiffRequirFields={qualiffRequir}
-                                handleTextChange={this.handleQualiffRequirTextChange}
-                                handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                                handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
-                                handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
-                            <div>
-                                { formAlert }
-                                { validationError && (
-                                    <Alert bsStyle="danger">
-                                        <h4>
-                                            <i className="icon fa fa-warning"/>
-                                            От халепа! :(
-                                        </h4>
-                                        <p>
-                                            {'Виправте помилки на формі!'}
-                                        </p>
-                                    </Alert>
-                                )
-                                }
-                            </div>
-                            <div className="form-group">
-                                {this.props.cancelSearch && (
-                                    <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
-                                        Відміна
-                                    </button>
-                                )}
+            <div className="form-edit-occup-info-wrapper">
+                <ModalAddInfoFromAnotherOccup />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newClarificationInpVal}
+                    onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
+                    show={this.state.showModalAddNewClarification}
+                    errors={this.props.occupNameInfoLists.clarificationList.addingErrors}
+                    success={this.props.occupNameInfoLists.clarificationList.addingSuccess}
+                    isLoading={this.props.occupNameInfoLists.clarificationList.isAddingNewVal || this.props.occupNameInfoLists.clarificationList.isFetching}
+                    onSave={this.props.addNewClarification}
+                    onAlertDismiss={ this.props.dismissModalAddNewClarificationAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewClarification: false});
+                        this.props.dismissModalAddNewClarificationAlert()
+                    }} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newKPCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewKPCode}
+                    errors={this.props.occupCodesLists.KPCodesList.addingErrors}
+                    success={this.props.occupCodesLists.KPCodesList.addingSuccess}
+                    isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
+                    onSave={this.props.addNewKPCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewKPCode: false});
+                        this.props.dismissModalAddNewKPCodeAlert()
+                    }} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newETDKCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewETDKCode}
+                    errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
+                    success={this.props.occupCodesLists.ETDKCodesList.addingSuccess}
+                    isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
+                    onSave={this.props.addNewETDKCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewETDKCode: false});
+                        this.props.dismissModalAddNewETDKCodeAlert()
+                    }} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newDKHPCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewDKHPCode}
+                    errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
+                    success={this.props.occupCodesLists.DKHPCodesList.addingSuccess}
+                    isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
+                    onSave={this.props.addNewDKHPCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewDKHPCode: false});
+                        this.props.dismissModalAddNewDKHPCodeAlert()
+                    }} />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newZKPPTRCodeInpVal}
+                    onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
+                    show={this.state.showModalAddNewZKPPTRCode}
+                    errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
+                    success={this.props.occupCodesLists.ZKPPTRCodesList.addingSuccess}
+                    isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
+                    onSave={this.props.addNewZKPPTRCode}
+                    onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewZKPPTRCode: false});
+                        this.props.dismissModalAddNewZKPPTRCodeAlert()
+                    }} />
+                {/*id="add-form" */}
+                <form className="form-horizontal form-edit-occup-info" onSubmit={handleSubmit} role="form">
+                    <div className="form-inner">
+                        <FormEditOccupInfoNameSection
+                            nameFields={name}
+                            {...this.props.occupNameInfoLists}
+                            handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
+                            handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
+                            handleClarificationInpChange={this.handleClarificationInpChange}
+                            openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
+                        <FormEditOccupInfoDurationsSection
+                            durationsFields={durations}
+                            handleAddPortionBtnClick={this.handleAddDurationsPortionBtnClick}
+                            handleDelPortionBtnClick={this.handleDelDurationsPortionBtnClick}
+                        />
+                        <FormEditOccupInfoCodesSection
+                            codesFields={codes}
+                            {...this.props.occupCodesLists}
+                            openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
+                            openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
+                            openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
+                            openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                            handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
+                            handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
+                        <FormEditOccupInfoResponsibSection
+                            responsibFields={responsibilities}
+                            handleTextChange={this.handleResponsibTextChange}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                            handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
+                            handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
+                        <FormEditOccupInfoHaveToKnowSection
+                            haveToKnowFields={haveToKnow}
+                            handleTextChange={this.handleHaveToKnowTextChange}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                            handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
+                            handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
+                        <FormEditOccupInfoQualiffRequirSection
+                            qualiffRequirFields={qualiffRequir}
+                            handleTextChange={this.handleQualiffRequirTextChange}
+                            handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
+                            handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
+                            handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
+                        <div>
+                            { formAlert }
+                            { validationError && (
+                                <Alert bsStyle="danger">
+                                    <h4>
+                                        <i className="icon fa fa-warning"/>
+                                        От халепа! :(
+                                    </h4>
+                                    <p>
+                                        {'Виправте помилки на формі!'}
+                                    </p>
+                                </Alert>
+                            )
+                            }
+                        </div>
+                        <div className="form-group">
+                            {this.props.cancelSearch && (
+                                <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
+                                    Відміна
+                                </button>
+                            )}
 
-                                <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
-                                    <button
-                                        type="reset"
-                                        onClick={resetForm}
-                                        disabled={submitting}
-                                        className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
-                                    >
-                                        Очистити форму <i className="fa fa-refresh" />
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        disabled={submitting}
-                                        className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
-                                    >
-                                        {
-                                            submitting ? (
-                                                <span>
+                            <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
+                                <button
+                                    type="reset"
+                                    onClick={resetForm}
+                                    disabled={submitting}
+                                    className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
+                                >
+                                    Очистити форму <i className="fa fa-refresh" />
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={submitting}
+                                    className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
+                                >
+                                    {
+                                        submitting ? (
+                                            <span>
                                                     Завантаження {" "}
-                                                    <i className="fa fa-spinner fa-pulse" />
+                                                <i className="fa fa-spinner fa-pulse" />
                                                 </span>
-                                            ) : (
-                                                this.props.submitBtnText
-                                            )
-                                        }
-                                    </button>
-                                </div>
+                                        ) : (
+                                            this.props.submitBtnText
+                                        )
+                                    }
+                                </button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
         )
     }
 }

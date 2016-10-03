@@ -6,8 +6,11 @@ import {
     MATCH_STRING,
     CONTAINS_STRING,
     ALL_TAGS,
-    ANY
-} from "../../constants/searchTypes"
+    ANY,
+
+    ONLY_IN_KPI,
+    ONLY_IN_STATE
+} from "../../constants/searchOccupationsTypes"
 
 import SearchOccupationsForm from "../SearchOccupationsForm"
 import BoxExpandBtn from "../BoxExpandBtn"
@@ -17,33 +20,18 @@ export default function SearchOccupBoxForm(props) {
 
     if(Object.keys(props.searchQuery).length) {
         let querySearchType = props.searchQuery.searchType,
+            queryInKpi = props.searchQuery.inKpi,
             queryOccupGroupVal = props.searchQuery.occupGroupVal;
         formFields = {
             searchType: [SOME_TAGS, MATCH_STRING, CONTAINS_STRING, ALL_TAGS, ANY].includes(querySearchType) ? querySearchType : ANY,
             occupGroupVal: props.occupationGroupList.items.includes(queryOccupGroupVal) ? queryOccupGroupVal : null,
             searchText: props.searchQuery.searchText,
             searchTags: props.searchQuery.searchTags.split(","),
-            inKpi: props.searchQuery.inKpi,
-            "creatingInStateDate": {
-                "takeIntoAccount": props.searchQuery.creatingInStateDate_takeIntoAccount,
-                "from": props.searchQuery.creatingInStateDate_from,
-                "to": props.searchQuery.creatingInStateDate_to
-            },
-            "creatingInKPIDate": {
-                "takeIntoAccount": props.searchQuery.creatingInKPIDate_takeIntoAccount,
-                "from": props.searchQuery.creatingInKPIDate_from,
-                "to": props.searchQuery.creatingInKPIDate_to
-            },
-            "cancelingInStateDate": {
-                "takeIntoAccount": props.searchQuery.cancelingInStateDate_takeIntoAccount,
-                "from": props.searchQuery.cancelingInStateDate_from,
-                "to": props.searchQuery.cancelingInStateDate_to
-            },
-            "cancelingInKPIDate": {
-                "takeIntoAccount": props.searchQuery.cancelingInKPIDate_takeIntoAccount,
-                "from": props.searchQuery.cancelingInKPIDate_from,
-                "to": props.searchQuery.cancelingInKPIDate_to
-            }
+            inKpi: [ONLY_IN_KPI, ONLY_IN_STATE, ANY].includes(queryInKpi) ? queryInKpi : ANY,
+            startFrom: props.searchQuery.startFrom,
+            startTo: props.searchQuery.startFrom,
+            stopFrom: props.searchQuery.startFrom,
+            stopTo: props.searchQuery.startFrom
         };
     }
 

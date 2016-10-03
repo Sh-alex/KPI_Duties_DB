@@ -133,20 +133,6 @@ export default function SearchOccupBoxResTblRowDetails(props) {
                         </div>
                     </div>
                     <div className="row occupation-details__row">
-                        <div className="col-sm-3 occupation-details__title">
-                            Є самостійною посадою:
-                        </div>
-                        <div className="col-sm-3 occupation-details__data">
-                            {props.data.occupationNameMin ? "Так" : "ні"}
-                        </div>
-                        <div className="col-sm-3 occupation-details__title" style={{paddingLeft: "5.5%"}}>
-                            Є віртуальною посадою:
-                        </div>
-                        <div className="col-sm-3 occupation-details__data" style={{paddingLeft: "3.6%"}}>
-                            {props.data.virtual ? "Так" : "ні"}
-                        </div>
-                    </div>
-                    <div className="row occupation-details__row">
                         <div className="col-sm-12 occupation-details__title">
                             Коди: {!props.data.codes.length && " - "}
                         </div>

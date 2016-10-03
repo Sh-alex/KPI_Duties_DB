@@ -10,8 +10,11 @@ import {
     MATCH_STRING,
     CONTAINS_STRING,
     ALL_TAGS,
-    ANY
-} from "../../constants/searchTypes"
+    ANY,
+
+    ONLY_IN_KPI,
+    ONLY_IN_STATE
+} from "../../constants/searchOccupationsTypes"
 
 import './styles.less'
 
@@ -32,27 +35,15 @@ export default class SearchOccupationsForm extends Component {
     getInitState() {
         return {
             form: Object.assign({
-                searchType: ANY,       //"MATCH_STRING", "CONTAINS_STRING", "ALL_TAGS", "SOME_TAGS"
+                searchType: ANY,       // усі в "constants/searchOccupationsTypes"
                 occupGroupVal: null,   // 8
-                searchText: "",        //"інженер"
+                searchText: "",        // "інженер"
                 searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
-                inKpi: true,
-                "creatingInStateDate": {
-                    "from": null,
-                    "to": null
-                },
-                "creatingInKPIDate": {
-                    "from": null,
-                    "to": null
-                },
-                "cancelingInStateDate": {
-                    "from": null,
-                    "to": null
-                },
-                "cancelingInKPIDate": {
-                    "from": null,
-                    "to": null
-                }
+                inKpi: ANY,            // "ANY", "ONLY_IN_KPI", "ONLY_IN_STATE"
+                startFrom: null,
+                startTo: null,
+                stopFrom: null,
+                stopTo: null,
             }, this.props.formFields),
             //описали окремо в store, а не просто юзаємо через props на випадок якщо треба буде не показувати у підсказці вже обрані елементи
             tagsList: this.props.tagsList && this.props.tagsList.items && this.props.tagsList.items.map(item => item.textValue) || []
@@ -119,7 +110,7 @@ export default class SearchOccupationsForm extends Component {
         return (
             <form
                 onSubmit={this.submitForm}
-                className="form-horizontal ssearch-occup-form"
+                className="form-horizontal search-occup-form"
                 role="form">
                 <div className="form-inner">
                     <div className="form-group">
@@ -228,257 +219,138 @@ export default class SearchOccupationsForm extends Component {
                             }
                         </div>
                     </div>
-
-                    <div className="row">
-                        <label className="col-xs-10 col-sm-3 control-label">
-                            Дата створення посади в державі
-                        </label>
-                        <div className="col-xs-12 col-sm-9">
-                            <div className="row">
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.creatingInStateDate.from}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        creatingInStateDate: {
-                                                            ...this.state.form.creatingInStateDate,
-                                                            from: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату початку фільтра"
-                                                time={false}
-                                                min={OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.creatingInStateDate.to}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        creatingInStateDate: {
-                                                            ...this.state.form.creatingInStateDate,
-                                                            to: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату кінця фільтра"
-                                                time={false}
-                                                min={this.state.form.creatingInStateDate.from || OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <label className="col-xs-10 col-sm-3 control-label">
-                            Дата відміни посади в державі
-                        </label>
-                        <div className="col-xs-12 col-sm-9">
-                            <div className="row">
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.cancelingInStateDate.from}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        cancelingInStateDate: {
-                                                            ...this.state.form.cancelingInStateDate,
-                                                            from: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату початку фільтра"
-                                                time={false}
-                                                min={OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.cancelingInStateDate.to}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        cancelingInStateDate: {
-                                                            ...this.state.form.cancelingInStateDate,
-                                                            to: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату кінця фільтра"
-                                                time={false}
-                                                min={this.state.form.cancelingInStateDate.from || OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <label className="col-xs-10 col-sm-3 control-label">
-                            Дата створення посади в КПІ
-                        </label>
-                        <div className="col-xs-12 col-sm-9">
-                            <div className="row">
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.creatingInKPIDate.from}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        creatingInKPIDate: {
-                                                            ...this.state.form.creatingInKPIDate,
-                                                            from: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату початку фільтра"
-                                                time={false}
-                                                min={OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.creatingInKPIDate.to}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        creatingInKPIDate: {
-                                                            ...this.state.form.creatingInKPIDate,
-                                                            to: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату кінця фільтра"
-                                                time={false}
-                                                min={this.state.form.creatingInKPIDate.from || OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <label className="col-xs-10 col-sm-3 control-label">
-                            Дата відміни посади в КПІ
-                        </label>
-                        <div className="col-xs-12 col-sm-9">
-                            <div className="row">
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.cancelingInKPIDate.from}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        cancelingInKPIDate: {
-                                                            ...this.state.form.cancelingInKPIDate,
-                                                            from: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату початку фільтра"
-                                                time={false}
-                                                min={OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xs-12 col-sm-6">
-                                    <div className="form-group">
-                                        <div className="col-xs-12">
-                                            <DateTimePicker
-                                                type="date"
-                                                format="DD.MM.YYYY"
-                                                value={this.state.form.cancelingInKPIDate.to}
-                                                defaultValue={null}
-                                                onChange={ newVal => this.setState({
-                                                    form: {
-                                                        ...this.state.form,
-                                                        cancelingInKPIDate: {
-                                                            ...this.state.form.cancelingInKPIDate,
-                                                            to: newVal
-                                                        }
-                                                    }
-                                                })
-                                                }
-                                                placeholder="Оберіть дату кінця фільтра"
-                                                time={false}
-                                                min={this.state.form.cancelingInKPIDate.from || OCCUPATION_MIN_DATE}
-                                                max={new Date()} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="form-group">
-                        <div className="col-sm-offset-3 col-sm-9 checkbox">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={this.state.form.inKpi}
-                                    onChange={ e => {
-                                        this.setState({
-                                            form: { ...this.state.form, inKpi: e.currentTarget.checked}
-                                        })
-                                    }} />
-                                Приналежність до КПІ
-                            </label>
+                        <label htmlFor="search-occup-form__select-in-kpi" className="col-sm-3 control-label">
+                            Приналежність посади
+                        </label>
+                        <div className="col-sm-9">
+                            <select
+                                value={this.state.form.inKpi}
+                                onChange={ e => {
+                                    this.setState({
+                                        form: { ...this.state.form, inKpi: e.currentTarget.value}
+                                    })
+                                }}
+                                className="form-control"
+                                id="search-occup-form__select-in-kpi"
+                            >
+                                <option value="ANY" >
+                                    Будь-яка
+                                </option>
+                                <option value={ONLY_IN_KPI} >
+                                    Лише в КПІ
+                                </option>
+                                <option value={ONLY_IN_STATE} >
+                                    Лише в державі
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <label className="col-xs-10 col-sm-3 control-label">
+                            Дата створення посади
+                        </label>
+                        <div className="col-xs-12 col-sm-9">
+                            <div className="row">
+                                <div className="col-xs-12 col-sm-6">
+                                    <div className="form-group">
+                                        <div className="col-xs-12">
+                                            <DateTimePicker
+                                                type="date"
+                                                format="DD.MM.YYYY"
+                                                value={this.state.form.startFrom}
+                                                defaultValue={null}
+                                                onChange={ newVal => this.setState({
+                                                    form: {
+                                                        ...this.state.form,
+                                                        startFrom: this.state.form.startFrom
+                                                    }
+                                                })
+                                                }
+                                                placeholder="Оберіть дату початку фільтра"
+                                                time={false}
+                                                min={OCCUPATION_MIN_DATE}
+                                                max={new Date()} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12 col-sm-6">
+                                    <div className="form-group">
+                                        <div className="col-xs-12">
+                                            <DateTimePicker
+                                                type="date"
+                                                format="DD.MM.YYYY"
+                                                value={this.state.form.startTo}
+                                                defaultValue={null}
+                                                onChange={ newVal => this.setState({
+                                                    form: {
+                                                        ...this.state.form,
+                                                        startTo: this.state.form.startTo
+                                                    }
+                                                })
+                                                }
+                                                placeholder="Оберіть дату кінця фільтра"
+                                                time={false}
+                                                min={this.state.form.startFrom || OCCUPATION_MIN_DATE}
+                                                max={new Date()} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <label className="col-xs-10 col-sm-3 control-label">
+                            Дата відміни посади
+                        </label>
+                        <div className="col-xs-12 col-sm-9">
+                            <div className="row">
+                                <div className="col-xs-12 col-sm-6">
+                                    <div className="form-group">
+                                        <div className="col-xs-12">
+                                            <DateTimePicker
+                                                type="date"
+                                                format="DD.MM.YYYY"
+                                                value={this.state.form.stopFrom}
+                                                defaultValue={null}
+                                                onChange={ newVal => this.setState({
+                                                    form: {
+                                                        ...this.state.form,
+                                                        stopFrom: this.state.form.stopFrom
+                                                    }
+                                                })
+                                                }
+                                                placeholder="Оберіть дату початку фільтра"
+                                                time={false}
+                                                min={OCCUPATION_MIN_DATE}
+                                                max={new Date()} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12 col-sm-6">
+                                    <div className="form-group">
+                                        <div className="col-xs-12">
+                                            <DateTimePicker
+                                                type="date"
+                                                format="DD.MM.YYYY"
+                                                value={this.state.form.stopTo}
+                                                defaultValue={null}
+                                                onChange={ newVal => this.setState({
+                                                    form: {
+                                                        ...this.state.form,
+                                                        stopTo: this.state.form.stopTo
+                                                    }
+                                                })
+                                                }
+                                                placeholder="Оберіть дату кінця фільтра"
+                                                time={false}
+                                                min={this.state.form.stopFrom || OCCUPATION_MIN_DATE}
+                                                max={new Date()} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
