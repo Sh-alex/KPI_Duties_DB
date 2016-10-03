@@ -52,8 +52,8 @@ class ModalEditOccup extends Component {
         this.props.initializeForm({
             name: {
                 'occupationGroup': null,
-                // 'clarifiedOccup': -1,        поки прибрав, бо ці поля не хочу показувати у формі редагування
-                // 'clarification': null,
+                'clarifiedOccup': -1,
+                'clarification': null,
                 'occupationName': '',
                 'occupationNameMin': ''
             },
@@ -142,8 +142,8 @@ export default reduxForm(
         form: 'formEditOccup',
         fields: [
             'name.occupationGroup',
-            // 'name.clarifiedOccup',       поки прибрав, бо ці поля не хочу показувати у формі редагування
-            // 'name.clarification',
+            'name.clarifiedOccup',
+            'name.clarification',
             'name.occupationName',
             'name.occupationNameMin',
             'durations[].id',

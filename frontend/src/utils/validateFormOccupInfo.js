@@ -25,7 +25,7 @@ export default function validateFormEditOccupInfo(formFields, props) {
     errors.durations = formFields.durations.map( (portion, portionIndex, fullArr) => {
         return {
             start: !portion.start && "Не обрано дати створення посади!",
-            stop: portion.stop && (portion.stop > portion.start) && "Дата відміни має бути більшою за дату створення",
+            stop: portion.stop && (portion.stop < portion.start) && "Дата відміни має бути більшою за дату створення",
         }
     });
     

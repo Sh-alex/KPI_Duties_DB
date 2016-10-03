@@ -256,6 +256,16 @@ export default function formEditOccup(state, action) {
                         "value": action.editingData.data.occupationGroup || null,
                         "_isFieldValue": true
                     },
+                    'clarifiedOccup': {
+                        "initial": null,
+                        "value": action.editingData.data.clarifiedOccup || -1,
+                        "_isFieldValue": true
+                    },
+                    'clarification': {
+                        "initial": null,
+                        "value": action.editingData.data.clarification || null,
+                        "_isFieldValue": true
+                    },
                     'occupationName': {
                         "initial": null,
                         "value": action.editingData.data.occupationName || "",
