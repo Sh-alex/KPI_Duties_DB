@@ -103,7 +103,6 @@ public class RtDutiesController {
     @Path("/{id}")
     @Transactional
     public Response update(@NotNull OccupationRequest request, @PathParam("id") Integer id) {
-        //TODO
         ValidatorObject.validate(request, logger, validator);
         RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request, id);
         entity.setId(id);
@@ -114,7 +113,7 @@ public class RtDutiesController {
 
         List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
 
-        //rtDutiesCodeService.update(rtDutiesEntity.getIdText(), rtCodes);
+        //rtDutiesCodeService.update(rtDutiesEntity.getId(), rtCodes);
 
         rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
@@ -126,33 +125,6 @@ public class RtDutiesController {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Integer id) {
-       /* RtDutiesEntity entity = rtDutiesService.getById(id);
-
-        for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
-            DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
-            if (dcDutiesMustKnowEntity.getRtDutiesMustKnowEntities().size() <= 1) {
-                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getIdText());
-            }
-        }
-        for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
-            DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity =
-                    dcDutiesTaskAndResponsibilitiesService.getById(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
-            if (dcDutiesTasksAndResponsibilitiesEntity.getRtDutiesTaskAndResponsibilitiesEntities().size() <= 1) {
-                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getIdText());
-            }
-        }
-        for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
-            try {
-                DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
-                        dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
-
-                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getIdText());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }*/
-
         rtDutiesService.delete(id);
 
         return Response.ok().build();
@@ -180,7 +152,6 @@ public class RtDutiesController {
     @GET
     @Path("/clarifiedOccup")
     public IdNameListResponse getAllDutiesNames() {
-
         List<RtDutiesEntity> all = rtDutiesService.getAll();
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);

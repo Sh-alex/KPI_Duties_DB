@@ -51,6 +51,15 @@ public class OccupationConverterImpl implements OccupationConverter {
     RtDutiesService rtDutiesService;
 
     @Autowired
+    RtDutiesTaskAndResponsibilitiesService rtDutiesTaskAndResponsibilitiesService;
+
+    @Autowired
+    RtDutiesMustKnowService rtDutiesMustKnowService;
+
+    @Autowired
+    RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
+
+    @Autowired
     HibernateTemplate hibernateTemplate;
 
     private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
@@ -126,6 +135,10 @@ public class OccupationConverterImpl implements OccupationConverter {
                 list.add(entity);//Не створювати сутність якщо не передано жодного коду
             }
         }
+
+        //Видаляю зайві зв'язки кодів, які були видалені при редагуванні
+        //TODO
+
         return list;
     }
 
@@ -145,8 +158,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 DcDutiesTasksAndResponsibilitiesEntity addedEntity = dcDutiesTaskAndResponsibilitiesService.add(tasksAndResponsibilitiesEntity);
                 entity.setDcDutiesTasksAndResponsibilitiesId(addedEntity.getId());
             } else {
-                DcDutiesTasksAndResponsibilitiesEntity tasksAndResponsibilitiesEntity = dcDutiesTaskAndResponsibilitiesService.getById(responsibility.getIdText());
-                dcDutiesTaskAndResponsibilitiesService.update(tasksAndResponsibilitiesEntity);
+                DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity = dcDutiesTaskAndResponsibilitiesService.getById(responsibility.getIdText());
+                dcDutiesTasksAndResponsibilitiesEntity.setText(responsibility.getText());
+                dcDutiesTaskAndResponsibilitiesService.update(dcDutiesTasksAndResponsibilitiesEntity);
                 entity.setDcDutiesTasksAndResponsibilitiesId(responsibility.getIdText());
             }
 
@@ -157,9 +171,17 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateEnd(responsibility.getDateEnd());
 
             list.add(entity);
-
         }
 
+        //Видаляю зайві, які було видалено при редагуванні
+        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesTaskAndResponsibilitiesEntities();
+        if (rtDutiesTaskAndResponsibilitiesEntities != null) {
+            List<RtDutiesTaskAndResponsibilitiesEntity> deleteList = rtDutiesTaskAndResponsibilitiesEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            if (!deleteList.isEmpty()) {
+                rtDutiesTaskAndResponsibilitiesService.delete(deleteList);
+            }
+        }
         return list;
     }
 
@@ -178,8 +200,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 DcDutiesMustKnowEntity addedEntity = dcDutiesMustKnowService.add(dutiesMustKnowEntity);
                 entity.setDcDutiesMustKnowId(addedEntity.getId());
             } else {
-                DcDutiesMustKnowEntity dutiesMustKnowEntity = dcDutiesMustKnowService.getById(responsibility.getIdText());
-                dcDutiesMustKnowService.update(dutiesMustKnowEntity);
+                DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(responsibility.getIdText());
+                dcDutiesMustKnowEntity.setText(responsibility.getText());
+                dcDutiesMustKnowService.update(dcDutiesMustKnowEntity);
                 entity.setDcDutiesMustKnowId(responsibility.getIdText());
             }
 
@@ -192,6 +215,17 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateEnd(responsibility.getDateEnd());
 
             list.add(entity);
+        }
+
+        //Видаляю зайві, які було видалено при редагуванні
+        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesMustKnowEntities();
+        if (rtDutiesMustKnowEntities != null) {
+            List<RtDutiesMustKnowEntity> deleteList = rtDutiesMustKnowEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+
+            if (!deleteList.isEmpty()) {
+                rtDutiesMustKnowService.delete(deleteList);
+            }
         }
 
         return list;
@@ -213,8 +247,9 @@ public class OccupationConverterImpl implements OccupationConverter {
                 DcDutiesQualificationRequirementsEntity addedEntity = dcDutiesQualificationRequirementsService.add(requirementsEntity);
                 entity.setDcDutiesQualificationRequirementsId(addedEntity.getId());
             } else {
-                DcDutiesQualificationRequirementsEntity requirementsEntity = dcDutiesQualificationRequirementsService.getById(responsibility.getIdText());
-                dcDutiesQualificationRequirementsService.update(requirementsEntity);
+                DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity = dcDutiesQualificationRequirementsService.getById(responsibility.getIdText());
+                dcDutiesQualificationRequirementsEntity.setText(responsibility.getText());
+                dcDutiesQualificationRequirementsService.update(dcDutiesQualificationRequirementsEntity);
                 entity.setDcDutiesQualificationRequirementsId(responsibility.getIdText());
             }
 
@@ -227,6 +262,17 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateEnd(responsibility.getDateEnd());
 
             list.add(entity);
+        }
+
+        //Видаляю зайві, які було видалено при редагуванні
+        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesQualificationRequirementsEntities();
+        if (rtDutiesQualificationRequirementsEntities != null) {
+            List<RtDutiesQualificationRequirementsEntity> deleteList = rtDutiesQualificationRequirementsEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+
+            if (!deleteList.isEmpty()) {
+                rtDutiesQualificationRequirementsService.delete(deleteList);
+            }
         }
 
         return list;
