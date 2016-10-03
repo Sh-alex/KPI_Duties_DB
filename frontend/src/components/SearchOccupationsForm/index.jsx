@@ -264,7 +264,7 @@ export default class SearchOccupationsForm extends Component {
                                                 onChange={ newVal => this.setState({
                                                     form: {
                                                         ...this.state.form,
-                                                        startFrom: this.state.form.startFrom
+                                                        startFrom: newVal
                                                     }
                                                 })
                                                 }
@@ -286,7 +286,7 @@ export default class SearchOccupationsForm extends Component {
                                                 onChange={ newVal => this.setState({
                                                     form: {
                                                         ...this.state.form,
-                                                        startTo: this.state.form.startTo
+                                                        startTo: newVal
                                                     }
                                                 })
                                                 }
@@ -317,7 +317,7 @@ export default class SearchOccupationsForm extends Component {
                                                 onChange={ newVal => this.setState({
                                                     form: {
                                                         ...this.state.form,
-                                                        stopFrom: this.state.form.stopFrom
+                                                        stopFrom: newVal
                                                     }
                                                 })
                                                 }
@@ -339,7 +339,7 @@ export default class SearchOccupationsForm extends Component {
                                                 onChange={ newVal => this.setState({
                                                     form: {
                                                         ...this.state.form,
-                                                        stopTo: this.state.form.stopTo
+                                                        stopTo: newVal
                                                     }
                                                 })
                                                 }
