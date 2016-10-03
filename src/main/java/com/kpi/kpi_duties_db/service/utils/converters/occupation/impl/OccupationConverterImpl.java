@@ -48,27 +48,34 @@ public class OccupationConverterImpl implements OccupationConverter {
     DcDutiesNameService dcDutiesNameService;
 
     @Autowired
+    RtDutiesService rtDutiesService;
+
+    @Autowired
     HibernateTemplate hibernateTemplate;
 
     private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
 
     @Override
-    public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request) {
+    public RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest request, Integer id) {
 
-        RtDutiesEntity entity = new RtDutiesEntity();
+        RtDutiesEntity entity;
+        //Визначаємо чи сутність створюється чи редагується
+        if (id == null) {
+            entity = new RtDutiesEntity();
+        } else {
+            entity = rtDutiesService.getById(id);
+        }
 
         NameOccupation nameOccupation = request.getNameOccupation();
 
         entity.setDcDutiesPartitionId(nameOccupation.getDcDutiesPartitionId());
 
-        if (!nameOccupation.getParentId().equals(-1)) {
-            entity.setParentId(nameOccupation.getParentId());
-        }
+        entity.setParentId(nameOccupation.getParentId());
 
         entity.setName(nameOccupation.getRtDutiesName());
         entity.setNameShort(nameOccupation.getRtDutiesNameShort());
-        entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
+        entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
         return entity;
     }
@@ -115,7 +122,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(codeOccupation.getPortionStartDate());
             entity.setDateStop(codeOccupation.getPortionEndDate());
 
-            if (codeOccupation.getCodeDKHPId() != null && codeOccupation.getCodeETDKId() != null && codeOccupation.getCodeKPId() != null && codeOccupation.getCodeZKPPTRId() != null) {
+            if (codeOccupation.getCodeDKHPId() != null || codeOccupation.getCodeETDKId() != null || codeOccupation.getCodeKPId() != null || codeOccupation.getCodeZKPPTRId() != null) {
                 list.add(entity);//Не створювати сутність якщо не передано жодного коду
             }
         }
@@ -143,17 +150,14 @@ public class OccupationConverterImpl implements OccupationConverter {
                 entity.setDcDutiesTasksAndResponsibilitiesId(responsibility.getIdText());
             }
 
-            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
-            rtDutiesEntity.setId(rtDutiesId);
 
             entity.setId(responsibility.getIdDates());
-            entity.setRtDutiesId(rtDutiesEntity.getId());
+            entity.setRtDutiesId(rtDutiesId);
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getIdText() != null) {
-                list.add(entity);
-            }
+            list.add(entity);
+
         }
 
         return list;
@@ -187,9 +191,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getIdText() != null) {
-                list.add(entity);
-            }
+            list.add(entity);
         }
 
         return list;
@@ -224,9 +226,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             entity.setDateStart(responsibility.getDateStart());
             entity.setDateEnd(responsibility.getDateEnd());
 
-            if (responsibility.getIdText() != null) {
-                list.add(entity);
-            }
+            list.add(entity);
         }
 
         return list;

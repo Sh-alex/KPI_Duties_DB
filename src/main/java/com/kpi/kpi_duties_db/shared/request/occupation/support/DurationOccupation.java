@@ -20,7 +20,7 @@ public class DurationOccupation {
 
     private Boolean inKpi;
 
-    private Boolean isVirtual;
+    private Boolean virtual;
 
     public Integer getId() {
         return id;
@@ -55,10 +55,10 @@ public class DurationOccupation {
     }
 
     public Boolean getVirtual() {
-        return isVirtual;
+        return virtual;
     }
 
     public void setVirtual(Boolean virtual) {
-        isVirtual = virtual;
+        this.virtual = virtual;
     }
 }

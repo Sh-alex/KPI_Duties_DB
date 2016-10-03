@@ -83,7 +83,7 @@ public class RtDutiesController {
     @Transactional
     public Response create(@NotNull OccupationRequest request) {
         ValidatorObject.validate(request, logger, validator);
-        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request);
+        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request, null);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.add(entity);
 
         dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
@@ -105,7 +105,7 @@ public class RtDutiesController {
     public Response update(@NotNull OccupationRequest request, @PathParam("id") Integer id) {
         //TODO
         ValidatorObject.validate(request, logger, validator);
-        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request);
+        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request, id);
         entity.setId(id);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.update(entity);
 
