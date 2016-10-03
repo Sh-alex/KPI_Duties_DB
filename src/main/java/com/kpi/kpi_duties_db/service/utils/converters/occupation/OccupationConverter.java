@@ -17,7 +17,7 @@ import java.util.Map;
 
 public interface OccupationConverter {
 
-    RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest occupationRequest);
+    RtDutiesEntity toRtDutiesEntityFromOccupationRequest(OccupationRequest occupationRequest, Integer id);
 
     List<DutiesValidityDateEntity> toDutiesValidityDateEntityListFromOccupationRequest(OccupationRequest request, Integer rtDutiesId);
 
