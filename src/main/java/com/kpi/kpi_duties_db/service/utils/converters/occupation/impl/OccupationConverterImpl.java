@@ -104,7 +104,10 @@ public class OccupationConverterImpl implements OccupationConverter {
         for (CodeOccupation codeOccupation : codes) {
             RtCodeEntity entity = new RtCodeEntity();
 
-            entity.setId(codeOccupation.getId());
+            Integer id = codeOccupation.getId();
+            if (id != null) {
+                entity.setId(id);
+            }
             entity.setCodeDKHPId(codeOccupation.getCodeDKHPId());
             entity.setCodeETKDId(codeOccupation.getCodeETDKId());
             entity.setCodeKPId(codeOccupation.getCodeKPId());

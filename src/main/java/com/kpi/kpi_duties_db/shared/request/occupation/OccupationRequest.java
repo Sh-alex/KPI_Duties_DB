@@ -25,7 +25,7 @@ public class OccupationRequest {
     private NameOccupation nameOccupation;
 
     @Valid
-    @JsonProperty("duration")
+    @JsonProperty("durations")
     private List<DurationOccupation> durationOccupation;
 
     @JsonProperty("codes")
