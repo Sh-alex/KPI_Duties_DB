@@ -7,14 +7,7 @@ export default function validateFormEditOccupInfo(formFields, props) {
             'occupationName': null,
             'occupationNameMin': null
         },
-        features: {
-            'isIndependent': null,
-            'isVirtual': null
-        },
-        duration: {
-            'creatingInStateDate': null,
-            'creatingInKPIDate': null
-        },
+        durations: [ ],
         codes: [ ],
         responsibilities: [ ],
         haveToKnow: [ ],
@@ -28,44 +21,47 @@ export default function validateFormEditOccupInfo(formFields, props) {
         errors.name.occupationName = "Це поле є обов'язковим!";
     if(!formFields.name.occupationNameMin)
         errors.name.occupationNameMin = "Це поле є обов'язковим!";
-    /*
-     if(!formFields.duration.creatingInStateDate && !formFields.duration.creatingInKPIDate)
-     errors.duration = "Не обрано дат створення посади!";
-     */
-    errors.codes = formFields.codes.map( (portion, portionIndex, fullArr) => {
+
+    errors.durations = formFields.durations.map( (portion, portionIndex, fullArr) => {
         return {
-            'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+            start: !portion.start && "Не обрано дати створення посади!",
+            stop: portion.stop && (portion.stop < portion.start) && "Дата відміни має бути більшою за дату створення",
+        }
+    });
+    
+    errors.codes = formFields.codes.map( (portion, portionIndex, fullArr) => {
+        let inputedAnyCode = portion.codeKP || portion.codeETDK || portion.codeZKPPTR || portion.codeDKHP;
+        return {
+            'portionStartDate': inputedAnyCode && !portion.portionStartDate && "Не обрано дати прийняття Набору кодів!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
-            'codeKP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
-            'codeETDK': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
-            'codeZKPPTR': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
-            'codeDKHP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+            // Коди зараз не обов'язкові
+            // 'codeKP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+            // 'codeETDK': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+            // 'codeZKPPTR': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
+            // 'codeDKHP': !portion.codeKP && !portion.codeETDK && !portion.codeZKPPTR && !portion.codeDKHP && "Не введено жодного з кодів!",
         }
     });
 
     errors.responsibilities = formFields.responsibilities.map( (portion, portionIndex, fullArr) => {
         return {
-            'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+            'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             //'portionEndDate': (fullArr.length > 1 && portionIndex < fullArr.length && !portion.portionEndDate) ? "Для попередніх наборів має бути встановлена дата припинення дії тексту!" : null,
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
-            'text': !portion.text && "Не введено тексту!",
-            'id': null
+            // 'text': !portion.text && "Не введено тексту!",
         };
     });
     errors.haveToKnow = formFields.haveToKnow.map( (portion, portionIndex, fullArr) => {
         return {
-            'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+            'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
-            'text': !portion.text && "Не введено тексту!",
-            'id': null
+            // 'text': !portion.text && "Не введено тексту!",
         };
     });
     errors.qualiffRequir = formFields.qualiffRequir.map( (portion, portionIndex, fullArr) => {
         return {
-            'portionStartDate': !portion.portionStartDate && "Не обрано дати прийняття тексту!",
+            'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
-            'text': !portion.text && "Не введено тексту!",
-            'id': null
+            // 'text': !portion.text && "Не введено тексту!",
         };
     });
 

@@ -20,23 +20,12 @@ function bindToggleExpandItem(itemIndex, portionIndex, props) {
 }
 
 export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) {
-    let tblRows;
+    let tbl,
+        alert,
+        tblRows;
     try {
-        tblRows = !props.searchResData.itemsList.length ?
-            (
-                <tr colSpan="100" className="text-center">
-                    <td>
-                        <Alert bsStyle="warning alert-sm">
-                            <p>
-                                За вказаними критеріями не знайдено жодної посади.<br />
-                                Спробуйте змінити критерії пошуку у формі.
-                            </p>
-                        </Alert>
-                    </td>
-                </tr>
-            )
-            :
-            props.searchResData.itemsList.map( (itemId,itemIndex) => {
+        if(props.searchResData.itemsList.length) {
+            tblRows = props.searchResData.itemsList.map( (itemId,itemIndex) => {
                 return props.searchResData.itemsById[itemId].data.qualiffRequir.map((portion, portionIndex) => {
                     let itemIsExpanded = props.expandedItems[itemIndex+"_"+portionIndex],
                         itemIsSelected = (props.selectedItem.itemIndex == itemIndex) && (props.selectedItem.portionIndex == portionIndex),
@@ -80,33 +69,39 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
                     )
                 })
             });
-    } catch(err) {
-        console.error(err);
-        tblRows = (
-            <tr colSpan="100" className="text-center">
-                <Alert bsStyle="danger">
+            tbl = (
+                <table className="table table-hover occup-table search-similar-table">
+                    <thead>
+                    <tr>
+                        <th colSpan="2" title="Номер в списку"> № </th>
+                        <th> Назва посади </th>
+                        <th> Приналежн. до КПІ </th>
+                        <th colSpan="2"> Кваліфікаційні вимоги </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tblRows}
+                    </tbody>
+                </table>
+            );
+        } else
+            alert = (
+                <Alert bsStyle="warning alert-sm alert--with-margin">
                     <p>
-                        Сталася помилка при побутові таблиці з результатами пошуку
+                        За вказаними критеріями не знайдено жодної посади.<br />
+                        Спробуйте змінити критерії пошуку у формі.
                     </p>
                 </Alert>
-            </tr>
+            );
+    } catch(err) {
+        console.error(err);
+        alert = (
+            <Alert bsStyle="danger alert-sm alert--with-margin">
+                <p> Сталася помилка при побутові таблиці з результатами пошуку </p>
+            </Alert>
         );
     }
 
-    return (
-        <table className="table table-hover occup-table search-similar-table">
-            <thead>
-            <tr>
-                <th colSpan="2" title="Номер в списку"> № </th>
-                <th> Назва посади </th>
-                <th> Приналежн. до КПІ </th>
-                <th colSpan="2"> Кваліфікаційні вимоги </th>
-            </tr>
-            </thead>
-            <tbody>
-            {tblRows}
-            </tbody>
-        </table>
-    )
+    return tbl || alert;
 }
 

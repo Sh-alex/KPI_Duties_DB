@@ -1,7 +1,7 @@
 var webpack = require('webpack'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     isDev = process.env.NODE_ENV != "production",
-    WDS_PORT = isDev && 2016,
+    WDS_PORT = isDev && 2018,
     API_PORT = 52300;
 
 module.exports = {

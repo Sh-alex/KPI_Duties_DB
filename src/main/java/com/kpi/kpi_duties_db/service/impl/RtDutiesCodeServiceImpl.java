@@ -34,13 +34,14 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
 
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
+
             list.add(repository.saveAndFlush(entity));
         }
         return list;
     }
 
     @Override
-    public List<RtDutiesCodeEntity> edit(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
+    public List<RtDutiesCodeEntity> update(Integer rtDutiesId, List<RtCodeEntity> rtCodeEntities) {
         List<RtDutiesCodeEntity> list = new ArrayList<>();
         for (RtCodeEntity rtCodeEntity : rtCodeEntities) {
             RtDutiesCodeEntity entity = new RtDutiesCodeEntity();
@@ -50,6 +51,7 @@ public class RtDutiesCodeServiceImpl extends BaseServiceImpl<RtDutiesCodeEntity>
 
             entity.setDateStart(rtCodeEntity.getDateStart());
             entity.setDateStop(rtCodeEntity.getDateStop());
+
             list.add(repository.saveAndFlush(entity));
         }
         return list;

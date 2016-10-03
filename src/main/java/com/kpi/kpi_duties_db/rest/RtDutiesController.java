@@ -83,7 +83,8 @@ public class RtDutiesController {
     @Transactional
     public Response create(@NotNull OccupationRequest request) {
         ValidatorObject.validate(request, logger, validator);
-        RtDutiesEntity rtDutiesEntity = rtDutiesService.add(converter.toRtDutiesEntityFromOccupationRequest(request));
+        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request, null);
+        RtDutiesEntity rtDutiesEntity = rtDutiesService.add(entity);
 
         dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
@@ -103,7 +104,8 @@ public class RtDutiesController {
     @Transactional
     public Response update(@NotNull OccupationRequest request, @PathParam("id") Integer id) {
         //TODO
-        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request);
+        ValidatorObject.validate(request, logger, validator);
+        RtDutiesEntity entity = converter.toRtDutiesEntityFromOccupationRequest(request, id);
         entity.setId(id);
         RtDutiesEntity rtDutiesEntity = rtDutiesService.update(entity);
 
@@ -112,7 +114,7 @@ public class RtDutiesController {
 
         List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
 
-        rtDutiesCodeService.edit(rtDutiesEntity.getId(), rtCodes);
+        //rtDutiesCodeService.update(rtDutiesEntity.getIdText(), rtCodes);
 
         rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
@@ -129,14 +131,14 @@ public class RtDutiesController {
         for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : entity.getRtDutiesMustKnowEntities()) {
             DcDutiesMustKnowEntity dcDutiesMustKnowEntity = dcDutiesMustKnowService.getById(rtDutiesMustKnowEntity.getDcDutiesMustKnowId());
             if (dcDutiesMustKnowEntity.getRtDutiesMustKnowEntities().size() <= 1) {
-                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getId());
+                dcDutiesMustKnowService.delete(dcDutiesMustKnowEntity.getIdText());
             }
         }
         for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : entity.getRtDutiesTaskAndResponsibilitiesEntities()) {
             DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity =
                     dcDutiesTaskAndResponsibilitiesService.getById(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId());
             if (dcDutiesTasksAndResponsibilitiesEntity.getRtDutiesTaskAndResponsibilitiesEntities().size() <= 1) {
-                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getId());
+                dcDutiesTaskAndResponsibilitiesService.delete(dcDutiesTasksAndResponsibilitiesEntity.getIdText());
             }
         }
         for (RtDutiesQualificationRequirementsEntity rtDutiesQualificationRequirementsEntity : entity.getRtDutiesQualificationRequirementsEntities()) {
@@ -144,7 +146,7 @@ public class RtDutiesController {
                 DcDutiesQualificationRequirementsEntity dcDutiesQualificationRequirementsEntity =
                         dcDutiesQualificationRequirementsService.getById(rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId());
 
-                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getId());
+                dcDutiesQualificationRequirementsService.delete(dcDutiesQualificationRequirementsEntity.getIdText());
             } catch (Exception e) {
                 e.printStackTrace();
             }

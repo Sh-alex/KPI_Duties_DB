@@ -31,8 +31,7 @@ import {
     addNewOccupHideServerRespMsg,
     occupationGroupInpChange,
     clarificationInpChange,
-    clarifiedOccupInpChange,
-    inpIsVirtualChange
+    clarifiedOccupInpChange
 } from "../../actions/addNewOccup"
 
 import {
@@ -46,21 +45,23 @@ import './styles.less'
 let initialFormState = {
     name: {
         'occupationGroup': null,
-        'clarifiedOccup': -1,
+        'clarifiedOccup': null,
         'clarification': null,
         'occupationName': '',
         'occupationNameMin': ''
     },
-    features: {
-        'isIndependent': false,
-        'isVirtual': false
-    },
-    duration: {
-        'creatingInStateDate': null,
-        'creatingInKPIDate': null
-    },
+    durations: [
+        {
+            "id": null,
+            "start": null,
+            "stop": null,
+            "inKpi": false,
+            "virtual": false
+        }
+    ],
     codes: [
         {
+            'id': null,
             'portionStartDate': null,
             'portionEndDate': null,
             'codeKP': null,
@@ -78,7 +79,8 @@ let initialFormState = {
             'portionStartDate': null,
             'portionEndDate': null,
             'text': "",
-            'id': null
+            'idDates': null,
+            'idText': null
         }
     ],
     haveToKnow: [
@@ -86,7 +88,8 @@ let initialFormState = {
             'portionStartDate': null,
             'portionEndDate': null,
             'text': "",
-            'id': null
+            'idDates': null,
+            'idText': null
         }
     ],
     qualiffRequir: [
@@ -94,7 +97,8 @@ let initialFormState = {
             'portionStartDate': null,
             'portionEndDate': null,
             'text': "",
-            'id': null
+            'idDates': null,
+            'idText': null
         }
     ]
 };
@@ -133,10 +137,12 @@ export default reduxForm(
             'name.clarification',
             'name.occupationName',
             'name.occupationNameMin',
-            'features.isIndependent',
-            'features.isVirtual',
-            'duration.creatingInStateDate',
-            'duration.creatingInKPIDate',
+            'durations[].id',
+            'durations[].start',
+            'durations[].stop',
+            'durations[].inKpi',
+            'durations[].virtual',
+            'codes[].id',
             'codes[].portionStartDate',
             'codes[].portionEndDate',
             'codes[].codeKP',
@@ -148,17 +154,20 @@ export default reduxForm(
             'codes[].codeZKPPTRText',
             'codes[].codeDKHPText',
             'responsibilities[].text',
-            'responsibilities[].id',
+            'responsibilities[].idText',
+            'responsibilities[].idDates',
             'responsibilities[].portionStartDate',
             'responsibilities[].portionEndDate',
             'haveToKnow[].text',
-            'haveToKnow[].id',
+            'haveToKnow[].idText',
+            'haveToKnow[].idDates',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
             'qualiffRequir[].text',
-            'qualiffRequir[].id',
+            'qualiffRequir[].idText',
+            'qualiffRequir[].idDates',
             'qualiffRequir[].portionStartDate',
-            'qualiffRequir[].portionEndDate'
+            'qualiffRequir[].portionEndDate',
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,
@@ -205,7 +214,10 @@ export default reduxForm(
                 return dispatch(addNewZKPPTRCode(val));
             },
             handleBtnAddInfoFromAnotherOccupClick(data){
-                return dispatch(showModalAddInfoFromAnotherOccup(data));
+                return dispatch(showModalAddInfoFromAnotherOccup({
+                    ...data,
+                    resForm: 'addForm'
+                }));
             },
 
             handleOccupationGroupInpChange(newVal) {
@@ -229,10 +241,6 @@ export default reduxForm(
             },
             dismissModalAddNewETDKCodeAlert() {
                 return dispatch( clearETDKCodeAddingMsg() );
-            },
-
-            changeAddFormInpIsVirtual(newVal){
-                return dispatch( inpIsVirtualChange(newVal) );
             }
         }
     }

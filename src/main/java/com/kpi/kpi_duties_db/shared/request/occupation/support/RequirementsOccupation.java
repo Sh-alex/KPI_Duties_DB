@@ -12,11 +12,11 @@ import java.sql.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequirementsOccupation {
 
-    @JsonProperty("id")
-    private Integer id;
+    private Integer idText;
 
-    @JsonProperty("text")
     private String text;
+
+    private Integer idDates;
 
     @JsonProperty("portionStartDate")
     private Date dateStart;
@@ -24,12 +24,12 @@ public class RequirementsOccupation {
     @JsonProperty("portionEndDate")
     private Date dateEnd;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdText() {
+        return idText;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdText(Integer idText) {
+        this.idText = idText;
     }
 
     public String getText() {
@@ -38,6 +38,14 @@ public class RequirementsOccupation {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Integer getIdDates() {
+        return idDates;
+    }
+
+    public void setIdDates(Integer idDates) {
+        this.idDates = idDates;
     }
 
     public Date getDateStart() {

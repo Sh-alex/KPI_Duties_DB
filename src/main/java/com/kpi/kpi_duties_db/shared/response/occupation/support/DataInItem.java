@@ -1,6 +1,7 @@
 package com.kpi.kpi_duties_db.shared.response.occupation.support;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -11,23 +12,22 @@ import java.util.List;
 
 public class DataInItem {
 
-    private Date cancelingInKPIDate;
+    @JsonProperty("occupationName")
+    private String rtDutiesName;
 
-    private Date cancelingInStateDate;
+    @JsonProperty("occupationNameMin")
+    private String rtDutiesNameShort;
 
-    private Date creatingInKPIDate;
+    @JsonProperty("occupationGroup")
+    private Integer dcDutiesPartitionId;
 
-    private Date creatingInStateDate;
+    @JsonProperty("clarifiedOccup")
+    private Integer rtDutiesParentId;
 
-    private Boolean isVirtual;
+    @JsonProperty("clarification")
+    private Integer dcDutiesNameId;
 
-    private Boolean inKPI;
-
-    private String occupationGroup;
-
-    private String occupationName;
-
-    private String occupationNameMin;
+    private List<Duration> durations;
 
     private List<CodesInData> codes;
 
@@ -37,76 +37,52 @@ public class DataInItem {
 
     private List<Requirement> qualiffRequir;
 
-    public Date getCancelingInKPIDate() {
-        return cancelingInKPIDate;
+    public String getRtDutiesName() {
+        return rtDutiesName;
     }
 
-    public void setCancelingInKPIDate(Date cancelingInKPIDate) {
-        this.cancelingInKPIDate = cancelingInKPIDate;
+    public void setRtDutiesName(String rtDutiesName) {
+        this.rtDutiesName = rtDutiesName;
     }
 
-    public Date getCancelingInStateDate() {
-        return cancelingInStateDate;
+    public String getRtDutiesNameShort() {
+        return rtDutiesNameShort;
     }
 
-    public void setCancelingInStateDate(Date cancelingInStateDate) {
-        this.cancelingInStateDate = cancelingInStateDate;
+    public void setRtDutiesNameShort(String rtDutiesNameShort) {
+        this.rtDutiesNameShort = rtDutiesNameShort;
     }
 
-    public Date getCreatingInKPIDate() {
-        return creatingInKPIDate;
+    public Integer getDcDutiesPartitionId() {
+        return dcDutiesPartitionId;
     }
 
-    public void setCreatingInKPIDate(Date creatingInKPIDate) {
-        this.creatingInKPIDate = creatingInKPIDate;
+    public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
+        this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public Date getCreatingInStateDate() {
-        return creatingInStateDate;
+    public Integer getRtDutiesParentId() {
+        return rtDutiesParentId;
     }
 
-    public void setCreatingInStateDate(Date creatingInStateDate) {
-        this.creatingInStateDate = creatingInStateDate;
+    public void setRtDutiesParentId(Integer rtDutiesParentId) {
+        this.rtDutiesParentId = rtDutiesParentId;
     }
 
-    public Boolean getVirtual() {
-        return isVirtual;
+    public Integer getDcDutiesNameId() {
+        return dcDutiesNameId;
     }
 
-    public void setVirtual(Boolean virtual) {
-        isVirtual = virtual;
+    public void setDcDutiesNameId(Integer dcDutiesNameId) {
+        this.dcDutiesNameId = dcDutiesNameId;
     }
 
-    public Boolean getInKPI() {
-        return inKPI;
+    public List<Duration> getDurations() {
+        return durations;
     }
 
-    public void setInKPI(Boolean inKPI) {
-        this.inKPI = inKPI;
-    }
-
-    public String getOccupationGroup() {
-        return occupationGroup;
-    }
-
-    public void setOccupationGroup(String occupationGroup) {
-        this.occupationGroup = occupationGroup;
-    }
-
-    public String getOccupationName() {
-        return occupationName;
-    }
-
-    public void setOccupationName(String occupationName) {
-        this.occupationName = occupationName;
-    }
-
-    public String getOccupationNameMin() {
-        return occupationNameMin;
-    }
-
-    public void setOccupationNameMin(String occupationNameMin) {
-        this.occupationNameMin = occupationNameMin;
+    public void setDurations(List<Duration> durations) {
+        this.durations = durations;
     }
 
     public List<CodesInData> getCodes() {

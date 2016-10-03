@@ -1,6 +1,7 @@
 package com.kpi.kpi_duties_db.shared.response.occupation.support;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -10,20 +11,40 @@ import java.sql.Date;
 
 public class Requirement {
 
-    private Integer id;
+    private Integer idText;
+
+    private String text;
+
+    private Integer idDates;
 
     private Date portionStartDate;
 
     private Date portionEndDate;
 
-    private String text;
+    private List<Integer> usingOccupations;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdText() {
+        return idText;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdText(Integer idText) {
+        this.idText = idText;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Integer getIdDates() {
+        return idDates;
+    }
+
+    public void setIdDates(Integer idDates) {
+        this.idDates = idDates;
     }
 
     public Date getPortionStartDate() {
@@ -42,11 +63,11 @@ public class Requirement {
         this.portionEndDate = portionEndDate;
     }
 
-    public String getText() {
-        return text;
+    public List<Integer> getUsingOccupations() {
+        return usingOccupations;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setUsingOccupations(List<Integer> usingOccupations) {
+        this.usingOccupations = usingOccupations;
     }
 }

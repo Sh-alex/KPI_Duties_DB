@@ -10,7 +10,6 @@ logging:
     com.kpi.kpi_duties_db: INFO
 
 #Base path to jersey controller endpoint
-
 spring:
   jersey:
       application-path: /api

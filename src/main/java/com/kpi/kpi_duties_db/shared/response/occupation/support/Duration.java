@@ -1,16 +1,14 @@
-package com.kpi.kpi_duties_db.shared.request.occupation.support;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.kpi.kpi_duties_db.shared.response.occupation.support;
 
 import java.sql.Date;
 
 /**
  * @author Olexandr Shevchenko
  * @version 1.0
- * @since 24.08.2016
+ * @since 01.10.2016
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class DurationOccupation {
+
+public class Duration {
 
     private Integer id;
 

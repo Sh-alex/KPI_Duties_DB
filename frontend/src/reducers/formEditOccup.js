@@ -22,15 +22,15 @@ import {
 
 import { SHOW_MODAL_EDIT_OCCUP } from '../constants/modalEditOccup'
 
-// function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
-//     if(clarifiedOccupTextVal && clarificationTextVal)
-//         return clarifiedOccupTextVal + " " + clarificationTextVal;
-//     if(clarifiedOccupTextVal)
-//         return clarifiedOccupTextVal;
-//     if(clarificationTextVal)
-//         return clarificationTextVal;
-//     return oldVal;
-// }
+function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
+    if(clarifiedOccupTextVal && clarificationTextVal)
+        return clarifiedOccupTextVal + " " + clarificationTextVal;
+    if(clarifiedOccupTextVal)
+        return clarifiedOccupTextVal;
+    if(clarificationTextVal)
+        return clarificationTextVal;
+    return oldVal;
+}
 
 export default function formEditOccup(state, action) {
     if(state.shouldShowServerRespMsg === undefined)
@@ -55,7 +55,8 @@ export default function formEditOccup(state, action) {
             };
 
         case ADD_INFO_FROM_ANOTHER_OCCUPATION:
-            // action.resPortionIndex
+            if(action.resForm !== 'formEditOccup')
+                return state;
             switch(action.resultsType){
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                     if(!action.data || !action.data.codes instanceof Array)
@@ -65,6 +66,11 @@ export default function formEditOccup(state, action) {
                             ...state,
                             codes: action.data.codes.map(portion => {
                                 return {
+                                    "id": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
                                     "portionStartDate": {
                                         "initial": null,
                                         "value": null,
@@ -140,53 +146,63 @@ export default function formEditOccup(state, action) {
                                         "_isFieldValue": true
                                     },
                                     "text": {
-                                        "initial": null,
+                                        "initial": "",
                                         "value": action.data.text,
                                         "_isFieldValue": true
                                     },
-                                    "id": {
+                                    "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
+                                        "_isFieldValue": true
+                                    },
+                                    "idDates": {
+                                        "initial": null,
+                                        "value": null,
                                         "_isFieldValue": true
                                     }
                                 }
                             })
                         };
                     break;
-                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
-                     if(!action.data)
-                         return state;
-                     else
-                         return {
-                             ...state,
-                             haveToKnow: state.haveToKnow.map( (portion, portionIndex) => {
-                                 if(portionIndex != action.resPortionIndex)
-                                     return portion;
-                                 return {
-                                     "portionStartDate": {
-                                         "initial": null,
-                                         "value": null,
-                                         "_isFieldValue": true
-                                     },
-                                     "portionEndDate": {
-                                         "initial": null,
-                                         "value": null,
-                                         "_isFieldValue": true
-                                     },
-                                     "text": {
-                                         "initial": null,
-                                         "value": action.data.text,
-                                         "_isFieldValue": true
-                                     },
-                                     "id": {
-                                         "initial": null,
-                                         "value": action.data.id,
-                                         "_isFieldValue": true
-                                     }
-                                 }
-                             })
-                         };
-                     break;
+                case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
+                    if(!action.data)
+                        return state;
+                    else
+                        return {
+                            ...state,
+                            haveToKnow: state.haveToKnow.map( (portion, portionIndex) => {
+                                if(portionIndex != action.resPortionIndex)
+                                    return portion;
+                                return {
+                                    "portionStartDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "portionEndDate": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    },
+                                    "text": {
+                                        "initial": "",
+                                        "value": action.data.text,
+                                        "_isFieldValue": true
+                                    },
+                                    "idText": {
+                                        "initial": null,
+                                        "value": action.data.idText,
+                                        "_isFieldValue": true
+                                    },
+                                    "idDates": {
+                                        "initial": null,
+                                        "value": null,
+                                        "_isFieldValue": true
+                                    }
+                                }
+                            })
+                        };
+                    break;
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR:
                     if(!action.data)
                         return state;
@@ -208,13 +224,18 @@ export default function formEditOccup(state, action) {
                                         "_isFieldValue": true
                                     },
                                     "text": {
-                                        "initial": null,
+                                        "initial": "",
                                         "value": action.data.text,
                                         "_isFieldValue": true
                                     },
-                                    "id": {
+                                    "idText": {
                                         "initial": null,
-                                        "value": action.data.id,
+                                        "value": action.data.idText,
+                                        "_isFieldValue": true
+                                    },
+                                    "idDates": {
+                                        "initial": null,
+                                        "value": null,
                                         "_isFieldValue": true
                                     }
                                 }
@@ -235,6 +256,16 @@ export default function formEditOccup(state, action) {
                         "value": action.editingData.data.occupationGroup || null,
                         "_isFieldValue": true
                     },
+                    'clarifiedOccup': {
+                        "initial": null,
+                        "value": action.editingData.data.clarifiedOccup || null,
+                        "_isFieldValue": true
+                    },
+                    'clarification': {
+                        "initial": null,
+                        "value": action.editingData.data.clarification || null,
+                        "_isFieldValue": true
+                    },
                     'occupationName': {
                         "initial": null,
                         "value": action.editingData.data.occupationName || "",
@@ -246,32 +277,42 @@ export default function formEditOccup(state, action) {
                         "_isFieldValue": true
                     }
                 },
-                features: {
-                    'isIndependent': {
-                        "initial": null,
-                        "value": action.editingData.data.isIndependent || false,
-                        "_isFieldValue": true
-                    },
-                    'isVirtual': {
-                        "initial": null,
-                        "value": action.editingData.data.virtual || false,
-                        "_isFieldValue": true
-                    }
-                },
-                duration: {
-                    'creatingInStateDate': {
-                        "initial": null,
-                        "value": action.editingData.data.creatingInStateDate || null,
-                        "_isFieldValue": true
-                    },
-                    'creatingInKPIDate': {
-                        "initial": null,
-                        "value": action.editingData.data.creatingInKPIDate || null,
-                        "_isFieldValue": true
-                    }
-                },
-                codes: action.editingData.data.codes.map( portion => {
+                durations: action.editingData.data.durations.map( portion => {
                     return {
+                        'id': {
+                            "initial": null,
+                            "value": portion.id || null,
+                            "_isFieldValue": true
+                        },
+                        'start': {
+                            "initial": null,
+                            "value": portion.start || null,
+                            "_isFieldValue": true
+                        },
+                        'stop': {
+                            "initial": null,
+                            "value": portion.stop || null,
+                            "_isFieldValue": true
+                        },
+                        'inKpi': {
+                            "initial": null,
+                            "value": portion.inKpi || false,
+                            "_isFieldValue": true
+                        },
+                        'virtual': {
+                            "initial": null,
+                            "value": portion.virtual || false,
+                            "_isFieldValue": true
+                        }
+                    }
+                }),
+                codes: (action.editingData.data.codes.length ? action.editingData.data.codes : new Array(1)).map( portion => {
+                    return {
+                        "id": {
+                            "initial": null,
+                            "value": portion.id || null,
+                            "_isFieldValue": true
+                        },
                         "portionStartDate": {
                             "initial": null,
                             "value": portion.portionStartDate || null,
@@ -303,23 +344,23 @@ export default function formEditOccup(state, action) {
                             "_isFieldValue": true
                         },
                         "codeKPText": {
-                            "initial": null,
-                            "value": portion.codeKP ? portion.codeKP.val : null,
+                            "initial": "",
+                            "value": portion.codeKP ? portion.codeKP.val : "",
                             "_isFieldValue": true,
                         },
                         "codeETDKText": {
-                            "initial": null,
-                            "value": portion.codeETDK ? portion.codeETDK.val : null,
+                            "initial": "",
+                            "value": portion.codeETDK ? portion.codeETDK.val : "",
                             "_isFieldValue": true
                         },
                         "codeZKPPTRText": {
-                            "initial": null,
-                            "value": portion.codeZKPPTR ? portion.codeZKPPTR.val : null,
+                            "initial": "",
+                            "value": portion.codeZKPPTR ? portion.codeZKPPTR.val : "",
                             "_isFieldValue": true
                         },
                         "codeDKHPText": {
-                            "initial": null,
-                            "value": portion.codeDKHP ? portion.codeDKHP.val : null,
+                            "initial": "",
+                            "value": portion.codeDKHP ? portion.codeDKHP.val : "",
                             "_isFieldValue": true
                         }
                     }
@@ -337,13 +378,23 @@ export default function formEditOccup(state, action) {
                             "_isFieldValue": true
                         },
                         "text": {
-                            "initial": null,
-                            "value": portion.text,
+                            "initial": "",
+                            "value": portion.text || "",
                             "_isFieldValue": true
                         },
-                        "id": {
+                        'updateTextInRelativeOccup': {
+                            "initial": "",
+                            "value": -1,
+                            "_isFieldValue": true
+                        },
+                        "idText": {
                             "initial": null,
-                            "value": portion.id,
+                            "value": portion.idText,
+                            "_isFieldValue": true
+                        },
+                        "idDates": {
+                            "initial": null,
+                            "value": portion.idDates,
                             "_isFieldValue": true
                         }
                     }
@@ -361,13 +412,23 @@ export default function formEditOccup(state, action) {
                             "_isFieldValue": true
                         },
                         "text": {
-                            "initial": null,
-                            "value": portion.text,
+                            "initial": "",
+                            "value": portion.text || "",
                             "_isFieldValue": true
                         },
-                        "id": {
+                        'updateTextInRelativeOccup': {
+                            "initial": "",
+                            "value": -1,
+                            "_isFieldValue": true
+                        },
+                        "idText": {
                             "initial": null,
-                            "value": portion.id,
+                            "value": portion.idText,
+                            "_isFieldValue": true
+                        },
+                        "idDates": {
+                            "initial": null,
+                            "value": portion.idDates,
                             "_isFieldValue": true
                         }
                     }
@@ -385,13 +446,23 @@ export default function formEditOccup(state, action) {
                             "_isFieldValue": true
                         },
                         "text": {
-                            "initial": null,
-                            "value": portion.text,
+                            "initial": "",
+                            "value": portion.text || "",
                             "_isFieldValue": true
                         },
-                        "id": {
+                        'updateTextInRelativeOccup': {
+                            "initial": "",
+                            "value": -1,
+                            "_isFieldValue": true
+                        },
+                        "idText": {
                             "initial": null,
-                            "value": portion.id,
+                            "value": portion.idText,
+                            "_isFieldValue": true
+                        },
+                        "idDates": {
+                            "initial": null,
+                            "value": portion.idDates,
                             "_isFieldValue": true
                         }
                     }
@@ -399,111 +470,60 @@ export default function formEditOccup(state, action) {
             };
 
 
-        case EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE:
-            //якщо не обрано варіант "є віртуальною посадою"
-            if(!action.newVal || action.newVal == "false") {
-                if(state.codes && state.codes.length)
-                    return state;
-                else
-                    return {
-                        ...state,
-                        codes: [
-                            {
-                                "portionStartDate": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "portionEndDate": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeKP": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeETDK": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeZKPPTR": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                },
-                                "codeDKHP": {
-                                    "initial": null,
-                                    "value": null,
-                                    "_isFieldValue": true
-                                }
-                            }
-                        ]
-                    };
-            }
-            else
-                return {
-                    ...state,
-                    codes: []
-                };
+        case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
+            return {
+                ...state,
+                name: {
+                    ...state.name,
+                    clarification: {
+                        ...state.name.clarification,
+                        value: action.newVal.id
+                    },
+                    occupationName: {
+                        ...state.name.occupationName,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textValue
+                        )
+                    },
+                    occupationNameMin: {
+                        ...state.name.occupationNameMin,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textValue
+                        )
+                    }
+                },
+                clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+            };
+        case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
+            return {
+                ...state,
+                name: {
+                    ...state.name,
+                    occupationName: {
+                        ...state.name.occupationName,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
+                    },
+                    occupationNameMin: {
+                        ...state.name.occupationNameMin,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
+                    }
+                },
+                clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+            };
 
-        // ЗАРАЗ поля Уточнювана посада та Уточнення не показуються, тому ці reducer-и не треба
-        // case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
-        //     return {
-        //         ...state,
-        //         name: {
-        //             ...state.name,
-        //             clarification: {
-        //                 ...state.name.clarification,
-        //                 value: action.newVal.id
-        //             },
-        //             occupationName: {
-        //                 ...state.name.occupationName,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationName.value,
-        //                     state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
-        //                     action.newVal.textValue
-        //                 )
-        //             },
-        //             occupationNameMin: {
-        //                 ...state.name.occupationNameMin,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationNameMin.value,
-        //                     state.name.clarifiedOccup.value == -1 ? "" : state.clarifiedOccupTextVal,
-        //                     action.newVal.textValue
-        //                 )
-        //             }
-        //         },
-        //         clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-        //     };
-        // case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
-        //     return {
-        //         ...state,
-        //         name: {
-        //             ...state.name,
-        //             occupationName: {
-        //                 ...state.name.occupationName,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationName.value,
-        //                     action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-        //                     state.clarificationTextVal
-        //                 )
-        //             },
-        //             occupationNameMin: {
-        //                 ...state.name.occupationNameMin,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationNameMin.value,
-        //                     action.newVal.id == -1 ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-        //                     state.clarificationTextVal
-        //                 )
-        //             }
-        //         },
-        //         clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-        //     };
-        //
-        // case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE: //TODO
+        case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE: //TODO
         default:
             return state;
     }

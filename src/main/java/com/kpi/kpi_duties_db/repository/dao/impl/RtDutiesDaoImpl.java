@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +45,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 Object value = paramsMap.get(paramName);
                 if (value != null) {
                     switch (paramName) {
-                        case "dcDutiesPartitionId":
-                            criteria.add(Restrictions.eq("dcDutiesPartitionId", value));
-                            break;
                         case "rtDutiesName":
                             if (paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
@@ -54,6 +52,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             if (paramsMap.get("searchType").equals("CONTAINS_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
                             }
+                            break;
+                        case "dcDutiesPartitionId":
+                            criteria.add(Restrictions.in("dcDutiesPartitionId", (ArrayList) value));
                             break;
                         case "dcDutiesNames":
                             //OR LIKE
@@ -73,30 +74,19 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                                 criteria.add(conjunction);
                             }
                             break;
-                        case "creatingInStateDate_from":
-                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.start", value)));
+                        case "startFrom":
+                            criteria.add(Restrictions.ge("dates.start", value));
                             break;
-                        case "creatingInStateDate_to":
-                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.start", value)));
+                        case "startTo":
+                            criteria.add(Restrictions.le("dates.start", value));
                             break;
-                        case "cancelingInStateDate_from":
-                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.ge("dates.stop", value)));
+                        case "stopFrom":
+                            criteria.add(Restrictions.ge("dates.stop", value));
                             break;
-                        case "cancelingInStateDate_to":
-                            criteriaForDatesInState.add(Restrictions.and(Restrictions.eq("dates.isInKpi", false), Restrictions.le("dates.stop", value)));
+                        case "stopTo":
+                            criteria.add(Restrictions.le("dates.stop", value));
                             break;
-                        case "creatingInKPIDate_from":
-                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.start", value)));
-                            break;
-                        case "creatingInKPIDate_to":
-                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.start", value)));
-                            break;
-                        case "cancelingInKPIDate_from":
-                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.ge("dates.stop", value)));
-                            break;
-                        case "cancelingInKPIDate_to":
-                            criteriaForDatesInKpi.add(Restrictions.and(Restrictions.eq("dates.isInKpi", true), Restrictions.le("dates.stop", value)));
-                            break;
+
                         /*case "offset":
                             offset = (Integer) value;
                             break;
@@ -113,22 +103,39 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             if (limit >= 0) {
                 criteria.setMaxResults(limit);
             }*/
-            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-            //Пошук по обмеженням дат в державі та КПІ, повертає id посад
-            criteriaForDatesInState.setProjection(Projections.distinct(Projections.property("id")));
-            criteriaForDatesInKpi.setProjection(Projections.distinct(Projections.property("id")));
-
-            List listByDates = criteriaForDatesInState.list();
-            //Перетин двох множин, які відповідають всім умовам
-            listByDates.retainAll(criteriaForDatesInKpi.list());
-
-            //Якщо не знайдено відповідних посад - не додаю обмеження
-            if (!listByDates.isEmpty()) {
-                criteria.add(Restrictions.in("id", listByDates));
-            }
-
-            return criteria.list();
         }
+        /*Так як приналежність до КПІ відноситься до дат, то потрібно перевірити щоб всі дати посади
+        відповідали критеріям пошуку*/
+        criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
+        criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
+        List listByKpi = null;
+        List listTemp;
+        if (paramsMap.get("inKpi") != null) {
+            switch ((String)paramsMap.get("inKpi")){
+                case "ONLY_IN_KPI" :
+                    listByKpi = criteriaForDatesInKpi.list();
+                    listTemp = criteriaForDatesInState.list();
+                    if (!listTemp.isEmpty()) {
+                        listByKpi.removeAll(listTemp);  //Видаляю посади, які містять дати БЕЗ приналежності до КПІ
+                    }
+                    break;
+                case "ONLY_IN_STATE" :
+                    listByKpi = criteriaForDatesInState.list();
+                    listTemp = criteriaForDatesInKpi.list();
+                    if (!listTemp.isEmpty()) {
+                        listByKpi.removeAll(listTemp); //Видаляю посади, які містять дати З приналежністю до КПІ
+                    }
+                    break;
+            }
+        }
+
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+        List result = criteria.list();
+        if (listByKpi != null) {
+            result.retainAll(listByKpi); //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
+        }
+
+        return result;
     }
 }

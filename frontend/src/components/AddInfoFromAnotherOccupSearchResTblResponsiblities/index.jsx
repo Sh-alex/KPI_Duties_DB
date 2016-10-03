@@ -20,25 +20,14 @@ function bindToggleExpandItem(itemIndex, portionIndex, props) {
 }
 
 export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props) {
-    let tblRows;
+    let tbl,
+        alert,
+        tblRows;
     try {
-        tblRows = !props.searchResData.itemsList.length ?
-            (
-                <tr colSpan="100" className="text-center">
-                    <td>
-                        <Alert bsStyle="warning alert-sm">
-                            <p>
-                                За вказаними критеріями не знайдено жодної посади.<br />
-                                Спробуйте змінити критерії пошуку у формі.
-                            </p>
-                        </Alert>
-                    </td>
-                </tr>
-            )
-            :
-            props.searchResData.itemsList.map( (itemId,itemIndex) => {
+        if(props.searchResData.itemsList.length) {
+            tblRows = props.searchResData.itemsList.map((itemId, itemIndex) => {
                 return props.searchResData.itemsById[itemId].data.responsibilities.map((portion, portionIndex) => {
-                    let itemIsExpanded = props.expandedItems[itemIndex+"_"+portionIndex],
+                    let itemIsExpanded = props.expandedItems[itemIndex + "_" + portionIndex],
                         itemIsSelected = (props.selectedItem.itemIndex == itemIndex) && (props.selectedItem.portionIndex == portionIndex),
                         bigTextCellClassName = classNames({
                             "search-similar-table__big-text-cell": true,
@@ -48,19 +37,19 @@ export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props
                     return (
                         <tr
                             onClick={bindHandleItemsSelect(itemId, itemIndex, portionIndex, props)}
-                            key={itemIndex+"_"+portionIndex}
+                            key={itemIndex + "_" + portionIndex}
                         >
                             <td>
                                 <input
                                     checked={itemIsSelected}
                                     type="radio"
                                     name="radio-selected-similar-occup"
-                                    className="minimal" />
+                                    className="minimal"/>
                             </td>
-                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td title="Номер в списку"> { itemIndex + 1 } </td>
                             <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
                             <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
-                            <td className={bigTextCellClassName} >
+                            <td className={bigTextCellClassName}>
                                 {portion.text}
                             </td>
                             <td>
@@ -71,8 +60,8 @@ export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props
                                 >
                                     {
                                         itemIsExpanded ?
-                                            (<i className='fa fa-chevron-up' />) :
-                                            (<i className="fa fa-chevron-down" />)
+                                            (<i className='fa fa-chevron-up'/>) :
+                                            (<i className="fa fa-chevron-down"/>)
                                     }
                                 </a>
                             </td>
@@ -80,33 +69,42 @@ export default function AddInfoFromAnotherOccupSearchResTblResponsiblities(props
                     )
                 })
             });
-    } catch(err) {
-        console.error(err);
-        tblRows = (
-            <tr colSpan="100" className="text-center">
-                <Alert bsStyle="danger">
+            tbl = (
+                <table className="table table-hover occup-table search-similar-table">
+                    <thead>
+                    <tr>
+                        <th colSpan="2" title="Номер в списку"> № </th>
+                        <th> Назва посади </th>
+                        <th> Приналежн. до КПІ </th>
+                        <th colSpan="2"> Завдання, обов'язки та повноваження </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    { tblRows }
+                    </tbody>
+                </table>
+            );
+        }
+        else
+            alert = (
+                <Alert bsStyle="warning alert-sm alert--with-margin">
                     <p>
-                        Сталася помилка при побутові таблиці з результатами пошуку
+                        За вказаними критеріями не знайдено жодної посади.<br />
+                        Спробуйте змінити критерії пошуку у формі.
                     </p>
                 </Alert>
-            </tr>
+            );
+    } catch(err) {
+        console.error(err);
+        alert = (
+            <Alert bsStyle="danger alert-sm alert--with-margin">
+                <p>
+                    Сталася помилка при побутові таблиці з результатами пошуку
+                </p>
+            </Alert>
         );
     }
 
-    return (
-        <table className="table table-hover occup-table search-similar-table">
-            <thead>
-            <tr>
-                <th colSpan="2" title="Номер в списку"> № </th>
-                <th> Назва посади </th>
-                <th> Приналежн. до КПІ </th>
-                <th colSpan="2"> Завдання, обов'язки та повноваження </th>
-            </tr>
-            </thead>
-            <tbody>
-            {tblRows}
-            </tbody>
-        </table>
-    )
+    return tbl || alert;
 }
 

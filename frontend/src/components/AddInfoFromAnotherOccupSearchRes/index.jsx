@@ -48,7 +48,7 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                     ...this.state.expandedItems,
                     [itemIndex+"_"+portionIndex]: true
                 }
-            });    
+            });
         }
     }
 
@@ -101,6 +101,19 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                 break;
         }
 
+        let pagPortionSize = 1,
+            pagination = this.props.searchResData.itemsList.length > pagPortionSize ? (
+                <div className="pagination-wrapper">
+                    <ul className="pagination no-margin">
+                        <li className="disabled"> <a href="#">«</a> </li>
+                        <li className="active"> <a href="#">1</a> </li>
+                        <li> <a href="#">2</a> </li>
+                        <li> <a href="#">3</a> </li>
+                        <li> <a href="#">»</a> </li>
+                    </ul>
+                </div>
+            ) : "";
+
         return (
             <form className="search-similar-results">
                 <a href="javascript:void(0)" onClick={this.props.goBackToSearchForm} className="btn-back-to-search-form">
@@ -116,27 +129,20 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                             Відміна
                         </button>
                     </div>
-                    <div className="text-center">
-                        <ul className="pagination no-margin">
-                            <li className="disabled"><a href="#">«</a></li>
-                            <li className="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
-                    </div>
+                    { pagination }
                     <div className="text-right">
-                        <button 
+                        <button
                             onClick={() => {
                                 this.props.handleAddInfoBtnClick({
                                     data: this.state.selectedItem.data,
-                                    resultsType: this.props.resultsType, 
-                                    resPortionIndex: this.props.resPortionIndex
+                                    resultsType: this.props.resultsType,
+                                    resPortionIndex: this.props.resPortionIndex,
+                                    resForm: this.props.resForm
                                 })
                             }}
                             type="button"
                             disabled={!this.state.selectedItem.data}
-                            form="search-similar-results" 
+                            form="search-similar-results"
                             className="btn btn-primary">
                             Додати
                         </button>

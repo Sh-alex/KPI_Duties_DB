@@ -2,7 +2,10 @@ package com.kpi.kpi_duties_db.shared.request.occupation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kpi.kpi_duties_db.shared.request.occupation.support.*;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.DurationOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,15 +24,9 @@ public class OccupationRequest {
     @JsonProperty("name")
     private NameOccupation nameOccupation;
 
-    @NotNull
     @Valid
-    @JsonProperty("features")
-    private FeaturesOccupation featuresOccupation;
-
-    @NotNull
-    @Valid
-    @JsonProperty("duration")
-    private DurationOccupation durationOccupation;
+    @JsonProperty("durations")
+    private List<DurationOccupation> durationOccupation;
 
     @JsonProperty("codes")
     private List<CodeOccupation> codes;
@@ -51,19 +48,11 @@ public class OccupationRequest {
         this.nameOccupation = nameOccupation;
     }
 
-    public FeaturesOccupation getFeaturesOccupation() {
-        return featuresOccupation;
-    }
-
-    public void setFeaturesOccupation(FeaturesOccupation featuresOccupation) {
-        this.featuresOccupation = featuresOccupation;
-    }
-
-    public DurationOccupation getDurationOccupation() {
+    public List<DurationOccupation> getDurationOccupation() {
         return durationOccupation;
     }
 
-    public void setDurationOccupation(DurationOccupation durationOccupation) {
+    public void setDurationOccupation(List<DurationOccupation> durationOccupation) {
         this.durationOccupation = durationOccupation;
     }
 

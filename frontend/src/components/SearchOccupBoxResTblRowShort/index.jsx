@@ -4,25 +4,61 @@ import moment from "moment";
 import "./styles.less";
 
 export default function SearchOccupBoxResTblRowShort(props) {
+    let occupationGroupItem = props.occupationGroupList.items.find(item => item.id == props.data.occupationGroup),
+        occupationGroupText = occupationGroupItem && occupationGroupItem.textValue ||
+            (<div title="Не вдалося визначити посадовий склад"> ? </div>),
+        creatingInStateDate = props.data.durations.map(item => {
+            if(item.inKpi) return "";
+
+            let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
+                v = item.virtual ? (<span title="Посада є віртуальною">, V</span>) : "";
+            return ( <div> { d && [d,v] || "-" } </div> );
+        }),
+        cancelingInStateDate = props.data.durations.map(item => {
+            return item.inKpi ? "" : (
+                <div>
+                    { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
+                </div>
+            )
+        }),
+        creatingInKPIDate = props.data.durations.map(item => {
+            if(!item.inKpi) return "";
+
+            let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
+                v = item.virtual ? (<span title="Посада є віртуальною">, V</span>) : "";
+            return ( <div> { d && [d,v] || "-" } </div> );
+        }),
+        cancelingInKPIDate = props.data.durations.map(item => {
+            return !item.inKpi ? "" : (
+                <div>
+                    { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
+                </div>
+            )
+        });
     return (
         <tr>
-            <td title="Номер в списку"> {props.itemIndex + 1} </td>
-            <td> {props.data.occupationGroup} </td>
-            <td> {props.data.occupationName} </td>
-            <td> {props.data.inKPI ? "+" : "-" } </td>
-            <td title="Дата створення посади в державі">
-                {props.data.creatingInStateDate ? moment(props.data.creatingInStateDate).format('DD.MM.YYYY') : "-" }
+            <td className="text-center" title="Номер в списку">
+                { props.itemIndex + 1}
             </td>
-            <td title="Дата відміни посади в державі">
-                {props.data.cancelingInStateDate ? moment(props.data.cancelingInStateDate).format('DD.MM.YYYY') : "-" }
+            <td className="text-left">
+                { occupationGroupText }
             </td>
-            <td title="Дата створення посади в КПІ ">
-                {props.data.creatingInKPIDate ? moment(props.data.creatingInKPIDate).format('DD.MM.YYYY') : "-"}
+            <td className="text-left">
+                { props.data.occupationName }
             </td>
-            <td title="Дата відміни посади в КПІ ">
-                {props.data.cancelingInKPIDate ? moment(props.data.cancelingInKPIDate).format('DD.MM.YYYY') : "-" }
+            <td className="text-center" title="Дата створення посади в державі">
+                { creatingInStateDate }
             </td>
-            <th className="action-btns-cell">
+            <td className="text-center" title="Дата відміни посади в державі">
+                { cancelingInStateDate }
+            </td>
+            <td className="text-center" title="Дата створення посади в КПІ ">
+                { creatingInKPIDate }
+            </td>
+            <td className="text-center" title="Дата відміни посади в КПІ ">
+                { cancelingInKPIDate }
+            </td>
+            <th className="text-center action-btns-cell">
                 <a
                     className="action-btns-cell__btn text-warning btn--btn-sm--btn-warning"
                     title="Редагувати посаду"

@@ -18,7 +18,7 @@ public class NameOccupation {
     private Integer dcDutiesPartitionId;
 
     @JsonProperty("clarifiedOccup")
-    private Integer rtDutiesParentId;
+    private Integer parentId;
 
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
@@ -37,12 +37,12 @@ public class NameOccupation {
         this.dcDutiesPartitionId = dcDutiesPartitionId;
     }
 
-    public Integer getRtDutiesParentId() {
-        return rtDutiesParentId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setRtDutiesParentId(Integer rtDutiesParentId) {
-        this.rtDutiesParentId = rtDutiesParentId;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public Integer getDcDutiesNameId() {

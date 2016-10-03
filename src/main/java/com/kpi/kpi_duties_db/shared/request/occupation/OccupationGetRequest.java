@@ -16,31 +16,24 @@ public class OccupationGetRequest {
 
     private List<String> searchType;
 
-    @JsonProperty("occupGroupVal")
-    private List<Integer> dcDutiesPartitionId;
-
     @JsonProperty("searchText")
     private List<String> rtDutiesName;
 
+    @JsonProperty("occupGroupVal")
+    private List<String> dcDutiesPartitionIdList;
+
     @JsonProperty("searchTags")
-    private List<String> dcDutiesNames;
+    private List<String> rtDutiesNameTags;
 
-    private List<Date> creatingInStateDate_from;
+    private List<Date> startFrom;
 
-    private List<Date> creatingInStateDate_to;
+    private List<Date> startTo;
 
-    private List<Date> cancelingInStateDate_from;
+    private List<Date> stopFrom;
 
-    private List<Date> cancelingInStateDate_to;
+    private List<Date> stopTo;
 
-    private List<Date> creatingInKPIDate_from;
-
-    private List<Date> creatingInKPIDate_to;
-
-    private List<Date> cancelingInKPIDate_from;
-
-    private List<Date> cancelingInKPIDate_to;
-
+    private List<String> inKpi;
 
     public List<String> getSearchType() {
         return searchType;
@@ -50,12 +43,12 @@ public class OccupationGetRequest {
         this.searchType = searchType;
     }
 
-    public List<Integer> getDcDutiesPartitionId() {
-        return dcDutiesPartitionId;
+    public List<String> getDcDutiesPartitionIdList() {
+        return dcDutiesPartitionIdList;
     }
 
-    public void setDcDutiesPartitionId(List<Integer> dcDutiesPartitionId) {
-        this.dcDutiesPartitionId = dcDutiesPartitionId;
+    public void setDcDutiesPartitionIdList(List<String> dcDutiesPartitionIdList) {
+        this.dcDutiesPartitionIdList = dcDutiesPartitionIdList;
     }
 
     public List<String> getRtDutiesName() {
@@ -66,75 +59,51 @@ public class OccupationGetRequest {
         this.rtDutiesName = rtDutiesName;
     }
 
-    public List<String> getDcDutiesNames() {
-        return dcDutiesNames;
+    public List<String> getRtDutiesNameTags() {
+        return rtDutiesNameTags;
     }
 
-    public void setDcDutiesNames(List<String> dcDutiesNames) {
-        this.dcDutiesNames = dcDutiesNames;
+    public void setRtDutiesNameTags(List<String> rtDutiesNameTags) {
+        this.rtDutiesNameTags = rtDutiesNameTags;
     }
 
-    public List<Date> getCreatingInStateDate_from() {
-        return creatingInStateDate_from;
+    public List<Date> getStartFrom() {
+        return startFrom;
     }
 
-    public void setCreatingInStateDate_from(List<Date> creatingInStateDate_from) {
-        this.creatingInStateDate_from = creatingInStateDate_from;
+    public void setStartFrom(List<Date> startFrom) {
+        this.startFrom = startFrom;
     }
 
-    public List<Date> getCreatingInStateDate_to() {
-        return creatingInStateDate_to;
+    public List<Date> getStartTo() {
+        return startTo;
     }
 
-    public void setCreatingInStateDate_to(List<Date> creatingInStateDate_to) {
-        this.creatingInStateDate_to = creatingInStateDate_to;
+    public void setStartTo(List<Date> startTo) {
+        this.startTo = startTo;
     }
 
-    public List<Date> getCancelingInStateDate_from() {
-        return cancelingInStateDate_from;
+    public List<Date> getStopFrom() {
+        return stopFrom;
     }
 
-    public void setCancelingInStateDate_from(List<Date> cancelingInStateDate_from) {
-        this.cancelingInStateDate_from = cancelingInStateDate_from;
+    public void setStopFrom(List<Date> stopFrom) {
+        this.stopFrom = stopFrom;
     }
 
-    public List<Date> getCancelingInStateDate_to() {
-        return cancelingInStateDate_to;
+    public List<Date> getStopTo() {
+        return stopTo;
     }
 
-    public void setCancelingInStateDate_to(List<Date> cancelingInStateDate_to) {
-        this.cancelingInStateDate_to = cancelingInStateDate_to;
+    public void setStopTo(List<Date> stopTo) {
+        this.stopTo = stopTo;
     }
 
-    public List<Date> getCreatingInKPIDate_from() {
-        return creatingInKPIDate_from;
+    public List<String> getInKpi() {
+        return inKpi;
     }
 
-    public void setCreatingInKPIDate_from(List<Date> creatingInKPIDate_from) {
-        this.creatingInKPIDate_from = creatingInKPIDate_from;
-    }
-
-    public List<Date> getCreatingInKPIDate_to() {
-        return creatingInKPIDate_to;
-    }
-
-    public void setCreatingInKPIDate_to(List<Date> creatingInKPIDate_to) {
-        this.creatingInKPIDate_to = creatingInKPIDate_to;
-    }
-
-    public List<Date> getCancelingInKPIDate_from() {
-        return cancelingInKPIDate_from;
-    }
-
-    public void setCancelingInKPIDate_from(List<Date> cancelingInKPIDate_from) {
-        this.cancelingInKPIDate_from = cancelingInKPIDate_from;
-    }
-
-    public List<Date> getCancelingInKPIDate_to() {
-        return cancelingInKPIDate_to;
-    }
-
-    public void setCancelingInKPIDate_to(List<Date> cancelingInKPIDate_to) {
-        this.cancelingInKPIDate_to = cancelingInKPIDate_to;
+    public void setInKpi(List<String> inKpi) {
+        this.inKpi = inKpi;
     }
 }

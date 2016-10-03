@@ -31,6 +31,9 @@ public class RtDutiesEntity {
     @Column(name = "DcDutiesNameId")
     private Integer dcDutiesNameId;
 
+    @Column(name = "ParentId")
+    private Integer parentId;
+
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
@@ -41,7 +44,6 @@ public class RtDutiesEntity {
     @ManyToOne
     @JoinColumn(name = "DcDutiesPartitionId", insertable = false, updatable = false)
     private DcDutiesPartitionEntity dcDutiesPartitionEntity;
-
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ParentId")
@@ -105,6 +107,14 @@ public class RtDutiesEntity {
 
     public void setDcDutiesNameId(Integer dcDutiesNameId) {
         this.dcDutiesNameId = dcDutiesNameId;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public Timestamp getVcChangeDate() {
