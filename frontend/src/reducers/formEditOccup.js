@@ -22,15 +22,15 @@ import {
 
 import { SHOW_MODAL_EDIT_OCCUP } from '../constants/modalEditOccup'
 
-// function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
-//     if(clarifiedOccupTextVal && clarificationTextVal)
-//         return clarifiedOccupTextVal + " " + clarificationTextVal;
-//     if(clarifiedOccupTextVal)
-//         return clarifiedOccupTextVal;
-//     if(clarificationTextVal)
-//         return clarificationTextVal;
-//     return oldVal;
-// }
+function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
+    if(clarifiedOccupTextVal && clarificationTextVal)
+        return clarifiedOccupTextVal + " " + clarificationTextVal;
+    if(clarifiedOccupTextVal)
+        return clarifiedOccupTextVal;
+    if(clarificationTextVal)
+        return clarificationTextVal;
+    return oldVal;
+}
 
 export default function formEditOccup(state, action) {
     if(state.shouldShowServerRespMsg === undefined)
@@ -469,61 +469,61 @@ export default function formEditOccup(state, action) {
                 })
             };
 
-        // ЗАРАЗ поля Уточнювана посада та Уточнення не показуються, тому ці reducer-и не треба
-        // case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
-        //     return {
-        //         ...state,
-        //         name: {
-        //             ...state.name,
-        //             clarification: {
-        //                 ...state.name.clarification,
-        //                 value: action.newVal.id
-        //             },
-        //             occupationName: {
-        //                 ...state.name.occupationName,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationName.value,
-        //                     state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
-        //                     action.newVal.textValue
-        //                 )
-        //             },
-        //             occupationNameMin: {
-        //                 ...state.name.occupationNameMin,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationNameMin.value,
-        //                     state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
-        //                     action.newVal.textValue
-        //                 )
-        //             }
-        //         },
-        //         clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-        //     };
-        // case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
-        //     return {
-        //         ...state,
-        //         name: {
-        //             ...state.name,
-        //             occupationName: {
-        //                 ...state.name.occupationName,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationName.value,
-        //                     action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-        //                     state.clarificationTextVal
-        //                 )
-        //             },
-        //             occupationNameMin: {
-        //                 ...state.name.occupationNameMin,
-        //                 value: calcNewOccupationNameVal(
-        //                     state.name.occupationNameMin.value,
-        //                     action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-        //                     state.clarificationTextVal
-        //                 )
-        //             }
-        //         },
-        //         clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-        //     };
-        //
-        // case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE: //TODO
+
+        case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
+            return {
+                ...state,
+                name: {
+                    ...state.name,
+                    clarification: {
+                        ...state.name.clarification,
+                        value: action.newVal.id
+                    },
+                    occupationName: {
+                        ...state.name.occupationName,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textValue
+                        )
+                    },
+                    occupationNameMin: {
+                        ...state.name.occupationNameMin,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            action.newVal.textValue
+                        )
+                    }
+                },
+                clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+            };
+        case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
+            return {
+                ...state,
+                name: {
+                    ...state.name,
+                    occupationName: {
+                        ...state.name.occupationName,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationName.value,
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
+                    },
+                    occupationNameMin: {
+                        ...state.name.occupationNameMin,
+                        value: calcNewOccupationNameVal(
+                            state.name.occupationNameMin.value,
+                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            state.clarificationTextVal
+                        )
+                    }
+                },
+                clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+            };
+
+        case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE: //TODO
         default:
             return state;
     }
