@@ -1,4 +1,5 @@
 /KPI_Duties_DB.iml
+MANIFEST.MF
 .idea
 node_modules/
 .sass-cache/
@@ -26,3 +27,4 @@ build/
 /gradle/
 /.gradle/
 /gradlew.bat
+/classes/artifacts/kpi_duties_db/exploded/kpi_duties_db-0.0.1-SNAPSHOT.war/META-INF/MANIFEST.MF

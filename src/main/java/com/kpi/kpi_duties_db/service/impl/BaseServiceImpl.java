@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.service.BaseService;
 import com.kpi.kpi_duties_db.shared.message.error.CreateEntityException;
+import com.kpi.kpi_duties_db.shared.message.error.DeleteEntityException;
 import com.kpi.kpi_duties_db.shared.message.error.UpdateEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,18 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Transactional
     public void delete(Integer id) {
         repository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(List<T> entities) {
+        try {
+            repository.delete(entities);
+        } catch (Exception e) {
+            String msg = "Entity " + entities.getClass().getSimpleName() + " not deleted, check the data";
+            logger.error(msg);
+            throw new DeleteEntityException(msg);
+        }
     }
 
     @Override
