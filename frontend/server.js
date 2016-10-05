@@ -33,12 +33,24 @@ function handleAPIResp (apiServerResp, frontEndReq, frontEndRes) {
     frontEndRes.status(apiServerResp.status);
 
     var contentType = apiServerResp.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1)
-        return apiServerResp.json().then(json => frontEndRes.send(json));
+    if (!contentType)
+        frontEndRes.send(apiServerResp);
+    else if(contentType && contentType.indexOf("application/json") !== -1)
+        return apiServerResp.json().then(function(json) {
+            frontEndRes.send(json)
+        });
     else if (contentType && contentType.indexOf('text/xml') !== -1)
-        return apiServerResp.text().then(frontEndRes.send);
+        return apiServerResp.text()
+            .then(function(text) {
+                frontEndRes.send(text)
+            });
     else
-        return apiServerResp.blob().then(frontEndRes.send).catch(e => frontEndRes.send(apiServerResp));
+        return apiServerResp.blob()
+            .then(function(blob) {
+                frontEndRes.send(blob)
+            }).catch(function(e) {
+                frontEndRes.send(apiServerResp)
+            });
 }
 
 // Activate proxy for API
@@ -53,16 +65,22 @@ app.use(/\/api\/(.*)/, (req, res) => {
             'Content-Type': req.get('content-type')
         },
     }).then(
-        apiServerResp => handleAPIResp(apiServerResp, req, res),
-        apiServerResp => handleAPIResp(apiServerResp, req, res)
-    );
+        function(apiServerResp) {
+            handleAPIResp(apiServerResp, req, res)
+        },
+        function(apiServerResp) {
+            handleAPIResp(apiServerResp, req, res)
+        }
+    ).catch(function(e) {
+        res.send(e)
+    });
 });
 
 var rootPath = __dirname + '/public';
 app.use('/', Express.static(rootPath));
 app.use(fallback(rootPath + '/index.html' ));
 
-server.listen(STATICS_SERVER_PORT, () => {
+server.listen(STATICS_SERVER_PORT, function() {
     console.log(`Server is listening on port ${STATICS_SERVER_PORT}`);
     console.log(`Server is proxying ${SERVER_ADDRESS}:${API_PORT}`);
 });
