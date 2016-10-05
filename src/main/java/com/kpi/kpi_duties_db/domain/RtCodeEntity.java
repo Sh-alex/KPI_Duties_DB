@@ -16,7 +16,7 @@ public class RtCodeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NewId")
     private Integer newId;
@@ -56,11 +56,11 @@ public class RtCodeEntity {
     DcCodeZkpptrEntity codeZkpptrEntity;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

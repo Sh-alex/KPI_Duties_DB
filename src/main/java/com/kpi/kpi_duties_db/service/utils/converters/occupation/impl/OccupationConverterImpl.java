@@ -60,6 +60,15 @@ public class OccupationConverterImpl implements OccupationConverter {
     RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
+    DutiesValidityDateService dutiesValidityDateService;
+
+    @Autowired
+    RtDutiesCodeService rtDutiesCodeService;
+
+    @Autowired
+    RtCodeService rtCodeService;
+
+    @Autowired
     HibernateTemplate hibernateTemplate;
 
     private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
@@ -107,12 +116,22 @@ public class OccupationConverterImpl implements OccupationConverter {
             list.add(entity);
         }
 
+        //Видаляю зайві, які було видалено при редагуванні
+        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<DutiesValidityDateEntity> dutiesValidityDateEntities = rtDutiesService.getById(rtDutiesId).getDutiesValidityDateEntities();
+        if (dutiesValidityDateEntities != null) {
+            List<DutiesValidityDateEntity> deleteList = dutiesValidityDateEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            if (!deleteList.isEmpty()) {
+                dutiesValidityDateService.delete(deleteList);
+            }
+        }
+
         return list;
     }
 
 
     @Override
-    public List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request) {
+    public List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request, Integer rtDutiesId) {
 
         List<CodeOccupation> codes = request.getCodes();
 
@@ -137,7 +156,19 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Видаляю зайві зв'язки кодів, які були видалені при редагуванні
-        //TODO
+        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<RtDutiesCodeEntity> rtDutiesCodeEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesCodeEntities();
+        if (rtDutiesCodeEntities != null) {
+            List<RtDutiesCodeEntity> deleteList = rtDutiesCodeEntities.stream().filter(item->!idList.contains(item.getRtCodeId())).collect(Collectors.toList());//Знаходжу RtDutiesCodeEntity, які треба видалити
+            List<RtCodeEntity> deleteCodeList = new ArrayList<>();//Знаходжу RtCodeEntity, які треба видалити
+            deleteList.forEach(item-> {
+                deleteCodeList.add(rtCodeService.getById(item.getRtCodeId()));
+            });
+            if (!deleteList.isEmpty()) {
+                rtDutiesCodeService.delete(deleteList);
+                rtCodeService.delete(deleteCodeList);
+            }
+        }
 
         return list;
     }
