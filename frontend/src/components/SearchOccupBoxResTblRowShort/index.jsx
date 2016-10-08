@@ -11,12 +11,12 @@ export default function SearchOccupBoxResTblRowShort(props) {
             if(item.inKpi) return "";
 
             let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
-                v = item.virtual ? (<span title="Посада є віртуальною">, V</span>) : "";
-            return ( <div> { d && [d,v] || "-" } </div> );
+                v = item.virtual ? (<span title="Посада є віртуальною" key={Math.random()}>, V</span>) : "";
+            return ( <div key={Math.random()}> { d && [d,v] || "-" } </div> );
         }),
         cancelingInStateDate = props.data.durations.map(item => {
             return item.inKpi ? "" : (
-                <div>
+                <div key={Math.random()}>
                     { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
                 </div>
             )
@@ -25,12 +25,12 @@ export default function SearchOccupBoxResTblRowShort(props) {
             if(!item.inKpi) return "";
 
             let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
-                v = item.virtual ? (<span title="Посада є віртуальною">, V</span>) : "";
-            return ( <div> { d && [d,v] || "-" } </div> );
+                v = item.virtual ? (<span key={Math.random()} title="Посада є віртуальною">, V</span>) : "";
+            return ( <div key={Math.random()}> { d && [d,v] || "-" } </div> );
         }),
         cancelingInKPIDate = props.data.durations.map(item => {
             return !item.inKpi ? "" : (
-                <div>
+                <div key={Math.random()}>
                     { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
                 </div>
             )
