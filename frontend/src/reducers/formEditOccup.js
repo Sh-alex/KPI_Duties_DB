@@ -81,6 +81,11 @@ export default function formEditOccup(state, action) {
                         "value": action.data.idText,
                         "_isFieldValue": true
                     },
+                    'updateTextInRelativeOccup': {
+                        "initial": -1, 
+                        "value": -1,
+                        "_isFieldValue": true
+                    },
                     'occupationsUsingText': {
                         "initial": "",
                         "value": action.data.usingOccupations && action.data.usingOccupations.join(", ") || "",
