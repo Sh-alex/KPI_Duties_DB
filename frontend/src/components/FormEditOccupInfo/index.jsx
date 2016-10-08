@@ -167,7 +167,10 @@ export default class FormEditOccupInfo extends Component {
         this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
-        if(this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup)
+        if(
+            this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.responsibilities[resPortionIndex].occupationsUsingText.value
+        )
             this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
         // this.props.fields.responsibilities[resPortionIndex].id.value &&
@@ -184,9 +187,8 @@ export default class FormEditOccupInfo extends Component {
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
         if(
-            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations &&
-            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations.length &&
-            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup
+            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.haveToKnow[resPortionIndex].occupationsUsingText.value
         )
             this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
@@ -203,7 +205,10 @@ export default class FormEditOccupInfo extends Component {
         this.props.fields.qualiffRequir[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
-        if(this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup)
+        if(
+            this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.qualiffRequir[resPortionIndex].occupationsUsingText.value
+        )
             this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
         // this.props.fields.qualiffRequir[resPortionIndex].id.value &&
