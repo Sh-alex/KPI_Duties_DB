@@ -5,10 +5,15 @@ import "./styles.less";
 
 function bindHandleItemsSelect(itemId, itemIndex, portionIndex, props) {
     return () => {
+        let textData = props.searchResData.itemsById[itemId].data.haveToKnow[portionIndex];
         return props.onSelectItem({
             itemIndex,
             portionIndex,
-            data: props.searchResData.itemsById[itemId].data.haveToKnow[portionIndex]
+            data: {
+                ...textData,
+                //дописуємо у список використовуваних посад назву цієї посади, щоб коли додамо текст там вона теж показувалась
+                usingOccupations: textData.usingOccupations.concat(props.searchResData.itemsById[itemId].data.occupationName)
+            }
         })
     }
 }

@@ -159,33 +159,9 @@ export function hideModalEditOccup() {
 
 export function showModalEditOccup(editingData, dispatch) {
     return function (dispatch, getState) {
-        let changedData;
-        try {
-            function descrTextMappingFunc(textItem) {
-                return {
-                    ...textItem,
-                    usingOccupations: textItem.usingOccupations.map(occupId => {
-                        let occupData = getState().searchOccupBox.searchResData.itemsById[occupId];
-                        return occupData && occupData.data.occupationName || `Посада з id=${occupId}`
-                    }).join(", ")
-                }
-            }
-            changedData = {
-                id: editingData.id,
-                data: {
-                    ...editingData.data,
-                    responsibilities: editingData.data.responsibilities.map(descrTextMappingFunc),
-                    haveToKnow: editingData.data.haveToKnow.map(descrTextMappingFunc),
-                    qualiffRequir: editingData.data.qualiffRequir.map(descrTextMappingFunc),
-                }
-            };
-        } catch (e) {
-            console.log("Caught error in action showModalEditOccup while tried to calculate usingOccupations names:", e);
-            changedData = editingData;
-        }
         dispatch( {
             type: SHOW_MODAL_EDIT_OCCUP,
-            editingData: changedData
+            editingData
         });
     }
 }
