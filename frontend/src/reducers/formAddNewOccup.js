@@ -258,7 +258,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
                             action.newVal.textValue
                         )
                     },
@@ -266,7 +266,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
+                            !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
                             action.newVal.textValue
                         )
                     }
@@ -282,7 +282,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     },
@@ -290,7 +290,7 @@ export default function formEditOccupInfo(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     }
