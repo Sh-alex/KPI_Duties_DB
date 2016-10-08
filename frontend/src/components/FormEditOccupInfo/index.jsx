@@ -9,7 +9,7 @@ import FormEditOccupInfoResponsibSection from "../FormEditOccupInfoResponsibSect
 import FormEditOccupInfoHaveToKnowSection from "../FormEditOccupInfoHaveToKnowSection"
 import FormEditOccupInfoQualiffRequirSection from "../FormEditOccupInfoQualiffRequirSection"
 
-import { Alert } from 'react-bootstrap'
+import { Alert, Popover, OverlayTrigger } from 'react-bootstrap'
 
 import replaceApostrophe from "../../utils/replaceApostrophe"
 
@@ -206,7 +206,6 @@ export default class FormEditOccupInfo extends Component {
         const {
             fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir},
             handleSubmit,
-            resetForm,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
             handleBtnAddInfoFromAnotherOccupClick,
@@ -217,6 +216,21 @@ export default class FormEditOccupInfo extends Component {
         //     var occupUsingResponsibText = this.props.occupData.data.responsibilities.map( item => item.usingOccupations || []),
         //         occupUsingHaveToKnowText = this.props.occupData.data.haveToKnow.map( item => item.usingOccupations || []),
         //         occupUsingQualiffRequirText = this.props.occupData.data.qualiffRequir.map( item => item.usingOccupations || []);
+
+        const popoverSubmitResetTitle = (
+                <div className="popover-title-inner--warning">
+                    Підтвердіть очищення форми
+                </div>
+            ),
+            popoverSubmitReset = (
+            <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
+                <div className="text-center">
+                    <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
+                        <span className="btn-label"> Очистити </span>
+                    </button>
+                </div>
+            </Popover>
+        );
 
         let formAlert = !shouldShowServerRespMsg ?
                 "" :
@@ -342,7 +356,6 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewZKPPTRCode: false});
                         this.props.dismissModalAddNewZKPPTRCodeAlert()
                     }} />
-                {/*id="add-form" */}
                 <form className="form-horizontal form-edit-occup-info" onSubmit={handleSubmit} role="form">
                     <div className="form-inner">
                         <FormEditOccupInfoNameSection
@@ -408,14 +421,15 @@ export default class FormEditOccupInfo extends Component {
                             )}
 
                             <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
-                                <button
-                                    type="reset"
-                                    onClick={resetForm}
-                                    disabled={submitting}
-                                    className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
-                                >
-                                    Очистити форму <i className="fa fa-refresh" />
-                                </button>
+                                <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverSubmitReset}>
+                                    <button
+                                        type="reset"
+                                        disabled={submitting}
+                                        className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
+                                    >
+                                        Очистити форму <i className="fa fa-refresh" />
+                                    </button>
+                                </OverlayTrigger>
                                 <button
                                     type="submit"
                                     disabled={submitting}
@@ -424,9 +438,9 @@ export default class FormEditOccupInfo extends Component {
                                     {
                                         submitting ? (
                                             <span>
-                                                    Завантаження {" "}
+                                                Завантаження {" "}
                                                 <i className="fa fa-spinner fa-pulse" />
-                                                </span>
+                                            </span>
                                         ) : (
                                             this.props.submitBtnText
                                         )
