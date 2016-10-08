@@ -50,10 +50,12 @@ export default function FormEditOccupInfoResponsibPortion(props) {
         portionEndDateValue = props.responsibPortionFields.portionEndDate.value &&
             (new Date(props.responsibPortionFields.portionEndDate.value) !== "Invalid Date") &&
             new Date(props.responsibPortionFields.portionEndDate.value) || null,
-        showBtnUpdateRelative = props.responsibPortionFields.updateTextInRelativeOccup &&
-            (props.responsibPortionFields.updateTextInRelativeOccup.value !== -1),
         updateRelative = props.responsibPortionFields.updateTextInRelativeOccup &&
-            props.responsibPortionFields.updateTextInRelativeOccup.value;
+            props.responsibPortionFields.updateTextInRelativeOccup.value,
+        occupationsUsingText = props.responsibPortionFields.occupationsUsingText &&
+            props.responsibPortionFields.occupationsUsingText.value || "",
+        showBtnUpdateRelative = occupationsUsingText && props.responsibPortionFields.updateTextInRelativeOccup &&
+            (props.responsibPortionFields.updateTextInRelativeOccup.value !== -1);
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -86,7 +88,7 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                                     showBtnUpdateRelative && (
                                         <label
                                             className={`btn btn-default btn-flat should-update-in-other-occup ${updateRelative ? "active" : ""}`}
-                                            title="Оновити також цей текст у посадах які використвоують його"
+                                            title={"Оновити також цей текст у посадах які використвоують його: " + occupationsUsingText }
                                         >
                                             <input
                                                 {...props.responsibPortionFields.updateTextInRelativeOccup}

@@ -83,10 +83,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddResponsibPortionBtnClick() {
         this.props.fields.responsibilities.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -96,10 +99,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddHaveToKnowPortionBtnClick() {
         this.props.fields.haveToKnow.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -109,10 +115,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddQualiffRequirPortionBtnClick() {
         this.props.fields.qualiffRequir.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -211,11 +220,6 @@ export default class FormEditOccupInfo extends Component {
             handleBtnAddInfoFromAnotherOccupClick,
             submitting
         } = this.props;
-
-        // if(this.props.occupData)
-        //     var occupUsingResponsibText = this.props.occupData.data.responsibilities.map( item => item.usingOccupations || []),
-        //         occupUsingHaveToKnowText = this.props.occupData.data.haveToKnow.map( item => item.usingOccupations || []),
-        //         occupUsingQualiffRequirText = this.props.occupData.data.qualiffRequir.map( item => item.usingOccupations || []);
 
         const popoverSubmitResetTitle = (
                 <div className="popover-title-inner--warning">
@@ -382,18 +386,21 @@ export default class FormEditOccupInfo extends Component {
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
                         <FormEditOccupInfoResponsibSection
                             responsibFields={responsibilities}
+                            occupUsingResponsibText={[] /*occupUsingResponsibText*/}
                             handleTextChange={this.handleResponsibTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                             handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
                         <FormEditOccupInfoHaveToKnowSection
                             haveToKnowFields={haveToKnow}
+                            occupUsingHaveToKnowText={[] /*occupUsingHaveToKnowText*/}
                             handleTextChange={this.handleHaveToKnowTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
                         <FormEditOccupInfoQualiffRequirSection
                             qualiffRequirFields={qualiffRequir}
+                            occupUsingQualiffRequirText={[] /*occupUsingQualiffRequirText*/}
                             handleTextChange={this.handleQualiffRequirTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}

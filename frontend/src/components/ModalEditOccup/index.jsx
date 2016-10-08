@@ -84,6 +84,7 @@ class ModalEditOccup extends Component {
             responsibilities: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -94,6 +95,7 @@ class ModalEditOccup extends Component {
             haveToKnow: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -104,6 +106,7 @@ class ModalEditOccup extends Component {
             qualiffRequir: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -166,18 +169,21 @@ export default reduxForm(
             'responsibilities[].idText',
             'responsibilities[].idDates',
             'responsibilities[].updateTextInRelativeOccup',
+            'responsibilities[].occupationsUsingText',
             'responsibilities[].portionStartDate',
             'responsibilities[].portionEndDate',
             'haveToKnow[].text',
             'haveToKnow[].idText',
             'haveToKnow[].idDates',
             'haveToKnow[].updateTextInRelativeOccup',
+            'haveToKnow[].occupationsUsingText',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
             'qualiffRequir[].text',
             'qualiffRequir[].idText',
             'qualiffRequir[].idDates',
             'qualiffRequir[].updateTextInRelativeOccup',
+            'qualiffRequir[].occupationsUsingText',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate',
         ],

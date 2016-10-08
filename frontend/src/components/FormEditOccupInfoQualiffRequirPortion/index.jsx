@@ -41,10 +41,12 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
         portionEndDateValue = props.qualiffRequirPortionFields.portionEndDate.value &&
             (new Date(props.qualiffRequirPortionFields.portionEndDate.value) !== "Invalid Date") &&
             new Date(props.qualiffRequirPortionFields.portionEndDate.value) || null,
-        showBtnUpdateRelative = props.qualiffRequirPortionFields.updateTextInRelativeOccup &&
-            (props.qualiffRequirPortionFields.updateTextInRelativeOccup.value !== -1),
         updateRelative = props.qualiffRequirPortionFields.updateTextInRelativeOccup &&
-            props.qualiffRequirPortionFields.updateTextInRelativeOccup.value;
+            props.qualiffRequirPortionFields.updateTextInRelativeOccup.value,
+        occupationsUsingText = props.qualiffRequirPortionFields.occupationsUsingText &&
+            props.qualiffRequirPortionFields.occupationsUsingText.value || "",
+        showBtnUpdateRelative = occupationsUsingText && props.qualiffRequirPortionFields.updateTextInRelativeOccup &&
+            (props.qualiffRequirPortionFields.updateTextInRelativeOccup.value !== -1);
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -77,7 +79,7 @@ export default function FormEditOccupInfoQualiffRequirPortion(props) {
                                     showBtnUpdateRelative && (
                                         <label
                                             className={`btn btn-default btn-flat should-update-in-other-occup ${updateRelative ? "active" : ""}`}
-                                            title="Оновити також цей текст у посадах які використвоують його"
+                                            title={"Оновити також цей текст у посадах які використвоують його: " + occupationsUsingText }
                                         >
                                             <input
                                                 {...props.qualiffRequirPortionFields.updateTextInRelativeOccup}

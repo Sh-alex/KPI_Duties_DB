@@ -135,6 +135,7 @@ export default function formEditOccup(state, action) {
                                 if(portionIndex != action.resPortionIndex)
                                     return portion;
                                 return {
+                                    //TODO: при додаванні тексту з іншої посади теж заповнювати поле occupationsUsingText
                                     "portionStartDate": {
                                         "initial": null,
                                         "value": null,
@@ -248,6 +249,45 @@ export default function formEditOccup(state, action) {
 
 
         case SHOW_MODAL_EDIT_OCCUP:
+            let descrTextMappingFunc = portion => {
+                return {
+                    "portionStartDate": {
+                        "initial": null,
+                        "value": portion.portionStartDate || null,
+                        "_isFieldValue": true
+                    },
+                    "portionEndDate": {
+                        "initial": null,
+                        "value": portion.portionEndDate || null,
+                        "_isFieldValue": true
+                    },
+                    "text": {
+                        "initial": "",
+                        "value": portion.text || "",
+                        "_isFieldValue": true
+                    },
+                    'updateTextInRelativeOccup': {
+                        "initial": -1,
+                        "value": -1,
+                        "_isFieldValue": true
+                    },
+                    'occupationsUsingText': {
+                        "initial": "",
+                        "value": portion.usingOccupations || "",
+                        "_isFieldValue": true
+                    },
+                    "idText": {
+                        "initial": null,
+                        "value": portion.idText,
+                        "_isFieldValue": true
+                    },
+                    "idDates": {
+                        "initial": null,
+                        "value": portion.idDates,
+                        "_isFieldValue": true
+                    }
+                }
+            };
             return {
                 ...state,
                 name: {
@@ -365,108 +405,9 @@ export default function formEditOccup(state, action) {
                         }
                     }
                 }),
-                responsibilities: action.editingData.data.responsibilities.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                }),
-                haveToKnow: action.editingData.data.haveToKnow.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                }),
-                qualiffRequir: action.editingData.data.qualiffRequir.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                })
+                responsibilities: action.editingData.data.responsibilities.map( descrTextMappingFunc ),
+                haveToKnow: action.editingData.data.haveToKnow.map( descrTextMappingFunc ),
+                qualiffRequir: action.editingData.data.qualiffRequir.map( descrTextMappingFunc )
             };
 
 
