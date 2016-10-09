@@ -7,6 +7,19 @@ import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
 import ModalEditOccup from "../ModalEditOccup"
 
+import {
+    sortSearchResData,
+
+    SORT_ASC,
+    SORT_DESC,
+
+    OCCUPATION_GROUP,
+    OCCUPATION_NAME,
+    START_IN_KPI_DATE,
+    STOP_IN_KPI_DATE,
+    START_IN_STATE_DATE,
+    STOP_IN_STATE_DATE
+} from "../../utils/sortSearchResData"
 
 export default class SearchOccupBoxRes extends Component {
     constructor(props) {
@@ -16,8 +29,8 @@ export default class SearchOccupBoxRes extends Component {
         this.state = {
             editingItem: null,                          //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
-            sortField: null,                            //поле по якому портується таблиця
-            sortDirection: "SORT_ASC",                  //напрям сортування SORT_ASC/SORT_DESC
+            sortField: OCCUPATION_NAME,                 //поле по якому портується таблиця
+            sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
             portionSize: portionSizesArr[0],            //обраний розмір порції
             portionSizesArr,                            //масив розмірів порцій
             portionIndex: 0,                            //номер порції яку показуємо
@@ -32,6 +45,7 @@ export default class SearchOccupBoxRes extends Component {
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleDeleteItemShowingModal = this.handleDeleteItemShowingModal.bind(this);
+        this.triggerSorting = this.triggerSorting.bind(this);
     }
 
     handleToggleExpandItem(itemId) {
@@ -81,10 +95,31 @@ export default class SearchOccupBoxRes extends Component {
         }
     }
 
+    triggerSorting(sortField) {
+        if(sortField == this.state.sortField) {
+            if(this.state.sortDirection == SORT_ASC)
+                return this.setState({ sortDirection: SORT_DESC });
+            else
+                return this.setState({ sortDirection: SORT_ASC });
+        } else {
+            return this.setState({
+                sortField: sortField,
+                sortDirection: SORT_ASC
+            });
+        }
+    }
+
     render() {
-        //TODO: обраховувати(на основі обраного індекса порції) які дані показувати у таблиці
-        let performedSearchResData = this.props.searchResData,
-            modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null && this.state.deletingItem !== undefined &&
+        let sortedSearchResData = sortSearchResData({
+                data: this.props.searchResData,
+                field: this.state.sortField,
+                direction: this.state.sortDirection,
+                occupationGroupList: this.props.occupationGroupList
+            }),
+            //TODO: обраховувати(на основі обраного індекса порції) які дані показувати у таблиці
+            performedSearchResData = sortedSearchResData,
+            modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
+                this.state.deletingItem !== undefined &&
                 this.props.searchResData.itemsById[this.state.deletingItem] &&
                 this.props.searchResData.itemsById[this.state.deletingItem].data &&
                 this.props.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
@@ -139,6 +174,7 @@ export default class SearchOccupBoxRes extends Component {
                                 onEditItem={this.props.onEditItem}
                                 onDeleteItem={this.handleDeleteItemShowingModal}
                                 onToggleExpandItem={this.handleToggleExpandItem}
+                                triggerSorting={this.triggerSorting}
                                 isDeletingOccupation={this.props.isDeletingOccupation}
                                 deletingItem={this.state.deletingItem}
                             />
