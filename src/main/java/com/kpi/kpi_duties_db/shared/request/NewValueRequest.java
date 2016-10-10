@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewValueRequest {
 
-    String newVal;
+    private String newVal;
 
     public String getNewVal() {
         return newVal;

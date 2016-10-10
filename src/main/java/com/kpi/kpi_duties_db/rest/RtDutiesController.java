@@ -97,7 +97,7 @@ public class RtDutiesController {
         rtDutiesMustKnowService.add(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesQualificationRequirementsService.add(converter.toRtDutiesQualificationRequirementsEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
-        return Response.ok().build();
+        return Response.ok().entity(rtDutiesEntity).build();
     }
 
     @PUT
