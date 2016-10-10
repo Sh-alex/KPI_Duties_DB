@@ -46,7 +46,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
 
 
-    compile files('C:\\Users\\MaxGenash\\.gradle\\caches\\modules-2\\files-2.1\\com\\microsoft\\sqlserver\\sqljdbc42\\6.0\\sqljdbc42-6.0.jar')
+    compile files('C:\\Users\\Olexandr\\.m2\\repository\\com\\microsoft\\sqlserver\\sqljdbc42\\6.0\\sqljdbc42-6.0.jar')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile("joda-time:joda-time:$jodaTimeVersion")
