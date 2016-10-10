@@ -182,15 +182,26 @@ export default reduxForm(
     },
     (dispatch, ownProps) => { //mapDispatchToProps
         return {
-            fetchInitialData() {
-                dispatch(fetchOccupGroupList());
-                dispatch(fetchClarifiedOccupList());
-                dispatch(fetchClarificationList());
-
-                dispatch(fetchKPCodesList());
-                dispatch(fetchZKPPTRCodesList());
-                dispatch(fetchETDKCodesList());
-                dispatch(fetchDKHPCodesList());
+            fetchOccupGroupList() {
+                return dispatch(fetchOccupGroupList());
+            },
+            fetchClarifiedOccupList() {
+                return dispatch(fetchClarifiedOccupList());
+            },
+            fetchClarificationList() {
+                return dispatch(fetchClarificationList());
+            },
+            fetchKPCodesList() {
+                return dispatch(fetchKPCodesList());
+            },
+            fetchZKPPTRCodesList() {
+                return dispatch(fetchZKPPTRCodesList());
+            },
+            fetchETDKCodesList() {
+                return dispatch(fetchETDKCodesList());
+            },
+            fetchDKHPCodesList() {
+                return dispatch(fetchDKHPCodesList());
             },
             handleServerRespMsgDismiss() {
                 return dispatch( addNewOccupHideServerRespMsg() );

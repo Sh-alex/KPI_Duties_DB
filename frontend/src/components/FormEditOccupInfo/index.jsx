@@ -53,18 +53,15 @@ export default class FormEditOccupInfo extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchInitialData();
-    }
+        this.props.fetchOccupGroupList();
+        this.props.fetchClarifiedOccupList();
+        this.props.fetchClarificationList();
 
-    // /**
-    //  * Set endDate to startDate if it's blank or would otherwise be invalid.
-    //  */
-    // handleStartDateChange(startDate) {
-    //   var {endDate} = this.props.fields
-    //   if (endDate.value == null || endDate.value < startDate) {
-    //     endDate.onChange(startDate)
-    //   }
-    // }
+        this.props.fetchKPCodesList();
+        this.props.fetchZKPPTRCodesList();
+        this.props.fetchETDKCodesList();
+        this.props.fetchDKHPCodesList();
+    }
 
     handleAddCodesPortionBtnClick() {
         this.props.fields.codes.addField({
@@ -370,6 +367,9 @@ export default class FormEditOccupInfo extends Component {
                         <FormEditOccupInfoNameSection
                             nameFields={name}
                             {...this.props.occupNameInfoLists}
+                            fetchOccupGroupList={this.props.fetchOccupGroupList}
+                            fetchClarifiedOccupList={this.props.fetchClarifiedOccupList}
+                            fetchClarificationList={this.props.fetchClarificationList}
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
@@ -382,6 +382,10 @@ export default class FormEditOccupInfo extends Component {
                         <FormEditOccupInfoCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
+                            fetchKPCodesList={this.props.fetchKPCodesList}
+                            fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
+                            fetchETDKCodesList={this.props.fetchETDKCodesList}
+                            fetchDKHPCodesList={this.props.fetchDKHPCodesList}
                             openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
                             openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
                             openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}

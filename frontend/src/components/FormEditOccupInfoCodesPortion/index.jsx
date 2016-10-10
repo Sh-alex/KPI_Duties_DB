@@ -150,6 +150,13 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     onClick={props.openModalAddNewKPCode} >
                                     +1
                                 </button>
+                                <button
+                                    type="button"
+                                    title="Оновити список"
+                                    className="btn btn-default btn-flat"
+                                    onClick={props.fetchKPCodesList} >
+                                    <i className="fa fa-refresh" />
+                                </button>
                             </div>
                         </div>
                         <span className="help-block">
@@ -199,6 +206,13 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     className="btn btn-default btn-flat"
                                     onClick={props.openModalAddNewZKPPTRCode} >
                                     +1
+                                </button>
+                                <button
+                                    type="button"
+                                    title="Оновити список"
+                                    className="btn btn-default btn-flat"
+                                    onClick={props.fetchZKPPTRCodesList} >
+                                    <i className="fa fa-refresh" />
                                 </button>
                             </div>
                         </div>
@@ -253,6 +267,13 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     onClick={props.openModalAddNewETDKCode} >
                                     +1
                                 </button>
+                                <button
+                                    type="button"
+                                    title="Оновити список"
+                                    className="btn btn-default btn-flat"
+                                    onClick={props.fetchETDKCodesList} >
+                                    <i className="fa fa-refresh" />
+                                </button>
                             </div>
                         </div>
                         <span className="help-block">
@@ -302,6 +323,13 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     className="btn btn-default btn-flat"
                                     onClick={props.openModalAddNewDKHPCode} >
                                     +1
+                                </button>
+                                <button
+                                    type="button"
+                                    title="Оновити список"
+                                    className="btn btn-default btn-flat"
+                                    onClick={props.fetchDKHPCodesList} >
+                                    <i className="fa fa-refresh" />
                                 </button>
                             </div>
                         </div>
