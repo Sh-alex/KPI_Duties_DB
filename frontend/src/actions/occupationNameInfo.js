@@ -24,9 +24,14 @@ import {
 } from '../constants/occupationNameInfo'
 
 import {
-    occupationGroupInpChange,
-    clarificationInpChange
+    occupationGroupInpChange as addOccupForm_occupationGroupInpChange,
+    clarificationInpChange as addOccupForm_clarificationInpChange
 } from './addNewOccup'
+
+import {
+    occupationGroupInpChange as editOccupForm_occupationGroupInpChange,
+    clarificationInpChange as editOccupForm_clarificationInpChange
+} from './editOccup'
 
 import * as API_URIs from '../constants/API_URIs';
 
@@ -67,11 +72,12 @@ export function fetchClarificationList() {
     }
 }
 
-export function addNewClarification(newVal) {
+export function addNewClarification({ newVal, resForm }) {
     return function (dispatch) {
         dispatch({
             type: ADD_NEW_CLARIFICATION_REQUEST,
-            newVal
+            newVal,
+            resForm
         });
 
         return fetch( API_URIs.ADD_NEW_CLARIFICATION, {
@@ -112,7 +118,10 @@ export function addNewClarification(newVal) {
                     type: ADD_NEW_CLARIFICATION_SUCCESS,
                     newItem: resObj
                 });
-                dispatch(clarificationInpChange(resObj));
+                if(resForm == 'formEditOccup')
+                    dispatch(editOccupForm_clarificationInpChange(resObj));
+                else
+                    dispatch(addOccupForm_clarificationInpChange(resObj));
             })
             .catch( error => dispatch({
                 type: ADD_NEW_CLARIFICATION_FAIL,
@@ -127,11 +136,12 @@ export function dismissModalAddNewClarificationAlert() {
     }
 }
 
-export function addNewOccupationGroup(newVal) {
+export function addNewOccupationGroup({ newVal, resForm }) {
     return function (dispatch) {
         dispatch({
             type: ADD_NEW_OCCUPATION_GROUP_REQUEST,
-            newVal
+            newVal,
+            resForm
         });
 
         return fetch( API_URIs.ADD_NEW_OCCUPATION_GROUP, {
@@ -172,7 +182,10 @@ export function addNewOccupationGroup(newVal) {
                     type: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
                     newItem: resObj
                 });
-                dispatch(occupationGroupInpChange(resObj));
+                if(resForm == 'formEditOccup')
+                    dispatch(editOccupForm_occupationGroupInpChange(resObj));
+                else
+                    dispatch(addOccupForm_occupationGroupInpChange(resObj));
             })
             .catch( error => dispatch({
                 type: ADD_NEW_OCCUPATION_GROUP_FAIL,

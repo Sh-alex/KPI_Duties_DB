@@ -214,11 +214,17 @@ export default reduxForm(
             fetchDKHPCodesList() {
                 return dispatch(fetchDKHPCodesList());
             },
-            addNewOccupationGroup(val) {
-                return dispatch(addNewOccupationGroup(val));
+            addNewOccupationGroup(newVal) {
+                return dispatch(addNewOccupationGroup({
+                    newVal,
+                    resForm: 'formAddNewOccup'
+                }));
             },
-            addNewClarification(val) {
-                return dispatch(addNewClarification(val));
+            addNewClarification(newVal) {
+                return dispatch(addNewClarification({
+                    newVal,
+                    resForm: 'formAddNewOccup'
+                }));
             },
             addNewKPCode(val) {
                 return dispatch(addNewKPCode(val));

@@ -363,33 +363,38 @@ export default function formEditOccup(state, action) {
 
 
         case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
-            return {
-                ...state,
-                name: {
-                    ...state.name,
-                    clarification: {
-                        ...state.name.clarification,
-                        value: action.newVal.id
+            if(state.name && state.name.clarification)
+                return {
+                    ...state,
+                    name: {
+                        ...state.name,
+                        clarification: {
+                            ...state.name.clarification,
+                            value: action.newVal.id
+                        },
+                        occupationName: {
+                            ...state.name.occupationName,
+                            value: calcNewOccupationNameVal(
+                                state.name.occupationName.value,
+                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                action.newVal.textValue
+                            )
+                        },
+                        occupationNameMin: {
+                            ...state.name.occupationNameMin,
+                            value: calcNewOccupationNameVal(
+                                state.name.occupationNameMin.value,
+                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                action.newVal.textValue
+                            )
+                        }
                     },
-                    occupationName: {
-                        ...state.name.occupationName,
-                        value: calcNewOccupationNameVal(
-                            state.name.occupationName.value,
-                            !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textValue
-                        )
-                    },
-                    occupationNameMin: {
-                        ...state.name.occupationNameMin,
-                        value: calcNewOccupationNameVal(
-                            state.name.occupationNameMin.value,
-                            !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textValue
-                        )
-                    }
-                },
-                clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-            };
+                    clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+                };
+            else {
+                console.log("Called EDIT_OCCUP_CLARIFICATION_INP_CHANGE reducer, but state is empty");
+                return state;
+            }
         case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
             return {
                 ...state,
@@ -416,6 +421,21 @@ export default function formEditOccup(state, action) {
             };
 
         case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE:
+            if(state.name && state.name.occupationGroup)
+                return {
+                    ...state,
+                    name: {
+                        ...state.name,
+                        occupationGroup: {
+                            ...state.name.occupationGroup,
+                            value: action.newVal && action.newVal.id || 0
+                        },
+                    }
+                };
+        else {
+            console.log("Called EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE reducer, but state is empty");
+            return state;
+        }
         default:
             return state;
     }
