@@ -57,7 +57,49 @@ export default function formEditOccup(state, action) {
         case ADD_INFO_FROM_ANOTHER_OCCUPATION:
             if(action.resForm !== 'formEditOccup')
                 return state;
-            switch(action.resultsType){
+            let addInfoFromAnotherOccupDescrTextMappingFunc = (portion, portionIndex) => {
+                if(portionIndex != action.resPortionIndex)
+                    return portion;
+                return {
+                    "portionStartDate": {
+                        "initial": null,
+                        "value": null,
+                        "_isFieldValue": true
+                    },
+                    "portionEndDate": {
+                        "initial": null,
+                        "value": null,
+                        "_isFieldValue": true
+                    },
+                    "text": {
+                        "initial": "",
+                        "value": action.data.text,
+                        "_isFieldValue": true
+                    },
+                    "idText": {
+                        "initial": null,
+                        "value": action.data.idText,
+                        "_isFieldValue": true
+                    },
+                    'updateTextInRelativeOccup': {
+                        "initial": -1, 
+                        "value": -1,
+                        "_isFieldValue": true
+                    },
+                    'occupationsUsingText': {
+                        "initial": "",
+                        "value": action.data.usingOccupations && action.data.usingOccupations.join(", ") || "",
+                        "_isFieldValue": true
+                    },
+                    "idDates": {
+                        "initial": null,
+                        "value": null,
+                        "_isFieldValue": true
+                    }
+                }
+            };
+
+            switch(action.resultsType) {
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                     if(!action.data || !action.data.codes instanceof Array)
                         return state;
@@ -131,37 +173,7 @@ export default function formEditOccup(state, action) {
                     else
                         return {
                             ...state,
-                            responsibilities: state.responsibilities.map( (portion, portionIndex) => {
-                                if(portionIndex != action.resPortionIndex)
-                                    return portion;
-                                return {
-                                    "portionStartDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "portionEndDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "text": {
-                                        "initial": "",
-                                        "value": action.data.text,
-                                        "_isFieldValue": true
-                                    },
-                                    "idText": {
-                                        "initial": null,
-                                        "value": action.data.idText,
-                                        "_isFieldValue": true
-                                    },
-                                    "idDates": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    }
-                                }
-                            })
+                            responsibilities: state.responsibilities.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                         };
                     break;
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
@@ -170,37 +182,7 @@ export default function formEditOccup(state, action) {
                     else
                         return {
                             ...state,
-                            haveToKnow: state.haveToKnow.map( (portion, portionIndex) => {
-                                if(portionIndex != action.resPortionIndex)
-                                    return portion;
-                                return {
-                                    "portionStartDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "portionEndDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "text": {
-                                        "initial": "",
-                                        "value": action.data.text,
-                                        "_isFieldValue": true
-                                    },
-                                    "idText": {
-                                        "initial": null,
-                                        "value": action.data.idText,
-                                        "_isFieldValue": true
-                                    },
-                                    "idDates": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    }
-                                }
-                            })
+                            haveToKnow: state.haveToKnow.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                         };
                     break;
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR:
@@ -209,37 +191,7 @@ export default function formEditOccup(state, action) {
                     else
                         return {
                             ...state,
-                            qualiffRequir: state.qualiffRequir.map( (portion, portionIndex) => {
-                                if(portionIndex != action.resPortionIndex)
-                                    return portion;
-                                return {
-                                    "portionStartDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "portionEndDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "text": {
-                                        "initial": "",
-                                        "value": action.data.text,
-                                        "_isFieldValue": true
-                                    },
-                                    "idText": {
-                                        "initial": null,
-                                        "value": action.data.idText,
-                                        "_isFieldValue": true
-                                    },
-                                    "idDates": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    }
-                                }
-                            })
+                            qualiffRequir: state.qualiffRequir.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                         };
                     break;
                 default:
@@ -248,6 +200,45 @@ export default function formEditOccup(state, action) {
 
 
         case SHOW_MODAL_EDIT_OCCUP:
+            let ShowModalEditOccupDescrTextMappingFunc = portion => {
+                return {
+                    "portionStartDate": {
+                        "initial": null,
+                        "value": portion.portionStartDate || null,
+                        "_isFieldValue": true
+                    },
+                    "portionEndDate": {
+                        "initial": null,
+                        "value": portion.portionEndDate || null,
+                        "_isFieldValue": true
+                    },
+                    "text": {
+                        "initial": "",
+                        "value": portion.text || "",
+                        "_isFieldValue": true
+                    },
+                    'updateTextInRelativeOccup': {
+                        "initial": -1,
+                        "value": -1,
+                        "_isFieldValue": true
+                    },
+                    'occupationsUsingText': {
+                        "initial": "",
+                        "value": portion.usingOccupations && portion.usingOccupations.join(", ") || "",
+                        "_isFieldValue": true
+                    },
+                    "idText": {
+                        "initial": null,
+                        "value": portion.idText,
+                        "_isFieldValue": true
+                    },
+                    "idDates": {
+                        "initial": null,
+                        "value": portion.idDates,
+                        "_isFieldValue": true
+                    }
+                }
+            };
             return {
                 ...state,
                 name: {
@@ -365,139 +356,45 @@ export default function formEditOccup(state, action) {
                         }
                     }
                 }),
-                responsibilities: action.editingData.data.responsibilities.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                }),
-                haveToKnow: action.editingData.data.haveToKnow.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                }),
-                qualiffRequir: action.editingData.data.qualiffRequir.map( portion => {
-                    return {
-                        "portionStartDate": {
-                            "initial": null,
-                            "value": portion.portionStartDate || null,
-                            "_isFieldValue": true
-                        },
-                        "portionEndDate": {
-                            "initial": null,
-                            "value": portion.portionEndDate || null,
-                            "_isFieldValue": true
-                        },
-                        "text": {
-                            "initial": "",
-                            "value": portion.text || "",
-                            "_isFieldValue": true
-                        },
-                        'updateTextInRelativeOccup': {
-                            "initial": "",
-                            "value": -1,
-                            "_isFieldValue": true
-                        },
-                        "idText": {
-                            "initial": null,
-                            "value": portion.idText,
-                            "_isFieldValue": true
-                        },
-                        "idDates": {
-                            "initial": null,
-                            "value": portion.idDates,
-                            "_isFieldValue": true
-                        }
-                    }
-                })
+                responsibilities: action.editingData.data.responsibilities.map( ShowModalEditOccupDescrTextMappingFunc ),
+                haveToKnow: action.editingData.data.haveToKnow.map( ShowModalEditOccupDescrTextMappingFunc ),
+                qualiffRequir: action.editingData.data.qualiffRequir.map( ShowModalEditOccupDescrTextMappingFunc )
             };
 
 
         case EDIT_OCCUP_CLARIFICATION_INP_CHANGE:
-            return {
-                ...state,
-                name: {
-                    ...state.name,
-                    clarification: {
-                        ...state.name.clarification,
-                        value: action.newVal.id
+            if(state.name && state.name.clarification)
+                return {
+                    ...state,
+                    name: {
+                        ...state.name,
+                        clarification: {
+                            ...state.name.clarification,
+                            value: action.newVal.id
+                        },
+                        occupationName: {
+                            ...state.name.occupationName,
+                            value: calcNewOccupationNameVal(
+                                state.name.occupationName.value,
+                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                action.newVal.textValue
+                            )
+                        },
+                        occupationNameMin: {
+                            ...state.name.occupationNameMin,
+                            value: calcNewOccupationNameVal(
+                                state.name.occupationNameMin.value,
+                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                action.newVal.textValue
+                            )
+                        }
                     },
-                    occupationName: {
-                        ...state.name.occupationName,
-                        value: calcNewOccupationNameVal(
-                            state.name.occupationName.value,
-                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textValue
-                        )
-                    },
-                    occupationNameMin: {
-                        ...state.name.occupationNameMin,
-                        value: calcNewOccupationNameVal(
-                            state.name.occupationNameMin.value,
-                            state.name.clarifiedOccup.value == null ? "" : state.clarifiedOccupTextVal,
-                            action.newVal.textValue
-                        )
-                    }
-                },
-                clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
-            };
+                    clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
+                };
+            else {
+                console.log("Called EDIT_OCCUP_CLARIFICATION_INP_CHANGE reducer, but state is empty");
+                return state;
+            }
         case EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE:
             return {
                 ...state,
@@ -507,7 +404,7 @@ export default function formEditOccup(state, action) {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
                             state.name.occupationName.value,
-                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     },
@@ -515,7 +412,7 @@ export default function formEditOccup(state, action) {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
                             state.name.occupationNameMin.value,
-                            action.newVal.id == null ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
+                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
                             state.clarificationTextVal
                         )
                     }
@@ -523,7 +420,22 @@ export default function formEditOccup(state, action) {
                 clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
             };
 
-        case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE: //TODO
+        case EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE:
+            if(state.name && state.name.occupationGroup)
+                return {
+                    ...state,
+                    name: {
+                        ...state.name,
+                        occupationGroup: {
+                            ...state.name.occupationGroup,
+                            value: action.newVal && action.newVal.id || 0
+                        },
+                    }
+                };
+        else {
+            console.log("Called EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE reducer, but state is empty");
+            return state;
+        }
         default:
             return state;
     }

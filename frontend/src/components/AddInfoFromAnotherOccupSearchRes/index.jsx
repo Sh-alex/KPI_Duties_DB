@@ -117,7 +117,7 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
         return (
             <form className="search-similar-results">
                 <a href="javascript:void(0)" onClick={this.props.goBackToSearchForm} className="btn-back-to-search-form">
-                    <i className="fa fa-long-arrow-left" aria-hidden="true" />
+                    <i className="fa fa-long-arrow-left" />
                     <i> Повернутися до пошукової форми </i>
                 </a>
                 <div className="table-responsive">

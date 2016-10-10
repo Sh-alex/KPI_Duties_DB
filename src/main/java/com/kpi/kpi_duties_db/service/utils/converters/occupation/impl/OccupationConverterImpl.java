@@ -60,6 +60,15 @@ public class OccupationConverterImpl implements OccupationConverter {
     RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
+    DutiesValidityDateService dutiesValidityDateService;
+
+    @Autowired
+    RtDutiesCodeService rtDutiesCodeService;
+
+    @Autowired
+    RtCodeService rtCodeService;
+
+    @Autowired
     HibernateTemplate hibernateTemplate;
 
     private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
@@ -107,12 +116,22 @@ public class OccupationConverterImpl implements OccupationConverter {
             list.add(entity);
         }
 
+        //Видаляю зайві, які було видалено при редагуванні
+        List<Integer> idList = list.stream().map(item -> item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<DutiesValidityDateEntity> dutiesValidityDateEntities = rtDutiesService.getById(rtDutiesId).getDutiesValidityDateEntities();
+        if (dutiesValidityDateEntities != null) {
+            List<DutiesValidityDateEntity> deleteList = dutiesValidityDateEntities.stream().filter(item -> !idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            if (!deleteList.isEmpty()) {
+                dutiesValidityDateService.delete(deleteList);
+            }
+        }
+
         return list;
     }
 
 
     @Override
-    public List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request) {
+    public List<RtCodeEntity> toRtCodeEntityListFromOccupationRequest(OccupationRequest request, Integer rtDutiesId) {
 
         List<CodeOccupation> codes = request.getCodes();
 
@@ -137,7 +156,19 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Видаляю зайві зв'язки кодів, які були видалені при редагуванні
-        //TODO
+        List<Integer> idList = list.stream().map(item -> item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        Set<RtDutiesCodeEntity> rtDutiesCodeEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesCodeEntities();
+        if (rtDutiesCodeEntities != null) {
+            List<RtDutiesCodeEntity> deleteList = rtDutiesCodeEntities.stream().filter(item -> !idList.contains(item.getRtCodeId())).collect(Collectors.toList());//Знаходжу RtDutiesCodeEntity, які треба видалити
+            List<RtCodeEntity> deleteCodeList = new ArrayList<>();//Знаходжу RtCodeEntity, які треба видалити
+            deleteList.forEach(item -> {
+                deleteCodeList.add(rtCodeService.getById(item.getRtCodeId()));
+            });
+            if (!deleteList.isEmpty()) {
+                rtDutiesCodeService.delete(deleteList);
+                rtCodeService.delete(deleteCodeList);
+            }
+        }
 
         return list;
     }
@@ -174,10 +205,10 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Видаляю зайві, які було видалено при редагуванні
-        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        List<Integer> idList = list.stream().map(item -> item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
         Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesTaskAndResponsibilitiesEntities();
         if (rtDutiesTaskAndResponsibilitiesEntities != null) {
-            List<RtDutiesTaskAndResponsibilitiesEntity> deleteList = rtDutiesTaskAndResponsibilitiesEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            List<RtDutiesTaskAndResponsibilitiesEntity> deleteList = rtDutiesTaskAndResponsibilitiesEntities.stream().filter(item -> !idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
             if (!deleteList.isEmpty()) {
                 rtDutiesTaskAndResponsibilitiesService.delete(deleteList);
             }
@@ -218,10 +249,10 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Видаляю зайві, які було видалено при редагуванні
-        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        List<Integer> idList = list.stream().map(item -> item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
         Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesMustKnowEntities();
         if (rtDutiesMustKnowEntities != null) {
-            List<RtDutiesMustKnowEntity> deleteList = rtDutiesMustKnowEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            List<RtDutiesMustKnowEntity> deleteList = rtDutiesMustKnowEntities.stream().filter(item -> !idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
 
             if (!deleteList.isEmpty()) {
                 rtDutiesMustKnowService.delete(deleteList);
@@ -265,10 +296,10 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Видаляю зайві, які було видалено при редагуванні
-        List<Integer> idList = list.stream().map(item->item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
+        List<Integer> idList = list.stream().map(item -> item.getId()).collect(Collectors.toList());//Всі id сутностей, які є для даної посади
         Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities = rtDutiesService.getById(rtDutiesId).getRtDutiesQualificationRequirementsEntities();
         if (rtDutiesQualificationRequirementsEntities != null) {
-            List<RtDutiesQualificationRequirementsEntity> deleteList = rtDutiesQualificationRequirementsEntities.stream().filter(item->!idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
+            List<RtDutiesQualificationRequirementsEntity> deleteList = rtDutiesQualificationRequirementsEntities.stream().filter(item -> !idList.contains(item.getId())).collect(Collectors.toList());//Залишаю тільки ті, які були відправлені по API, а інші видаляю
 
             if (!deleteList.isEmpty()) {
                 rtDutiesQualificationRequirementsService.delete(deleteList);
@@ -460,12 +491,16 @@ public class OccupationConverterImpl implements OccupationConverter {
                 haveToKnow.setPortionStartDate(rtDutiesMustKnowEntity.getDateStart());
                 haveToKnow.setPortionEndDate(rtDutiesMustKnowEntity.getDateEnd());
 
-                //Знаходжу посади, в яких використовується даний текст
+                //Знаходжу посади, в яких використовується даний текст крім поточної
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesMustKnowEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesMustKnowId", rtDutiesMustKnowEntity.getDcDutiesMustKnowId()));
                 List<RtDutiesMustKnowEntity> usingText = criteria.list();
-                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
-                haveToKnow.setUsingOccupations(idDuties);
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<String> rtDutiesNames = new ArrayList<>();
+                rtDutiesIdList.forEach(item -> {
+                    rtDutiesNames.add(rtDutiesService.getById(item).getName());
+                });
+                haveToKnow.setUsingOccupations(rtDutiesNames);
 
                 haveToKnowList.add(haveToKnow);
             }
@@ -481,12 +516,16 @@ public class OccupationConverterImpl implements OccupationConverter {
                 responsibility.setPortionStartDate(rtDutiesTaskAndResponsibilitiesEntity.getDateStart());
                 responsibility.setPortionEndDate(rtDutiesTaskAndResponsibilitiesEntity.getDateEnd());
 
-                //Знаходжу посади, в яких використовується даний текст
+                //Знаходжу посади, в яких використовується даний текст крім поточної
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesTaskAndResponsibilitiesEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesTasksAndResponsibilitiesId", rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId()));
                 List<RtDutiesTaskAndResponsibilitiesEntity> usingText = criteria.list();
-                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
-                responsibility.setUsingOccupations(idDuties);
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<String> rtDutiesNames = new ArrayList<>();
+                rtDutiesIdList.forEach(item -> {
+                    rtDutiesNames.add(rtDutiesService.getById(item).getName());
+                });
+                responsibility.setUsingOccupations(rtDutiesNames);
 
                 responsibilitiesList.add(responsibility);
             }
@@ -502,12 +541,16 @@ public class OccupationConverterImpl implements OccupationConverter {
                 qualiffRequir.setPortionStartDate(rtDutiesQualificationRequirementsEntity.getDateStart());
                 qualiffRequir.setPortionEndDate(rtDutiesQualificationRequirementsEntity.getDateEnd());
 
-                //Знаходжу посади, в яких використовується даний текст
+                //Знаходжу посади, в яких використовується даний текст крім поточної
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesQualificationRequirementsEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesQualificationRequirementsId", rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId()));
                 List<RtDutiesQualificationRequirementsEntity> usingText = criteria.list();
-                List<Integer> idDuties = usingText.stream().map(item -> item.getRtDutiesId()).collect(Collectors.toList());
-                qualiffRequir.setUsingOccupations(idDuties);
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<String> rtDutiesNames = new ArrayList<>();
+                rtDutiesIdList.forEach(item -> {
+                    rtDutiesNames.add(rtDutiesService.getById(item).getName());
+                });
+                qualiffRequir.setUsingOccupations(rtDutiesNames);
 
                 qualiffRequirList.add(qualiffRequir);
             }

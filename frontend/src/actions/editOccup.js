@@ -157,9 +157,11 @@ export function hideModalEditOccup() {
     }
 }
 
-export function showModalEditOccup(editingData) {
-    return {
-        type: SHOW_MODAL_EDIT_OCCUP,
-        editingData
+export function showModalEditOccup(editingData, dispatch) {
+    return function (dispatch, getState) {
+        dispatch( {
+            type: SHOW_MODAL_EDIT_OCCUP,
+            editingData
+        });
     }
 }

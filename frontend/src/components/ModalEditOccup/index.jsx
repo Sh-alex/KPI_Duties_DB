@@ -13,6 +13,8 @@ import {
     fetchClarifiedOccupList,
     fetchClarificationList,
     addNewClarification,
+    addNewOccupationGroup,
+    dismissModalAddNewOccupationGroupAlert,
     dismissModalAddNewClarificationAlert
 } from "../../actions/occupationNameInfo"
 
@@ -84,6 +86,7 @@ class ModalEditOccup extends Component {
             responsibilities: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -94,6 +97,7 @@ class ModalEditOccup extends Component {
             haveToKnow: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -104,6 +108,7 @@ class ModalEditOccup extends Component {
             qualiffRequir: [
                 {
                     'updateTextInRelativeOccup': -1,
+                    'occupationsUsingText': "",
                     'portionStartDate': null,
                     'portionEndDate': null,
                     'text': "",
@@ -166,18 +171,21 @@ export default reduxForm(
             'responsibilities[].idText',
             'responsibilities[].idDates',
             'responsibilities[].updateTextInRelativeOccup',
+            'responsibilities[].occupationsUsingText',
             'responsibilities[].portionStartDate',
             'responsibilities[].portionEndDate',
             'haveToKnow[].text',
             'haveToKnow[].idText',
             'haveToKnow[].idDates',
             'haveToKnow[].updateTextInRelativeOccup',
+            'haveToKnow[].occupationsUsingText',
             'haveToKnow[].portionStartDate',
             'haveToKnow[].portionEndDate',
             'qualiffRequir[].text',
             'qualiffRequir[].idText',
             'qualiffRequir[].idDates',
             'qualiffRequir[].updateTextInRelativeOccup',
+            'qualiffRequir[].occupationsUsingText',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate',
         ],
@@ -200,26 +208,47 @@ export default reduxForm(
             onHideModalEditOccup() {
                 dispatch(hideModalEditOccup());
             },
-            
-            fetchInitialData() {
-                dispatch(fetchOccupGroupList());
-                dispatch(fetchClarifiedOccupList());
-                dispatch(fetchClarificationList());
-
-                dispatch(fetchKPCodesList());
-                dispatch(fetchZKPPTRCodesList());
-                dispatch(fetchETDKCodesList());
-                dispatch(fetchDKHPCodesList());
-            },
-
             handleServerRespMsgDismiss() {
                 return dispatch( editOccupHideServerRespMsg() );
             },
-            dismissModalAddNewClarificationAlert() {
-                return dispatch( dismissModalAddNewClarificationAlert() );
+            handleBtnAddInfoFromAnotherOccupClick(data) {
+                return dispatch(showModalAddInfoFromAnotherOccup({
+                    ...data,
+                    resForm: 'formEditOccup'
+                }));
             },
-            addNewClarification(val) {
-                return dispatch(addNewClarification(val));
+            fetchOccupGroupList() {
+                return dispatch(fetchOccupGroupList());
+            },
+            fetchClarifiedOccupList() {
+                return dispatch(fetchClarifiedOccupList());
+            },
+            fetchClarificationList() {
+                return dispatch(fetchClarificationList());
+            },
+            fetchKPCodesList() {
+                return dispatch(fetchKPCodesList());
+            },
+            fetchZKPPTRCodesList() {
+                return dispatch(fetchZKPPTRCodesList());
+            },
+            fetchETDKCodesList() {
+                return dispatch(fetchETDKCodesList());
+            },
+            fetchDKHPCodesList() {
+                return dispatch(fetchDKHPCodesList());
+            },
+            addNewOccupationGroup(newVal) {
+                return dispatch(addNewOccupationGroup({
+                    newVal,
+                    resForm: 'formEditOccup'
+                }));
+            },
+            addNewClarification(newVal) {
+                return dispatch(addNewClarification({
+                    newVal,
+                    resForm: 'formEditOccup'
+                }));
             },
             addNewKPCode(val) {
                 return dispatch(addNewKPCode(val));
@@ -233,13 +262,6 @@ export default reduxForm(
             addNewZKPPTRCode(val) {
                 return dispatch(addNewZKPPTRCode(val));
             },
-            handleBtnAddInfoFromAnotherOccupClick(data) {
-                return dispatch(showModalAddInfoFromAnotherOccup({
-                    ...data,
-                    resForm: 'formEditOccup'
-                }));
-            },
-
             handleOccupationGroupInpChange(newVal) {
                 return dispatch(occupationGroupInpChange(newVal));
             },
@@ -249,7 +271,12 @@ export default reduxForm(
             handleClarificationInpChange(newVal) {
                 return dispatch(clarificationInpChange(newVal));
             },
-
+            dismissModalAddNewOccupationGroupAlert() {
+                return dispatch( dismissModalAddNewOccupationGroupAlert() );
+            },
+            dismissModalAddNewClarificationAlert() {
+                return dispatch( dismissModalAddNewClarificationAlert() );
+            },
             dismissModalAddNewKPCodeAlert() {
                 return dispatch( clearKPCodeAddingMsg() );
             },

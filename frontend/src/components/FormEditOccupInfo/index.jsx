@@ -9,7 +9,7 @@ import FormEditOccupInfoResponsibSection from "../FormEditOccupInfoResponsibSect
 import FormEditOccupInfoHaveToKnowSection from "../FormEditOccupInfoHaveToKnowSection"
 import FormEditOccupInfoQualiffRequirSection from "../FormEditOccupInfoQualiffRequirSection"
 
-import { Alert } from 'react-bootstrap'
+import { Alert, Popover, OverlayTrigger } from 'react-bootstrap'
 
 import replaceApostrophe from "../../utils/replaceApostrophe"
 
@@ -20,11 +20,13 @@ export default class FormEditOccupInfo extends Component {
         super(props);
 
         this.state = {
+            newOccupationGroupVal: "",
             newClarificationInpVal: "",
             newKPCodeInpVal: "",
             newDKHPCodeInpVal: "",
             newETDKCodeInpVal: "",
             newZKPPTRCodeInpVal: "",
+            showModalAddNewOccupationGroup: false,
             showModalAddNewClarification: false,
             showModalAddNewKPCode: false,
             showModalAddNewDKHPCode: false,
@@ -53,18 +55,15 @@ export default class FormEditOccupInfo extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchInitialData();
-    }
+        this.props.fetchOccupGroupList();
+        this.props.fetchClarifiedOccupList();
+        this.props.fetchClarificationList();
 
-    // /**
-    //  * Set endDate to startDate if it's blank or would otherwise be invalid.
-    //  */
-    // handleStartDateChange(startDate) {
-    //   var {endDate} = this.props.fields
-    //   if (endDate.value == null || endDate.value < startDate) {
-    //     endDate.onChange(startDate)
-    //   }
-    // }
+        this.props.fetchKPCodesList();
+        this.props.fetchZKPPTRCodesList();
+        this.props.fetchETDKCodesList();
+        this.props.fetchDKHPCodesList();
+    }
 
     handleAddCodesPortionBtnClick() {
         this.props.fields.codes.addField({
@@ -83,10 +82,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddResponsibPortionBtnClick() {
         this.props.fields.responsibilities.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -96,10 +98,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddHaveToKnowPortionBtnClick() {
         this.props.fields.haveToKnow.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -109,10 +114,13 @@ export default class FormEditOccupInfo extends Component {
 
     handleAddQualiffRequirPortionBtnClick() {
         this.props.fields.qualiffRequir.addField({
+            'updateTextInRelativeOccup': -1,
+            'occupationsUsingText': "",
             'portionStartDate': null,
             'portionEndDate': null,
-            'id': null,
-            'text': ""
+            'text': "",
+            'idDates': null,
+            'idText': null
         });
     }
 
@@ -158,7 +166,10 @@ export default class FormEditOccupInfo extends Component {
         this.props.fields.responsibilities[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
-        if(this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup)
+        if(
+            this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.responsibilities[resPortionIndex].occupationsUsingText.value
+        )
             this.props.fields.responsibilities[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
         // this.props.fields.responsibilities[resPortionIndex].id.value &&
@@ -175,9 +186,8 @@ export default class FormEditOccupInfo extends Component {
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
         if(
-            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations &&
-            // this.props.occupData.data.haveToKnow[resPortionIndex].usingOccupations.length &&
-            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup
+            this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.haveToKnow[resPortionIndex].occupationsUsingText.value
         )
             this.props.fields.haveToKnow[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
@@ -194,7 +204,10 @@ export default class FormEditOccupInfo extends Component {
         this.props.fields.qualiffRequir[resPortionIndex].text.onChange(newVal);
         //якщо було змінено текст, то id обнуляємо, бо текст уже новий, а не взятий з іншої посади
 
-        if(this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup)
+        if(
+            this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup &&
+            this.props.fields.qualiffRequir[resPortionIndex].occupationsUsingText.value
+        )
             this.props.fields.qualiffRequir[resPortionIndex].updateTextInRelativeOccup.onChange(0);
 
         // this.props.fields.qualiffRequir[resPortionIndex].id.value &&
@@ -206,17 +219,26 @@ export default class FormEditOccupInfo extends Component {
         const {
             fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir},
             handleSubmit,
-            resetForm,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
             handleBtnAddInfoFromAnotherOccupClick,
             submitting
         } = this.props;
 
-        // if(this.props.occupData)
-        //     var occupUsingResponsibText = this.props.occupData.data.responsibilities.map( item => item.usingOccupations || []),
-        //         occupUsingHaveToKnowText = this.props.occupData.data.haveToKnow.map( item => item.usingOccupations || []),
-        //         occupUsingQualiffRequirText = this.props.occupData.data.qualiffRequir.map( item => item.usingOccupations || []);
+        const popoverSubmitResetTitle = (
+                <div className="popover-title-inner--warning">
+                    Підтвердіть очищення форми
+                </div>
+            ),
+            popoverSubmitReset = (
+            <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
+                <div className="text-center">
+                    <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
+                        <span className="btn-label"> Очистити </span>
+                    </button>
+                </div>
+            </Popover>
+        );
 
         let formAlert = !shouldShowServerRespMsg ?
                 "" :
@@ -277,6 +299,19 @@ export default class FormEditOccupInfo extends Component {
         return (
             <div className="form-edit-occup-info-wrapper">
                 <ModalAddInfoFromAnotherOccup />
+                <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newOccupationGroupVal}
+                    onInpValChange={newVal => this.setState({ newOccupationGroupVal: newVal })}
+                    show={this.state.showModalAddNewOccupationGroup}
+                    errors={this.props.occupNameInfoLists.occupationGroupList.addingErrors}
+                    success={this.props.occupNameInfoLists.occupationGroupList.addingSuccess}
+                    isLoading={this.props.occupNameInfoLists.occupationGroupList.isAddingNewVal || this.props.occupNameInfoLists.occupationGroupList.isFetching}
+                    onSave={this.props.addNewOccupationGroup}
+                    onAlertDismiss={ this.props.dismissModalAddNewOccupationGroupAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewOccupationGroup: false});
+                        this.props.dismissModalAddNewOccupationGroupAlert()
+                    }} />
                 <ModalAddNewOccupKeyWord
                     inpVal={this.state.newClarificationInpVal}
                     onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
@@ -342,15 +377,18 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewZKPPTRCode: false});
                         this.props.dismissModalAddNewZKPPTRCodeAlert()
                     }} />
-                {/*id="add-form" */}
                 <form className="form-horizontal form-edit-occup-info" onSubmit={handleSubmit} role="form">
                     <div className="form-inner">
                         <FormEditOccupInfoNameSection
                             nameFields={name}
                             {...this.props.occupNameInfoLists}
+                            fetchOccupGroupList={this.props.fetchOccupGroupList}
+                            fetchClarifiedOccupList={this.props.fetchClarifiedOccupList}
+                            fetchClarificationList={this.props.fetchClarificationList}
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
+                            onBtnAddOccupationGroupClick={() => this.setState({ showModalAddNewOccupationGroup: true })}
                             openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
                         <FormEditOccupInfoDurationsSection
                             durationsFields={durations}
@@ -360,6 +398,10 @@ export default class FormEditOccupInfo extends Component {
                         <FormEditOccupInfoCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
+                            fetchKPCodesList={this.props.fetchKPCodesList}
+                            fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
+                            fetchETDKCodesList={this.props.fetchETDKCodesList}
+                            fetchDKHPCodesList={this.props.fetchDKHPCodesList}
                             openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
                             openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
                             openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
@@ -369,18 +411,21 @@ export default class FormEditOccupInfo extends Component {
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
                         <FormEditOccupInfoResponsibSection
                             responsibFields={responsibilities}
+                            occupUsingResponsibText={[] /*occupUsingResponsibText*/}
                             handleTextChange={this.handleResponsibTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                             handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
                         <FormEditOccupInfoHaveToKnowSection
                             haveToKnowFields={haveToKnow}
+                            occupUsingHaveToKnowText={[] /*occupUsingHaveToKnowText*/}
                             handleTextChange={this.handleHaveToKnowTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
                         <FormEditOccupInfoQualiffRequirSection
                             qualiffRequirFields={qualiffRequir}
+                            occupUsingQualiffRequirText={[] /*occupUsingQualiffRequirText*/}
                             handleTextChange={this.handleQualiffRequirTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
@@ -408,14 +453,15 @@ export default class FormEditOccupInfo extends Component {
                             )}
 
                             <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
-                                <button
-                                    type="reset"
-                                    onClick={resetForm}
-                                    disabled={submitting}
-                                    className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
-                                >
-                                    Очистити форму <i className="fa fa-refresh" />
-                                </button>
+                                <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverSubmitReset}>
+                                    <button
+                                        type="reset"
+                                        disabled={submitting}
+                                        className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
+                                    >
+                                        Очистити форму <i className="fa fa-refresh" />
+                                    </button>
+                                </OverlayTrigger>
                                 <button
                                     type="submit"
                                     disabled={submitting}
@@ -424,9 +470,9 @@ export default class FormEditOccupInfo extends Component {
                                     {
                                         submitting ? (
                                             <span>
-                                                    Завантаження {" "}
+                                                Завантаження {" "}
                                                 <i className="fa fa-spinner fa-pulse" />
-                                                </span>
+                                            </span>
                                         ) : (
                                             this.props.submitBtnText
                                         )

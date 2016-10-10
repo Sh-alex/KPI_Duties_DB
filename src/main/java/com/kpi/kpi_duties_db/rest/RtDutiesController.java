@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -88,7 +89,7 @@ public class RtDutiesController {
 
         dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
-        List<RtCodeEntity> rtCodes = rtCodeService.add(converter.toRtCodeEntityListFromOccupationRequest(request));
+        List<RtCodeEntity> rtCodes = rtCodeService.add(converter.toRtCodeEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
         rtDutiesCodeService.add(rtDutiesEntity.getId(), rtCodes);
 
@@ -96,7 +97,7 @@ public class RtDutiesController {
         rtDutiesMustKnowService.add(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesQualificationRequirementsService.add(converter.toRtDutiesQualificationRequirementsEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 
-        return Response.ok().build();
+        return Response.ok().entity(rtDutiesEntity).build();
     }
 
     @PUT
@@ -111,9 +112,17 @@ public class RtDutiesController {
         List<DutiesValidityDateEntity> entities = converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
         dutiesValidityDateService.update(entities);
 
-        List<RtCodeEntity> rtCodes = rtCodeService.update(converter.toRtCodeEntityListFromOccupationRequest(request));
-
-        //rtDutiesCodeService.update(rtDutiesEntity.getId(), rtCodes);
+        List<RtCodeEntity> rtCodeList = converter.toRtCodeEntityListFromOccupationRequest(request, rtDutiesEntity.getId());
+        //Знаходжу нові набори кодів, які ще не створено
+        List<RtCodeEntity> rtCodeNew = rtCodeList.stream().filter(item->item.getId() == null).collect(Collectors.toList());
+        List<RtCodeEntity> rtCodesAdd = rtCodeService.add(rtCodeNew);
+        //Створюю для нових набори кодів RtDutiesCode
+        rtDutiesCodeService.add(rtDutiesEntity.getId(), rtCodesAdd);
+        //Відсікаю нові набори кодів і залишаю тільки ті, які треба редагувати
+        if (!rtCodeNew.isEmpty()) {
+            rtCodeList.retainAll(rtCodeNew);
+        }
+        List<RtCodeEntity> rtCodes = rtCodeService.update(rtCodeList);
 
         rtDutiesTaskAndResponsibilitiesService.update(converter.toRtDutiesTaskAndResponsibilitiesEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
         rtDutiesMustKnowService.update(converter.toRtDutiesMustKnowEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));

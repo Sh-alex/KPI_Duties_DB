@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -56,13 +57,13 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(Integer id) {
         repository.delete(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(List<T> entities) {
         try {
             repository.delete(entities);
@@ -85,12 +86,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         List<T> list = null;
         try {
             list = repository.save(entities);
+            repository.flush();
         } catch (Exception e) {
             String msg = "Entity " + entities.getClass().getSimpleName() + " not updated, check the data";
             logger.error(msg);
             throw new UpdateEntityException(msg);
         }
-        repository.flush();
 
         return list;
     }

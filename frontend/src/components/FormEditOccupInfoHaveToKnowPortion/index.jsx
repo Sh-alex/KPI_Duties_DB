@@ -42,10 +42,12 @@ export default function FormEditOccupInfoHaveToKnowPortion(props) {
         portionEndDateValue = props.haveToKnowPortionFields.portionEndDate.value &&
             (new Date(props.haveToKnowPortionFields.portionEndDate.value) !== "Invalid Date") &&
             new Date(props.haveToKnowPortionFields.portionEndDate.value) || null,
-        showBtnUpdateRelative = props.haveToKnowPortionFields.updateTextInRelativeOccup &&
-            (props.haveToKnowPortionFields.updateTextInRelativeOccup.value !== -1),
         updateRelative = props.haveToKnowPortionFields.updateTextInRelativeOccup &&
-            props.haveToKnowPortionFields.updateTextInRelativeOccup.value;
+            props.haveToKnowPortionFields.updateTextInRelativeOccup.value,
+        occupationsUsingText = props.haveToKnowPortionFields.occupationsUsingText &&
+            props.haveToKnowPortionFields.occupationsUsingText.value || "",
+        showBtnUpdateRelative = occupationsUsingText && props.haveToKnowPortionFields.updateTextInRelativeOccup &&
+            (props.haveToKnowPortionFields.updateTextInRelativeOccup.value !== -1);
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -78,7 +80,7 @@ export default function FormEditOccupInfoHaveToKnowPortion(props) {
                                     showBtnUpdateRelative && (
                                         <label
                                             className={`btn btn-default btn-flat should-update-in-other-occup ${updateRelative ? "active" : ""}`}
-                                            title="Оновити також цей текст у посадах які використвоують його"
+                                            title={"Оновити також цей текст у посадах які використвоують його: " + occupationsUsingText }
                                         >
                                             <input
                                                 {...props.haveToKnowPortionFields.updateTextInRelativeOccup}

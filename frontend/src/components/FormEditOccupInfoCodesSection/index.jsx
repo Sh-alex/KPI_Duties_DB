@@ -31,6 +31,10 @@ export default class FormEditOccupInfoCodesSection extends Component {
                         openModalAddNewZKPPTRCode={this.props.openModalAddNewZKPPTRCode}
                         openModalAddNewETDKCode={this.props.openModalAddNewETDKCode}
                         handleDelCodesPortionBtnClick={decoratedDelHandler}
+                        fetchKPCodesList={this.props.fetchKPCodesList}
+                        fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
+                        fetchETDKCodesList={this.props.fetchETDKCodesList}
+                        fetchDKHPCodesList={this.props.fetchDKHPCodesList}
                         DKHPCodesList={this.props.DKHPCodesList}
                         ETDKCodesList={this.props.ETDKCodesList}
                         ZKPPTRCodesList={this.props.ZKPPTRCodesList}

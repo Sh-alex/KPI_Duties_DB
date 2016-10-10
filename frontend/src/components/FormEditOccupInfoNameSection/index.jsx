@@ -45,27 +45,45 @@ export default class FormEditOccupInfoNameSection extends Component {
                 <div className={occupGroupFormGroupClass}>
                     <label htmlFor="inp-occupation-group" className="col-sm-2 control-label"> Посадовий склад </label>
                     <div className="col-sm-10">
-                        <DropdownList
-                            {...nameFields.occupationGroup}
-                            id="inp-occupation-group"
-                            className="form-control no-padding"
-                            placeholder="Оберіть варіант зі списку"
-                            messages={{
-                                emptyList:"Список пустий",
-                                emptyFilter: "Не знайдено жодного елементу"
-                            }}
-                            data={occupationGroupList.items}
-                            valueField='id'
-                            textField='textValue'
-                            defaultValue={null}
-                            onChange={ this.props.handleOccupationGroupInpChange }
-                            busy={occupationGroupList.isFetching}
-                            caseSensitive={false}
-                            filter='contains' />
+                        <div className="input-group">
+                            <DropdownList
+                                {...nameFields.occupationGroup}
+                                id="inp-occupation-group"
+                                className="form-control no-padding"
+                                placeholder="Оберіть варіант зі списку"
+                                messages={{
+                                    emptyList:"Список пустий",
+                                    emptyFilter: "Не знайдено жодного елементу"
+                                }}
+                                data={occupationGroupList.items}
+                                valueField='id'
+                                textField='textValue'
+                                defaultValue={null}
+                                onChange={ this.props.handleOccupationGroupInpChange }
+                                busy={occupationGroupList.isFetching}
+                                caseSensitive={false}
+                                filter='contains' />
+                            <div className="input-group-btn">
+                                <button
+                                    type="button"
+                                    title="Додати нове ключове слово для уточнення"
+                                    className="btn btn-default btn-flat"
+                                    onClick={this.props.onBtnAddOccupationGroupClick} >
+                                    +1
+                                </button>
+                                <button
+                                    type="button"
+                                    title="Оновити список"
+                                    className="btn btn-default btn-flat"
+                                    onClick={this.props.fetchOccupGroupList} >
+                                    <i className="fa fa-refresh" />
+                                </button>
+                            </div>
+                        </div>
                         <span className="help-block">
                         {
                             occupationGroupList.errors && occupationGroupList.errors.length &&
-                            occupationGroupList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
+                            occupationGroupList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
                             nameFields.occupationGroup.touched && nameFields.occupationGroup.error
                         }
                     </span>
@@ -78,37 +96,48 @@ export default class FormEditOccupInfoNameSection extends Component {
                                 Уточнювана посада
                             </label>
                             <div className="col-sm-8">
-                                <DropdownList
-                                    {...nameFields.clarifiedOccup}
-                                    id="select-clarified-occup"
-                                    className="form-control no-padding"
-                                    placeholder="Оберіть варіант зі списку"
-                                    messages={{
-                                        emptyList: "Список пустий",
-                                        emptyFilter: "Не знайдено жодного елементу"
-                                    }}
-                                    data={[
-                                        {
+                                <div className="input-group">
+                                    <DropdownList
+                                        {...nameFields.clarifiedOccup}
+                                        id="select-clarified-occup"
+                                        className="form-control no-padding"
+                                        placeholder="Оберіть варіант зі списку"
+                                        messages={{
+                                            emptyList: "Список пустий",
+                                            emptyFilter: "Не знайдено жодного елементу"
+                                        }}
+                                        data={[
+                                            {
+                                                "id": null,
+                                                "textValue": "-(Відсутня)-"
+                                            },
+                                            ...this.props.clarifiedOccupationList.items
+                                        ]}
+                                        value={nameFields.clarifiedOccup.value || null}
+                                        defaultValue={{
                                             "id": null,
                                             "textValue": "-(Відсутня)-"
-                                        },
-                                        ...this.props.clarifiedOccupationList.items
-                                    ]}
-                                    value={nameFields.clarifiedOccup.value || null}
-                                    defaultValue={{
-                                        "id": null,
-                                        "textValue": "-(Відсутня)-"
-                                    }}
-                                    valueField='id'
-                                    textField='textValue'
-                                    onChange={ this.props.handleClarifiedOccupInpChange }
-                                    caseSensitive={false}
-                                    busy={clarifiedOccupationList.isFetching}
-                                    filter='contains' />
+                                        }}
+                                        valueField='id'
+                                        textField='textValue'
+                                        onChange={ this.props.handleClarifiedOccupInpChange }
+                                        caseSensitive={false}
+                                        busy={clarifiedOccupationList.isFetching}
+                                        filter='contains' />
+                                    <div className="input-group-btn">
+                                        <button
+                                            type="button"
+                                            title="Оновити список"
+                                            className="btn btn-default btn-flat"
+                                            onClick={this.props.fetchClarifiedOccupList} >
+                                            <i className="fa fa-refresh" />
+                                        </button>
+                                    </div>
+                                </div>
                                 <span className="help-block">
                             {
                                 clarifiedOccupationList.errors && clarifiedOccupationList.errors.length &&
-                                clarifiedOccupationList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
+                                clarifiedOccupationList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
                                 nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error
                             }
                         </span>
@@ -152,12 +181,19 @@ export default class FormEditOccupInfoNameSection extends Component {
                                             onClick={this.props.openModalAddNewClarification} >
                                             +1
                                         </button>
+                                        <button
+                                            type="button"
+                                            title="Оновити список"
+                                            className="btn btn-default btn-flat"
+                                            onClick={this.props.fetchClarificationList} >
+                                            <i className="fa fa-refresh" />
+                                        </button>
                                     </div>
                                 </div>
                                 <span className="help-block">
                             {
                                 clarificationList.errors && clarificationList.errors.length &&
-                                clarificationList.errors.map( (err, i) => <span key={i}> {err} <br /> </span>)  ||
+                                clarificationList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
                                 nameFields.clarification.touched && nameFields.clarification.error
                             }
                         </span>

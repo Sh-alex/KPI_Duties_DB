@@ -8,6 +8,8 @@ import {
     fetchClarifiedOccupList,
     fetchClarificationList,
     addNewClarification,
+    addNewOccupationGroup,
+    dismissModalAddNewOccupationGroupAlert,
     dismissModalAddNewClarificationAlert
 } from "../../actions/occupationNameInfo"
 
@@ -182,24 +184,47 @@ export default reduxForm(
     },
     (dispatch, ownProps) => { //mapDispatchToProps
         return {
-            fetchInitialData() {
-                dispatch(fetchOccupGroupList());
-                dispatch(fetchClarifiedOccupList());
-                dispatch(fetchClarificationList());
-
-                dispatch(fetchKPCodesList());
-                dispatch(fetchZKPPTRCodesList());
-                dispatch(fetchETDKCodesList());
-                dispatch(fetchDKHPCodesList());
-            },
             handleServerRespMsgDismiss() {
                 return dispatch( addNewOccupHideServerRespMsg() );
             },
-            dismissModalAddNewClarificationAlert() {
-                return dispatch( dismissModalAddNewClarificationAlert() );
+            handleBtnAddInfoFromAnotherOccupClick(data){
+                return dispatch(showModalAddInfoFromAnotherOccup({
+                    ...data,
+                    resForm: 'addForm'
+                }));
             },
-            addNewClarification(val) {
-                return dispatch(addNewClarification(val));
+            fetchOccupGroupList() {
+                return dispatch(fetchOccupGroupList());
+            },
+            fetchClarifiedOccupList() {
+                return dispatch(fetchClarifiedOccupList());
+            },
+            fetchClarificationList() {
+                return dispatch(fetchClarificationList());
+            },
+            fetchKPCodesList() {
+                return dispatch(fetchKPCodesList());
+            },
+            fetchZKPPTRCodesList() {
+                return dispatch(fetchZKPPTRCodesList());
+            },
+            fetchETDKCodesList() {
+                return dispatch(fetchETDKCodesList());
+            },
+            fetchDKHPCodesList() {
+                return dispatch(fetchDKHPCodesList());
+            },
+            addNewOccupationGroup(newVal) {
+                return dispatch(addNewOccupationGroup({
+                    newVal,
+                    resForm: 'formAddNewOccup'
+                }));
+            },
+            addNewClarification(newVal) {
+                return dispatch(addNewClarification({
+                    newVal,
+                    resForm: 'formAddNewOccup'
+                }));
             },
             addNewKPCode(val) {
                 return dispatch(addNewKPCode(val));
@@ -213,13 +238,6 @@ export default reduxForm(
             addNewZKPPTRCode(val) {
                 return dispatch(addNewZKPPTRCode(val));
             },
-            handleBtnAddInfoFromAnotherOccupClick(data){
-                return dispatch(showModalAddInfoFromAnotherOccup({
-                    ...data,
-                    resForm: 'addForm'
-                }));
-            },
-
             handleOccupationGroupInpChange(newVal) {
                 return dispatch(occupationGroupInpChange(newVal));
             },
@@ -229,7 +247,12 @@ export default reduxForm(
             handleClarificationInpChange(newVal) {
                 return dispatch(clarificationInpChange(newVal));
             },
-
+            dismissModalAddNewOccupationGroupAlert() {
+                return dispatch( dismissModalAddNewOccupationGroupAlert() );
+            },
+            dismissModalAddNewClarificationAlert() {
+                return dispatch( dismissModalAddNewClarificationAlert() );
+            },
             dismissModalAddNewKPCodeAlert() {
                 return dispatch( clearKPCodeAddingMsg() );
             },

@@ -28,6 +28,7 @@ export default class SearchOccupationsForm extends Component {
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleTagsCreate = this.handleTagsCreate.bind(this);
         this.handleOccupGroupChange = this.handleOccupGroupChange.bind(this);
+        this.toggleInpOccupGroupIsOpen = this.toggleInpOccupGroupIsOpen.bind(this);
 
         this.state = this.getInitState();
     }
@@ -36,7 +37,7 @@ export default class SearchOccupationsForm extends Component {
         return {
             form: Object.assign({
                 searchType: ANY,       // усі в "constants/searchOccupationsTypes"
-                occupGroupVal: null,   // 8
+                occupGroupVal: [null],     // [8, 3, 6] || [null]
                 searchText: "",        // "інженер"
                 searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
                 inKpi: ANY,            // "ANY", "ONLY_IN_KPI", "ONLY_IN_STATE"
@@ -45,6 +46,7 @@ export default class SearchOccupationsForm extends Component {
                 stopFrom: null,
                 stopTo: null,
             }, this.props.formFields),
+            inpOccupGroupIsOpen: false,         //чи показувати зараз список із посадовим складом
             //описали окремо в store, а не просто юзаємо через props на випадок якщо треба буде не показувати у підсказці вже обрані елементи
             tagsList: this.props.tagsList && this.props.tagsList.items && this.props.tagsList.items.map(item => item.textValue) || []
         };
@@ -82,10 +84,25 @@ export default class SearchOccupationsForm extends Component {
         })
     }
 
-    handleOccupGroupChange(newVal) {
-        this.setState({
-            form: { ...this.state.form, occupGroupVal: newVal.id}
-        })
+    handleOccupGroupChange(newVal = []) {
+        let idArr = newVal.map(item => item.id);
+        if(idArr.includes(null))
+            this.setState({
+                form: { ...this.state.form, occupGroupVal: [null]}
+            });
+        else
+            this.setState({
+                form: { ...this.state.form, occupGroupVal: idArr}
+            });
+    }
+
+    toggleInpOccupGroupIsOpen (shouldBeOpen) {
+        //якщо обрано варіант "будь-який", не даємо можливість обрати інший варіант
+        if(this.state.form.occupGroupVal.includes(null))
+            return this.setState({ inpOccupGroupIsOpen: false });
+
+        //інакше показуємо список з посадовим складом якщо треба
+        this.setState({ inpOccupGroupIsOpen: shouldBeOpen });
     }
 
 
@@ -118,9 +135,11 @@ export default class SearchOccupationsForm extends Component {
                             Посадовий склад
                         </label>
                         <div className="col-sm-9">
-                            <DropdownList
+                            <Multiselect
                                 id="inp-occupation-group"
-                                placeholder="Оберіть варіант зі списку"
+                                open={this.state.inpOccupGroupIsOpen}
+                                onToggle={this.toggleInpOccupGroupIsOpen}
+                                placeholder="Оберіть варіанти зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
                                     emptyFilter: "Не знайдено жодного елементу"
@@ -134,7 +153,6 @@ export default class SearchOccupationsForm extends Component {
                                 ]}
                                 valueField='id'
                                 textField='textValue'
-                                defaultValue={null}
                                 value={this.state.form.occupGroupVal}
                                 onChange={this.handleOccupGroupChange}
                                 busy={this.props.occupationGroupList.isFetching}

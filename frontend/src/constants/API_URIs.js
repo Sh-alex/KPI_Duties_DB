@@ -3,6 +3,7 @@ export const FETCH_CLARIFICATION_LIST = '/api/clarification/';
 export const FETCH_CLARIFIED_OCCUP_LIST = '/api/occupations/clarifiedOccup';
 
 export const ADD_NEW_CLARIFICATION = '/api/clarification';
+export const ADD_NEW_OCCUPATION_GROUP = '/api/partition';
 
 export const FETCH_KP_CODES_LIST = '/api/code/kp';
 export const FETCH_ZKPPTR_CODES_LIST = '/api/code/zkpptr';

@@ -31,3 +31,30 @@ label {
   margin-top: 15px;
   margin-bottom: 20px;
 }
+
+
+.popover-title-inner--warning {
+  margin: -8px -14px;
+  padding: 8px 14px;
+  font-weight: bold;
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+}
+
+
+//HACK
+.rw-i.rw-loading {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
+  color: #555;
+  height: auto;
+}
+
+.rw-i.rw-loading:before {
+  content: "\F110";
+}

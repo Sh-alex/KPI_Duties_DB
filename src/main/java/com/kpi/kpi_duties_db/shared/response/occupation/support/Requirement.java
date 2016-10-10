@@ -21,7 +21,7 @@ public class Requirement {
 
     private Date portionEndDate;
 
-    private List<Integer> usingOccupations;
+    private List<String> usingOccupations;
 
     public Integer getIdText() {
         return idText;
@@ -63,11 +63,11 @@ public class Requirement {
         this.portionEndDate = portionEndDate;
     }
 
-    public List<Integer> getUsingOccupations() {
+    public List<String> getUsingOccupations() {
         return usingOccupations;
     }
 
-    public void setUsingOccupations(List<Integer> usingOccupations) {
+    public void setUsingOccupations(List<String> usingOccupations) {
         this.usingOccupations = usingOccupations;
     }
 }
