@@ -20,11 +20,13 @@ export default class FormEditOccupInfo extends Component {
         super(props);
 
         this.state = {
+            newOccupationGroupVal: "",
             newClarificationInpVal: "",
             newKPCodeInpVal: "",
             newDKHPCodeInpVal: "",
             newETDKCodeInpVal: "",
             newZKPPTRCodeInpVal: "",
+            showModalAddNewOccupationGroup: false,
             showModalAddNewClarification: false,
             showModalAddNewKPCode: false,
             showModalAddNewDKHPCode: false,
@@ -298,6 +300,19 @@ export default class FormEditOccupInfo extends Component {
             <div className="form-edit-occup-info-wrapper">
                 <ModalAddInfoFromAnotherOccup />
                 <ModalAddNewOccupKeyWord
+                    inpVal={this.state.newOccupationGroupVal}
+                    onInpValChange={newVal => this.setState({ newOccupationGroupVal: newVal })}
+                    show={this.state.showModalAddNewOccupationGroup}
+                    errors={this.props.occupNameInfoLists.occupationGroupList.addingErrors}
+                    success={this.props.occupNameInfoLists.occupationGroupList.addingSuccess}
+                    isLoading={this.props.occupNameInfoLists.occupationGroupList.isAddingNewVal || this.props.occupNameInfoLists.occupationGroupList.isFetching}
+                    onSave={this.props.addNewOccupationGroup}
+                    onAlertDismiss={ this.props.dismissModalAddNewOccupationGroupAlert }
+                    onHide={ () => {
+                        this.setState({showModalAddNewOccupationGroup: false});
+                        this.props.dismissModalAddNewOccupationGroupAlert()
+                    }} />
+                <ModalAddNewOccupKeyWord
                     inpVal={this.state.newClarificationInpVal}
                     onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
                     show={this.state.showModalAddNewClarification}
@@ -373,6 +388,7 @@ export default class FormEditOccupInfo extends Component {
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
+                            onBtnAddOccupationGroupClick={() => this.setState({ showModalAddNewOccupationGroup: true })}
                             openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
                         <FormEditOccupInfoDurationsSection
                             durationsFields={durations}

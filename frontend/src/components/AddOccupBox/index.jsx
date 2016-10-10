@@ -8,6 +8,8 @@ import {
     fetchClarifiedOccupList,
     fetchClarificationList,
     addNewClarification,
+    addNewOccupationGroup,
+    dismissModalAddNewOccupationGroupAlert,
     dismissModalAddNewClarificationAlert
 } from "../../actions/occupationNameInfo"
 
@@ -182,6 +184,15 @@ export default reduxForm(
     },
     (dispatch, ownProps) => { //mapDispatchToProps
         return {
+            handleServerRespMsgDismiss() {
+                return dispatch( addNewOccupHideServerRespMsg() );
+            },
+            handleBtnAddInfoFromAnotherOccupClick(data){
+                return dispatch(showModalAddInfoFromAnotherOccup({
+                    ...data,
+                    resForm: 'addForm'
+                }));
+            },
             fetchOccupGroupList() {
                 return dispatch(fetchOccupGroupList());
             },
@@ -203,11 +214,8 @@ export default reduxForm(
             fetchDKHPCodesList() {
                 return dispatch(fetchDKHPCodesList());
             },
-            handleServerRespMsgDismiss() {
-                return dispatch( addNewOccupHideServerRespMsg() );
-            },
-            dismissModalAddNewClarificationAlert() {
-                return dispatch( dismissModalAddNewClarificationAlert() );
+            addNewOccupationGroup(val) {
+                return dispatch(addNewOccupationGroup(val));
             },
             addNewClarification(val) {
                 return dispatch(addNewClarification(val));
@@ -224,13 +232,6 @@ export default reduxForm(
             addNewZKPPTRCode(val) {
                 return dispatch(addNewZKPPTRCode(val));
             },
-            handleBtnAddInfoFromAnotherOccupClick(data){
-                return dispatch(showModalAddInfoFromAnotherOccup({
-                    ...data,
-                    resForm: 'addForm'
-                }));
-            },
-
             handleOccupationGroupInpChange(newVal) {
                 return dispatch(occupationGroupInpChange(newVal));
             },
@@ -240,7 +241,12 @@ export default reduxForm(
             handleClarificationInpChange(newVal) {
                 return dispatch(clarificationInpChange(newVal));
             },
-
+            dismissModalAddNewOccupationGroupAlert() {
+                return dispatch( dismissModalAddNewOccupationGroupAlert() );
+            },
+            dismissModalAddNewClarificationAlert() {
+                return dispatch( dismissModalAddNewClarificationAlert() );
+            },
             dismissModalAddNewKPCodeAlert() {
                 return dispatch( clearKPCodeAddingMsg() );
             },

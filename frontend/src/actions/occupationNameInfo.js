@@ -15,11 +15,18 @@ import {
     ADD_NEW_CLARIFICATION_FAIL,
     ADD_NEW_CLARIFICATION_SUCCESS,
 
-    HIDE_ADD_FORM_SERVER_RESP_MSG,
-    DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
+    ADD_NEW_OCCUPATION_GROUP_REQUEST,
+    ADD_NEW_OCCUPATION_GROUP_SUCCESS,
+    ADD_NEW_OCCUPATION_GROUP_FAIL,
+
+    DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST,
+    DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT,
 } from '../constants/occupationNameInfo'
 
-import { clarificationInpChange } from './addNewOccup'
+import {
+    occupationGroupInpChange,
+    clarificationInpChange
+} from './addNewOccup'
 
 import * as API_URIs from '../constants/API_URIs';
 
@@ -117,6 +124,66 @@ export function addNewClarification(newVal) {
 export function dismissModalAddNewClarificationAlert() {
     return {
         type: DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
+    }
+}
+
+export function addNewOccupationGroup(newVal) {
+    return function (dispatch) {
+        dispatch({
+            type: ADD_NEW_OCCUPATION_GROUP_REQUEST,
+            newVal
+        });
+
+        return fetch( API_URIs.ADD_NEW_OCCUPATION_GROUP, {
+            credentials: 'include',
+            mode: 'cors',
+            method: 'post',
+            body: JSON.stringify( { newVal } ),
+            headers: {
+                'Content-Type': 'application/json',
+                //'X-CSRFToken': CSRF_TOKEN
+            }
+        })
+            .then( response => {
+                if(response.status === 404)
+                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
+
+                var contentType = response.headers.get("content-type");
+                if(contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                }
+                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
+            })
+            .then( json => {
+                let createdId = json.id,
+                    error = json.error;
+                if(createdId == undefined)
+                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
+                if(error)
+                    throw error;
+
+                let resObj = {
+                    "id": createdId,
+                    "textValue": newVal
+                };
+                dispatch({
+                    type: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
+                    newItem: resObj
+                });
+                dispatch(occupationGroupInpChange(resObj));
+            })
+            .catch( error => dispatch({
+                type: ADD_NEW_OCCUPATION_GROUP_FAIL,
+                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
+            }))
+    }
+}
+
+export function dismissModalAddNewOccupationGroupAlert() {
+    return {
+        type: DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST
     }
 }
 

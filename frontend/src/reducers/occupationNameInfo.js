@@ -1,4 +1,27 @@
-import * as aTypes from '../constants/occupationNameInfo'
+import {
+    FETCH_CLARIFICATION_LIST_REQUEST,
+    FETCH_CLARIFICATION_LIST_FAIL,
+    FETCH_CLARIFICATION_LIST_SUCCESS,
+
+    FETCH_CLARIFIED_OCCUP_LIST_REQUEST,
+    FETCH_CLARIFIED_OCCUP_LIST_FAIL,
+    FETCH_CLARIFIED_OCCUP_LIST_SUCCESS,
+
+    FETCH_OCCUP_GROUP_LIST_REQUEST,
+    FETCH_OCCUP_GROUP_LIST_FAIL,
+    FETCH_OCCUP_GROUP_LIST_SUCCESS,
+
+    ADD_NEW_CLARIFICATION_REQUEST,
+    ADD_NEW_CLARIFICATION_FAIL,
+    ADD_NEW_CLARIFICATION_SUCCESS,
+
+    ADD_NEW_OCCUPATION_GROUP_REQUEST,
+    ADD_NEW_OCCUPATION_GROUP_SUCCESS,
+    ADD_NEW_OCCUPATION_GROUP_FAIL,
+
+    DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST,
+    DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT,
+} from '../constants/occupationNameInfo'
 
 const initialState = {
     occupationGroupList: {
@@ -101,7 +124,7 @@ const initialState = {
 
 export default function occupationNameInfo(state = initialState, action) {
     switch (action.type) {
-        case aTypes.ADD_NEW_CLARIFICATION_REQUEST:
+        case ADD_NEW_CLARIFICATION_REQUEST:
             return {
                 ...state,
                 clarificationList: {
@@ -111,7 +134,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     addingErrors: []
                 }
             };
-        case aTypes.ADD_NEW_CLARIFICATION_SUCCESS:
+        case ADD_NEW_CLARIFICATION_SUCCESS:
             return {
                 ...state,
                 clarificationList: {
@@ -122,7 +145,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     addingErrors: []
                 }
             };
-        case aTypes.ADD_NEW_CLARIFICATION_FAIL:
+        case ADD_NEW_CLARIFICATION_FAIL:
             return {
                 ...state,
                 clarificationList: {
@@ -133,7 +156,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 }
             };
 
-        case aTypes.DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT:
+        case DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT:
             return {
                 ...state,
                 clarificationList: {
@@ -143,7 +166,49 @@ export default function occupationNameInfo(state = initialState, action) {
                 }
             };
 
-        case aTypes.FETCH_OCCUP_GROUP_LIST_REQUEST:
+        case ADD_NEW_OCCUPATION_GROUP_REQUEST:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isAddingNewVal: true,
+                    addingSuccess: false,
+                    addingErrors: []
+                }
+            };
+        case ADD_NEW_OCCUPATION_GROUP_SUCCESS:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    items: [...state.occupationGroupList.items, action.newItem],
+                    isAddingNewVal: false,
+                    addingSuccess: true,
+                    addingErrors: []
+                }
+            };
+        case ADD_NEW_OCCUPATION_GROUP_FAIL:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isAddingNewVal: false,
+                    addingSuccess: false,
+                    addingErrors: [...state.occupationGroupList.addingErrors, action.error]
+                }
+            };
+
+        case DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    addingSuccess: false,
+                    addingErrors: []
+                }
+            };
+
+        case FETCH_OCCUP_GROUP_LIST_REQUEST:
             return {
                 ...state,
                 occupationGroupList: {
@@ -152,7 +217,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_OCCUP_GROUP_LIST_SUCCESS:
+        case FETCH_OCCUP_GROUP_LIST_SUCCESS:
             return {
                 ...state,
                 occupationGroupList: {
@@ -161,7 +226,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_OCCUP_GROUP_LIST_FAIL:
+        case FETCH_OCCUP_GROUP_LIST_FAIL:
             return {
                 ...state,
                 occupationGroupList: {
@@ -171,7 +236,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 }
             };
 
-        case aTypes.FETCH_CLARIFICATION_LIST_REQUEST:
+        case FETCH_CLARIFICATION_LIST_REQUEST:
             return {
                 ...state,
                 clarificationList: {
@@ -180,7 +245,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_CLARIFICATION_LIST_SUCCESS:
+        case FETCH_CLARIFICATION_LIST_SUCCESS:
             return {
                 ...state,
                 clarificationList: {
@@ -189,7 +254,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_CLARIFICATION_LIST_FAIL:
+        case FETCH_CLARIFICATION_LIST_FAIL:
             return {
                 ...state,
                 clarificationList: {
@@ -199,7 +264,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 }
             };
 
-        case aTypes.FETCH_CLARIFIED_OCCUP_LIST_REQUEST:
+        case FETCH_CLARIFIED_OCCUP_LIST_REQUEST:
             return {
                 ...state,
                 clarifiedOccupationList: {
@@ -208,7 +273,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_CLARIFIED_OCCUP_LIST_SUCCESS:
+        case FETCH_CLARIFIED_OCCUP_LIST_SUCCESS:
             return {
                 ...state,
                 clarifiedOccupationList: {
@@ -217,7 +282,7 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: []
                 }
             };
-        case aTypes.FETCH_CLARIFIED_OCCUP_LIST_FAIL:
+        case FETCH_CLARIFIED_OCCUP_LIST_FAIL:
             return {
                 ...state,
                 clarifiedOccupationList: {

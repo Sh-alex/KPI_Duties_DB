@@ -66,6 +66,13 @@ export default class FormEditOccupInfoNameSection extends Component {
                             <div className="input-group-btn">
                                 <button
                                     type="button"
+                                    title="Додати нове ключове слово для уточнення"
+                                    className="btn btn-default btn-flat"
+                                    onClick={this.props.onBtnAddOccupationGroupClick} >
+                                    +1
+                                </button>
+                                <button
+                                    type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
                                     onClick={this.props.fetchOccupGroupList} >
