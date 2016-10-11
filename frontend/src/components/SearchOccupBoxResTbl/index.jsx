@@ -42,7 +42,7 @@ export default function SearchOccupBoxResTbl(props) {
                     clarifiedOccupationList={props.clarifiedOccupationList}
                     clarificationList={props.clarificationList}
                     key={itemId+"_0"}
-                    itemIndex={itemIndex}
+                    itemIndex={itemIndex + props.tblStartIndex}
                     data={props.searchResData.itemsById[itemId].data}
                     onEditItem={bindOnEditItem(props.onEditItem, props.searchResData.itemsById[itemId])}
                     onDeleteItem={bindOnDeleteItem(props.onDeleteItem, itemId)}

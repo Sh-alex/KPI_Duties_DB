@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Alert} from 'react-bootstrap'
+import React, { Component } from "react";
+import { Alert, Pagination } from 'react-bootstrap'
 import "./styles.less";
 
 import BoxExpandBtn from "../BoxExpandBtn"
@@ -33,14 +33,15 @@ export default class SearchOccupBoxRes extends Component {
             sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
             portionSize: portionSizesArr[0],            //обраний розмір порції
             portionSizesArr,                            //масив розмірів порцій
-            portionIndex: 0,                            //номер порції яку показуємо
+            activePortion: 1,                           //номер порції таблиці яку показуємо
             expandedItems: {},                          //які елементи розкриті(показуються деталі про посаду)
 
-            dontShowAgainDelModal: false,
-            showModalConfirmDelOccup: false,
+            dontShowAgainDelModal: false,               //більше не показувати повідомлення із підтвердженням видалення посади
+            showModalConfirmDelOccup: false,            //чи показується(відкрите) зараз модальне вікно із підтвердженням видалення посади
         };
 
         this.handleToggleExpandItem = this.handleToggleExpandItem.bind(this);
+        this.handlePaginationPageSelect = this.handlePaginationPageSelect.bind(this);
         this.hideModalConfirmDelOccup = this.hideModalConfirmDelOccup.bind(this);
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -108,6 +109,10 @@ export default class SearchOccupBoxRes extends Component {
             });
         }
     }
+    
+    handlePaginationPageSelect(pageNum) {
+        this.setState({ activePortion: pageNum });
+    }
 
     render() {
         let sortedSearchResData = sortSearchResData({
@@ -116,8 +121,13 @@ export default class SearchOccupBoxRes extends Component {
                 direction: this.state.sortDirection,
                 occupationGroupList: this.props.occupationGroupList
             }),
-            //TODO: обраховувати(на основі обраного індекса порції) які дані показувати у таблиці
-            performedSearchResData = sortedSearchResData,
+            numOfPortions = Math.ceil(sortedSearchResData.itemsList.length / this.state.portionSize),
+            portionStartIndex = this.state.portionSize*(this.state.activePortion-1),
+            portionEndIndex = this.state.portionSize*this.state.activePortion,
+            showingSearchResData = {
+                itemsById: sortedSearchResData.itemsById,
+                itemsList: sortedSearchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+            },
             modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
                 this.state.deletingItem !== undefined &&
                 this.props.searchResData.itemsById[this.state.deletingItem] &&
@@ -155,7 +165,7 @@ export default class SearchOccupBoxRes extends Component {
                     />
                     <ModalEditOccup />
                     {
-                        !performedSearchResData.itemsList.length ? (
+                        !this.props.searchResData.itemsList.length ? (
                             <Alert bsStyle="warning alert-sm alert--with-margin">
                                 <p>
                                     За вказаними критеріями не знайдено жодної посади.<br />
@@ -164,7 +174,8 @@ export default class SearchOccupBoxRes extends Component {
                             </Alert>
                         ) : (
                             <SearchOccupBoxResTbl
-                                searchResData={performedSearchResData}
+                                searchResData={showingSearchResData}
+                                tblStartIndex={portionStartIndex}
                                 occupationGroupList={this.props.occupationGroupList}
                                 clarifiedOccupationList={this.props.clarifiedOccupationList}
                                 clarificationList={this.props.clarificationList}
@@ -182,7 +193,7 @@ export default class SearchOccupBoxRes extends Component {
                     }
                 </div>
                 {
-                    performedSearchResData.itemsList.length && (
+                    this.props.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
                             <div className="col-sm-6">
                                 <label>
@@ -206,13 +217,17 @@ export default class SearchOccupBoxRes extends Component {
                                 </label>
                             </div>
                             <div className="col-sm-6 text-right">
-                                <ul className="pagination no-margin">
-                                    <li className="disabled"><a href="#">«</a></li>
-                                    <li className="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
+                                <Pagination
+                                    prev
+                                    next
+                                    first
+                                    last
+                                    ellipsis
+                                    boundaryLinks
+                                    items={numOfPortions}
+                                    maxButtons={5}
+                                    activePage={this.state.activePortion}
+                                    onSelect={this.handlePaginationPageSelect} />
                             </div>
                         </div>
                     ) || ""
