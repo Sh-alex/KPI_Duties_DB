@@ -30,7 +30,7 @@ export default class SearchOccupBoxRes extends Component {
         this.state = {
             editingItem: null,                          //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
-            sortField: OCCUPATION_NAME,                 //поле по якому портується таблиця
+            sortField: null,                            //поле по якому портується таблиця
             sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
             searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
             paginationSize: paginationSizesArr[0],      //обраний розмір порції
