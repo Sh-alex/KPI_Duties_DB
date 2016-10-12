@@ -31,6 +31,7 @@ export default class SearchOccupBoxRes extends Component {
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
             sortField: OCCUPATION_NAME,                 //поле по якому портується таблиця
             sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
+            searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
             portionSize: portionSizesArr[0],            //обраний розмір порції
             portionSizesArr,                            //масив розмірів порцій
             activePortion: 1,                           //номер порції таблиці яку показуємо
@@ -47,6 +48,35 @@ export default class SearchOccupBoxRes extends Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleDeleteItemShowingModal = this.handleDeleteItemShowingModal.bind(this);
         this.triggerSorting = this.triggerSorting.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let thisItemsList = this.state.searchResData.itemsList,
+            nextItemsList = nextProps.searchResData.itemsList,
+            searchResDataChanged = false,
+            i = 0;
+
+        if(thisItemsList.length !== nextItemsList.length){
+            searchResDataChanged = true;
+            i = nextItemsList.length+1;
+        }
+
+        for(; i < nextItemsList.length; i++) {
+            if(thisItemsList[i] !== nextItemsList[i]) {
+                searchResDataChanged = true;
+                break;
+            }
+        }
+
+        if(searchResDataChanged)
+            return this.setState({
+                searchResData: sortSearchResData({
+                    data: nextProps.searchResData,
+                    field: this.state.sortField,
+                    direction: this.state.sortDirection,
+                    occupationGroupList: nextProps.occupationGroupList
+                })
+            });
     }
 
     handleToggleExpandItem(itemId) {
@@ -97,17 +127,26 @@ export default class SearchOccupBoxRes extends Component {
     }
 
     triggerSorting(sortField) {
+        let sortDirection;
         if(sortField == this.state.sortField) {
             if(this.state.sortDirection == SORT_ASC)
-                return this.setState({ sortDirection: SORT_DESC });
+                sortDirection = SORT_DESC;
             else
-                return this.setState({ sortDirection: SORT_ASC });
+                sortDirection = SORT_ASC;
         } else {
-            return this.setState({
-                sortField: sortField,
-                sortDirection: SORT_ASC
-            });
+            sortDirection = SORT_ASC;
         }
+
+        return this.setState({
+            sortField,
+            sortDirection,
+            searchResData: sortSearchResData({
+                data: this.state.searchResData,
+                field: sortField,
+                direction: sortDirection,
+                occupationGroupList: this.props.occupationGroupList
+            })
+        });
     }
     
     handlePaginationPageSelect(pageNum) {
@@ -115,24 +154,18 @@ export default class SearchOccupBoxRes extends Component {
     }
 
     render() {
-        let sortedSearchResData = sortSearchResData({
-                data: this.props.searchResData,
-                field: this.state.sortField,
-                direction: this.state.sortDirection,
-                occupationGroupList: this.props.occupationGroupList
-            }),
-            numOfPortions = Math.ceil(sortedSearchResData.itemsList.length / this.state.portionSize),
+        let numOfPortions = Math.ceil(this.state.searchResData.itemsList.length / this.state.portionSize),
             portionStartIndex = this.state.portionSize*(this.state.activePortion-1),
             portionEndIndex = this.state.portionSize*this.state.activePortion,
             showingSearchResData = {
-                itemsById: sortedSearchResData.itemsById,
-                itemsList: sortedSearchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+                itemsById: this.state.searchResData.itemsById,
+                itemsList: this.state.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
             },
             modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
                 this.state.deletingItem !== undefined &&
-                this.props.searchResData.itemsById[this.state.deletingItem] &&
-                this.props.searchResData.itemsById[this.state.deletingItem].data &&
-                this.props.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
+                this.state.searchResData.itemsById[this.state.deletingItem] &&
+                this.state.searchResData.itemsById[this.state.deletingItem].data &&
+                this.state.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
 
         if(this.state.dontShowAgainDelModal && this.props.delOccupationError)
             alert(this.props.delOccupationError);
@@ -165,7 +198,7 @@ export default class SearchOccupBoxRes extends Component {
                     />
                     <ModalEditOccup />
                     {
-                        !this.props.searchResData.itemsList.length ? (
+                        !this.state.searchResData.itemsList.length ? (
                             <Alert bsStyle="warning alert-sm alert--with-margin">
                                 <p>
                                     За вказаними критеріями не знайдено жодної посади.<br />
@@ -193,7 +226,7 @@ export default class SearchOccupBoxRes extends Component {
                     }
                 </div>
                 {
-                    this.props.searchResData.itemsList.length && (
+                    this.state.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
                             <div className="col-sm-6">
                                 <label>
