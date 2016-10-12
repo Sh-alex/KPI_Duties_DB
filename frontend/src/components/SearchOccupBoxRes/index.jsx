@@ -6,6 +6,7 @@ import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
 import ModalEditOccup from "../ModalEditOccup"
+import PaginationSizeSelect from "../PaginationSizeSelect"
 
 import {
     sortSearchResData,
@@ -25,15 +26,15 @@ export default class SearchOccupBoxRes extends Component {
     constructor(props) {
         super(props);
 
-        let portionSizesArr = [10, 25, 50, 100, 200];
+        let paginationSizesArr = [10, 25, 50, 100, 200];
         this.state = {
             editingItem: null,                          //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
             sortField: OCCUPATION_NAME,                 //поле по якому портується таблиця
             sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
             searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
-            portionSize: portionSizesArr[0],            //обраний розмір порції
-            portionSizesArr,                            //масив розмірів порцій
+            paginationSize: paginationSizesArr[0],      //обраний розмір порції
+            paginationSizesArr,                         //масив розмірів порцій
             activePortion: 1,                           //номер порції таблиці яку показуємо
             expandedItems: {},                          //які елементи розкриті(показуються деталі про посаду)
 
@@ -48,6 +49,7 @@ export default class SearchOccupBoxRes extends Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleDeleteItemShowingModal = this.handleDeleteItemShowingModal.bind(this);
         this.triggerSorting = this.triggerSorting.bind(this);
+        this.handlePaginationSizeSelect = this.handlePaginationSizeSelect.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -126,6 +128,13 @@ export default class SearchOccupBoxRes extends Component {
         }
     }
 
+    handlePaginationSizeSelect(e) {
+        this.setState({
+            activePortion: 1,
+            paginationSize: Number.parseInt(e.currentTarget.value)
+        })
+    }
+    
     triggerSorting(sortField) {
         let sortDirection;
         if(sortField == this.state.sortField) {
@@ -154,9 +163,9 @@ export default class SearchOccupBoxRes extends Component {
     }
 
     render() {
-        let numOfPortions = Math.ceil(this.state.searchResData.itemsList.length / this.state.portionSize),
-            portionStartIndex = this.state.portionSize*(this.state.activePortion-1),
-            portionEndIndex = this.state.portionSize*this.state.activePortion,
+        let numOfPortions = Math.ceil(this.state.searchResData.itemsList.length / this.state.paginationSize),
+            portionStartIndex = this.state.paginationSize*(this.state.activePortion-1),
+            portionEndIndex = this.state.paginationSize*this.state.activePortion,
             showingSearchResData = {
                 itemsById: this.state.searchResData.itemsById,
                 itemsList: this.state.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
@@ -229,25 +238,10 @@ export default class SearchOccupBoxRes extends Component {
                     this.state.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
                             <div className="col-sm-6">
-                                <label>
-                                    Показувати по {" "}
-                                    <select
-                                        value={this.state.selectedPortionSize}
-                                        onChange={ e =>
-                                            this.setState({
-                                                selectedPortionSize: Number.parseInt(e.currentTarget.value)
-                                            })
-                                        }
-                                        className="input-sm"
-                                    >
-                                        {
-                                            this.state.portionSizesArr.map((size, i) => {
-                                                return <option value={size} key={i}> { size } </option>
-                                            })
-                                        }
-                                    </select>
-                                    {" "} записів
-                                </label>
+                                <PaginationSizeSelect
+                                    selectedSize={this.state.paginationSize}
+                                    onSizeSelect={this.handlePaginationSizeSelect}
+                                    sizesArr={this.state.paginationSizesArr} />
                             </div>
                             <div className="col-sm-6 text-right">
                                 <Pagination
@@ -257,6 +251,7 @@ export default class SearchOccupBoxRes extends Component {
                                     last
                                     ellipsis
                                     boundaryLinks
+                                    bsClass={"pagination no-margin"}
                                     items={numOfPortions}
                                     maxButtons={5}
                                     activePage={this.state.activePortion}
