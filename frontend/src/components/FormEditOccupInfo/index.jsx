@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import ModalAddInfoFromAnotherOccup from "../ModalAddInfoFromAnotherOccup"
-import ModalAddNewOccupKeyWord from "../ModalAddNewOccupKeyWord"
+import ModalAddNewValToOccupDc from "../ModalAddNewValToOccupDc"
 import FormEditOccupInfoNameSection from "../FormEditOccupInfoNameSection"
 import FormEditOccupInfoDurationsSection from "../FormEditOccupInfoDurationsSection"
 import FormEditOccupInfoCodesSection from "../FormEditOccupInfoCodesSection"
@@ -299,7 +299,8 @@ export default class FormEditOccupInfo extends Component {
         return (
             <div className="form-edit-occup-info-wrapper">
                 <ModalAddInfoFromAnotherOccup />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Посадовий склад"}
                     inpVal={this.state.newOccupationGroupVal}
                     onInpValChange={newVal => this.setState({ newOccupationGroupVal: newVal })}
                     show={this.state.showModalAddNewOccupationGroup}
@@ -312,7 +313,8 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewOccupationGroup: false});
                         this.props.dismissModalAddNewOccupationGroupAlert()
                     }} />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Уточнення"}
                     inpVal={this.state.newClarificationInpVal}
                     onInpValChange={newVal => this.setState({ newClarificationInpVal: newVal })}
                     show={this.state.showModalAddNewClarification}
@@ -325,7 +327,8 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewClarification: false});
                         this.props.dismissModalAddNewClarificationAlert()
                     }} />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Код КП"}
                     inpVal={this.state.newKPCodeInpVal}
                     onInpValChange={newVal => this.setState({ newKPCodeInpVal: newVal })}
                     show={this.state.showModalAddNewKPCode}
@@ -338,7 +341,8 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewKPCode: false});
                         this.props.dismissModalAddNewKPCodeAlert()
                     }} />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Код ЄТДК"}
                     inpVal={this.state.newETDKCodeInpVal}
                     onInpValChange={newVal => this.setState({ newETDKCodeInpVal: newVal })}
                     show={this.state.showModalAddNewETDKCode}
@@ -351,7 +355,8 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewETDKCode: false});
                         this.props.dismissModalAddNewETDKCodeAlert()
                     }} />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Код ДКХП"}
                     inpVal={this.state.newDKHPCodeInpVal}
                     onInpValChange={newVal => this.setState({ newDKHPCodeInpVal: newVal })}
                     show={this.state.showModalAddNewDKHPCode}
@@ -364,7 +369,8 @@ export default class FormEditOccupInfo extends Component {
                         this.setState({showModalAddNewDKHPCode: false});
                         this.props.dismissModalAddNewDKHPCodeAlert()
                     }} />
-                <ModalAddNewOccupKeyWord
+                <ModalAddNewValToOccupDc
+                    dcName={"Код ЗКППТР"}
                     inpVal={this.state.newZKPPTRCodeInpVal}
                     onInpValChange={newVal => this.setState({ newZKPPTRCodeInpVal: newVal })}
                     show={this.state.showModalAddNewZKPPTRCode}

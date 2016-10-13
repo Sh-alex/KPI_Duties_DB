@@ -6,7 +6,7 @@ import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import './styles.less'
 
-export default function ModalAddNewOccupKeyWord(props) {
+export default function ModalAddNewValToOccupDc(props) {
     const submitHandler = e => {
         e.preventDefault();
         props.onSave(props.inpVal);
@@ -47,7 +47,7 @@ export default function ModalAddNewOccupKeyWord(props) {
         <Modal {...props} bsSize="small">
             <Modal.Header closeButton>
                 <Modal.Title className="text-center">
-                    Додати нове значення у список
+                    Додати нове значення у список {props.dcName || ""}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
