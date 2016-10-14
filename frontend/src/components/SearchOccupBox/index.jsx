@@ -30,7 +30,7 @@ class SearchOccupBox extends Component {
 
         this.state = {
             searchResultsIsExpanded: this.props.searchResData,//Object.keys(this.props.location.query).length,
-            searchFormIsExpanded: !this.props.searchResData//!Object.keys(this.props.location.query).length
+            searchFormIsExpanded: !(this.props.searchResData && this.props.searchResData.itemsList && this.props.searchResData.itemsList.length)
         };
 
         //this.smth = this.smth.bind(this);
@@ -42,15 +42,16 @@ class SearchOccupBox extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            searchResultsIsExpanded: nextProps.searchResData,//Object.keys(this.props.location.query).length,
-            searchFormIsExpanded: !nextProps.searchResData//!Object.keys(this.props.location.query).length
+            searchResultsIsExpanded: nextProps.searchResData,
+            searchFormIsExpanded: !(nextProps.searchResData && nextProps.searchResData.itemsList && nextProps.searchResData.itemsList.length)
         });
     }
 
     render() {
         console.log("SearchOccupBox.props.location.query: ", this.props.location.query);
         // if(Object.keys(this.props.location.query).length)
-        if(this.props.searchResData)
+        let showSearchResults = this.props.searchResData && !this.props.searchError;
+        if(showSearchResults)
             return (
                 <div>
                     <SearchOccupBoxForm
