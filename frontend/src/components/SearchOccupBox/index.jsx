@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux'
 
-import SearchOccupBoxForm from "../SearchOccupBoxForm";
+import SearchOccupBoxFormWrapper from "../SearchOccupBoxFormWrapper";
 import SearchOccupBoxRes from "../SearchOccupBoxRes";
 
 import {
@@ -54,7 +54,7 @@ class SearchOccupBox extends Component {
         if(showSearchResults)
             return (
                 <div>
-                    <SearchOccupBoxForm
+                    <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
@@ -86,7 +86,7 @@ class SearchOccupBox extends Component {
         else
             return (
                 <div>
-                    <SearchOccupBoxForm
+                    <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}

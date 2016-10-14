@@ -54,6 +54,17 @@ export default class SearchOccupationsForm extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
+            form: Object.assign({
+                searchType: ANY,       // усі в "constants/searchOccupationsTypes"
+                occupGroupVal: [null], // [8, 3, 6] || [null]
+                searchText: "",        // "інженер"
+                searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
+                inKpi: ANY,            // "ANY", "ONLY_IN_KPI", "ONLY_IN_STATE"
+                startFrom: null,
+                startTo: null,
+                stopFrom: null,
+                stopTo: null,
+            }, nextProps.formFields),
             tagsList: nextProps.tagsList && nextProps.tagsList.items && nextProps.tagsList.items.map(item => item.textValue) || []
         })
     }

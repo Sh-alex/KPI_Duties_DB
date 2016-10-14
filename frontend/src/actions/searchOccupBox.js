@@ -1,13 +1,11 @@
+import { push as locationPush } from 'react-router-redux'
+
 import {
     SEARCH_OCCUP_BOX_FORM_SUBMIT_REQUEST,
     SEARCH_OCCUP_BOX_FORM_SUBMIT_FAIL,
     SEARCH_OCCUP_BOX_FORM_SUBMIT_SUCCESS,
     DISMISS_SEARCH_OCCUP_BOX_FORM_ALERT
 } from '../constants/searchOccupBox'
-
-import {
-    CHANGE_SEARCH_PAGE_URI
-} from "../constants/Routing"
 
 import searchOccupations from "./searchOccupations"
 
@@ -38,19 +36,11 @@ export function searchOccupBoxFormSubmit(data, dispatch) {
             data,
             onRequest: () => dispatch(submitFormRequest(data)),
             onSucces: (foundOccupations, searchGetParams) => {
-                dispatch(submitFormSuccess(foundOccupations));
-                dispatch(changeSearchPageURI(location.pathname + searchGetParams));
+                dispatch( locationPush(location.pathname + searchGetParams) );
+                dispatch( submitFormSuccess(foundOccupations) );
             },
             onFail: (errorText) => dispatch(submitFormFail(errorText))
         });
-    }
-}
-
-
-export function changeSearchPageURI(URI) {
-    //TODO: змінювати URI сторінки
-    return {
-        type: CHANGE_SEARCH_PAGE_URI
     }
 }
 
