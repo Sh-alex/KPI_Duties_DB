@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Pagination } from 'react-bootstrap'
 import "./styles.less";
 
 import AddInfoFromAnotherOccupSearchResTblResponsiblities from '../AddInfoFromAnotherOccupSearchResTblResponsiblities'
@@ -23,10 +24,12 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
                 portionIndex: null,
                 data: null
             },
+            activePortion: 1,                           //номер порції таблиці яку показуємо
             expandedItems: {},
         };
         this.handleItemSelect = this.handleItemSelect.bind(this);
         this.handleToggleExpandItem = this.handleToggleExpandItem.bind(this);
+        this.handlePaginationPageSelect = this.handlePaginationPageSelect.bind(this);
     }
 
     handleItemSelect(newItem) {
@@ -35,10 +38,10 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
         });
     }
 
-    handleToggleExpandItem(itemIndex, portionIndex) {
-        if(this.state.expandedItems[itemIndex+"_"+portionIndex]) {
+    handleToggleExpandItem(itemId) {
+        if(this.state.expandedItems[itemId]) {
             let newExpandedItemsState = Object.assign({}, this.state.expandedItems);
-            delete newExpandedItemsState[itemIndex+"_"+portionIndex];
+            delete newExpandedItemsState[itemId];
             this.setState({
                 expandedItems: newExpandedItemsState
             });
@@ -46,56 +49,73 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
             this.setState({
                 expandedItems: {
                     ...this.state.expandedItems,
-                    [itemIndex+"_"+portionIndex]: true
+                    [itemId]: true
                 }
             });
         }
     }
 
+    handlePaginationPageSelect(pageNum) {
+        this.setState({ activePortion: pageNum });
+    }
+
     render() {
-        let resultsTable;
+        let paginationSize = 10,
+            numOfPortions = Math.ceil(this.props.searchResData.itemsList.length / paginationSize),
+            portionStartIndex = paginationSize*(this.state.activePortion-1),
+            portionEndIndex = paginationSize*this.state.activePortion,
+            showingSearchResData = {
+                itemsById: this.props.searchResData.itemsById,
+                itemsList: this.props.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+            },
+            resultsTable;
+
         switch(this.props.resultsType) {
             case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES:
                 resultsTable = (
                     <AddInfoFromAnotherOccupSearchResTblResponsiblities
+                        tblStartIndex={portionStartIndex}
                         selectedItem={this.state.selectedItem}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
                         onToggleExpandItem={this.handleToggleExpandItem}
-                        searchResData={this.props.searchResData}
+                        searchResData={showingSearchResData}
                     />
                 );
                 break;
             case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
                 resultsTable = (
                     <AddInfoFromAnotherOccupSearchResTblHaveToKnow
+                        tblStartIndex={portionStartIndex}
                         selectedItem={this.state.selectedItem}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
                         onToggleExpandItem={this.handleToggleExpandItem}
-                        searchResData={this.props.searchResData}
+                        searchResData={showingSearchResData}
                     />
                 );
                 break;
             case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR:
                 resultsTable = (
                     <AddInfoFromAnotherOccupSearchResTblQualiffRequir
+                        tblStartIndex={portionStartIndex}
                         selectedItem={this.state.selectedItem}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
                         onToggleExpandItem={this.handleToggleExpandItem}
-                        searchResData={this.props.searchResData}
+                        searchResData={showingSearchResData}
                     />
                 );
                 break;
             case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                 resultsTable = (
                     <AddInfoFromAnotherOccupSearchResTblCodes
+                        tblStartIndex={portionStartIndex}
                         selectedItem={this.state.selectedItem}
                         onSelectItem={this.handleItemSelect}
                         expandedItems={this.state.expandedItems}
                         onToggleExpandItem={this.handleToggleExpandItem}
-                        searchResData={this.props.searchResData}
+                        searchResData={showingSearchResData}
                     />
                 );
                 break;
@@ -104,13 +124,18 @@ export default class AddInfoFromAnotherOccupSearchRes extends Component {
         let pagPortionSize = 1,
             pagination = this.props.searchResData.itemsList.length > pagPortionSize ? (
                 <div className="pagination-wrapper">
-                    <ul className="pagination no-margin">
-                        <li className="disabled"> <a href="#">«</a> </li>
-                        <li className="active"> <a href="#">1</a> </li>
-                        <li> <a href="#">2</a> </li>
-                        <li> <a href="#">3</a> </li>
-                        <li> <a href="#">»</a> </li>
-                    </ul>
+                    <Pagination
+                        prev
+                        next
+                        first
+                        last
+                        ellipsis
+                        boundaryLinks
+                        bsClass={"pagination no-margin"}
+                        items={numOfPortions}
+                        maxButtons={5}
+                        activePage={this.state.activePortion}
+                        onSelect={this.handlePaginationPageSelect} />
                 </div>
             ) : "";
 
