@@ -180,7 +180,7 @@ export default class SearchOccupBoxRes extends Component {
             alert(this.props.delOccupationError);
 
         return (
-            <div className={`box box-default ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
+            <div className={`box box-default box-search-res ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
                 <div className="box-header with-border text-center">
                     <h3 className="box-title">
                         Результати пошуку
