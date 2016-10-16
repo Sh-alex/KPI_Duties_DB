@@ -451,14 +451,16 @@ export default class FormEditOccupInfo extends Component {
                             )
                             }
                         </div>
-                        <div className="form-group">
+                        <div className="form-group bottom-btns-part">
                             {this.props.cancelSearch && (
-                                <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
-                                    Відміна
-                                </button>
+                                <div>
+                                    <button type="button" className="btn btn-default" onClick={this.props.cancelSearch}>
+                                        Відміна
+                                    </button>
+                                </div>
                             )}
 
-                            <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
+                            <div className={this.props.cancelSearch ? "text-right" : "text-center"}>
                                 <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverSubmitReset}>
                                     <button
                                         type="reset"

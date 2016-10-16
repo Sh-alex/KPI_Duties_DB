@@ -139,7 +139,8 @@ export default class SearchOccupationsForm extends Component {
             <form
                 onSubmit={this.submitForm}
                 className="form-horizontal search-occup-form"
-                role="form">
+                role="form"
+            >
                 <div className="form-inner">
                     <div className="form-group">
                         <label htmlFor="search-occup-form__inp-occupation-group" className="col-sm-3 control-label">
@@ -384,14 +385,16 @@ export default class SearchOccupationsForm extends Component {
                     </div>
                 </div>
                 { errorAlert }
-                <div className="clearfix search-occup-form__bottom-btns-part">
+                <div className="bottom-btns-part">
                     {this.props.cancelSearch && (
-                        <button type="button" className="btn btn-default pull-left" onClick={this.props.cancelSearch}>
-                            Відміна
-                        </button>
+                        <div className="">
+                            <button type="button" className="btn btn-default" onClick={this.props.cancelSearch}>
+                                Відміна
+                            </button>
+                        </div>
                     )}
 
-                    <div className={this.props.cancelSearch ? "pull-right" : "text-center"}>
+                    <div className={this.props.cancelSearch ? "text-right" : "text-center"}>
                         <button
                             type="reset"
                             className="btn btn-default"

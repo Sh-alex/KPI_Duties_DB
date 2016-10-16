@@ -96,7 +96,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                                 Уточнювана посада
                             </label>
                             <div className="col-sm-8">
-                                <div className="input-group">
+                                <div className="input-group input-group--clarified-occup">
                                     <DropdownList
                                         {...nameFields.clarifiedOccup}
                                         id="select-clarified-occup"
