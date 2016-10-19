@@ -1,10 +1,13 @@
 import React, {Component, PropTypes} from "react";
 import {Link} from "react-router";
+import classNames from "classnames"
 
 export default class HeaderMenuItem extends Component {
     render () {
-        let isActive = this.context.router.isActive(this.props.to, true),
-            className = isActive ? "active" : "";
+        let className = classNames({
+            "header-menu-item": true,
+            "active": this.context.router.isActive(this.props.to, true)
+        });
 
         return (
             <li className={className}>

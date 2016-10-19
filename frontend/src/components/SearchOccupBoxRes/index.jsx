@@ -1,11 +1,12 @@
-import React, {Component} from "react";
-import {Alert} from 'react-bootstrap'
+import React, { Component } from "react";
+import { Alert, Pagination } from 'react-bootstrap'
 import "./styles.less";
 
 import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
 import ModalEditOccup from "../ModalEditOccup"
+import PaginationSizeSelect from "../PaginationSizeSelect"
 
 import {
     sortSearchResData,
@@ -25,27 +26,59 @@ export default class SearchOccupBoxRes extends Component {
     constructor(props) {
         super(props);
 
-        let portionSizesArr = [10, 25, 50, 100, 200];
+        let paginationSizesArr = [10, 25, 50, 100, 200];
         this.state = {
             editingItem: null,                          //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
-            sortField: OCCUPATION_NAME,                 //поле по якому портується таблиця
+            sortField: null,                            //поле по якому портується таблиця
             sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
-            portionSize: portionSizesArr[0],            //обраний розмір порції
-            portionSizesArr,                            //масив розмірів порцій
-            portionIndex: 0,                            //номер порції яку показуємо
+            searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
+            paginationSize: paginationSizesArr[0],      //обраний розмір порції
+            paginationSizesArr,                         //масив розмірів порцій
+            activePortion: 1,                           //номер порції таблиці яку показуємо
             expandedItems: {},                          //які елементи розкриті(показуються деталі про посаду)
 
-            dontShowAgainDelModal: false,
-            showModalConfirmDelOccup: false,
+            dontShowAgainDelModal: false,               //більше не показувати повідомлення із підтвердженням видалення посади
+            showModalConfirmDelOccup: false,            //чи показується(відкрите) зараз модальне вікно із підтвердженням видалення посади
         };
 
         this.handleToggleExpandItem = this.handleToggleExpandItem.bind(this);
+        this.handlePaginationPageSelect = this.handlePaginationPageSelect.bind(this);
         this.hideModalConfirmDelOccup = this.hideModalConfirmDelOccup.bind(this);
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleDeleteItemShowingModal = this.handleDeleteItemShowingModal.bind(this);
         this.triggerSorting = this.triggerSorting.bind(this);
+        this.handlePaginationSizeSelect = this.handlePaginationSizeSelect.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let thisItemsList = this.state.searchResData.itemsList,
+            nextItemsList = nextProps.searchResData.itemsList,
+            searchResDataChanged = false,
+            i = 0;
+
+        if(thisItemsList.length !== nextItemsList.length){
+            searchResDataChanged = true;
+            i = nextItemsList.length+1;
+        }
+
+        for(; i < nextItemsList.length; i++) {
+            if(thisItemsList[i] !== nextItemsList[i]) {
+                searchResDataChanged = true;
+                break;
+            }
+        }
+
+        if(searchResDataChanged)
+            return this.setState({
+                searchResData: sortSearchResData({
+                    data: nextProps.searchResData,
+                    field: this.state.sortField,
+                    direction: this.state.sortDirection,
+                    occupationGroupList: nextProps.occupationGroupList
+                })
+            });
     }
 
     handleToggleExpandItem(itemId) {
@@ -95,40 +128,59 @@ export default class SearchOccupBoxRes extends Component {
         }
     }
 
+    handlePaginationSizeSelect(e) {
+        this.setState({
+            activePortion: 1,
+            paginationSize: Number.parseInt(e.currentTarget.value)
+        })
+    }
+    
     triggerSorting(sortField) {
+        let sortDirection;
         if(sortField == this.state.sortField) {
             if(this.state.sortDirection == SORT_ASC)
-                return this.setState({ sortDirection: SORT_DESC });
+                sortDirection = SORT_DESC;
             else
-                return this.setState({ sortDirection: SORT_ASC });
+                sortDirection = SORT_ASC;
         } else {
-            return this.setState({
-                sortField: sortField,
-                sortDirection: SORT_ASC
-            });
+            sortDirection = SORT_ASC;
         }
+
+        return this.setState({
+            sortField,
+            sortDirection,
+            searchResData: sortSearchResData({
+                data: this.state.searchResData,
+                field: sortField,
+                direction: sortDirection,
+                occupationGroupList: this.props.occupationGroupList
+            })
+        });
+    }
+    
+    handlePaginationPageSelect(pageNum) {
+        this.setState({ activePortion: pageNum });
     }
 
     render() {
-        let sortedSearchResData = sortSearchResData({
-                data: this.props.searchResData,
-                field: this.state.sortField,
-                direction: this.state.sortDirection,
-                occupationGroupList: this.props.occupationGroupList
-            }),
-            //TODO: обраховувати(на основі обраного індекса порції) які дані показувати у таблиці
-            performedSearchResData = sortedSearchResData,
+        let numOfPortions = Math.ceil(this.state.searchResData.itemsList.length / this.state.paginationSize),
+            portionStartIndex = this.state.paginationSize*(this.state.activePortion-1),
+            portionEndIndex = this.state.paginationSize*this.state.activePortion,
+            showingSearchResData = {
+                itemsById: this.state.searchResData.itemsById,
+                itemsList: this.state.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+            },
             modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
                 this.state.deletingItem !== undefined &&
-                this.props.searchResData.itemsById[this.state.deletingItem] &&
-                this.props.searchResData.itemsById[this.state.deletingItem].data &&
-                this.props.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
+                this.state.searchResData.itemsById[this.state.deletingItem] &&
+                this.state.searchResData.itemsById[this.state.deletingItem].data &&
+                this.state.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
 
         if(this.state.dontShowAgainDelModal && this.props.delOccupationError)
             alert(this.props.delOccupationError);
 
         return (
-            <div className={`box box-default ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
+            <div className={`box box-default box-search-res ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
                 <div className="box-header with-border text-center">
                     <h3 className="box-title">
                         Результати пошуку
@@ -155,7 +207,7 @@ export default class SearchOccupBoxRes extends Component {
                     />
                     <ModalEditOccup />
                     {
-                        !performedSearchResData.itemsList.length ? (
+                        !this.state.searchResData.itemsList.length ? (
                             <Alert bsStyle="warning alert-sm alert--with-margin">
                                 <p>
                                     За вказаними критеріями не знайдено жодної посади.<br />
@@ -164,7 +216,8 @@ export default class SearchOccupBoxRes extends Component {
                             </Alert>
                         ) : (
                             <SearchOccupBoxResTbl
-                                searchResData={performedSearchResData}
+                                searchResData={showingSearchResData}
+                                tblStartIndex={portionStartIndex}
                                 occupationGroupList={this.props.occupationGroupList}
                                 clarifiedOccupationList={this.props.clarifiedOccupationList}
                                 clarificationList={this.props.clarificationList}
@@ -182,37 +235,27 @@ export default class SearchOccupBoxRes extends Component {
                     }
                 </div>
                 {
-                    performedSearchResData.itemsList.length && (
+                    this.state.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
                             <div className="col-sm-6">
-                                <label>
-                                    Показувати по {" "}
-                                    <select
-                                        value={this.state.selectedPortionSize}
-                                        onChange={ e =>
-                                            this.setState({
-                                                selectedPortionSize: Number.parseInt(e.currentTarget.value)
-                                            })
-                                        }
-                                        className="input-sm"
-                                    >
-                                        {
-                                            this.state.portionSizesArr.map((size, i) => {
-                                                return <option value={size} key={i}> { size } </option>
-                                            })
-                                        }
-                                    </select>
-                                    {" "} записів
-                                </label>
+                                <PaginationSizeSelect
+                                    selectedSize={this.state.paginationSize}
+                                    onSizeSelect={this.handlePaginationSizeSelect}
+                                    sizesArr={this.state.paginationSizesArr} />
                             </div>
                             <div className="col-sm-6 text-right">
-                                <ul className="pagination no-margin">
-                                    <li className="disabled"><a href="#">«</a></li>
-                                    <li className="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
+                                <Pagination
+                                    prev
+                                    next
+                                    first
+                                    last
+                                    ellipsis
+                                    boundaryLinks
+                                    bsClass={"pagination no-margin"}
+                                    items={numOfPortions}
+                                    maxButtons={5}
+                                    activePage={this.state.activePortion}
+                                    onSelect={this.handlePaginationPageSelect} />
                             </div>
                         </div>
                     ) || ""

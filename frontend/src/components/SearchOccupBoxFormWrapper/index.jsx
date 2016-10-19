@@ -15,23 +15,35 @@ import {
 import SearchOccupationsForm from "../SearchOccupationsForm"
 import BoxExpandBtn from "../BoxExpandBtn"
 
-export default function SearchOccupBoxForm(props) {
+export default function SearchOccupBoxFormWrapper(props) {
     let formFields;
 
     if(Object.keys(props.searchQuery).length) {
         let querySearchType = props.searchQuery.searchType,
             queryInKpi = props.searchQuery.inKpi,
-            queryOccupGroupVal = props.searchQuery.occupGroupVal;
+            queryOccupGroupVal = props.searchQuery.occupGroupVal,
+            occupGroulValIsOk = queryOccupGroupVal && queryOccupGroupVal.length;
         formFields = {
             searchType: [SOME_TAGS, MATCH_STRING, CONTAINS_STRING, ALL_TAGS, ANY].includes(querySearchType) ? querySearchType : ANY,
-            occupGroupVal: props.occupationGroupList.items.includes(queryOccupGroupVal) ? queryOccupGroupVal : null,
+            occupGroupVal: occupGroulValIsOk ? queryOccupGroupVal : [null],
             searchText: props.searchQuery.searchText,
-            searchTags: props.searchQuery.searchTags.split(","),
+            searchTags: props.searchQuery.searchTags.reduce( (res, item) => {
+                if(item) res.push(item);
+                return res;
+            }, []) || [],
             inKpi: [ONLY_IN_KPI, ONLY_IN_STATE, ANY].includes(queryInKpi) ? queryInKpi : ANY,
-            startFrom: props.searchQuery.startFrom,
-            startTo: props.searchQuery.startFrom,
-            stopFrom: props.searchQuery.startFrom,
-            stopTo: props.searchQuery.startFrom
+            startFrom: props.searchQuery.startFrom &&
+                (new Date(props.searchQuery.startFrom) !== "Invalid Date") &&
+                new Date(props.searchQuery.startFrom) || null,
+            startTo: props.searchQuery.startTo &&
+                (new Date(props.searchQuery.startTo) !== "Invalid Date") &&
+                new Date(props.searchQuery.startTo) || null,
+            stopFrom: props.searchQuery.stopFrom &&
+                (new Date(props.searchQuery.stopFrom) !== "Invalid Date") &&
+                new Date(props.searchQuery.stopFrom) || null,
+            stopTo: props.searchQuery.stopTo &&
+                (new Date(props.searchQuery.stopTo) !== "Invalid Date") &&
+                new Date(props.searchQuery.stopTo) || null
         };
     }
 

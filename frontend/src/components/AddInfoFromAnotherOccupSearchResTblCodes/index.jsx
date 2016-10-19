@@ -23,9 +23,9 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                     return (
                         <tr >
                             <td>
-                                <input disabled type="radio" name="radio-selected-similar-occup" className="minimal" key={itemIndex} />
+                                <input disabled type="radio" name="radio-selected-similar-occup" className="minimal" key={itemId} />
                             </td>
-                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td title="Номер в списку"> { props.tblStartIndex + itemIndex + 1 } </td>
                             <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
                             <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
                             <td> - </td>
@@ -37,7 +37,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                 else
                     return (
                         <tr
-                            key={itemIndex}
+                            key={itemId}
                             onClick={bindHandleItemsSelect(itemId, itemIndex, props)}
                         >
                             <td>
@@ -48,7 +48,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                                     className="minimal"
                                 />
                             </td>
-                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td title="Номер в списку"> { props.tblStartIndex + itemIndex + 1 } </td>
                             <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
                             <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
                             <td>

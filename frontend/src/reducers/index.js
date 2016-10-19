@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import modals from './modals'
 import user from './user'
+import { routerReducer } from 'react-router-redux'
 import formAddNewOccup from './formAddNewOccup'
 import formEditOccup from './formEditOccup'
 import delOccupation from "./delOccupation"
@@ -10,12 +11,13 @@ import searchOccupBox from './searchOccupBox'
 import {reducer as formReducer} from 'redux-form'
 
 export const rootReducer = combineReducers({
-    modals,
+    routing: routerReducer,
     user,
-    searchOccupBox,
-    delOccupation,
     occupationNameInfo,
     occupCodesLists,
+    modals,
+    searchOccupBox,
+    delOccupation,
     form: formReducer.plugin({
         addForm: formAddNewOccup,
         formEditOccup: formEditOccup

@@ -45,7 +45,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                 <div className={occupGroupFormGroupClass}>
                     <label htmlFor="inp-occupation-group" className="col-sm-2 control-label"> Посадовий склад </label>
                     <div className="col-sm-10">
-                        <div className="input-group">
+                        <div className="input-group input-group--occupation-group">
                             <DropdownList
                                 {...nameFields.occupationGroup}
                                 id="inp-occupation-group"
@@ -66,7 +66,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                             <div className="input-group-btn">
                                 <button
                                     type="button"
-                                    title="Додати нове ключове слово для уточнення"
+                                    title="Додати нове значення до списку"
                                     className="btn btn-default btn-flat"
                                     onClick={this.props.onBtnAddOccupationGroupClick} >
                                     +1
@@ -96,7 +96,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                                 Уточнювана посада
                             </label>
                             <div className="col-sm-8">
-                                <div className="input-group">
+                                <div className="input-group input-group--clarified-occup">
                                     <DropdownList
                                         {...nameFields.clarifiedOccup}
                                         id="select-clarified-occup"
@@ -176,7 +176,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     <div className="input-group-btn">
                                         <button
                                             type="button"
-                                            title="Додати нове ключове слово для уточнення"
+                                            title="Додати нове значення до списку"
                                             className="btn btn-default btn-flat"
                                             onClick={this.props.openModalAddNewClarification} >
                                             +1

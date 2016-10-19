@@ -18,9 +18,9 @@ function bindHandleItemsSelect(itemId, itemIndex, portionIndex, props) {
     }
 }
 
-function bindToggleExpandItem(itemIndex, portionIndex, props) {
+function bindToggleExpandItem(itemId, props) {
     return () => {
-        return props.onToggleExpandItem(itemIndex, portionIndex)
+        return props.onToggleExpandItem(itemId)
     }
 }
 
@@ -32,7 +32,7 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
         if(props.searchResData.itemsList.length) {
             tblRows = props.searchResData.itemsList.map( (itemId,itemIndex) => {
                 return props.searchResData.itemsById[itemId].data.qualiffRequir.map((portion, portionIndex) => {
-                    let itemIsExpanded = props.expandedItems[itemIndex+"_"+portionIndex],
+                    let itemIsExpanded = props.expandedItems[itemId],
                         itemIsSelected = (props.selectedItem.itemIndex == itemIndex) && (props.selectedItem.portionIndex == portionIndex),
                         bigTextCellClassName = classNames({
                             "search-similar-table__big-text-cell": true,
@@ -42,7 +42,7 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
                     return (
                         <tr
                             onClick={bindHandleItemsSelect(itemId, itemIndex, portionIndex, props)}
-                            key={itemIndex+"_"+portionIndex}
+                            key={itemId}
                         >
                             <td>
                                 <input
@@ -51,7 +51,7 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
                                     name="radio-selected-similar-occup"
                                     className="minimal" />
                             </td>
-                            <td title="Номер в списку"> { itemIndex+1 } </td>
+                            <td title="Номер в списку"> { props.tblStartIndex + itemIndex+1 } </td>
                             <td> { props.searchResData.itemsById[itemId].data.occupationName } </td>
                             <td> { props.searchResData.itemsById[itemId].data.inKPI ? "+" : "-"} </td>
                             <td className={bigTextCellClassName} >
@@ -60,7 +60,7 @@ export default function AddInfoFromAnotherOccupSearchResTblQualiffRequir(props) 
                             <td>
                                 <a className="pull-right occup-table__btn-expand"
                                    href="javascript:void(0)"
-                                   onClick={bindToggleExpandItem(itemIndex, portionIndex, props)}
+                                   onClick={bindToggleExpandItem(itemId, props)}
                                    title="Переглянути деталі"
                                 >
                                     {

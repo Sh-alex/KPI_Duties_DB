@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux'
 
-import SearchOccupBoxForm from "../SearchOccupBoxForm";
+import SearchOccupBoxFormWrapper from "../SearchOccupBoxFormWrapper";
 import SearchOccupBoxRes from "../SearchOccupBoxRes";
 
 import {
@@ -30,7 +30,7 @@ class SearchOccupBox extends Component {
 
         this.state = {
             searchResultsIsExpanded: this.props.searchResData,//Object.keys(this.props.location.query).length,
-            searchFormIsExpanded: !this.props.searchResData//!Object.keys(this.props.location.query).length
+            searchFormIsExpanded: !(this.props.searchResData && this.props.searchResData.itemsList && this.props.searchResData.itemsList.length)
         };
 
         //this.smth = this.smth.bind(this);
@@ -42,18 +42,19 @@ class SearchOccupBox extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            searchResultsIsExpanded: nextProps.searchResData,//Object.keys(this.props.location.query).length,
-            searchFormIsExpanded: !nextProps.searchResData//!Object.keys(this.props.location.query).length
+            searchResultsIsExpanded: nextProps.searchResData,
+            searchFormIsExpanded: !(nextProps.searchResData && nextProps.searchResData.itemsList && nextProps.searchResData.itemsList.length)
         });
     }
 
     render() {
         console.log("SearchOccupBox.props.location.query: ", this.props.location.query);
         // if(Object.keys(this.props.location.query).length)
-        if(this.props.searchResData)
+        let showSearchResults = this.props.searchResData && !this.props.searchError;
+        if(showSearchResults)
             return (
                 <div>
-                    <SearchOccupBoxForm
+                    <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
@@ -85,7 +86,7 @@ class SearchOccupBox extends Component {
         else
             return (
                 <div>
-                    <SearchOccupBoxForm
+                    <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
