@@ -16,46 +16,46 @@ import "./styles.less";
 //         debouncedHandleTextareaChange(newVal, reduxChangeHandler);
 //     };
 
-export default function FormEditOccupInfoResponsibPortion(props) {
+export default function FormEditOccupInfoDescriptionTextPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
         <div>
             <hr />
             <button
                 type="button"
                 className="close inp-portions__btn-amount-ctrl--del"
-                onClick={props.handleDelResponsibPortionBtnClick} >
-                <span aria-hidden="true">&times;</span>
+                onClick={props.handleDelPortionBtnClick} >
+                <span aria-hidden={true}>&times;</span>
             </button>
         </div>
     ) : "";
 
     let portionStartDateFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.responsibPortionFields.portionStartDate.touched && props.responsibPortionFields.portionStartDate.error,
-            'has-success': props.responsibPortionFields.portionStartDate.touched && !props.responsibPortionFields.portionStartDate.error
+            'has-error':  props.fields.portionStartDate.touched && props.fields.portionStartDate.error,
+            'has-success': props.fields.portionStartDate.touched && !props.fields.portionStartDate.error
         }),
         portionEndDateFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.responsibPortionFields.portionEndDate.touched && props.responsibPortionFields.portionEndDate.error,
-            'has-success': props.responsibPortionFields.portionEndDate.touched && !props.responsibPortionFields.portionEndDate.error
+            'has-error':  props.fields.portionEndDate.touched && props.fields.portionEndDate.error,
+            'has-success': props.fields.portionEndDate.touched && !props.fields.portionEndDate.error
         }),
         portionTextFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.responsibPortionFields.text.touched && props.responsibPortionFields.text.error,
-            'has-success': props.responsibPortionFields.text.touched && !props.responsibPortionFields.text.error
+            'has-error':  props.fields.text.touched && props.fields.text.error,
+            'has-success': props.fields.text.touched && !props.fields.text.error
         }),
-        portionStartDateValue = props.responsibPortionFields.portionStartDate.value &&
-            (new Date(props.responsibPortionFields.portionStartDate.value) !== "Invalid Date") &&
-            new Date(props.responsibPortionFields.portionStartDate.value) || null,
-        portionEndDateValue = props.responsibPortionFields.portionEndDate.value &&
-            (new Date(props.responsibPortionFields.portionEndDate.value) !== "Invalid Date") &&
-            new Date(props.responsibPortionFields.portionEndDate.value) || null,
-        updateRelative = props.responsibPortionFields.updateTextInRelativeOccup &&
-            props.responsibPortionFields.updateTextInRelativeOccup.value,
-        occupationsUsingText = props.responsibPortionFields.occupationsUsingText &&
-            props.responsibPortionFields.occupationsUsingText.value || "",
-        showBtnUpdateRelative = occupationsUsingText && props.responsibPortionFields.updateTextInRelativeOccup &&
-            (props.responsibPortionFields.updateTextInRelativeOccup.value !== -1);
+        portionStartDateValue = props.fields.portionStartDate.value &&
+            (new Date(props.fields.portionStartDate.value) !== "Invalid Date") &&
+            new Date(props.fields.portionStartDate.value) || null,
+        portionEndDateValue = props.fields.portionEndDate.value &&
+            (new Date(props.fields.portionEndDate.value) !== "Invalid Date") &&
+            new Date(props.fields.portionEndDate.value) || null,
+        updateRelative = props.fields.updateTextInRelativeOccup &&
+            props.fields.updateTextInRelativeOccup.value,
+        occupationsUsingText = props.fields.occupationsUsingText &&
+            props.fields.occupationsUsingText.value || "",
+        showBtnUpdateRelative = occupationsUsingText && props.fields.updateTextInRelativeOccup &&
+            (props.fields.updateTextInRelativeOccup.value !== -1);
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
@@ -66,13 +66,13 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                         <div className="input-group">
                             <input
                                 type="hidden"
-                                {...props.responsibPortionFields.idText} />
+                                {...props.fields.idText} />
                             <textarea
-                                {...props.responsibPortionFields.text}
-                                value={props.responsibPortionFields.text.value || ""}
+                                {...props.fields.text}
+                                value={props.fields.text.value || ""}
                                 onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
-                                placeholder="Завдання, обов'язки та повноваження"
+                                placeholder={"Введіть тут текст про " + props.headline}
                                 rows="6" />
                             <div className="input-group-btn">
                                 <button
@@ -91,12 +91,12 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                                             title={"Оновити також цей текст у посадах які використвоують його: " + occupationsUsingText }
                                         >
                                             <input
-                                                {...props.responsibPortionFields.updateTextInRelativeOccup}
+                                                {...props.fields.updateTextInRelativeOccup}
                                                 type="checkbox"
                                                 autoComplete="off"
                                                 className="hidden"
                                             />
-                                            {updateRelative ? [<i className="fa fa-check" key="321"/>, " "] : ""}
+                                            {updateRelative ? [<i className="fa fa-check" key={Math.random()}/>, " "] : ""}
                                             <i className="fa fa-fast-forward"/>
                                         </label>
                                     )
@@ -104,30 +104,30 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                             </div>
                         </div>
                         <span className="help-block">
-                            { props.responsibPortionFields.text.touched && props.responsibPortionFields.text.error }
+                            { props.fields.text.touched && props.fields.text.error }
                         </span>
                     </div>
                 </div>
                 <div className="col-sm-4">
                     <input
                         type="hidden"
-                        {...props.responsibPortionFields.idDates} />
+                        {...props.fields.idDates} />
                     <div className={portionStartDateFormGroupClass}>
                         <label className="center-block">
                             Дата прийняття тексту <br />
                             <DateTimePicker
-                                {...props.responsibPortionFields.portionStartDate}
+                                {...props.fields.portionStartDate}
                                 format="DD.MM.YYYY"
                                 value={portionStartDateValue}
                                 defaultValue={null}
-                                onChange={props.responsibPortionFields.portionStartDate.onChange}
-                                onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionStartDate)}
+                                onChange={props.fields.portionStartDate.onChange}
+                                onBlur={(event) => fixBlur(event, props.fields.portionStartDate)}
                                 placeholder="Дата прийняття тексту"
                                 time={false}
                                 min={OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                             <span className="help-block">
-                                { props.responsibPortionFields.portionStartDate.touched && props.responsibPortionFields.portionStartDate.error }
+                                { props.fields.portionStartDate.touched && props.fields.portionStartDate.error }
                             </span>
                         </label>
                     </div>
@@ -135,18 +135,18 @@ export default function FormEditOccupInfoResponsibPortion(props) {
                         <label className="center-block">
                             Дата припинення дії тексту <br />
                             <DateTimePicker
-                                {...props.responsibPortionFields.portionEndDate}
+                                {...props.fields.portionEndDate}
                                 format="DD.MM.YYYY"
                                 value={portionEndDateValue}
                                 defaultValue={null}
-                                onChange={props.responsibPortionFields.portionEndDate.onChange}
-                                onBlur={(event) => fixBlur(event, props.responsibPortionFields.portionEndDate)}
+                                onChange={props.fields.portionEndDate.onChange}
+                                onBlur={(event) => fixBlur(event, props.fields.portionEndDate)}
                                 placeholder="Дата припинення дії тексту"
                                 time={false}
                                 min={portionStartDateValue || OCCUPATION_MIN_DATE}
                                 max={new Date()} />
                             <span className="help-block">
-                                { props.responsibPortionFields.portionEndDate.touched && props.responsibPortionFields.portionEndDate.error }
+                                { props.fields.portionEndDate.touched && props.fields.portionEndDate.error }
                             </span>
                         </label>
                     </div>
