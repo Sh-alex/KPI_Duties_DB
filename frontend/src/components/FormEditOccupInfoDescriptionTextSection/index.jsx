@@ -3,6 +3,39 @@ import FormEditOccupInfoDescriptionTextPortion from "../FormEditOccupInfoDescrip
 import "./styles.less";
 
 export default class FormEditOccupInfoDescriptionTextSection extends Component {
+    constructor(props) {
+        super(props);
+
+        // зберігаємо значення текстових полів у локальному state,
+        // а потім при події Blur записуємо локальне значення у Store
+        // при зміні props, перезаписуємо значення текстових полів у локальному state,
+
+        this.state = {
+            textFieldsVals: props.fields.map(fieldsItem => fieldsItem.text.value)
+        };
+
+        this.handleTextBlur = this.handleTextBlur.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            textFieldsVals: nextProps.fields.map(fieldsItem => fieldsItem.text.value)
+        });
+    }
+
+    handleTextChange(newVal, i) {
+        let newTextFieldsVals = this.state.textFieldsVals.slice();
+        newTextFieldsVals[i] = newVal;
+        this.setState({
+            textFieldsVals: newTextFieldsVals
+        });
+    }
+
+    handleTextBlur(e, i) {
+        this.props.handleTextChange(e.target.value, i)
+    }
+
     render() {
         let sectionHeadline = this.props.headline,
             addInfoFromAnotherOccupTypeId = this.props.addInfoFromAnotherOccupTypeId,
@@ -15,7 +48,10 @@ export default class FormEditOccupInfoDescriptionTextSection extends Component {
                     })(i),
                     decoratedTextChangeHandler = ((index, f) => {
                         return newVal => f(newVal, index)
-                    })(i, this.props.handleTextChange),
+                    })(i, this.handleTextChange),
+                    decoretedTextBlurHandler = ((index, f) => {
+                        return e => f(e, index)
+                    })(i, this.handleTextBlur),
                     decoratedAddInfoFromAnotherOccupHandler = (index => {
                         return () => originalAddInfoFromAnotherOccupHandler({
                             typeText: sectionHeadline,
@@ -27,6 +63,8 @@ export default class FormEditOccupInfoDescriptionTextSection extends Component {
                     <FormEditOccupInfoDescriptionTextPortion
                         headline={sectionHeadline}
                         fields={fieldsItem}
+                        textValue={this.state.textFieldsVals[i] || ""}
+                        handleTextBlur={decoretedTextBlurHandler}
                         showDelBtn={ fieldsArr.length > 1 }
                         portionItemClassName={ i===0 ? "is-first-item" : "" }
                         key={i}

@@ -68,8 +68,8 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
                                 type="hidden"
                                 {...props.fields.idText} />
                             <textarea
-                                {...props.fields.text}
-                                value={props.fields.text.value || ""}
+                                onBlur={props.handleTextBlur}
+                                value={props.textValue}
                                 onChange={ e => props.handleTextChange(e.target.value) }
                                 className="form-control"
                                 placeholder={"Введіть тут текст про " + props.headline}
