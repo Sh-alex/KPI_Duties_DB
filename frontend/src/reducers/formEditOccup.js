@@ -63,12 +63,12 @@ export default function formEditOccup(state, action) {
                 return {
                     "portionStartDate": {
                         "initial": null,
-                        "value": null,
+                        "value": action.data.portionStartDate,
                         "_isFieldValue": true
                     },
                     "portionEndDate": {
                         "initial": null,
-                        "value": null,
+                        "value": action.data.portionEndDate,
                         "_isFieldValue": true
                     },
                     "text": {
@@ -115,12 +115,12 @@ export default function formEditOccup(state, action) {
                                     },
                                     "portionStartDate": {
                                         "initial": null,
-                                        "value": null,
+                                        "value": portion.portionStartDate,
                                         "_isFieldValue": true
                                     },
                                     "portionEndDate": {
                                         "initial": null,
-                                        "value": null,
+                                        "value": portion.portionEndDate,
                                         "_isFieldValue": true
                                     },
                                     "codeKP": {

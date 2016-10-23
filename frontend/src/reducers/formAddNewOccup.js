@@ -55,6 +55,39 @@ export default function formEditOccupInfo(state, action) {
         case ADD_INFO_FROM_ANOTHER_OCCUPATION:
             if(action.resForm !== 'addForm')
                 return state;
+
+            let addInfoFromAnotherOccupDescrTextMappingFunc = (portion, portionIndex) => {
+                if(portionIndex != action.resPortionIndex)
+                    return portion;
+                return {
+                    "portionStartDate": {
+                        "initial": null,
+                        "value": action.data.portionStartDate,
+                        "_isFieldValue": true
+                    },
+                    "portionEndDate": {
+                        "initial": null,
+                        "value": action.data.portionEndDate,
+                        "_isFieldValue": true
+                    },
+                    "text": {
+                        "initial": "",
+                        "value": action.data.text,
+                        "_isFieldValue": true
+                    },
+                    "idText": {
+                        "initial": null,
+                        "value": action.data.idText,
+                        "_isFieldValue": true
+                    },
+                    "idDates": {
+                        "initial": null,
+                        "value": null,
+                        "_isFieldValue": true
+                    }
+                }
+            };
+
             switch(action.resultsType){
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                     if(!action.data || !action.data.codes instanceof Array)
@@ -71,12 +104,12 @@ export default function formEditOccupInfo(state, action) {
                                     },
                                     "portionStartDate": {
                                         "initial": null,
-                                        "value": null,
+                                        "value": portion.portionStartDate,
                                         "_isFieldValue": true
                                     },
                                     "portionEndDate": {
                                         "initial": null,
-                                        "value": null,
+                                        "value": portion.portionEndDate,
                                         "_isFieldValue": true
                                     },
                                     "codeKP": {
@@ -129,76 +162,16 @@ export default function formEditOccupInfo(state, action) {
                     else
                         return {
                             ...state,
-                            responsibilities: state.responsibilities.map( (portion, portionIndex) => {
-                                if(portionIndex != action.resPortionIndex)
-                                    return portion;
-                                return {
-                                    "portionStartDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "portionEndDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "text": {
-                                        "initial": "",
-                                        "value": action.data.text,
-                                        "_isFieldValue": true
-                                    },
-                                    "idText": {
-                                        "initial": null,
-                                        "value": action.data.idText,
-                                        "_isFieldValue": true
-                                    },
-                                    "idDates": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    }
-                                }
-                            })
+                            responsibilities: state.responsibilities.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                         };
                     break;
-                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
+                case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW:
                      if(!action.data)
                          return state;
                      else
                          return {
                              ...state,
-                             haveToKnow: state.haveToKnow.map( (portion, portionIndex) => {
-                                 if(portionIndex != action.resPortionIndex)
-                                     return portion;
-                                 return {
-                                     "portionStartDate": {
-                                         "initial": null,
-                                         "value": null,
-                                         "_isFieldValue": true
-                                     },
-                                     "portionEndDate": {
-                                         "initial": null,
-                                         "value": null,
-                                         "_isFieldValue": true
-                                     },
-                                     "text": {
-                                         "initial": "",
-                                         "value": action.data.text,
-                                         "_isFieldValue": true
-                                     },
-                                     "idText": {
-                                         "initial": null,
-                                         "value": action.data.idText,
-                                         "_isFieldValue": true
-                                     },
-                                     "idDates": {
-                                         "initial": null,
-                                         "value": null,
-                                         "_isFieldValue": true
-                                     }
-                                 }
-                             })
+                             haveToKnow: state.haveToKnow.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                          };
                      break;
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR:
@@ -207,37 +180,7 @@ export default function formEditOccupInfo(state, action) {
                     else
                         return {
                             ...state,
-                            qualiffRequir: state.qualiffRequir.map( (portion, portionIndex) => {
-                                if(portionIndex != action.resPortionIndex)
-                                    return portion;
-                                return {
-                                    "portionStartDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "portionEndDate": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    },
-                                    "text": {
-                                        "initial": "",
-                                        "value": action.data.text,
-                                        "_isFieldValue": true
-                                    },
-                                    "idText": {
-                                        "initial": null,
-                                        "value": action.data.idText,
-                                        "_isFieldValue": true
-                                    },
-                                    "idDates": {
-                                        "initial": null,
-                                        "value": null,
-                                        "_isFieldValue": true
-                                    }
-                                }
-                            })
+                            qualiffRequir: state.qualiffRequir.map( addInfoFromAnotherOccupDescrTextMappingFunc )
                         };
                     break;
                 default:
