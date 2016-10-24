@@ -152,8 +152,11 @@ export function clarifiedOccupInpChange(newVal) {
 
 
 export function hideModalEditOccup() {
-    return {
-        type: HIDE_MODAL_EDIT_OCCUP
+    return function (dispatch, getState) {
+        dispatch( {
+            type: HIDE_MODAL_EDIT_OCCUP,
+        });
+        dispatch(editOccupHideServerRespMsg());
     }
 }
 
