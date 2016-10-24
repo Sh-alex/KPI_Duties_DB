@@ -24,10 +24,12 @@ function submitFormRequest (data) {
     }
 }
 
-function submitFormSuccess (response) {
+function submitFormSuccess (response, requestData, editedOccupId) {
     return {
         type: EDIT_OCCUP_SUBMIT_SUCCESS,
-        response
+        response,
+        requestData,
+        editedOccupId
     }
 }
 
@@ -87,8 +89,7 @@ export function editOccup(editingOccupId, formData, dispatch) {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    dispatch(submitFormSuccess(response));
-                    resolve();
+                    resolve( dispatch(submitFormSuccess(response, data, editingOccupId)) );
                 }
                 else if (response.status === 400) {
                     throw(new Error("Передано некоректні дані на сервер!"));

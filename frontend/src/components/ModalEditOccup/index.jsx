@@ -130,7 +130,6 @@ class ModalEditOccup extends Component {
                 <Modal.Body>
                     <FormEditOccupInfo
                         {...this.props}
-                        occupData={this.props.editingOccupData}
                         submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
                         successMsgText={"Зміни успішно збережено"}
                         cancelSearch={this.props.onHideModalEditOccup}
@@ -197,7 +196,6 @@ export default reduxForm(
         return {
             modalState: state.modals.editOccup,
             editingOccupId: state.modals.editOccup.editingData && state.modals.editOccup.editingData.id || null,
-            editingOccupData: state.modals.editOccup.editingData && state.modals.editOccup.editingData.data || {},
             occupNameInfoLists: state.occupationNameInfo,
             occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.formEditOccup.shouldShowServerRespMsg

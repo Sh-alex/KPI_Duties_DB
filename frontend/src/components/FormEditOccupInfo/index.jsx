@@ -221,7 +221,7 @@ export default class FormEditOccupInfo extends Component {
 
     render() {
         const {
-            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir},
+            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir },
             handleSubmit,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
