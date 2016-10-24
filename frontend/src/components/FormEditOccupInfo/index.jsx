@@ -5,9 +5,13 @@ import ModalAddNewValToOccupDc from "../ModalAddNewValToOccupDc"
 import FormEditOccupInfoNameSection from "../FormEditOccupInfoNameSection"
 import FormEditOccupInfoDurationsSection from "../FormEditOccupInfoDurationsSection"
 import FormEditOccupInfoCodesSection from "../FormEditOccupInfoCodesSection"
-import FormEditOccupInfoResponsibSection from "../FormEditOccupInfoResponsibSection"
-import FormEditOccupInfoHaveToKnowSection from "../FormEditOccupInfoHaveToKnowSection"
-import FormEditOccupInfoQualiffRequirSection from "../FormEditOccupInfoQualiffRequirSection"
+import FormEditOccupInfoDescriptionTextSection from "../FormEditOccupInfoDescriptionTextSection"
+
+import {
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW,
+    ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
+} from '../../constants/addingInfoFromAnotherOccup';
 
 import { Alert, Popover, OverlayTrigger } from 'react-bootstrap'
 
@@ -217,7 +221,7 @@ export default class FormEditOccupInfo extends Component {
 
     render() {
         const {
-            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir},
+            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir },
             handleSubmit,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
@@ -415,27 +419,30 @@ export default class FormEditOccupInfo extends Component {
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
-                        <FormEditOccupInfoResponsibSection
-                            responsibFields={responsibilities}
-                            occupUsingResponsibText={[] /*occupUsingResponsibText*/}
+                        <FormEditOccupInfoDescriptionTextSection
+                            fields={responsibilities}
+                            headline={"Завдання, обов'язки та повноваження"}
+                            addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES}
                             handleTextChange={this.handleResponsibTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddResponsibPortionBtnClick={this.handleAddResponsibPortionBtnClick}
-                            handleDelResponsibPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
-                        <FormEditOccupInfoHaveToKnowSection
-                            haveToKnowFields={haveToKnow}
-                            occupUsingHaveToKnowText={[] /*occupUsingHaveToKnowText*/}
+                            handleAddPortionBtnClick={this.handleAddResponsibPortionBtnClick}
+                            handleDelPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
+                        <FormEditOccupInfoDescriptionTextSection
+                            fields={haveToKnow}
+                            headline={"Повинен знати"}
+                            addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW}
                             handleTextChange={this.handleHaveToKnowTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddHaveToKnowPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
-                            handleDelHaveToKnowPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
-                        <FormEditOccupInfoQualiffRequirSection
-                            qualiffRequirFields={qualiffRequir}
-                            occupUsingQualiffRequirText={[] /*occupUsingQualiffRequirText*/}
+                            handleAddPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
+                            handleDelPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
+                        <FormEditOccupInfoDescriptionTextSection
+                            fields={qualiffRequir}
+                            headline={"Кваліфікаційні вимоги"}
+                            addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR}
                             handleTextChange={this.handleQualiffRequirTextChange}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
-                            handleAddQualiffRequirPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
-                            handleDelQualiffRequirPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
+                            handleAddPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
+                            handleDelPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
                         <div>
                             { formAlert }
                             { validationError && (

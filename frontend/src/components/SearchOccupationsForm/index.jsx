@@ -30,10 +30,10 @@ export default class SearchOccupationsForm extends Component {
         this.handleOccupGroupChange = this.handleOccupGroupChange.bind(this);
         this.toggleInpOccupGroupIsOpen = this.toggleInpOccupGroupIsOpen.bind(this);
 
-        this.state = this.getInitState();
+        this.state = this.getInitState(this.props.formFields);
     }
 
-    getInitState() {
+    getInitState(formFields = {}) {
         return {
             form: Object.assign({
                 searchType: ANY,       // усі в "constants/searchOccupationsTypes"
@@ -45,7 +45,7 @@ export default class SearchOccupationsForm extends Component {
                 startTo: null,
                 stopFrom: null,
                 stopTo: null,
-            }, this.props.formFields),
+            }, formFields),
             inpOccupGroupIsOpen: false,         //чи показувати зараз список із посадовим складом
             //описали окремо в store, а не просто юзаємо через props на випадок якщо треба буде не показувати у підсказці вже обрані елементи
             tagsList: this.props.tagsList && this.props.tagsList.items && this.props.tagsList.items.map(item => item.textValue) || []
