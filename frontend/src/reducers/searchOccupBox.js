@@ -23,6 +23,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 searchError: null,
+                searchResData: null,
                 isSubmittngSearchForm: true,
             };
         case SEARCH_OCCUP_BOX_FORM_SUBMIT_SUCCESS:
@@ -35,6 +36,7 @@ export default function (state = initialState, action) {
         case SEARCH_OCCUP_BOX_FORM_SUBMIT_FAIL:
             return {
                 ...state,
+                searchResData: null,
                 isSubmittngSearchForm: false,
                 searchError: action.error,
             };

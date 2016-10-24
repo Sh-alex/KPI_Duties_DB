@@ -3,6 +3,8 @@ import { DropdownList, Multiselect, DateTimePicker } from "react-widgets";
 import { Alert } from 'react-bootstrap'
 import classNames from 'classnames';
 
+import deepEqual from "../../utils/deepEqual"
+
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
 import {
@@ -53,20 +55,25 @@ export default class SearchOccupationsForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            form: Object.assign({
-                searchType: ANY,       // усі в "constants/searchOccupationsTypes"
-                occupGroupVal: [null], // [8, 3, 6] || [null]
-                searchText: "",        // "інженер"
-                searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
-                inKpi: ANY,            // "ANY", "ONLY_IN_KPI", "ONLY_IN_STATE"
-                startFrom: null,
-                startTo: null,
-                stopFrom: null,
-                stopTo: null,
-            }, nextProps.formFields),
-            tagsList: nextProps.tagsList && nextProps.tagsList.items && nextProps.tagsList.items.map(item => item.textValue) || []
-        })
+        if(!deepEqual(nextProps.formFields, this.props.formFields))
+            this.setState({
+                form: Object.assign({
+                    searchType: ANY,       // усі в "constants/searchOccupationsTypes"
+                    occupGroupVal: [null], // [8, 3, 6] || [null]
+                    searchText: "",        // "інженер"
+                    searchTags: [],        // ["Старший", "Інженер", "1 розряду"]
+                    inKpi: ANY,            // "ANY", "ONLY_IN_KPI", "ONLY_IN_STATE"
+                    startFrom: null,
+                    startTo: null,
+                    stopFrom: null,
+                    stopTo: null,
+                }, nextProps.formFields)
+            });
+
+        if(!deepEqual(nextProps.tagsList, this.props.tagsList))
+            this.setState({
+                tagsList: nextProps.tagsList && nextProps.tagsList.items && nextProps.tagsList.items.map(item => item.textValue) || []
+            })
     }
 
     submitForm(e) {
