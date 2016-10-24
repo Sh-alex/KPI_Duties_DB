@@ -21,11 +21,22 @@ export default function SearchOccupBoxFormWrapper(props) {
     if(Object.keys(props.searchQuery).length) {
         let querySearchType = props.searchQuery.searchType,
             queryInKpi = props.searchQuery.inKpi,
-            queryOccupGroupVal = props.searchQuery.occupGroupVal,
-            occupGroulValIsOk = queryOccupGroupVal && queryOccupGroupVal.length;
+            queryOccupGroupVal = props.searchQuery.occupGroupVal.split(",");
+
+        for(let i=0; i< queryOccupGroupVal.length; i++) {
+            let numId = Number.parseInt(queryOccupGroupVal[i]);
+            if(isNaN(numId)) {
+                queryOccupGroupVal = [null];
+                break;
+            }
+            else
+                queryOccupGroupVal[i] = numId;
+        }
+
         formFields = {
-            searchType: [SOME_TAGS, MATCH_STRING, CONTAINS_STRING, ALL_TAGS, ANY].includes(querySearchType) ? querySearchType : ANY,
-            occupGroupVal: occupGroulValIsOk ? queryOccupGroupVal : [null],
+            searchType: [SOME_TAGS, MATCH_STRING, CONTAINS_STRING, ALL_TAGS, ANY].includes(querySearchType) ?
+                querySearchType : ANY,
+            occupGroupVal: queryOccupGroupVal,
             searchText: props.searchQuery.searchText,
             searchTags: props.searchQuery.searchTags.reduce( (res, item) => {
                 if(item) res.push(item);
