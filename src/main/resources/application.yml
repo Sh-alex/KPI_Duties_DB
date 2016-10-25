@@ -2,7 +2,7 @@
 logging:
   file: logs/kpi.log
   pattern:
-    console: "%d %-5level %logger : %msg%n"
+    #console: "%d %-5level %logger : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
     org.springframework: INFO
@@ -13,5 +13,8 @@ logging:
 spring:
   jersey:
       application-path: /api
+  output:
+        ansi:
+          enabled: always
   profiles:
     active: dev
