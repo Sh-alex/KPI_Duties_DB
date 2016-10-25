@@ -16,7 +16,7 @@ import {
 
     ONLY_IN_KPI,
     ONLY_IN_STATE
-} from "../../constants/searchOccupationsTypes"
+} from "../../constants/searchOccupationsForm"
 
 import './styles.less'
 
@@ -27,8 +27,11 @@ export default class SearchOccupationsForm extends Component {
 
         this.getInitState = this.getInitState.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.handleSearchTypeChange = this.handleSearchTypeChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleTagsCreate = this.handleTagsCreate.bind(this);
+        this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+        this.handleSearchTextBlur = this.handleSearchTextBlur.bind(this);
         this.handleOccupGroupChange = this.handleOccupGroupChange.bind(this);
         this.toggleInpOccupGroupIsOpen = this.toggleInpOccupGroupIsOpen.bind(this);
 
@@ -84,6 +87,40 @@ export default class SearchOccupationsForm extends Component {
         });
     }
 
+    handleSearchTypeChange (e) {
+        let newSearchType = e.currentTarget.value;
+        this.setState({
+            form: { ...this.state.form, searchType: newSearchType}
+        });
+
+        //чи треба знов зробити "предпошук посад", чи очистити попередні результати предпошуку
+        let shouldSearch = this.state.form.searchText &&
+            (newSearchType === CONTAINS_STRING || newSearchType === MATCH_STRING);
+
+        if(shouldSearch)
+            this.props.priorSearchOccupations(newSearchType, this.state.form.searchText);
+        else
+            this.props.priorSearchOccupReset();
+    }
+
+    handleSearchTextChange(e) {
+        let searchText = e.currentTarget.value;
+        this.setState({
+            form: {
+                ...this.state.form,
+                searchText
+            }
+        });
+    }
+
+    handleSearchTextBlur (e) {
+        //якщо рядок не пустий - шукаємо
+        if(this.state.form.searchText)
+            this.props.priorSearchOccupations(this.state.form.searchType, this.state.form.searchText);
+        else
+            this.props.priorSearchOccupReset();
+    }
+
     handleTagsChange(newVal) {
         this.setState({
             form: {
@@ -125,12 +162,25 @@ export default class SearchOccupationsForm extends Component {
 
 
     render() {
-        let
-            // fixBlur = (event, input) => {
-            //     event.target = {value: input.value};
-            //     input.onBlur(event);
-            // },
-            errorAlert = (!this.props.searchError) ? "" : (
+        let searchTextFeedbackIconClassName, searchTextTitle;
+        if(this.props.searchTextResIsPrefetching) {
+            searchTextFeedbackIconClassName = "fa fa-spinner fa-pulse text-muted form-control-feedback";
+            searchTextTitle = "Йде перевірка чи дасть пошук результати по введеному рядку";
+        } else if(this.props.searchTextResPrefetchingError) {
+            searchTextFeedbackIconClassName = "glyphicon text-danger glyphicon-warning-sign form-control-feedback";
+            searchTextTitle = this.props.searchTextResPrefetchingError;
+        } else if(this.props.searchTextWillSucceed === true) {
+            searchTextFeedbackIconClassName = "glyphicon text-success glyphicon-ok form-control-feedback";
+            searchTextTitle = "Знайдено посади, що відповідають введеному рядку";
+        } else if(this.props.searchTextWillSucceed === false) {
+            searchTextFeedbackIconClassName = "glyphicon text-danger glyphicon-remove form-control-feedback";
+            searchTextTitle = "НЕ знайдено посад, що відповідають введеному рядку";
+        } else {
+            searchTextFeedbackIconClassName = "";
+            searchTextTitle = "Введіть текст";
+        }
+
+        let errorAlert = (!this.props.searchError) ? "" : (
                 <Alert bsStyle="danger" onDismiss={this.props.onAlertDismiss}>
                     <h4>
                         <i className="icon fa fa-warning" />
@@ -140,7 +190,40 @@ export default class SearchOccupationsForm extends Component {
                         { this.props.searchError }
                     </p>
                 </Alert>
-            );
+            ),
+            searchTextFeedbackIcon = searchTextFeedbackIconClassName && (
+                <span className={searchTextFeedbackIconClassName} />
+            ) || "",
+            inpSearchText = this.state.form.searchType === CONTAINS_STRING || this.state.form.searchType === MATCH_STRING ? (
+                <input
+                    type="text"
+                    className="form-control"
+                    id="search-occup-form__inp-occupation-name"
+                    placeholder="Введіть текст"
+                    title={searchTextTitle}
+                    value={this.state.form.searchText}
+                    onChange={ this.handleSearchTextChange }
+                    onBlur={ this.handleSearchTextBlur }
+                />
+            ) : "",
+            inpSearchTags = this.state.form.searchType === ALL_TAGS || this.state.form.searchType === SOME_TAGS ? (
+                <Multiselect
+                    id="search-occup-form__inp-occupation-name"
+                    placeholder="Введіть тут теги"
+                    messages={{
+                        emptyList: "Список пустий",
+                        emptyFilter: "Не знайдено жодного елементу",
+                        createNew: "Додати новий тег"
+                    }}
+                    defaultValue={""}
+                    data={ this.state.tagsList }
+                    value={this.state.form.searchTags}
+                    busy={this.props.tagsList.isFetching}
+                    onChange={this.handleTagsChange}
+                    onCreate={this.handleTagsCreate}
+                    caseSensitive={false}
+                    filter='contains' />
+            ) : "";
 
         return (
             <form
@@ -186,11 +269,7 @@ export default class SearchOccupationsForm extends Component {
                         <div className="col-sm-9">
                             <select
                                 value={this.state.form.searchType}
-                                onChange={ e => {
-                                    this.setState({
-                                        form: { ...this.state.form, searchType: e.currentTarget.value}
-                                    })
-                                }}
+                                onChange={ this.handleSearchTypeChange }
                                 className="form-control"
                                 id="search-occup-form__select-occupation-name"
                             >
@@ -214,46 +293,13 @@ export default class SearchOccupationsForm extends Component {
                     </div>
                     <div className={classNames({
                         'form-group': true,
-                        'hidden': this.state.form.searchType === ANY
+                        'hidden': this.state.form.searchType === ANY,
+                        'has-feedback': searchTextFeedbackIcon
                     })}>
                         <div className="col-sm-offset-3 col-sm-9">
-                            {
-                                this.state.form.searchType === CONTAINS_STRING || this.state.form.searchType === MATCH_STRING ?
-                                    (
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="search-occup-form__inp-occupation-name"
-                                            placeholder="Введіть текст"
-                                            value={this.state.form.searchText}
-                                            onChange={ e => {
-                                                this.setState({
-                                                    form: { ...this.state.form, searchText: e.currentTarget.value}
-                                                })
-                                            }} />
-                                    ) : ""
-                            }
-                            {
-                                this.state.form.searchType === ALL_TAGS || this.state.form.searchType === SOME_TAGS ?
-                                    (
-                                        <Multiselect
-                                            id="search-occup-form__inp-occupation-name"
-                                            placeholder="Введіть тут теги"
-                                            messages={{
-                                                emptyList: "Список пустий",
-                                                emptyFilter: "Не знайдено жодного елементу",
-                                                createNew: "Додати новий тег"
-                                            }}
-                                            defaultValue={""}
-                                            data={ this.state.tagsList }
-                                            value={this.state.form.searchTags}
-                                            busy={this.props.tagsList.isFetching}
-                                            onChange={this.handleTagsChange}
-                                            onCreate={this.handleTagsCreate}
-                                            caseSensitive={false}
-                                            filter='contains' />
-                                    ) : ""
-                            }
+                            { inpSearchText }
+                            { searchTextFeedbackIcon }
+                            { inpSearchTags }
                         </div>
                     </div>
                     <div className="form-group">

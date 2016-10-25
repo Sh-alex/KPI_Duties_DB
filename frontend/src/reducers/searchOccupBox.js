@@ -5,6 +5,13 @@ import {
     DISMISS_SEARCH_OCCUP_BOX_FORM_ALERT
 } from '../constants/searchOccupBox'
 
+import {
+    PRIOR_SEARCH_OCCUP_REQUEST,
+    PRIOR_SEARCH_OCCUP_SUCCESS,
+    PRIOR_SEARCH_OCCUP_FAIL,
+    PRIOR_SEARCH_OCCUP_RESET
+} from '../constants/searchOccupationsForm'
+
 import { EDIT_OCCUP_SUBMIT_SUCCESS } from '../constants/modalEditOccup'
 
 import { DEL_OCCUP_SUCCESS } from "../constants/delOccupation"
@@ -12,7 +19,12 @@ import { DEL_OCCUP_SUCCESS } from "../constants/delOccupation"
 const initialState = {
     isSubmittngSearchForm: false,
     searchResData: null,
-    searchError: null
+    searchError: "",
+
+    //попередній пошук посад по введеному рядку
+    searchTextWillSucceed: undefined,   //undefined, true, false,
+    searchTextResIsPrefetching: false,
+    searchTextResPrefetchingError: "",
 };
 
 export default function (state = initialState, action) {
@@ -46,6 +58,38 @@ export default function (state = initialState, action) {
                 ...state,
                 searchError: null
             };
+
+
+        case PRIOR_SEARCH_OCCUP_REQUEST:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,
+                searchTextResIsPrefetching: true,
+                searchTextResPrefetchingError: "",
+            };
+        case PRIOR_SEARCH_OCCUP_SUCCESS:
+            return {
+                ...state,
+                searchTextWillSucceed: !!action.response,   //undefined, true, false,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: "",
+            };
+        case PRIOR_SEARCH_OCCUP_FAIL:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: action.error,
+            };
+
+        case PRIOR_SEARCH_OCCUP_RESET:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,   //undefined, true, false,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: "",
+            };
+
 
         case DEL_OCCUP_SUCCESS:
             newSearchResData = Object.assign({}, state.searchResData);

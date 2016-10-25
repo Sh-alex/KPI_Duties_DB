@@ -10,7 +10,7 @@ import {
 
     ONLY_IN_KPI,
     ONLY_IN_STATE
-} from "../../constants/searchOccupationsTypes"
+} from "../../constants/searchOccupationsForm"
 
 import SearchOccupationsForm from "../SearchOccupationsForm"
 import BoxExpandBtn from "../BoxExpandBtn"

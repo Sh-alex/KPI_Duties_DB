@@ -10,6 +10,11 @@ import {
 } from '../../actions/searchOccupBox'
 
 import {
+    priorSearchOccupations,
+    priorSearchOccupReset
+} from '../../actions/searchOccupations'
+
+import {
     fetchOccupGroupList,
     fetchClarifiedOccupList,
     fetchClarificationList,
@@ -57,6 +62,11 @@ class SearchOccupBox extends Component {
                     <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
+                        priorSearchOccupations={this.props.priorSearchOccupations}
+                        priorSearchOccupReset={this.props.priorSearchOccupReset}
+                        searchTextWillSucceed={this.props.searchTextWillSucceed}
+                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                         isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                         tagsList={this.props.clarificationList}
@@ -89,6 +99,11 @@ class SearchOccupBox extends Component {
                     <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
+                        priorSearchOccupations={this.props.priorSearchOccupations}
+                        priorSearchOccupReset={this.props.priorSearchOccupReset}
+                        searchTextWillSucceed={this.props.searchTextWillSucceed}
+                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                         isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                         tagsList={this.props.clarificationList}
@@ -117,6 +132,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(fetchOccupGroupList());
             dispatch(fetchClarifiedOccupList());
             dispatch(fetchClarificationList());
+        },
+        priorSearchOccupations(...data) {
+            dispatch(priorSearchOccupations(...data, dispatch))
+        },
+        priorSearchOccupReset() {
+            dispatch(priorSearchOccupReset())
         },
         onSubmitSearchForm(data) {
             dispatch(searchOccupBoxFormSubmit(data, dispatch))
