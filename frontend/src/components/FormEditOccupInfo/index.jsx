@@ -468,7 +468,12 @@ export default class FormEditOccupInfo extends Component {
                             )}
 
                             <div className={this.props.cancelSearch ? "text-right" : "text-center"}>
-                                <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverSubmitReset}>
+                                <OverlayTrigger
+                                    trigger="click"
+                                    rootClose={true}
+                                    placement="top"
+                                    overlay={popoverSubmitReset}
+                                >
                                     <button
                                         type="reset"
                                         disabled={submitting}
