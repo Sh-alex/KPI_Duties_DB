@@ -330,7 +330,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             occupationGetDto.setStartTo(request.getStartTo().get(0));
         }
         if (request.getStopFrom() != null && !request.getStopFrom().isEmpty()) {
-            occupationGetDto.setStartFrom(request.getStopFrom().get(0));
+            occupationGetDto.setStopFrom(request.getStopFrom().get(0));
         }
         if (request.getStopTo() != null && !request.getStopTo().isEmpty()) {
             occupationGetDto.setStopTo(request.getStopTo().get(0));
