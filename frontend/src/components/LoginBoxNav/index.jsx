@@ -5,7 +5,7 @@ import LoginBoxBody from "../LoginBoxBody";
 import "./styles.less";
 
 export default function LoginBoxNav(props) {
-    var elClassName = classnames([LoginBoxBody.className, "login-box-body--nav"]);
+    var elClassName = classnames([LoginBoxBody.className, "loginUser-box-body--nav"]);
     return (
         <LoginBoxBody {...props} className={elClassName}>
             <p className="login-box-msg">

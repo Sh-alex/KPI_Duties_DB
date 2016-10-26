@@ -1,12 +1,27 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { refreshTokenAndGetUserInfo } from '../../actions/user';
 
-//ТУТ БУДЕ НАЛАШТУВАННЯ АНІМАЦІЇ
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    )
-  }
+class App extends Component {
+    componentWillMount() {
+        this.props.refreshTokenAndGetUserInfo();
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.children}
+            </div>
+        )
+    }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        refreshTokenAndGetUserInfo: () => dispatch(refreshTokenAndGetUserInfo())
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(App);

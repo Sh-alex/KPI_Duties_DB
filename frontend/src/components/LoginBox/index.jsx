@@ -7,8 +7,7 @@ import LoginBoxNav from "../LoginBoxNav";
 import "./styles.less";
 
 import {
-    login,
-    logout
+    logOutUser
 } from "../../actions/user"
 
 
@@ -18,11 +17,7 @@ function LoginBox(props) {
             logOutUser={props.logOutUser}
         />
     ) : (
-        <LoginBoxAuthForm
-            logInUser={props.logInUser}
-            isLoggingIn={props.userState.isLoggingIn}
-            loginError={props.userState.loginError}
-        />
+        <LoginBoxAuthForm />
     );
 
     return (
@@ -43,8 +38,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        logInUser: userData => dispatch(login(userData)),
-        logOutUser: () => dispatch(logout())
+        logOutUser: () => dispatch(logOutUser())
     }
 };
 

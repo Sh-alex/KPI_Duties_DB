@@ -17,7 +17,7 @@ export default function requireAuthentication(Component) {
           type: ROUTING,
           payload: {
             method: 'replace',
-            nextUrl: '/login'
+            nextUrl: '/loginUser'
           }
         })
       }
