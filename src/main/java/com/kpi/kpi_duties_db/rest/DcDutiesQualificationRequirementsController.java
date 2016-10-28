@@ -2,7 +2,9 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesQualificationRequirementsEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesQualificationRequirementsService;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -28,6 +31,18 @@ public class DcDutiesQualificationRequirementsController {
 
     @Autowired
     private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+
+    @Autowired
+    private IdNameConverter idNameConverter;
+
+    @GET
+    public Response getAll() {
+
+        List<DcDutiesQualificationRequirementsEntity> all = dcDutiesQualificationRequirementsService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+
+        return Response.ok(response).build();
+    }
 
     @POST
     public Response add(@NotNull NewValueRequest request) {

@@ -24,6 +24,7 @@ public class IdNameConverterImpl implements IdNameConverter {
 
     private final String GET_ID = "getId";
     private final String GET_NAME = "getName";
+    private final String GET_TEXT = "getText";
 
     private final static Logger logger = LoggerFactory.getLogger(IdNameConverterImpl.class);
 
@@ -39,7 +40,11 @@ public class IdNameConverterImpl implements IdNameConverter {
             try {
                 Method method = object.getClass().getMethod(GET_ID);
                 idNameResponse.setId((Integer)method.invoke(object));
-                method = object.getClass().getMethod(GET_NAME);
+                try {
+                    method = object.getClass().getMethod(GET_NAME);
+                } catch (NoSuchMethodException e) {
+                    method = object.getClass().getMethod(GET_TEXT);
+                }
                 idNameResponse.setName((String) method.invoke(object));
             } catch (NoSuchMethodException e) {
                 String msg = "No such method by name in object";
