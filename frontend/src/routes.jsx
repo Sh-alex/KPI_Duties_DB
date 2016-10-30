@@ -6,6 +6,7 @@ import LoginBox from "./components/LoginBox";
 import SearchOccupBox from "./components/SearchOccupBox"
 import AddOccupBox from "./components/AddOccupBox";
 import MainLayout from "./components/MainLayout";
+import CtrlDcBox from "./components/CtrlDcBox"
 
 /*
  import Admin from './components/Admin'
@@ -39,6 +40,7 @@ export const routes = (
             <Route component={MainLayout}>
                 <Route path="add" component={AddOccupBox} />
                 <Route path="search*" component={SearchOccupBox} />
+                <Route path="ctrldict" component={CtrlDcBox}/>
             </Route>
             <Route path='*' component={NotFound} />
         </Route>

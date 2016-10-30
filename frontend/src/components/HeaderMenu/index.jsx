@@ -12,6 +12,9 @@ export default class HeaderMenu extends Component {
             <HeaderMenuItem to='/search'>
                 <i className="fa fa-search" /> Пошук
             </HeaderMenuItem>
+            <HeaderMenuItem to='/ctrldict'>
+                <i className="fa fa-book" /> Списки
+            </HeaderMenuItem>
         </ul>
     </div>
   }
