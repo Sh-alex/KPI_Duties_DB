@@ -1,0 +1,79 @@
+.ctrl-dc-box-menu {
+
+}
+
+.ctrl-dc-box-res {
+
+  .box-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fa-link {
+    transform: rotate(-45deg);
+  }
+
+  .ctrl-occup-dc-table-wrapper {
+    overflow-y: auto;
+
+    .ctrl-occup-dc-table {
+      margin: 0 auto !important;
+
+      a.disabled,
+      a.disabled:hover {
+        color: #BBB;
+      }
+
+      tbody > tr > td {
+        //text-align: center;
+      }
+
+      .big-text-cell--folded {
+        max-width: 100px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .row--details {
+
+        td {
+          border-top-style: dashed;
+        }
+      }
+
+      .action-btns-cell {
+        white-space: nowrap;
+        text-align: right;
+        font-size: 1.5em;
+        //vertical-align: middle;
+        padding: 0;
+
+        .action-btns-cell__btn {
+          vertical-align: middle;
+          display: inline-block;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .btn-expand {
+          font-size: 0.7em;
+        }
+      }
+
+      .list-of-using-occup {
+        font-style: italic;
+      }
+    }
+  }
+
+  .btn-show-adding-inp-wrapper {
+
+    .btn-show-adding-inp {
+      border-radius: 0 0 10px 10px;
+      //width: 100px;
+    }
+  }
+}

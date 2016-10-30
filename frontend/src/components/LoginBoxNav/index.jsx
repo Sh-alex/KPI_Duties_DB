@@ -20,6 +20,10 @@ export default function LoginBoxNav(props) {
                     <i className="fa fa-search" />
                     Пошук посад
                 </NavLink>
+                <NavLink to="/search" className="list-group-item">
+                    <i className="fa fa-book" />
+                    Контроль списків
+                </NavLink>
                 <a
                     onClick={props.logOutUser}
                     href="javascript:void(0)"
