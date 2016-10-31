@@ -6,7 +6,8 @@ import SearchOccupBoxRes from "../SearchOccupBoxRes";
 
 import {
     searchOccupBoxFormSubmit,
-    dismissSearchOccupBoxFormAlert
+    dismissSearchOccupBoxFormAlert,
+    showModalResDownloadSettings,
 } from '../../actions/searchOccupBox'
 
 import {
@@ -87,6 +88,7 @@ class SearchOccupBox extends Component {
                         toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
 
                         dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
+                        showModalResDownloadSettings={this.props.showModalResDownloadSettings}
                         delOccupationError={this.props.delOccupationError}
                         delOccupationSuccess={this.props.delOccupationSuccess}
                         isDeletingOccupation={this.props.isDeletingOccupation}
@@ -153,6 +155,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         handleDeleteItem(itemId) {
             dispatch(delOccupation(itemId, dispatch))
+        },
+        showModalResDownloadSettings() {
+            dispatch(showModalResDownloadSettings());
         }
     }
 };

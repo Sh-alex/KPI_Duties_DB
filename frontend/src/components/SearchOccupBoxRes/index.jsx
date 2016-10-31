@@ -6,6 +6,7 @@ import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
 import ModalEditOccup from "../ModalEditOccup"
+import ModalResDownloadSettings from "../ModalResDownloadSettings"
 import PaginationSizeSelect from "../PaginationSizeSelect"
 
 import {
@@ -193,6 +194,7 @@ export default class SearchOccupBoxRes extends Component {
                     </div>
                 </div>
                 <div className="box-body">
+                    <ModalResDownloadSettings />
                     <ModalConfirmDelOccup
                         additionalTitle={modalConfirmDelOccupAdditionalTitle}
                         onTriggerDontShowAgain={this.triggerDontShowAgainDel}
@@ -237,13 +239,23 @@ export default class SearchOccupBoxRes extends Component {
                 {
                     this.state.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
-                            <div className="col-sm-6">
+                            <div className="col-sm-4">
                                 <PaginationSizeSelect
                                     selectedSize={this.state.paginationSize}
                                     onSizeSelect={this.handlePaginationSizeSelect}
                                     sizesArr={this.state.paginationSizesArr} />
                             </div>
-                            <div className="col-sm-6 text-right">
+                            <div className="col-sm-4 text-center">
+                                <button
+                                    className="btn btn-default"
+                                    title="Заватажити результати у Excel файл"
+                                    onClick={this.props.showModalResDownloadSettings}
+                                >
+                                    <i className="fa fa-download" />
+                                    {" "} Заватажити результати
+                                </button>
+                            </div>
+                            <div className="col-sm-4 text-right">
                                 <Pagination
                                     prev
                                     next
