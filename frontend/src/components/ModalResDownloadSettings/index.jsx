@@ -19,18 +19,20 @@ class ModalResDownloadSettings extends Component {
             occupationNameMin: true,
             occupationGroup: true,
             qualiffRequirText: true,
-            // qualiffRequirStartDate: true,
-            // qualiffRequirEndDate: true,
+            qualiffRequirStartDate: true,
+            qualiffRequirEndDate: true,
             responsibilitiesText: true,
-            // responsibilitiesStartDate: true,
-            // responsibilitiesEndDate: true,
+            responsibilitiesStartDate: true,
+            responsibilitiesEndDate: true,
             haveToKnowText: true,
-            // haveToKnowStartDate: true,
-            // haveToKnowEndDate: true,
+            haveToKnowStartDate: true,
+            haveToKnowEndDate: true,
             codeDKHP: true,
             codeETDK: true,
             codeKP: true,
             codeZKPPTR: true,
+            codesStartDate: true,
+            codesEndDate: true,
             durationsStartDate: true,
             durationsStopDate: true,
             inKpi: true
@@ -67,9 +69,9 @@ class ModalResDownloadSettings extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <form role="form" onSubmit={this.handleFormSubmit} className="form-horizontal" id="form-res-download-settings">
-                        <b>
-                            Оберіть поля посад які треба експорувати у файл:
-                        </b>
+                        <div>
+                            <b> Оберіть поля посад які треба експорувати у файл: </b>
+                        </div>
                         <div className="form-inner">
                             <div className="checkbox">
                                 <label>
@@ -104,7 +106,25 @@ class ModalResDownloadSettings extends Component {
                                         type="checkbox"
                                         checked={this.state.qualiffRequirText}
                                         onChange={ e => this.setState({ qualiffRequirText: e.currentTarget.checked }) } />
-                                    Кваліфікаційні вимоги
+                                    Кваліфікаційні вимоги: текст
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.qualiffRequirStartDate}
+                                        onChange={ e => this.setState({ qualiffRequirStartDate: e.currentTarget.checked }) } />
+                                    Кваліфікаційні вимоги: дата прийняття тексту
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.qualiffRequirEndDate}
+                                        onChange={ e => this.setState({ qualiffRequirEndDate: e.currentTarget.checked }) } />
+                                    Кваліфікаційні вимоги: дата відміни тексту
                                 </label>
                             </div>
                             <div className="checkbox">
@@ -113,7 +133,25 @@ class ModalResDownloadSettings extends Component {
                                         type="checkbox"
                                         checked={this.state.responsibilitiesText}
                                         onChange={ e => this.setState({ responsibilitiesText: e.currentTarget.checked }) } />
-                                    Завдання, обов'язки та повноваження
+                                    Завдання, обов'язки та повноваження: текст
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.responsibilitiesStartDate}
+                                        onChange={ e => this.setState({ responsibilitiesStartDate: e.currentTarget.checked }) } />
+                                    Завдання, обов'язки та повноваження: дата прийняття тексту
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.responsibilitiesEndDate}
+                                        onChange={ e => this.setState({ responsibilitiesEndDate: e.currentTarget.checked }) } />
+                                    Завдання, обов'язки та повноваження: дата відміни тексту
                                 </label>
                             </div>
                             <div className="checkbox">
@@ -122,7 +160,25 @@ class ModalResDownloadSettings extends Component {
                                         type="checkbox"
                                         checked={this.state.haveToKnowText}
                                         onChange={ e => this.setState({ haveToKnowText: e.currentTarget.checked }) } />
-                                    Повинен знати
+                                    Повинен знати: текст
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.haveToKnowStartDate}
+                                        onChange={ e => this.setState({ haveToKnowStartDate: e.currentTarget.checked }) } />
+                                    Повинен знати: дата прийняття тексту
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.haveToKnowEndDate}
+                                        onChange={ e => this.setState({ haveToKnowEndDate: e.currentTarget.checked }) } />
+                                    Повинен знати: дата відміни тексту
                                 </label>
                             </div>
                             <div className="checkbox">
@@ -149,7 +205,7 @@ class ModalResDownloadSettings extends Component {
                                         type="checkbox"
                                         checked={this.state.codeZKPPTR}
                                         onChange={ e => this.setState({ codeZKPPTR: e.currentTarget.checked }) } />
-                                    ПКод ЗКППТР
+                                    Код ЗКППТР
                                 </label>
                             </div>
                             <div className="checkbox">
@@ -165,9 +221,27 @@ class ModalResDownloadSettings extends Component {
                                 <label>
                                     <input
                                         type="checkbox"
+                                        checked={this.state.codesStartDate}
+                                        onChange={ e => this.setState({ codesStartDate: e.currentTarget.checked }) } />
+                                    Дата прийняття кодів
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.codesEndDate}
+                                        onChange={ e => this.setState({ codesEndDate: e.currentTarget.checked }) } />
+                                    Дата відміни кодів
+                                </label>
+                            </div>
+                            <div className="checkbox">
+                                <label>
+                                    <input
+                                        type="checkbox"
                                         checked={this.state.durationsStartDate}
                                         onChange={ e => this.setState({ durationsStartDate: e.currentTarget.checked }) } />
-                                    Дити створення посади
+                                    Дати створення посади
                                 </label>
                             </div>
                             <div className="checkbox">

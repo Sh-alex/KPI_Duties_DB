@@ -247,7 +247,7 @@ export default class SearchOccupBoxRes extends Component {
                             </div>
                             <div className="col-sm-4 text-center">
                                 <button
-                                    className="btn btn-default"
+                                    className="btn btn-default btn-download-search-res"
                                     title="Заватажити результати у Excel файл"
                                     onClick={this.props.showModalResDownloadSettings}
                                 >
