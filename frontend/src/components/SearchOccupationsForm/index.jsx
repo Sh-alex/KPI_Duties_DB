@@ -209,11 +209,11 @@ export default class SearchOccupationsForm extends Component {
             inpSearchTags = this.state.form.searchType === ALL_TAGS || this.state.form.searchType === SOME_TAGS ? (
                 <Multiselect
                     id="search-occup-form__inp-occupation-name"
-                    placeholder="Введіть тут теги"
+                    placeholder="Введіть тут теги(ключові слова)"
                     messages={{
                         emptyList: "Список пустий",
                         emptyFilter: "Не знайдено жодного елементу",
-                        createNew: "Додати новий тег"
+                        createNew: "Додати новий тег(ключове слово)"
                     }}
                     defaultValue={""}
                     data={ this.state.tagsList }
@@ -283,10 +283,10 @@ export default class SearchOccupationsForm extends Component {
                                     Рядок міститься у назві
                                 </option>
                                 <option value={SOME_TAGS} >
-                                    Назва містить хоча б один із тегів
+                                    Назва містить хоча б один із тегів(ключових слів)
                                 </option>
                                 <option value={ALL_TAGS} >
-                                    Назва містить кожен із тегів
+                                    Назва містить кожен із тегів(ключових слів)
                                 </option>
                             </select>
                         </div>
