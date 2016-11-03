@@ -6,6 +6,7 @@ import FormEditOccupInfoNameSection from "../FormEditOccupInfoNameSection"
 import FormEditOccupInfoDurationsSection from "../FormEditOccupInfoDurationsSection"
 import FormEditOccupInfoCodesSection from "../FormEditOccupInfoCodesSection"
 import FormEditOccupInfoDescriptionTextSection from "../FormEditOccupInfoDescriptionTextSection"
+import FormEditOccupInfoDocRefSection from "../FormEditOccupInfoDocRefSection"
 
 import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES,
@@ -221,7 +222,7 @@ export default class FormEditOccupInfo extends Component {
 
     render() {
         const {
-            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir },
+            fields: { name, durations, codes, mainInfoDocRef, responsibilities, haveToKnow, qualiffRequir, descriptionDocRef },
             handleSubmit,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
@@ -419,6 +420,9 @@ export default class FormEditOccupInfo extends Component {
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
+                        <FormEditOccupInfoDocRefSection
+                            headline="Посилання на правові документи про загальну інформацію"
+                            fields={mainInfoDocRef} />
                         <FormEditOccupInfoDescriptionTextSection
                             fields={responsibilities}
                             headline={"Завдання, обов'язки та повноваження"}
@@ -443,6 +447,9 @@ export default class FormEditOccupInfo extends Component {
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
+                        <FormEditOccupInfoDocRefSection
+                            headline="Посилання на правові документи про тексти з описом посади"
+                            fields={descriptionDocRef} />
                         <div>
                             { formAlert }
                             { validationError && (

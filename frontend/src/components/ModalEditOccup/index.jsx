@@ -83,6 +83,10 @@ class ModalEditOccup extends Component {
                     'codeDKHPText': ""
                 }
             ],
+            mainInfoDocRef: {
+                docName: "",
+                docLink: ""
+            },
             responsibilities: [
                 {
                     'updateTextInRelativeOccup': -1,
@@ -115,7 +119,11 @@ class ModalEditOccup extends Component {
                     'idDates': null,
                     'idText': null
                 }
-            ]
+            ],
+            descriptionDocRef: {
+                docName: "",
+                docLink: ""
+            },
         });
     }
 
@@ -166,6 +174,8 @@ export default reduxForm(
             'codes[].codeETDKText',
             'codes[].codeZKPPTRText',
             'codes[].codeDKHPText',
+            'mainInfoDocRef.docName',
+            'mainInfoDocRef.docLink',
             'responsibilities[].text',
             'responsibilities[].idText',
             'responsibilities[].idDates',
@@ -187,6 +197,8 @@ export default reduxForm(
             'qualiffRequir[].occupationsUsingText',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate',
+            'descriptionDocRef.docName',
+            'descriptionDocRef.docLink',
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,

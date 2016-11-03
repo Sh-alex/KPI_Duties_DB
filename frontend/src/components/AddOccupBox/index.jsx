@@ -76,6 +76,10 @@ let initialFormState = {
             'codeDKHPText': ""
         }
     ],
+    mainInfoDocRef: {
+        docName: "",
+        docLink: ""
+    },
     responsibilities: [
         {
             'portionStartDate': null,
@@ -102,7 +106,11 @@ let initialFormState = {
             'idDates': null,
             'idText': null
         }
-    ]
+    ],
+    descriptionDocRef: {
+        docName: "",
+        docLink: ""
+    },
 };
 
 class AddOccupBox extends Component {
@@ -155,6 +163,8 @@ export default reduxForm(
             'codes[].codeETDKText',
             'codes[].codeZKPPTRText',
             'codes[].codeDKHPText',
+            'mainInfoDocRef.docName',
+            'mainInfoDocRef.docLink',
             'responsibilities[].text',
             'responsibilities[].idText',
             'responsibilities[].idDates',
@@ -170,6 +180,8 @@ export default reduxForm(
             'qualiffRequir[].idDates',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate',
+            'descriptionDocRef.docName',
+            'descriptionDocRef.docLink',
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,
