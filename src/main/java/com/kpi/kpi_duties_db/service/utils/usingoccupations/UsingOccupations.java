@@ -11,8 +11,12 @@ import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 public interface UsingOccupations {
 
     // nameCode - ім'я поля з id кода в RtCode, наприклад "codeETKDId"
-    IdNameListResponse findUsingOccupationsIdForCode(IdNameListResponse response, String nameCode);
+    IdNameListResponse findUsingOccupationsIdForCode(IdNameListResponse response, String nameParentId);
 
-    IdNameListResponse findUsingOccupationsIdForDcDutiesMustKnow(IdNameListResponse response);
+    IdNameListResponse findUsingOccupationsIdForRtDutiesMustKnow(IdNameListResponse response);
+
+    IdNameListResponse findUsingOccupationsIdForRtDutiesQualificationRequirements(IdNameListResponse response);
+
+    IdNameListResponse findUsingOccupationsIdForRtDutiesTaskAndResponsibilities(IdNameListResponse response);
 
 }

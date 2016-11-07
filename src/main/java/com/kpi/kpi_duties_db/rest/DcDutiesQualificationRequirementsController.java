@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcDutiesQualificationRequirementsEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesQualificationRequirementsService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
+import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,15 @@ public class DcDutiesQualificationRequirementsController {
     @Autowired
     private IdNameConverter idNameConverter;
 
+    @Autowired
+    private UsingOccupations usingOccupations;
+
     @GET
     public Response getAll() {
 
         List<DcDutiesQualificationRequirementsEntity> all = dcDutiesQualificationRequirementsService.getAll();
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        response = usingOccupations.findUsingOccupationsIdForRtDutiesQualificationRequirements(response);
 
         return Response.ok(response).build();
     }
