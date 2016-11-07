@@ -42,6 +42,7 @@ public class DcDutiesMustKnowController {
         List<DcDutiesMustKnowEntity> all = dcDutiesMustKnowService.getAll();
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
 
+
         return Response.ok(response).build();
     }
 
