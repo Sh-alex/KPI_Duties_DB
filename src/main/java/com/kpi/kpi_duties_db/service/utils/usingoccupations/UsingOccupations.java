@@ -19,4 +19,8 @@ public interface UsingOccupations {
 
     IdNameListResponse findUsingOccupationsIdForRtDutiesTaskAndResponsibilities(IdNameListResponse response);
 
+    IdNameListResponse findUsingOccupationsIdForDcDutiesName(IdNameListResponse response);
+
+    IdNameListResponse findUsingOccupationsIdForDcDutiesPartition(IdNameListResponse response);
+
 }

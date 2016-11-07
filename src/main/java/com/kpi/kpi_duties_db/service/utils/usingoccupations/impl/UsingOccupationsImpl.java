@@ -119,5 +119,49 @@ public class UsingOccupationsImpl implements UsingOccupations {
         return response;
     }
 
+    @Override
+    @Transactional
+    public IdNameListResponse findUsingOccupationsIdForDcDutiesName(IdNameListResponse response) {
 
+        List<IdNameResponse> idNameResponses = response.getIdNameResponses();
+
+        for (IdNameResponse item : idNameResponses) {
+
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+
+            criteria.add(Restrictions.eq("dcDutiesNameId", item.getId()));
+
+            List<RtDutiesEntity> list = criteria.list();
+
+            List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).collect(Collectors.toList());
+
+            item.setUsingOccupationsId(usingOccupationsId);
+        }
+
+        return response;
+    }
+
+
+
+    @Override
+    @Transactional
+    public IdNameListResponse findUsingOccupationsIdForDcDutiesPartition(IdNameListResponse response) {
+
+        List<IdNameResponse> idNameResponses = response.getIdNameResponses();
+
+        for (IdNameResponse item : idNameResponses) {
+
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+
+            criteria.add(Restrictions.eq("dcDutiesPartitionId", item.getId()));
+
+            List<RtDutiesEntity> list = criteria.list();
+
+            List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).collect(Collectors.toList());
+
+            item.setUsingOccupationsId(usingOccupationsId);
+        }
+
+        return response;
+    }
 }
