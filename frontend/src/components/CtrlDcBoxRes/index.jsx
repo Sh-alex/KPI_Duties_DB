@@ -33,7 +33,7 @@ export default function CtrlDcBoxRes(props) {
             <Alert bsStyle="warning">
                 <p>
                     Сталася помлка :( <br/>
-                    { props.activeList.errors.map(errMsg => <p>{errMsg}</p>) }
+                    { props.activeList.fetchingErrors.map(errMsg => <p>{errMsg}</p>) }
                 </p>
             </Alert>
         ),
@@ -114,6 +114,7 @@ export default function CtrlDcBoxRes(props) {
                                 <CtrlDcBoxResTbl
                                     shownOccupDescrTextsList={props.shownOccupDescrTextsList}
                                     listData={props.activeList}
+                                    onEditListItemBtnClick={props.onEditListItemBtnClick}
                                 />
                 }
                 <div className="btn-show-adding-inp-wrapper">

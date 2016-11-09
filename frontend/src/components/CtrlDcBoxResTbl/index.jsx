@@ -20,9 +20,9 @@ function bindToggleUsingOccupList(itemId, props) {
     }
 }
 
-function bindEditListItemHandler(itemId, props) {
+function bindEditListItemHandler(itemId, itemVal, props) {
     return () => {
-        //return props.onEditListItemBtnClick(itemId)
+        return props.onEditListItemBtnClick(itemId, itemVal);
     }
 }
 
@@ -79,7 +79,7 @@ export default function CtrlDcBoxResTbl(props) {
                         </a>
                         <br className="show-for-big-text"/> {" "}
                         <a
-                            onClick={bindEditListItemHandler(item.id, props)}
+                            onClick={bindEditListItemHandler(item.id, item.textValue, props)}
                             className="action-btns-cell__btn text-warning"
                             title="Редагувати елемент"
                         >
