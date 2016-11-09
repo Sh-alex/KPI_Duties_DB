@@ -21,6 +21,16 @@ import {
 
     DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST,
     DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT,
+
+    EDIT_CLARIFICATION_REQUEST,
+    EDIT_CLARIFICATION_FAIL,
+    EDIT_CLARIFICATION_SUCCESS,
+    EDIT_CLARIFICATION_CLEAR_MSG,
+
+    EDIT_OCCUPATION_GROUP_REQUEST,
+    EDIT_OCCUPATION_GROUP_SUCCESS,
+    EDIT_OCCUPATION_GROUP_FAIL,
+    EDIT_OCCUPATION_GROUP_CLEAR_MSG,
 } from '../constants/occupationNameInfo'
 
 import {
@@ -34,6 +44,8 @@ import {
 } from './editOccup'
 
 import * as API_URIs from '../constants/API_URIs';
+
+import generateEditingDcValRequestFunction from "../utils/generateEditingDcValRequestFunction"
 
 export function fetchClarificationList() {
     return function (dispatch) {
@@ -130,6 +142,21 @@ export function addNewClarification({ newVal, resForm }) {
     }
 }
 
+
+export const editClarification = generateEditingDcValRequestFunction({
+    requestConst: EDIT_CLARIFICATION_REQUEST,
+    successConst: EDIT_CLARIFICATION_SUCCESS,
+    failConst: EDIT_CLARIFICATION_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.EDIT_CLARIFICATION
+});
+
+export function editClarificationClearMsg() {
+    return {
+        type: EDIT_CLARIFICATION_CLEAR_MSG
+    }
+}
+
 export function dismissModalAddNewClarificationAlert() {
     return {
         type: DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
@@ -194,6 +221,12 @@ export function addNewOccupationGroup({ newVal, resForm }) {
     }
 }
 
+export function editOccupGroupClearMsg() {
+    return {
+        type: EDIT_OCCUPATION_GROUP_CLEAR_MSG
+    }
+}
+
 export function dismissModalAddNewOccupationGroupAlert() {
     return {
         type: DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST
@@ -237,6 +270,16 @@ export function fetchOccupGroupList() {
             }))
     }
 }
+
+
+export const editOccupGroup = generateEditingDcValRequestFunction({
+    requestConst: EDIT_OCCUPATION_GROUP_REQUEST,
+    successConst: EDIT_OCCUPATION_GROUP_SUCCESS,
+    failConst: EDIT_OCCUPATION_GROUP_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.EDIT_OCCUPATION_GROUP
+});
+
 
 export function fetchClarifiedOccupList() {
     return function (dispatch) {

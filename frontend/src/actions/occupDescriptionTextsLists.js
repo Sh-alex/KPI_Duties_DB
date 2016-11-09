@@ -24,7 +24,22 @@ import {
     ADD_NEW_QUALIFF_REQUIR_TEXT_REQUEST,
     ADD_NEW_QUALIFF_REQUIR_TEXT_SUCCESS,
     ADD_NEW_QUALIFF_REQUIR_TEXT_FAIL,
-    ADD_NEW_QUALIFF_REQUIR_TEXT_CLEAR_MSG
+    ADD_NEW_QUALIFF_REQUIR_TEXT_CLEAR_MSG,
+
+    EDIT_HAVE_TO_KNOW_TEXT_REQUEST,
+    EDIT_HAVE_TO_KNOW_TEXT_SUCCESS,
+    EDIT_HAVE_TO_KNOW_TEXT_FAIL,
+    EDIT_HAVE_TO_KNOW_TEXT_CLEAR_MSG,
+
+    EDIT_RESPONSIBILITIES_TEXT_REQUEST,
+    EDIT_RESPONSIBILITIES_TEXT_SUCCESS,
+    EDIT_RESPONSIBILITIES_TEXT_FAIL,
+    EDIT_RESPONSIBILITIES_TEXT_CLEAR_MSG,
+
+    EDIT_QUALIFF_REQUIR_TEXT_REQUEST,
+    EDIT_QUALIFF_REQUIR_TEXT_SUCCESS,
+    EDIT_QUALIFF_REQUIR_TEXT_FAIL,
+    EDIT_QUALIFF_REQUIR_TEXT_CLEAR_MSG,
 } from '../constants/occupDescriptionTextsLists'
 
 import {
@@ -35,7 +50,13 @@ import {
     ADD_NEW_HAVE_TO_KNOW_TEXT as API_ADD_NEW_HAVE_TO_KNOW_TEXT,
     ADD_NEW_RESPONSIBILITIES_TEXT as API_ADD_NEW_RESPONSIBILITIES_TEXT,
     ADD_NEW_QUALIFF_REQUIR_TEXT as API_ADD_NEW_QUALIFF_REQUIR_TEXT,
+
+    EDIT_HAVE_TO_KNOW_TEXT as API_EDIT_HAVE_TO_KNOW_TEXT,
+    EDIT_RESPONSIBILITIES_TEXT as API_EDIT_RESPONSIBILITIES_TEXT,
+    EDIT_QUALIFF_REQUIR_TEXT as API_EDIT_QUALIFF_REQUIR_TEXT,
 } from '../constants/API_URIs';
+
+import generateEditingDcValRequestFunction from "../utils/generateEditingDcValRequestFunction"
 
 export function fetchHaveToKnowTextsList() {
     return function (dispatch) {
@@ -326,5 +347,46 @@ export function clearQualiffRequirTextAddingMsg() {
 export function clearResponsibilitiesTextAddingMsg() {
     return {
         type: ADD_NEW_RESPONSIBILITIES_TEXT_CLEAR_MSG
+    }
+}
+
+
+export const editHaveToKnowText = generateEditingDcValRequestFunction({
+    requestConst: EDIT_HAVE_TO_KNOW_TEXT_REQUEST,
+    successConst: EDIT_HAVE_TO_KNOW_TEXT_SUCCESS,
+    failConst: EDIT_HAVE_TO_KNOW_TEXT_FAIL,
+    listName: "Повинен знати",
+    apiURI: API_EDIT_HAVE_TO_KNOW_TEXT
+});
+export const editQualiffRequirText = generateEditingDcValRequestFunction({
+    requestConst: EDIT_QUALIFF_REQUIR_TEXT_REQUEST,
+    successConst: EDIT_QUALIFF_REQUIR_TEXT_SUCCESS,
+    failConst: EDIT_QUALIFF_REQUIR_TEXT_FAIL,
+    listName: "Кваліфікаційні вимоги",
+    apiURI: API_EDIT_QUALIFF_REQUIR_TEXT
+});
+export const editResponsibilitiesText = generateEditingDcValRequestFunction({
+    requestConst: EDIT_RESPONSIBILITIES_TEXT_REQUEST,
+    successConst: EDIT_RESPONSIBILITIES_TEXT_SUCCESS,
+    failConst: EDIT_RESPONSIBILITIES_TEXT_FAIL,
+    listName: "Коди ДКХП",
+    apiURI: API_EDIT_RESPONSIBILITIES_TEXT
+});
+
+export function editHaveToKnowTextClearMsg() {
+    return {
+        type: EDIT_HAVE_TO_KNOW_TEXT_CLEAR_MSG
+    }
+}
+
+export function editQualiffRequirTextClearMsg() {
+    return {
+        type: EDIT_QUALIFF_REQUIR_TEXT_CLEAR_MSG
+    }
+}
+
+export function editResponsibilitiesTextClearMsg() {
+    return {
+        type: EDIT_RESPONSIBILITIES_TEXT_CLEAR_MSG
     }
 }

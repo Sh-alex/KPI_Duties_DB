@@ -34,9 +34,31 @@ import {
     ADD_NEW_DKHP_CODE_SUCCESS,
     ADD_NEW_DKHP_CODE_FAIL,
     ADD_NEW_DKHP_CODE_CLEAR_MSG,
+
+    EDIT_KP_CODE_REQUEST,
+    EDIT_KP_CODE_SUCCESS,
+    EDIT_KP_CODE_FAIL,
+    EDIT_KP_CODE_CLEAR_MSG,
+
+    EDIT_ZKPPTR_CODE_REQUEST,
+    EDIT_ZKPPTR_CODE_SUCCESS,
+    EDIT_ZKPPTR_CODE_FAIL,
+    EDIT_ZKPPTR_CODE_CLEAR_MSG,
+
+    EDIT_ETDK_CODE_REQUEST,
+    EDIT_ETDK_CODE_SUCCESS,
+    EDIT_ETDK_CODE_FAIL,
+    EDIT_ETDK_CODE_CLEAR_MSG,
+
+    EDIT_DKHP_CODE_REQUEST,
+    EDIT_DKHP_CODE_SUCCESS,
+    EDIT_DKHP_CODE_FAIL,
+    EDIT_DKHP_CODE_CLEAR_MSG,
 } from '../constants/occupCodesLists'
 
 import * as API_URIs from '../constants/API_URIs';
+
+import generateEditingDcValRequestFunction from "../utils/generateEditingDcValRequestFunction"
 
 export function fetchKPCodesList() {
     return function (dispatch) {
@@ -425,5 +447,59 @@ export function clearETDKCodeAddingMsg() {
 export function clearZKPPTRCodeAddingMsg() {
     return {
         type: ADD_NEW_ZKPPTR_CODE_CLEAR_MSG
+    }
+}
+
+
+export const editKPCode = generateEditingDcValRequestFunction({
+    requestConst: EDIT_KP_CODE_REQUEST,
+    successConst: EDIT_KP_CODE_SUCCESS,
+    failConst: EDIT_KP_CODE_FAIL,
+    listName: "Коди КП",
+    apiURI: API_URIs.EDIT_KP_CODE
+});
+export const editETDKCode = generateEditingDcValRequestFunction({
+    requestConst: EDIT_ETDK_CODE_REQUEST,
+    successConst: EDIT_ETDK_CODE_SUCCESS,
+    failConst: EDIT_ETDK_CODE_FAIL,
+    listName: "Коди ЄТДК",
+    apiURI: API_URIs.EDIT_ETDK_CODE
+});
+export const editDKHPCode = generateEditingDcValRequestFunction({
+    requestConst: EDIT_DKHP_CODE_REQUEST,
+    successConst: EDIT_DKHP_CODE_SUCCESS,
+    failConst: EDIT_DKHP_CODE_FAIL,
+    listName: "Коди ДКХП",
+    apiURI: API_URIs.EDIT_DKHP_CODE
+});
+export const editZKPPTRCode = generateEditingDcValRequestFunction({
+    requestConst: EDIT_ZKPPTR_CODE_REQUEST,
+    successConst: EDIT_ZKPPTR_CODE_SUCCESS,
+    failConst: EDIT_ZKPPTR_CODE_FAIL,
+    listName: "Коди ЗКППТР",
+    apiURI: API_URIs.EDIT_ZKPPTR_CODE
+});
+
+export function editKPCodeClearMsg() {
+    return {
+        type: EDIT_KP_CODE_CLEAR_MSG
+    }
+}
+
+export function editETDKCodeClearMsg() {
+    return {
+        type: EDIT_ETDK_CODE_CLEAR_MSG
+    }
+}
+
+export function editDKHPCodeClearMsg() {
+    return {
+        type: EDIT_DKHP_CODE_CLEAR_MSG
+    }
+}
+
+export function editZKPPTRCodeClearMsg() {
+    return {
+        type: EDIT_ZKPPTR_CODE_CLEAR_MSG
     }
 }

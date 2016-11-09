@@ -21,13 +21,29 @@ import {
 
     DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST,
     DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT,
+
+    EDIT_CLARIFICATION_REQUEST,
+    EDIT_CLARIFICATION_FAIL,
+    EDIT_CLARIFICATION_SUCCESS,
+    EDIT_CLARIFICATION_CLEAR_MSG,
+
+    EDIT_OCCUPATION_GROUP_REQUEST,
+    EDIT_OCCUPATION_GROUP_SUCCESS,
+    EDIT_OCCUPATION_GROUP_FAIL,
+    EDIT_OCCUPATION_GROUP_CLEAR_MSG,
 } from '../constants/occupationNameInfo'
 
 const initialState = {
     occupationGroupList: {
         isFetching: false,
-        errors: [],
-        items : []
+        errors: [],                 // WARNING! замінити на fetchingErrors
+        items : [],
+        isAddingNewVal: false,
+        addingSuccess: false,
+        addingErrors: [],
+        isUpdatingVal: false,
+        updatingSuccess: false,
+        updatingError: null,
         // items : [
         //     {
         //         "id": 0,
@@ -53,7 +69,7 @@ const initialState = {
     },
     clarifiedOccupationList: {
         isFetching: false,
-        errors: [],
+        errors: [],                 // WARNING! замінити на fetchingErrors
         items : []
         // items : [
         //     {
@@ -88,11 +104,14 @@ const initialState = {
     },
     clarificationList: {
         isFetching: false,
+        errors: [],                 // WARNING! замінити на fetchingErrors
+        items : [],
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
-        errors: [],
-        items : []
+        isUpdatingVal: false,
+        updatingSuccess: false,
+        updatingError: null,
         // items : [
         //     {
         //         "id": 0,
@@ -291,6 +310,112 @@ export default function occupationNameInfo(state = initialState, action) {
                     errors: [...state.clarifiedOccupationList.errors, action.error]
                 }
             };
+
+
+        case EDIT_CLARIFICATION_REQUEST:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isUpdatingVal: true,
+                    updatingSuccess: false,
+                    updatingError: null,
+                }
+            };
+        case EDIT_CLARIFICATION_SUCCESS:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isUpdatingVal: false,
+                    updatingSuccess: true,
+                    updatingError: null,
+                    //TODO: треба змінити щоб items було хеш-таблицею, бо пробігати по масиву ващє не ок((
+                    items: state.clarificationList.items.map(item => {
+                        if(item.id === action.id)
+                            return {
+                                id: action.id,
+                                textValue: action.newVal,
+                                usingOccupations: item.usingOccupations.slice() //shallow copy на всяк випадок
+                            };
+                        else
+                            return item;
+                    }),
+                }
+            };
+        case EDIT_CLARIFICATION_FAIL:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: action.error,
+                }
+            };
+        case EDIT_CLARIFICATION_CLEAR_MSG:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    updatingSuccess: false,
+                    updatingError:null,
+                }
+            };
+
+
+        case EDIT_OCCUPATION_GROUP_REQUEST:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isUpdatingVal: true,
+                    updatingSuccess: false,
+                    updatingError: null,
+                }
+            };
+        case EDIT_OCCUPATION_GROUP_SUCCESS:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isUpdatingVal: false,
+                    updatingSuccess: true,
+                    updatingError: null,
+                    items: state.occupationGroupList.items.map(item => {
+                        if(item.id === action.id)
+                            return {
+                                id: action.id,
+                                textValue: action.newVal,
+                                usingOccupations: item.usingOccupations.slice() //shallow copy на всяк випадок
+                            };
+                        else
+                            return item;
+                    }),
+                }
+            };
+        case EDIT_OCCUPATION_GROUP_FAIL:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: action.error,
+                }
+            };
+
+        case EDIT_OCCUPATION_GROUP_CLEAR_MSG:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+
+
         default:
             return state
     }
