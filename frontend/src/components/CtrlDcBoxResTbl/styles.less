@@ -14,7 +14,7 @@
     }
 
     .big-text-cell--folded {
-      max-width: 100px;
+      max-width: 200px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -34,28 +34,27 @@
       //vertical-align: middle;
       padding: 0;
 
-      .action-btns-cell__btn {
-        vertical-align: middle;
+      .inner {
+        text-align: left;
         display: inline-block;
 
-        &:hover {
-          cursor: pointer;
-        }
-      }
+        .action-btns-cell__btn {
+          vertical-align: middle;
+          display: inline-block;
 
-      .btn-expand {
-        font-size: 0.7em;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .btn-expand {
+          font-size: 0.7em;
+        }
       }
     }
 
     .list-of-using-occup {
       font-style: italic;
     }
-  }
-}
-
-.has-big-text {
-  .action-btns-cell {
-    text-align: left !important;
   }
 }

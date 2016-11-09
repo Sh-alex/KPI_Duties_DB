@@ -83,13 +83,31 @@ class CtrlDcBox extends Component {
         this.showModalEditOccupDcVal = this.showModalEditOccupDcVal.bind(this);
         this.changeEditingInpVal = this.changeEditingInpVal.bind(this);
         this.hideModalEditOccupDcVal = this.hideModalEditOccupDcVal.bind(this);
+        this.handleToggleExpandItem = this.handleToggleExpandItem.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchLists();
     }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
+    // }
+
+    handleToggleExpandItem(itemId) {
+        if(this.state.expandedItems[itemId]) {
+            let newExpandedItemsState = Object.assign({}, this.state.expandedItems);
+            delete newExpandedItemsState[itemId];
+            this.setState({
+                expandedItems: newExpandedItemsState
+            });
+        } else {
+            this.setState({
+                expandedItems: {
+                    ...this.state.expandedItems,
+                    [itemId]: true
+                }
+            });
+        }
     }
 
     showAddingInp(e) {
@@ -223,6 +241,8 @@ class CtrlDcBox extends Component {
                             activeList={activeList}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
+                            expandedItems={this.state.expandedItems}
+                            onToggleExpandItem={this.handleToggleExpandItem}
                         />
                     </div>
                 </div>

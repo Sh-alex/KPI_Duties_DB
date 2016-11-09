@@ -4,7 +4,7 @@ import "./styles.less";
 
 function bindToggleExpandItemHandler(itemId, props) {
     return () => {
-        //return props.onToggleExpandItemClick(itemId)
+        return props.onToggleExpandItemClick(itemId)
     }
 }
 
@@ -35,7 +35,7 @@ function bindDelListItemHandler(itemId, props) {
 export default function CtrlDcBoxResTbl(props) {
     let tblRows = props.listData.items.map((item, itemIndex) => {
         let isUsedByOccup = item.usingOccupations && item.usingOccupations.length,
-            infoRowIsExpanded = true,//props.expandedItems[item.id],
+            infoRowIsExpanded = props.shownOccupDescrTextsList && props.expandedItems[item.id],
             showUsingOccupRow = false,//props.shownUsingOccupRows[item.id],
             btnUsingOccupClassName = classNames({
                 "text-muted": true,
@@ -70,31 +70,33 @@ export default function CtrlDcBoxResTbl(props) {
                         {item.textValue}
                     </td>
                     <th className="action-btns-cell">
-                        <a
-                            onClick={bindToggleUsingOccupList(item.id, props)}
-                            className={btnUsingOccupClassName}
-                            title="Посади що використовують це значення"
-                        >
-                            <i className="fa fa-link" />
-                        </a>
-                        <br className="show-for-big-text"/> {" "}
-                        <a
-                            onClick={bindEditListItemHandler(item.id, item.textValue, props)}
-                            className="action-btns-cell__btn text-warning"
-                            title="Редагувати елемент"
-                        >
-                            <i className="fa fa-edit" />
-                        </a>
-                        <br className="show-for-big-text"/> {" "}
-                        <a
-                            onClick={bindDelListItemHandler(item.id, props)}
-                            className={btnDelOccupClassName}
-                            title="Видалити елемент зі списку"
-                        >
-                            <i className={`fa fa-trash`} />
-                        </a>
-                        <br className="show-for-big-text"/> {" "}
-                        { btnExpandRow }
+                        <div className="inner">
+                            <a
+                                onClick={bindToggleUsingOccupList(item.id, props)}
+                                className={btnUsingOccupClassName}
+                                title="Посади що використовують це значення"
+                            >
+                                <i className="fa fa-link" />
+                            </a>
+                            <br className="show-for-big-text"/> {" "}
+                            <a
+                                onClick={bindEditListItemHandler(item.id, item.textValue, props)}
+                                className="action-btns-cell__btn text-warning"
+                                title="Редагувати елемент"
+                            >
+                                <i className="fa fa-edit" />
+                            </a>
+                            <br className="show-for-big-text"/> {" "}
+                            <a
+                                onClick={bindDelListItemHandler(item.id, props)}
+                                className={btnDelOccupClassName}
+                                title="Видалити елемент зі списку"
+                            >
+                                <i className={`fa fa-trash`} />
+                            </a>
+                            <br className="show-for-big-text"/> {" "}
+                            { btnExpandRow }
+                        </div>
                     </th>
                 </tr>
             ),
