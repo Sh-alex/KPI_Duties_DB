@@ -70,7 +70,8 @@ class CtrlDcBox extends Component {
             addingInpIsShown: false,                    //чи показано зараз поле для додавання нового значення
             activeListName: "OCCUP_GROUP",              //активний список, одне із: CLARIFICATION, CODE_KP, CODE_ZKPPTR, CODE_ETDK, CODE_DKHP, RESPONSIBILITIES, HAVE_TO_KNOW, QUALIFF_REQUIR
             editingItemId: null,                        //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
-            editingItemNewVal: "",
+            editingInpVal: "",                          //значення в інпуті для редагування елементів списків
+            addingInpVal: "",                           //значення в інпуті для додавання нових елементів списків
             deletingItemId: null,                       //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
             sortDirection: "SORT_ASC",                  //напрям сортування SORT_ASC/SORT_DESC
             expandedItems: {},                          //які елементи розкриті(показуються деталі про посаду)
@@ -79,6 +80,7 @@ class CtrlDcBox extends Component {
 
         this.showAddingInp = this.showAddingInp.bind(this);
         this.hideAddingInp = this.hideAddingInp.bind(this);
+        this.changeAddingInpVal = this.changeAddingInpVal.bind(this);
         this.setActiveListName = this.setActiveListName.bind(this);
         this.showModalEditOccupDcVal = this.showModalEditOccupDcVal.bind(this);
         this.changeEditingInpVal = this.changeEditingInpVal.bind(this);
@@ -90,8 +92,20 @@ class CtrlDcBox extends Component {
         this.props.fetchLists();
     }
 
-    // componentWillReceiveProps(nextProps) {
-    // }
+    componentWillReceiveProps(nextProps) {
+        let successfullyAddedNewVal =
+            !this.props.occupationGroupList.addingSuccess && nextProps.occupationGroupList.addingSuccess ||
+            !this.props.KPCodesList.addingSuccess && nextProps.KPCodesList.addingSuccess ||
+            !this.props.ZKPPTRCodesList.addingSuccess && nextProps.ZKPPTRCodesList.addingSuccess ||
+            !this.props.ETDKCodesList.addingSuccess && nextProps.ETDKCodesList.addingSuccess ||
+            !this.props.DKHPCodesList.addingSuccess && nextProps.DKHPCodesList.addingSuccess ||
+            !this.props.responsibilitiesTextsList.addingSuccess && nextProps.responsibilitiesTextsList.addingSuccess ||
+            !this.props.haveToKnowTextsList.addingSuccess && nextProps.haveToKnowTextsList.addingSuccess ||
+            !this.props.qualiffRequirTextsList.addingSuccess && nextProps.qualiffRequirTextsList.addingSuccess ||
+            !this.props.clarificationList.addingSuccess && nextProps.clarificationList.addingSuccess;
+        if(successfullyAddedNewVal)
+            this.setState({ addingInpVal: "" });
+    }
 
     handleToggleExpandItem(itemId) {
         if(this.state.expandedItems[itemId]) {
@@ -118,6 +132,10 @@ class CtrlDcBox extends Component {
         this.setState({addingInpIsShown: false})
     }
 
+    changeAddingInpVal(newVal) {
+        this.setState({ addingInpVal: newVal });
+    }
+
     setActiveListName(newVal) {
         this.setState({activeListName: newVal})
     }
@@ -125,21 +143,19 @@ class CtrlDcBox extends Component {
     showModalEditOccupDcVal(occupId, oldVal) {
         this.setState({
             editingItemId: occupId,
-            editingItemNewVal: oldVal
-        });
-    }
-
-    changeEditingInpVal(newVal) {
-        this.setState({
-            editingItemNewVal: newVal
+            editingInpVal: oldVal
         });
     }
 
     hideModalEditOccupDcVal() {
         this.setState({
             editingItemId: null,
-            editingItemNewVal: ""
+            editingInpVal: ""
         });
+    }
+
+    changeEditingInpVal(newVal) {
+        this.setState({ editingInpVal: newVal });
     }
 
     render() {
@@ -148,45 +164,57 @@ class CtrlDcBox extends Component {
             activeList,
             activeListName,
             editOccupDcValClearMsg,
-            editOccupDcValSubmit;
+            editOccupDcValSubmit,
+            addNewOccupDcValClearMsg,
+            addNewOccupDcValSubmit;
         switch(this.state.activeListName) {
             case "OCCUP_GROUP":
                 activeList = this.props.occupationGroupList;
                 activeListName = "Посадовий склад";
                 editOccupDcValClearMsg = this.props.editOccupGroupClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editOccupGroup({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewOccupGroupClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewOccupGroup(newVal);
                 break;
             case "CLARIFICATION":
                 activeList = this.props.clarificationList;
                 activeListName = "Уточнення";
                 editOccupDcValClearMsg = this.props.editClarificationClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editClarification({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewClarificationClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewClarification( newVal );
                 break;
             case "CODE_KP":
                 activeList = this.props.KPCodesList;
                 activeListName = "Коди КП";
                 editOccupDcValClearMsg = this.props.editKPCodeClearMsg;
-                editOccupDcValSubmit = newVal => {
-                    this.props.editKPCode({ newVal, id: this.state.editingItemId });
-                };
+                editOccupDcValSubmit = newVal => this.props.editKPCode({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewKPCodeClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewKPCode( newVal );
                 break;
             case "CODE_ZKPPTR":
                 activeList = this.props.ZKPPTRCodesList;
                 activeListName = "Коди ЗКППТР";
                 editOccupDcValClearMsg = this.props.editZKPPTRCodeClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editZKPPTRCode({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewZKPPTRCodeClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewZKPPTRCode( newVal );
                 break;
             case "CODE_ETDK":
                 activeList = this.props.ETDKCodesList;
                 activeListName = "Коди ЄТДК";
                 editOccupDcValClearMsg = this.props.editETDKCodeClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editETDKCode({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewETDKCodeClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewETDKCode( newVal );
                 break;
             case "CODE_DKHP":
                 activeList = this.props.DKHPCodesList;
                 activeListName = "Коди ДКХП";
                 editOccupDcValClearMsg = this.props.editDKHPCodeClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editDKHPCode({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewDKHPCodeClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewDKHPCode( newVal );
                 break;
             case "RESPONSIBILITIES":
                 activeList = this.props.responsibilitiesTextsList;
@@ -194,6 +222,8 @@ class CtrlDcBox extends Component {
                 activeListName = "Завдання, обов'язки та повноваження";
                 editOccupDcValClearMsg = this.props.editResponsibilitiesTextClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editResponsibilitiesText({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewResponsibilitiesTextClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewResponsibilitiesText( newVal );
                 break;
             case "HAVE_TO_KNOW":
                 activeList = this.props.haveToKnowTextsList;
@@ -201,6 +231,8 @@ class CtrlDcBox extends Component {
                 activeListName = "Повинен знати";
                 editOccupDcValClearMsg = this.props.editHaveToKnowTextClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editHaveToKnowText({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewHaveToKnowTextClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewHaveToKnowText( newVal );
                 break;
             case "QUALIFF_REQUIR":
                 activeList = this.props.qualiffRequirTextsList;
@@ -208,6 +240,8 @@ class CtrlDcBox extends Component {
                 activeListName = "Кваліфікаційні вимоги";
                 editOccupDcValClearMsg = this.props.editQualiffRequirTextClearMsg;
                 editOccupDcValSubmit = newVal => this.props.editQualiffRequirText({ newVal, id: this.state.editingItemId });
+                addNewOccupDcValClearMsg = this.props.addNewQualiffRequirTextClearMsg;
+                addNewOccupDcValSubmit = newVal => this.props.addNewQualiffRequirText( newVal );
                 break;
         }
 
@@ -223,7 +257,7 @@ class CtrlDcBox extends Component {
                     <div className="col-xs-12 col-sm-6">
                         <ModalEditOccupDcVal
                             additionalTitle={activeListName}
-                            inpVal={this.state.editingItemNewVal}
+                            inpVal={this.state.editingInpVal}
                             onInpValChange={this.changeEditingInpVal}
                             shownBigTextInp={shownOccupDescrTextsList}
                             show={showModalEditOccupDcVal}
@@ -238,6 +272,14 @@ class CtrlDcBox extends Component {
                             showAddingInp={this.showAddingInp}
                             hideAddingInp={this.hideAddingInp}
                             addingInpIsShown={this.state.addingInpIsShown}
+                            addNewOccupDcValClearMsg={addNewOccupDcValClearMsg}
+                            addNewOccupDcValSubmit={addNewOccupDcValSubmit}
+                            addingInpVal={this.state.addingInpVal}
+                            handleAddingInpValChange={this.changeAddingInpVal}
+                            addingErrors={activeList.addingErrors}
+                            addingSuccess={activeList.addingSuccess}
+                            isSavingNewVal={activeList.isAddingNewVal}
+
                             activeList={activeList}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
@@ -274,6 +316,27 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(fetchResponsibilitiesTextsList());
             dispatch(fetchQualiffRequirTextsList());
         },
+        addNewOccupGroup: newVal => dispatch(addNewOccupationGroup({newVal})),
+        addNewClarification: newVal => dispatch(addNewClarification({newVal})),
+        addNewOccupGroupClearMsg: () => dispatch(dismissModalAddNewOccupationGroupAlert()),
+        addNewClarificationClearMsg: () => dispatch(dismissModalAddNewClarificationAlert()),
+
+        addNewKPCode: (newVal) => dispatch(addNewKPCode({newVal})),
+        addNewETDKCode: (newVal) => dispatch(addNewETDKCode({newVal})),
+        addNewDKHPCode: (newVal) => dispatch(addNewDKHPCode({newVal})),
+        addNewZKPPTRCode: (newVal) => dispatch(addNewZKPPTRCode({newVal})),
+        addNewKPCodeClearMsg: () => dispatch(clearKPCodeAddingMsg()),
+        addNewETDKCodeClearMsg: () => dispatch(clearDKHPCodeAddingMsg()),
+        addNewDKHPCodeClearMsg: () => dispatch(clearETDKCodeAddingMsg()),
+        addNewZKPPTRCodeClearMsg: () => dispatch(clearZKPPTRCodeAddingMsg()),
+
+        addNewHaveToKnowText: (newVal) => dispatch(addNewHaveToKnowText({newVal})),
+        addNewQualiffRequirText: (newVal) => dispatch(addNewQualiffRequirText({newVal})),
+        addNewResponsibilitiesText: (newVal) => dispatch(addNewResponsibilitiesText({newVal})),
+        addNewHaveToKnowTextClearMsg: () => dispatch(clearHaveToKnowTextAddingMsg()),
+        addNewQualiffRequirTextClearMsg: () => dispatch(clearQualiffRequirTextAddingMsg()),
+        addNewResponsibilitiesTextClearMsg: () => dispatch(clearResponsibilitiesTextAddingMsg()),
+
         editOccupGroup: ({ newVal, id }) => dispatch(editOccupGroup({ newVal, id })),
         editClarification: ({ newVal, id }) => dispatch(editClarification({ newVal, id })),
         editOccupGroupClearMsg: () => dispatch(editOccupGroupClearMsg()),
