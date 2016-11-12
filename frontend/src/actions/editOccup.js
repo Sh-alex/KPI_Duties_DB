@@ -8,6 +8,10 @@ import {
     EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
     EDIT_OCCUP_CLARIFICATION_INP_CHANGE,
     EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
+    EDIT_OCCUP_KP_CODE_INP_CHANGE,
+    EDIT_OCCUP_DKHP_CODE_INP_CHANGE,
+    EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+    EDIT_OCCUP_ETDK_CODE_INP_CHANGE,
     EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE,
 
     HIDE_MODAL_EDIT_OCCUP,
@@ -148,6 +152,39 @@ export function clarifiedOccupInpChange(newVal) {
     return {
         type: EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
         newVal
+    }
+}
+
+
+export function KPCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_KP_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function DKHPCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_DKHP_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function ZKPPTRCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function ETDKCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_ETDK_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
     }
 }
 

@@ -45,7 +45,8 @@ import {
 
 import * as API_URIs from '../constants/API_URIs';
 
-import generateEditingDcValRequestFunction from "../utils/generateEditingDcValRequestFunction"
+import generateEditingDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
+import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
 
 export function fetchClarificationList() {
     return function (dispatch) {
@@ -84,64 +85,25 @@ export function fetchClarificationList() {
     }
 }
 
-export function addNewClarification({ newVal, resForm }) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_CLARIFICATION_REQUEST,
-            newVal,
-            resForm
-        });
+export const addNewClarification = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_CLARIFICATION_REQUEST,
+    successConst: ADD_NEW_CLARIFICATION_SUCCESS,
+    failConst: ADD_NEW_CLARIFICATION_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.ADD_NEW_CLARIFICATION,
+});
 
-        return fetch( API_URIs.ADD_NEW_CLARIFICATION, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify( { newVal } ),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then( json => {
-                let createdId = json.id,
-                    error = json.error;
-                if(createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if(error)
-                    throw error;
-
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_CLARIFICATION_SUCCESS,
-                    newItem: resObj
-                });
-                if(resForm == 'formEditOccup')
-                    dispatch(editOccupForm_clarificationInpChange(resObj));
-                else
-                    dispatch(addOccupForm_clarificationInpChange(resObj));
-            })
-            .catch( error => dispatch({
-                type: ADD_NEW_CLARIFICATION_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export function addNewClarificationAndUpdateForm({ newVal, resForm}) {
+    return addNewClarification({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_clarificationInpChange(results));
+            else
+                dispatch(addOccupForm_clarificationInpChange(results));
+        }
+    });
 }
-
 
 export const editClarification = generateEditingDcValRequestFunction({
     requestConst: EDIT_CLARIFICATION_REQUEST,
@@ -163,62 +125,24 @@ export function dismissModalAddNewClarificationAlert() {
     }
 }
 
-export function addNewOccupationGroup({ newVal, resForm }) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_OCCUPATION_GROUP_REQUEST,
-            newVal,
-            resForm
-        });
+export const addNewOccupationGroup = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_OCCUPATION_GROUP_REQUEST,
+    successConst: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
+    failConst: ADD_NEW_OCCUPATION_GROUP_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.ADD_NEW_OCCUPATION_GROUP,
+});
 
-        return fetch( API_URIs.ADD_NEW_OCCUPATION_GROUP, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify( { newVal } ),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then( json => {
-                let createdId = json.id,
-                    error = json.error;
-                if(createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if(error)
-                    throw error;
-
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
-                    newItem: resObj
-                });
-                if(resForm == 'formEditOccup')
-                    dispatch(editOccupForm_occupationGroupInpChange(resObj));
-                else
-                    dispatch(addOccupForm_occupationGroupInpChange(resObj));
-            })
-            .catch( error => dispatch({
-                type: ADD_NEW_OCCUPATION_GROUP_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export function addNewOccupationGroupAndUpdateForm({ newVal, resForm}) {
+    return addNewOccupationGroup({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_occupationGroupInpChange(results));
+            else
+                dispatch(addOccupForm_occupationGroupInpChange(results));
+        }
+    });
 }
 
 export function editOccupGroupClearMsg() {

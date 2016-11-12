@@ -12,8 +12,8 @@ import {
     fetchOccupGroupList,
     fetchClarifiedOccupList,
     fetchClarificationList,
-    addNewClarification,
-    addNewOccupationGroup,
+    addNewClarificationAndUpdateForm,
+    addNewOccupationGroupAndUpdateForm,
     dismissModalAddNewOccupationGroupAlert,
     dismissModalAddNewClarificationAlert
 } from "../../actions/occupationNameInfo"
@@ -23,10 +23,10 @@ import {
     fetchZKPPTRCodesList,
     fetchETDKCodesList,
     fetchDKHPCodesList,
-    addNewKPCode,
-    addNewDKHPCode,
-    addNewETDKCode,
-    addNewZKPPTRCode,
+    addNewKPCodeAndUpdateForm,
+    addNewDKHPCodeAndUpdateForm,
+    addNewETDKCodeAndUpdateForm,
+    addNewZKPPTRCodeAndUpdateForm,
     clearKPCodeAddingMsg,
     clearDKHPCodeAddingMsg,
     clearETDKCodeAddingMsg,
@@ -249,28 +249,28 @@ export default reduxForm(
                 return dispatch(fetchDKHPCodesList());
             },
             addNewOccupationGroup(newVal) {
-                return dispatch(addNewOccupationGroup({
+                return dispatch(addNewOccupationGroupAndUpdateForm({
                     newVal,
                     resForm: 'formEditOccup'
                 }));
             },
             addNewClarification(newVal) {
-                return dispatch(addNewClarification({
+                return dispatch(addNewClarificationAndUpdateForm({
                     newVal,
                     resForm: 'formEditOccup'
                 }));
             },
-            addNewKPCode(val) {
-                return dispatch(addNewKPCode(val));
+            addNewKPCode(newVal, resPortionIndex) {
+                return dispatch(addNewKPCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewDKHPCode(val) {
-                return dispatch(addNewDKHPCode(val));
+            addNewDKHPCode(newVal, resPortionIndex) {
+                return dispatch(addNewDKHPCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewETDKCode(val) {
-                return dispatch(addNewETDKCode(val));
+            addNewETDKCode(newVal, resPortionIndex) {
+                return dispatch(addNewETDKCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewZKPPTRCode(val) {
-                return dispatch(addNewZKPPTRCode(val));
+            addNewZKPPTRCode(newVal, resPortionIndex) {
+                return dispatch(addNewZKPPTRCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
             handleOccupationGroupInpChange(newVal) {
                 return dispatch(occupationGroupInpChange(newVal));

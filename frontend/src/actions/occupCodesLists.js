@@ -58,7 +58,22 @@ import {
 
 import * as API_URIs from '../constants/API_URIs';
 
-import generateEditingDcValRequestFunction from "../utils/generateEditingDcValRequestFunction"
+import generateEditingDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
+import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
+
+import {
+    KPCodeInpChange as addOccupForm_KPCodeInpChange,
+    DKHPCodeInpChange as addOccupForm_DKHPCodeInpChange,
+    ZKPPTRCodeInpChange as addOccupForm_ZKPPTRCodeInpChange,
+    ETDKCodeInpChange as addOccupForm_ETDKCodeInpChange,
+} from './addNewOccup'
+
+import {
+    KPCodeInpChange as editOccupForm_KPCodeInpChange,
+    DKHPCodeInpChange as editOccupForm_DKHPCodeInpChange,
+    ZKPPTRCodeInpChange as editOccupForm_ZKPPTRCodeInpChange,
+    ETDKCodeInpChange as editOccupForm_ETDKCodeInpChange,
+} from './editOccup'
 
 export function fetchKPCodesList() {
     return function (dispatch) {
@@ -209,220 +224,93 @@ export function fetchDKHPCodesList() {
 }
 
 
-export function addNewKPCode(newVal) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_KP_CODE_REQUEST,
-            newVal
-        });
+export const addNewKPCode = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_KP_CODE_REQUEST,
+    successConst: ADD_NEW_KP_CODE_SUCCESS,
+    failConst: ADD_NEW_KP_CODE_FAIL,
+    listName: "Коди КП",
+    apiURI: API_URIs.ADD_NEW_KP_CODE,
+});
 
-        return fetch(API_URIs.ADD_NEW_KP_CODE, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify({newVal}),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then(response => {
-                if (response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if (499 < response.status && response.status < 600)
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
+export const addNewETDKCode = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_ETDK_CODE_REQUEST,
+    successConst: ADD_NEW_ETDK_CODE_SUCCESS,
+    failConst: ADD_NEW_ETDK_CODE_FAIL,
+    listName: "Коди ЄТДК",
+    apiURI: API_URIs.ADD_NEW_ETDK_CODE,
+});
 
-                var contentType = response.headers.get("content-type");
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then(json => {
-                let createdId = json.id,
-                    error = json.error;
-                if (createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if (error)
-                    throw error;
+export const addNewDKHPCode = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_DKHP_CODE_REQUEST,
+    successConst: ADD_NEW_DKHP_CODE_SUCCESS,
+    failConst: ADD_NEW_DKHP_CODE_FAIL,
+    listName: "Коди ДКХП",
+    apiURI: API_URIs.ADD_NEW_DKHP_CODE,
+});
 
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_KP_CODE_SUCCESS,
-                    newItem: resObj
-                });
-                //dispatch(KPCOdesInpChange(resObj));
-            })
-            .catch(error => dispatch({
-                type: ADD_NEW_KP_CODE_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export const addNewZKPPTRCode = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_ZKPPTR_CODE_REQUEST,
+    successConst: ADD_NEW_ZKPPTR_CODE_SUCCESS,
+    failConst: ADD_NEW_ZKPPTR_CODE_FAIL,
+    listName: "Коди ЗКППТР",
+    apiURI: API_URIs.ADD_NEW_ZKPPTR_CODE,
+});
+
+
+export function addNewKPCodeAndUpdateForm({ newVal, resPortionIndex, resForm}) {
+    return addNewKPCode({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_KPCodeInpChange(results, resPortionIndex));
+            else if(resForm == 'formAddNewOccup')
+                dispatch(addOccupForm_KPCodeInpChange(results, resPortionIndex));
+            else
+                console.warn("Called addNewKPCodeAndUpdateForm, but resForm == ", resForm);
+        }
+    });
 }
 
-export function addNewETDKCode(newVal) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_ETDK_CODE_REQUEST,
-            newVal
-        });
-
-        return fetch(API_URIs.ADD_NEW_ETDK_CODE, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify({newVal}),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then(response => {
-                if (response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if (499 < response.status && response.status < 600)
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then(json => {
-                let createdId = json.id,
-                    error = json.error;
-                if (createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if (error)
-                    throw error;
-
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_ETDK_CODE_SUCCESS,
-                    newItem: resObj
-                });
-                //dispatch(ETDKCOdesInpChange(resObj));
-            })
-            .catch(error => dispatch({
-                type: ADD_NEW_ETDK_CODE_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export function addNewETDKCodeAndUpdateForm({ newVal, resPortionIndex, resForm}) {
+    return addNewETDKCode({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_ETDKCodeInpChange(results, resPortionIndex));
+            else if(resForm == 'formAddNewOccup')
+                dispatch(addOccupForm_ETDKCodeInpChange(results, resPortionIndex));
+            else
+                console.warn("Called addNewETDKCodeAndUpdateForm, but resForm == ", resForm);
+        }
+    });
 }
 
-export function addNewDKHPCode(newVal) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_DKHP_CODE_REQUEST,
-            newVal
-        });
-
-        return fetch(API_URIs.ADD_NEW_DKHP_CODE, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify({newVal}),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then(response => {
-                if (response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if (499 < response.status && response.status < 600)
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then(json => {
-                let createdId = json.id,
-                    error = json.error;
-                if (createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if (error)
-                    throw error;
-
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_DKHP_CODE_SUCCESS,
-                    newItem: resObj
-                });
-                //dispatch(DKHPCOdesInpChange(resObj));
-            })
-            .catch(error => dispatch({
-                type: ADD_NEW_DKHP_CODE_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export function addNewDKHPCodeAndUpdateForm({ newVal, resPortionIndex, resForm}) {
+    return addNewDKHPCode({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_DKHPCodeInpChange(results, resPortionIndex));
+            else if(resForm == 'formAddNewOccup')
+                dispatch(addOccupForm_DKHPCodeInpChange(results, resPortionIndex));
+            else
+                console.warn("Called addNewDKHPCodeAndUpdateForm, but resForm == ", resForm);
+        }
+    });
 }
 
-export function addNewZKPPTRCode(newVal) {
-    return function (dispatch) {
-        dispatch({
-            type: ADD_NEW_ZKPPTR_CODE_REQUEST,
-            newVal
-        });
-
-        return fetch(API_URIs.ADD_NEW_ZKPPTR_CODE, {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'post',
-            body: JSON.stringify({newVal}),
-            headers: {
-                'Content-Type': 'application/json',
-                //'X-CSRFToken': CSRF_TOKEN
-            }
-        })
-            .then(response => {
-                if (response.status === 404)
-                    throw 'При додаванні нового значення не знайдено відповідного методу на сервері!';
-                if (499 < response.status && response.status < 600)
-                    throw `При додаванні нового значення сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                }
-                throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-            })
-            .then(json => {
-                let createdId = json.id,
-                    error = json.error;
-                if (createdId == undefined)
-                    throw "При додаванні нового значення не отримано ідентифікатор нового запису від сервера!";
-                if (error)
-                    throw error;
-
-                let resObj = {
-                    "id": createdId,
-                    "textValue": newVal
-                };
-                dispatch({
-                    type: ADD_NEW_ZKPPTR_CODE_SUCCESS,
-                    newItem: resObj
-                });
-                //dispatch(ZKPPTRCOdesInpChange(resObj));
-            })
-            .catch(error => dispatch({
-                type: ADD_NEW_ZKPPTR_CODE_FAIL,
-                error: error || "Сталася неочікувана помилка при додаванні нового значення!"
-            }))
-    }
+export function addNewZKPPTRCodeAndUpdateForm({ newVal, resPortionIndex, resForm}) {
+    return addNewZKPPTRCode({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_ZKPPTRCodeInpChange(results, resPortionIndex));
+            else if(resForm == 'formAddNewOccup')
+                dispatch(addOccupForm_ZKPPTRCodeInpChange(results, resPortionIndex));
+            else
+                console.warn("Called addNewZKPPTRCodeAndUpdateForm, but resForm == ", resForm);
+        }
+    });
 }
 
 
