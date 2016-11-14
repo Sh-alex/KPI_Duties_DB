@@ -16,14 +16,27 @@ export default function CtrlDcBoxResListSettingsMenu(props) {
     });
 
     return (
-        <form onSubmit={e => submitHandler(e, props)}>
+        <form className="res-list-settings-menu" onSubmit={e => submitHandler(e, props)}>
             <div className="form-group">
                 <div className="input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Пошук значень у списку"
-                        title="Відфільтрувати таблицю по введеному рядку" />
+                    <div className="btn-reset-text-inp-filter-wrapper">
+                        <a
+                            href="javascript:void(0)"
+                            type="button"
+                            onClick={props.resetFilterListInpVal}
+                            className={`fa fa-times-circle btn-reset-text-filter ${!props.filterListInpVal ? 'hidden' : ""}`}
+                            title="Скинути фільтр по введеному рядку"
+                        >
+                            <span className="sr-only"> Скинути фільтр </span>
+                        </a>
+                        <input
+                            value={props.filterListInpVal}
+                            onChange={props.onChangeFilterListInpVal}
+                            type="text"
+                            className="form-control"
+                            placeholder="Пошук значень у списку"
+                            title="Відфільтрувати таблицю по введеному рядку" />
+                    </div>
                     <div className="input-group-btn">
                         <button
                             type="submit"

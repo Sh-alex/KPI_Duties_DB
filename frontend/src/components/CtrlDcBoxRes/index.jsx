@@ -23,11 +23,29 @@ export default function CtrlDcBoxRes(props) {
         ctrlDcBoxMenuH = ctrlDcBoxMenu.length && ctrlDcBoxMenu[0].clientHeight || 1,
         //розраховуємо висоту блока з інформацією про список(доводиться робити через JS, бо через CSS не виходить)
         resBoxMaxHeight = Math.max(...[calcContainerH, ctrlDcBoxMenuH, 200]),
-        msgListIsEmpty = listIsEmpty && (
+        showMsgFilterMadeListEmpty = listIsEmpty && props.filterListInpVal,
+        showMsgListIsEmpty = listIsEmpty && !props.filterListInpVal,
+        msgListIsEmpty = showMsgListIsEmpty && (
                 <Alert bsStyle="warning">
                     <p>
                         Список поки що пустий :( <br/>
                         Але ви можете додати сюди нові значення.
+                    </p>
+                </Alert>
+            ),
+        msgFilterMadeListEmpty = showMsgFilterMadeListEmpty && (
+                <Alert bsStyle="warning">
+                    <p>
+                        Не знайдено результатів що відповідють вказаним критеріям :( <br/>
+                        Спробуйте змінити фільтр. <br/>
+                        <a
+                            href="javascript:void(0)"
+                            type="button"
+                            onClick={props.resetFilterListInpVal}
+                            title="Скинути фільтр по введеному рядку"
+                        >
+                            <i> Скинути фільтр </i>
+                        </a>
                     </p>
                 </Alert>
             ),
@@ -121,10 +139,14 @@ export default function CtrlDcBoxRes(props) {
             <div className={`box-body ${hasBigText}`} style={{maxHeight: resBoxMaxHeight + "px"}}>
                 <div>
                     {
-                        !listIsEmpty && !listIsLoading && !listHasErrors && (
+                        !showMsgListIsEmpty && !listIsLoading && !listHasErrors && (
                             <CtrlDcBoxResListSettingsMenu
                                 sortDirection={props.sortDirection}
                                 onTriggerSorting={props.onTriggerSorting}
+                                filterListInpVal={props.filterListInpVal}
+                                filterList={props.filterList}
+                                onChangeFilterListInpVal={props.onChangeFilterListInpVal}
+                                resetFilterListInpVal={props.resetFilterListInpVal}
                             />
                         )
                     }
@@ -134,17 +156,19 @@ export default function CtrlDcBoxRes(props) {
                         msgListHasErrors :
                         listIsLoading ?
                             <LoadingBlock caption="Іде завантаження списку..." /> :
-                            listIsEmpty ?
+                            showMsgListIsEmpty ?
                                 msgListIsEmpty :
-                                <CtrlDcBoxResTbl
-                                    shownOccupDescrTextsList={props.shownOccupDescrTextsList}
-                                    listDataItems={props.listDataItems}
-                                    onEditListItemBtnClick={props.onEditListItemBtnClick}
-                                    onDelListItemBtnClick={props.onDelListItemBtnClick}
-                                    expandedItems={props.expandedItems}
-                                    deletingItemId={props.deletingItemId}
-                                    onToggleExpandItemClick={props.onToggleExpandItem}
-                                />
+                                showMsgFilterMadeListEmpty ?
+                                    msgFilterMadeListEmpty :
+                                    <CtrlDcBoxResTbl
+                                        shownOccupDescrTextsList={props.shownOccupDescrTextsList}
+                                        listDataItems={props.listDataItems}
+                                        onEditListItemBtnClick={props.onEditListItemBtnClick}
+                                        onDelListItemBtnClick={props.onDelListItemBtnClick}
+                                        expandedItems={props.expandedItems}
+                                        deletingItemId={props.deletingItemId}
+                                        onToggleExpandItemClick={props.onToggleExpandItem}
+                                    />
                 }
                 <div className="btn-show-adding-inp-wrapper">
                     {

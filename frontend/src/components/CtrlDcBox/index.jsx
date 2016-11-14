@@ -102,6 +102,7 @@ class CtrlDcBox extends Component {
             activeListName: "OCCUP_GROUP",              //активний список, одне із: CLARIFICATION, CODE_KP, CODE_ZKPPTR, CODE_ETDK, CODE_DKHP, RESPONSIBILITIES, HAVE_TO_KNOW, QUALIFF_REQUIR
             editingItemId: null,                        //яка елемент(ID) зараз редагується(для нього показуємо модальне вікно)
             editingInpVal: "",                          //значення в інпуті для редагування елементів списків
+            filterListInpVal: "",                       //значення в інпуті для фільтрування елементів по введеному рядку
             addingInpVal: "",                           //значення в інпуті для додавання нових елементів списків
             deletingItemId: null,                       //який елемент(ID) зараз видаляється(для нього показуємо модальне вікно)
             deletingItemVal: "",                        //значення елемента який зараз видаляється(щоб показати його у модальному вікні)
@@ -126,6 +127,9 @@ class CtrlDcBox extends Component {
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
         this.triggerSorting = this.triggerSorting.bind(this);
         this.sortListItems = this.sortListItems.bind(this);
+        this.filterList = this.filterList.bind(this);
+        this.resetFilterListInpVal = this.resetFilterListInpVal.bind(this);
+        this.onChangeFilterListInpVal = this.onChangeFilterListInpVal.bind(this);
         this.selectAddNewOccupDcValSubmitHandler = this.selectAddNewOccupDcValSubmitHandler.bind(this);
         this.selectAddNewOccupDcValClearMsgHandler = this.selectAddNewOccupDcValClearMsgHandler.bind(this);
         this.selectDelOccupDcValSubmitHandler = this.selectDelOccupDcValSubmitHandler.bind(this);
@@ -192,6 +196,26 @@ class CtrlDcBox extends Component {
             default:
                 return listItems;
         }
+    }
+
+    onChangeFilterListInpVal(e) {
+        this.setState({ filterListInpVal: e.target.value });
+    }
+
+    filterList(filterStr="") {
+        let propsListData = this.getActiveListData().items.slice(),
+            filteredListData = propsListData.filter(item => item.textValue.includes(filterStr));
+        this.setState({
+            listItems: this.sortListItems(filteredListData, this.state.sortDirection )
+        });
+    }
+
+    resetFilterListInpVal() {
+        let propsListData = this.getActiveListData().items.slice();
+        this.setState({
+            filterListInpVal: "",
+            listItems: this.sortListItems(propsListData, this.state.sortDirection)
+        });
     }
 
     selectAddNewOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
@@ -568,6 +592,10 @@ class CtrlDcBox extends Component {
                             onToggleExpandItem={this.handleToggleExpandItem}
                             onTriggerSorting={this.triggerSorting}
                             sortDirection={this.state.sortDirection}
+                            filterListInpVal={this.state.filterListInpVal}
+                            filterList={this.filterList}
+                            onChangeFilterListInpVal={this.onChangeFilterListInpVal}
+                            resetFilterListInpVal={this.resetFilterListInpVal}
                         />
                     </div>
                 </div>
