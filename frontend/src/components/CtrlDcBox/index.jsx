@@ -147,6 +147,56 @@ class CtrlDcBox extends Component {
             this.setState({ addingInpVal: "" });
     }
 
+    selectAddNewOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return newVal => this.props.addNewOccupGroup(newVal);
+            case "CLARIFICATION":
+                return newVal => this.props.addNewClarification( newVal );
+            case "CODE_KP":
+                return newVal => this.props.addNewKPCode( newVal );
+            case "CODE_ZKPPTR":
+                return newVal => this.props.addNewZKPPTRCode( newVal );
+            case "CODE_ETDK":
+                return newVal => this.props.addNewETDKCode( newVal );
+            case "CODE_DKHP":
+                return newVal => this.props.addNewDKHPCode( newVal );
+            case "RESPONSIBILITIES":
+                return newVal => this.props.addNewResponsibilitiesText( newVal );
+            case "HAVE_TO_KNOW":
+                return newVal => this.props.addNewHaveToKnowText( newVal );
+            case "QUALIFF_REQUIR":
+                return newVal => this.props.addNewQualiffRequirText( newVal );
+            default:
+                return () => console.error(`Called CtrlDcBox.selectAddNewOccupDcValSubmitHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
+    }
+
+    selectAddNewOccupDcValClearMsgHandler(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return this.props.addNewOccupGroupClearMsg;
+            case "CLARIFICATION":
+                return this.props.addNewClarificationClearMsg;
+            case "CODE_KP":
+                return this.props.addNewKPCodeClearMsg;
+            case "CODE_ZKPPTR":
+                return this.props.addNewZKPPTRCodeClearMsg;
+            case "CODE_ETDK":
+                return this.props.addNewETDKCodeClearMsg;
+            case "CODE_DKHP":
+                return this.props.addNewDKHPCodeClearMsg;
+            case "RESPONSIBILITIES":
+                return this.props.addNewResponsibilitiesTextClearMsg;
+            case "HAVE_TO_KNOW":
+                return this.props.addNewHaveToKnowTextClearMsg;
+            case "QUALIFF_REQUIR":
+                return this.props.addNewQualiffRequirTextClearMsg;
+            default:
+                return () => console.error(`Called CtrlDcBox.selectAddNewOccupDcValClearMsgHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
+    }
+    
     selectDelOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
         switch(activeListName) {
             case "OCCUP_GROUP":
@@ -194,6 +244,121 @@ class CtrlDcBox extends Component {
                 return this.props.delQualiffRequirTextClearMsg;
             default:
                 return () => console.error(`Called CtrlDcBox.selectDelOccupDcValClearMsgHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
+    }
+
+    selectEditOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return newVal => this.props.editOccupGroup({ newVal, id: this.state.editingItemId });
+            case "CLARIFICATION":
+                return newVal => this.props.editClarification({ newVal, id: this.state.editingItemId });
+            case "CODE_KP":
+                return newVal => this.props.editKPCode({ newVal, id: this.state.editingItemId });
+            case "CODE_ZKPPTR":
+                return newVal => this.props.editZKPPTRCode({ newVal, id: this.state.editingItemId });
+            case "CODE_ETDK":
+                return newVal => this.props.editETDKCode({ newVal, id: this.state.editingItemId });
+            case "CODE_DKHP":
+                return newVal => this.props.editDKHPCode({ newVal, id: this.state.editingItemId });
+            case "RESPONSIBILITIES":
+                return newVal => this.props.editResponsibilitiesText({ newVal, id: this.state.editingItemId });
+            case "HAVE_TO_KNOW":
+                return newVal => this.props.editHaveToKnowText({ newVal, id: this.state.editingItemId });
+            case "QUALIFF_REQUIR":
+                return newVal => this.props.editQualiffRequirText({ newVal, id: this.state.editingItemId });
+            default:
+                return () => console.error(`Called CtrlDcBox.selectEditOccupDcValSubmitHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
+    }
+
+    selectEditOccupDcValClearMsgHandler(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return this.props.editOccupGroupClearMsg;
+            case "CLARIFICATION":
+                return this.props.editClarificationClearMsg;
+            case "CODE_KP":
+                return this.props.editKPCodeClearMsg;
+            case "CODE_ZKPPTR":
+                return this.props.editZKPPTRCodeClearMsg;
+            case "CODE_ETDK":
+                return this.props.editETDKCodeClearMsg;
+            case "CODE_DKHP":
+                return this.props.editDKHPCodeClearMsg;
+            case "RESPONSIBILITIES":
+                return this.props.editResponsibilitiesTextClearMsg;
+            case "HAVE_TO_KNOW":
+                return this.props.editHaveToKnowTextClearMsg;
+            case "QUALIFF_REQUIR":
+                return this.props.editQualiffRequirTextClearMsg;
+            default:
+                return () => console.error(`Called CtrlDcBox.selectEditOccupDcValClearMsgHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
+    }
+    
+    getActiveListData(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return this.props.occupationGroupList;
+            case "CLARIFICATION":
+                return this.props.clarificationList;
+            case "CODE_KP":
+                return this.props.KPCodesList;
+            case "CODE_ZKPPTR":
+                return this.props.ZKPPTRCodesList;
+            case "CODE_ETDK":
+                return this.props.ETDKCodesList;
+            case "CODE_DKHP":
+                return this.props.DKHPCodesList;
+            case "RESPONSIBILITIES":
+                return this.props.responsibilitiesTextsList;
+            case "HAVE_TO_KNOW":
+                return this.props.haveToKnowTextsList;
+            case "QUALIFF_REQUIR":
+                return this.props.qualiffRequirTextsList;
+            default:
+                console.error(`Called CtrlDcBox.getActiveListData, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+                return {
+                    isFetching: false,
+                    errors: [],                 //TODO: замінити на fetchingErrors
+                    items : [],
+                    isAddingNewVal: false,
+                    addingErrors: [],
+                    addingSuccess: false,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: null,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: null,
+                }
+        }
+    }
+
+    getActiveListTitle(activeListName = this.state.activeListName) {
+        switch(activeListName) {
+            case "OCCUP_GROUP":
+                return "Посадовий склад";
+            case "CLARIFICATION":
+                return "Уточнення";
+            case "CODE_KP":
+                return "Коди КП";
+            case "CODE_ZKPPTR":
+                return "Коди ЗКППТР";
+            case "CODE_ETDK":
+                return "Коди ЄТДК";
+            case "CODE_DKHP":
+                return "Коди ДКХП";
+            case "RESPONSIBILITIES":
+                return "Завдання, обов'язки та повноваження";
+            case "HAVE_TO_KNOW":
+                return "Повинен знати";
+            case "QUALIFF_REQUIR":
+                return "Кваліфікаційні вимоги";
+            default:
+                console.error(`Called CtrlDcBox.getActiveListTitle, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+                return "";
         }
     }
 
@@ -283,94 +448,16 @@ class CtrlDcBox extends Component {
     }
 
     render() {
-        let shownOccupDescrTextsList = false,
+        let shownOccupDescrTextsList = ["RESPONSIBILITIES", "HAVE_TO_KNOW", "QUALIFF_REQUIR"].includes(this.state.activeListName),
             showModalEditOccupDcVal = (this.state.editingItemId !== null),
             modalConfirmDelItemHeadline = `Підтвердіть видалення елемента "${trimSubstr(this.state.deletingItemVal, 80)}" зі списку "${activeListTitle}"`,
-            activeList,
-            activeListTitle,
-            editOccupDcValClearMsg,
-            editOccupDcValSubmit,
+            activeList = this.getActiveListData(),
+            activeListTitle = this.getActiveListTitle(),
+            editOccupDcValClearMsg = this.selectEditOccupDcValClearMsgHandler(),
+            editOccupDcValSubmit = this.selectEditOccupDcValSubmitHandler(),
             delOccupDcValClearMsgHandler = this.selectDelOccupDcValClearMsgHandler(),
-            addNewOccupDcValClearMsg,
-            addNewOccupDcValSubmit;
-        //TODO: поробити окремі функції які отримують this.state.activeListName та повертають значення цих змінних
-        switch(this.state.activeListName) {
-            case "OCCUP_GROUP":
-                activeList = this.props.occupationGroupList;
-                activeListTitle = "Посадовий склад";
-                editOccupDcValClearMsg = this.props.editOccupGroupClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editOccupGroup({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewOccupGroupClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewOccupGroup(newVal);
-                break;
-            case "CLARIFICATION":
-                activeList = this.props.clarificationList;
-                activeListTitle = "Уточнення";
-                editOccupDcValClearMsg = this.props.editClarificationClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editClarification({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewClarificationClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewClarification( newVal );
-                break;
-            case "CODE_KP":
-                activeList = this.props.KPCodesList;
-                activeListTitle = "Коди КП";
-                editOccupDcValClearMsg = this.props.editKPCodeClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editKPCode({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewKPCodeClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewKPCode( newVal );
-                break;
-            case "CODE_ZKPPTR":
-                activeList = this.props.ZKPPTRCodesList;
-                activeListTitle = "Коди ЗКППТР";
-                editOccupDcValClearMsg = this.props.editZKPPTRCodeClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editZKPPTRCode({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewZKPPTRCodeClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewZKPPTRCode( newVal );
-                break;
-            case "CODE_ETDK":
-                activeList = this.props.ETDKCodesList;
-                activeListTitle = "Коди ЄТДК";
-                editOccupDcValClearMsg = this.props.editETDKCodeClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editETDKCode({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewETDKCodeClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewETDKCode( newVal );
-                break;
-            case "CODE_DKHP":
-                activeList = this.props.DKHPCodesList;
-                activeListTitle = "Коди ДКХП";
-                editOccupDcValClearMsg = this.props.editDKHPCodeClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editDKHPCode({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewDKHPCodeClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewDKHPCode( newVal );
-                break;
-            case "RESPONSIBILITIES":
-                activeList = this.props.responsibilitiesTextsList;
-                shownOccupDescrTextsList = true;
-                activeListTitle = "Завдання, обов'язки та повноваження";
-                editOccupDcValClearMsg = this.props.editResponsibilitiesTextClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editResponsibilitiesText({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewResponsibilitiesTextClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewResponsibilitiesText( newVal );
-                break;
-            case "HAVE_TO_KNOW":
-                activeList = this.props.haveToKnowTextsList;
-                shownOccupDescrTextsList = true;
-                activeListTitle = "Повинен знати";
-                editOccupDcValClearMsg = this.props.editHaveToKnowTextClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editHaveToKnowText({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewHaveToKnowTextClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewHaveToKnowText( newVal );
-                break;
-            case "QUALIFF_REQUIR":
-                activeList = this.props.qualiffRequirTextsList;
-                shownOccupDescrTextsList = true;
-                activeListTitle = "Кваліфікаційні вимоги";
-                editOccupDcValClearMsg = this.props.editQualiffRequirTextClearMsg;
-                editOccupDcValSubmit = newVal => this.props.editQualiffRequirText({ newVal, id: this.state.editingItemId });
-                addNewOccupDcValClearMsg = this.props.addNewQualiffRequirTextClearMsg;
-                addNewOccupDcValSubmit = newVal => this.props.addNewQualiffRequirText( newVal );
-                break;
-        }
+            addNewOccupDcValClearMsg = this.selectAddNewOccupDcValClearMsgHandler(),
+            addNewOccupDcValSubmit = this.selectAddNewOccupDcValSubmitHandler();
 
         return (
             <div className="container">
@@ -393,7 +480,7 @@ class CtrlDcBox extends Component {
                             onAlertDismiss={editOccupDcValClearMsg}
                             isLoading={activeList.isUpdatingVal}
                             onSubmit={editOccupDcValSubmit}
-                            onHide={ this.hideModalEditOccupDcVal }
+                            onHide={this.hideModalEditOccupDcVal}
                         />
                         <ModalConfirmDelItem
                             headline={modalConfirmDelItemHeadline}
@@ -406,7 +493,7 @@ class CtrlDcBox extends Component {
                             onAlertDismiss={delOccupDcValClearMsgHandler}
                             isDeletingItem={activeList.isDeletingVal}
                             onSubmit={this.handleDeleteItem}
-                            onHide={ this.hideModalConfirmDelOccupDcVal }
+                            onHide={this.hideModalConfirmDelOccupDcVal}
                         />
                         <CtrlDcBoxRes
                             showAddingInp={this.showAddingInp}
