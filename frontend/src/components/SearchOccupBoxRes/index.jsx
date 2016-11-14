@@ -4,7 +4,7 @@ import "./styles.less";
 
 import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
-import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
+import ModalConfirmDelItem from "../ModalConfirmDelItem"
 import ModalEditOccup from "../ModalEditOccup"
 import ModalResDownloadSettings from "../ModalResDownloadSettings"
 import PaginationSizeSelect from "../PaginationSizeSelect"
@@ -195,15 +195,16 @@ export default class SearchOccupBoxRes extends Component {
                 </div>
                 <div className="box-body">
                     <ModalResDownloadSettings />
-                    <ModalConfirmDelOccup
-                        additionalTitle={modalConfirmDelOccupAdditionalTitle}
+                    <ModalConfirmDelItem
+                        headline={"Підтвердіть видалення інформації про посаду " + modalConfirmDelOccupAdditionalTitle}
+                        successMsgAlertTitle={"Посаду успішно видалено."}
                         onTriggerDontShowAgain={this.triggerDontShowAgainDel}
                         dontShowAgain={this.state.dontShowAgainDelModal}
                         show={this.state.showModalConfirmDelOccup}
                         error={this.props.delOccupationError}
                         success={this.props.delOccupationSuccess}
                         onAlertDismiss={this.props.dismissDelOccupationAlert}
-                        isDeletingOccupation={this.props.isDeletingOccupation}
+                        isDeletingItem={this.props.isDeletingOccupation}
                         onSubmit={this.handleDeleteItem}
                         onHide={ this.hideModalConfirmDelOccup }
                     />

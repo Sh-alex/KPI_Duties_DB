@@ -3,11 +3,11 @@ import { Modal, Alert } from 'react-bootstrap'
 
 import './styles.less'
 
-export default function ModalConfirmDelOccup(props) {
+export default function ModalConfirmDelItem(props) {
     let msgAlert;
     if(props.error) {
         msgAlert = (
-            <Alert bsStyle="danger" onDismiss={props.onAlertDismiss}>
+            <Alert bsStyle="danger" className="no-margin" onDismiss={props.onAlertDismiss}>
                 <h4>
                     <i className="icon fa fa-warning" />
                     Помилка! :(
@@ -17,12 +17,12 @@ export default function ModalConfirmDelOccup(props) {
         );
     } else if(props.success) {
         msgAlert = (
-            <Alert bsStyle="success" onDismiss={props.onAlertDismiss}>
+            <Alert bsStyle="success" className="no-margin" onDismiss={props.onAlertDismiss}>
                 <h4>
                     <i className="icon fa fa-check" />
                     Успіх!
                 </h4>
-                <p> Посаду успішно видалено. </p>
+                <p> {props.successMsgAlertTitle || "Видалення пройшло успішно."} </p>
             </Alert>
         );
         setTimeout(() => props.onHide(), 1000);
@@ -36,19 +36,17 @@ export default function ModalConfirmDelOccup(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h3> 
-                    Підтвердіть видалення інформації про посаду  
-                    {" "+props.additionalTitle}
-                </h3>
+                <h4>
+                    { props.headline || "Підтвердіть видалення" }
+                </h4>
                 <p> <u> Зміни неможливо буде повернути. </u> </p>
                 <p className="checkbox">
-                    <label>
+                    <label title="Якщо відмітити, після закриття вспливаючого вікна це попередження більше не з'являтиметься">
                         <input
                             type="checkbox"
                             checked={props.dontShowAgain}
                             onChange={props.onTriggerDontShowAgain}
                             id="dont-remind-delete-danger"
-                            title="Якщо відмітити, після закриття вспливаючого вікна це попередження більше не з'являтиметься"
                         />
                         <i> Більше не показувати попередження </i>
                     </label>
@@ -63,12 +61,12 @@ export default function ModalConfirmDelOccup(props) {
                 <button
                     type="button"
                     className="btn btn-outline"
-                    disabled={props.isDeletingOccupation}
+                    disabled={props.isDeletingItem}
                     onClick={(e) => props.onSubmit()}
                 >
                     <span className="btn-label"> Видалити </span>
                     {
-                        props.isDeletingOccupation ? (
+                        props.isDeletingItem ? (
                             <span className="btn-spinner">
                                 <i className="fa fa-spinner fa-pulse" />
                             </span>

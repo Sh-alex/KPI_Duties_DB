@@ -31,12 +31,22 @@ import {
     EDIT_OCCUPATION_GROUP_SUCCESS,
     EDIT_OCCUPATION_GROUP_FAIL,
     EDIT_OCCUPATION_GROUP_CLEAR_MSG,
+
+    DEL_CLARIFICATION_REQUEST,
+    DEL_CLARIFICATION_FAIL,
+    DEL_CLARIFICATION_SUCCESS,
+    DEL_CLARIFICATION_CLEAR_MSG,
+
+    DEL_OCCUPATION_GROUP_REQUEST,
+    DEL_OCCUPATION_GROUP_SUCCESS,
+    DEL_OCCUPATION_GROUP_FAIL,
+    DEL_OCCUPATION_GROUP_CLEAR_MSG,
 } from '../constants/occupationNameInfo'
 
 const initialState = {
     occupationGroupList: {
         isFetching: false,
-        errors: [],                 // WARNING! замінити на fetchingErrors
+        errors: [],                 //TODO: замінити на fetchingErrors
         items : [],
         isAddingNewVal: false,
         addingSuccess: false,
@@ -44,67 +54,45 @@ const initialState = {
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
+        isDeletingVal: false,
+        deletingSuccess: false,
+        deletingError: null,
         // items : [
         //     {
         //         "id": 0,
-        //         "textValue": "Керівники"
+        //         "textValue": "Керівники",
+        //         "usingOccupations" [4,3] //id посад що використовують це значення
         //     },
         //     {
         //         "id": 1,
         //         "textValue": "Професіонали"
+        //         "usingOccupations" [1,2]
         //     },
         //     {
         //         "id": 2,
         //         "textValue": "Фахівці"
+        //         "usingOccupations" []
         //     },
         //     {
         //         "id": 3,
         //         "textValue": "Технічні службовці"
+        //         "usingOccupations" [0]
         //     },
         //     {
         //         "id": 4,
         //         "textValue": "Найпростіші професії"
+        //         "usingOccupations" [1,2,3]
         //     }
         // ],
     },
     clarifiedOccupationList: {
         isFetching: false,
-        errors: [],                 // WARNING! замінити на fetchingErrors
+        errors: [],                 //TODO: замінити на fetchingErrors
         items : []
-        // items : [
-        //     {
-        //         "id": -1,
-        //         "textValue": "-(Відсутня)-"
-        //     },
-        //     {
-        //         "id": 0,
-        //         "textValue": "Інженер"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "Інженер молодший"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "Інженер старший 1 категорії"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "Директор"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "Посол"
-        //     },
-        //     {
-        //         "id": 5,
-        //         "textValue": "Фрезерувальник"
-        //     }
-        // ]
     },
     clarificationList: {
         isFetching: false,
-        errors: [],                 // WARNING! замінити на fetchingErrors
+        errors: [],                 //TODO: замінити на fetchingErrors
         items : [],
         isAddingNewVal: false,
         addingErrors: [],
@@ -112,32 +100,9 @@ const initialState = {
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
-        // items : [
-        //     {
-        //         "id": 0,
-        //         "textValue": "Патімейкер"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "Молодший"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "Замістник"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "Старший"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "1 категорії"
-        //     },
-        //     {
-        //         "id": 5,
-        //         "textValue": "3 розряду"
-        //     }
-        // ]
+        isDeletingVal: false,
+        deletingSuccess: false,
+        deletingError: null,
     }
 };
 
@@ -412,6 +377,98 @@ export default function occupationNameInfo(state = initialState, action) {
                     ...state.occupationGroupList,
                     updatingSuccess: false,
                     updatingError: null
+                }
+            };
+
+
+        case DEL_CLARIFICATION_REQUEST:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null,
+                }
+            };
+        case DEL_CLARIFICATION_SUCCESS:
+            let newClarificationList = state.clarificationList.items.slice(),
+                deletedItemIndex = newClarificationList.findIndex(item => item.id === action.id);
+            newClarificationList.splice(deletedItemIndex, 1);
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null,
+                    items: newClarificationList
+                }
+            };
+        case DEL_CLARIFICATION_FAIL:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error,
+                }
+            };
+        case DEL_CLARIFICATION_CLEAR_MSG:
+            return {
+                ...state,
+                clarificationList: {
+                    ...state.clarificationList,
+                    deletingSuccess: false,
+                    deletingError:null,
+                }
+            };
+
+
+        case DEL_OCCUPATION_GROUP_REQUEST:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null,
+                }
+            };
+        case DEL_OCCUPATION_GROUP_SUCCESS:
+            let newOccupationGroupList = state.occupationGroupList.items.slice(),
+                deletedItemIndex2 = newOccupationGroupList.findIndex(item => item.id === action.id);
+            newOccupationGroupList.splice(deletedItemIndex2, 1);
+
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null,
+                    items: newOccupationGroupList,
+                }
+            };
+        case DEL_OCCUPATION_GROUP_FAIL:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error,
+                }
+            };
+
+        case DEL_OCCUPATION_GROUP_CLEAR_MSG:
+            return {
+                ...state,
+                occupationGroupList: {
+                    ...state.occupationGroupList,
+                    deletingSuccess: false,
+                    deletingError: null
                 }
             };
 

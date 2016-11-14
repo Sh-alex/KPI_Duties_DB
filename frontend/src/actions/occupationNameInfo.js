@@ -31,6 +31,16 @@ import {
     EDIT_OCCUPATION_GROUP_SUCCESS,
     EDIT_OCCUPATION_GROUP_FAIL,
     EDIT_OCCUPATION_GROUP_CLEAR_MSG,
+
+    DEL_CLARIFICATION_REQUEST,
+    DEL_CLARIFICATION_FAIL,
+    DEL_CLARIFICATION_SUCCESS,
+    DEL_CLARIFICATION_CLEAR_MSG,
+
+    DEL_OCCUPATION_GROUP_REQUEST,
+    DEL_OCCUPATION_GROUP_SUCCESS,
+    DEL_OCCUPATION_GROUP_FAIL,
+    DEL_OCCUPATION_GROUP_CLEAR_MSG,
 } from '../constants/occupationNameInfo'
 
 import {
@@ -47,6 +57,8 @@ import * as API_URIs from '../constants/API_URIs';
 
 import generateEditingDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
 import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
+import generateDelOccupDcValRequestFunction from "../utils/generateDelOccupDcValRequestFunction"
+
 
 export function fetchClarificationList() {
     return function (dispatch) {
@@ -82,78 +94,6 @@ export function fetchClarificationList() {
                 type: FETCH_CLARIFICATION_LIST_FAIL,
                 error
             }))
-    }
-}
-
-export const addNewClarification = generateAddingOccupDcValRequestFunction({
-    requestConst: ADD_NEW_CLARIFICATION_REQUEST,
-    successConst: ADD_NEW_CLARIFICATION_SUCCESS,
-    failConst: ADD_NEW_CLARIFICATION_FAIL,
-    listName: "Уточнення",
-    apiURI: API_URIs.ADD_NEW_CLARIFICATION,
-});
-
-export function addNewClarificationAndUpdateForm({ newVal, resForm}) {
-    return addNewClarification({
-        newVal,
-        onSuccess(dispatch, results) {
-            if(resForm == 'formEditOccup')
-                dispatch(editOccupForm_clarificationInpChange(results));
-            else
-                dispatch(addOccupForm_clarificationInpChange(results));
-        }
-    });
-}
-
-export const editClarification = generateEditingDcValRequestFunction({
-    requestConst: EDIT_CLARIFICATION_REQUEST,
-    successConst: EDIT_CLARIFICATION_SUCCESS,
-    failConst: EDIT_CLARIFICATION_FAIL,
-    listName: "Уточнення",
-    apiURI: API_URIs.EDIT_CLARIFICATION
-});
-
-export function editClarificationClearMsg() {
-    return {
-        type: EDIT_CLARIFICATION_CLEAR_MSG
-    }
-}
-
-export function dismissModalAddNewClarificationAlert() {
-    return {
-        type: DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
-    }
-}
-
-export const addNewOccupationGroup = generateAddingOccupDcValRequestFunction({
-    requestConst: ADD_NEW_OCCUPATION_GROUP_REQUEST,
-    successConst: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
-    failConst: ADD_NEW_OCCUPATION_GROUP_FAIL,
-    listName: "Посадовий склад",
-    apiURI: API_URIs.ADD_NEW_OCCUPATION_GROUP,
-});
-
-export function addNewOccupationGroupAndUpdateForm({ newVal, resForm}) {
-    return addNewOccupationGroup({
-        newVal,
-        onSuccess(dispatch, results) {
-            if(resForm == 'formEditOccup')
-                dispatch(editOccupForm_occupationGroupInpChange(results));
-            else
-                dispatch(addOccupForm_occupationGroupInpChange(results));
-        }
-    });
-}
-
-export function editOccupGroupClearMsg() {
-    return {
-        type: EDIT_OCCUPATION_GROUP_CLEAR_MSG
-    }
-}
-
-export function dismissModalAddNewOccupationGroupAlert() {
-    return {
-        type: DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST
     }
 }
 
@@ -195,16 +135,6 @@ export function fetchOccupGroupList() {
     }
 }
 
-
-export const editOccupGroup = generateEditingDcValRequestFunction({
-    requestConst: EDIT_OCCUPATION_GROUP_REQUEST,
-    successConst: EDIT_OCCUPATION_GROUP_SUCCESS,
-    failConst: EDIT_OCCUPATION_GROUP_FAIL,
-    listName: "Посадовий склад",
-    apiURI: API_URIs.EDIT_OCCUPATION_GROUP
-});
-
-
 export function fetchClarifiedOccupList() {
     return function (dispatch) {
         dispatch({
@@ -239,5 +169,116 @@ export function fetchClarifiedOccupList() {
                 type: FETCH_CLARIFIED_OCCUP_LIST_FAIL,
                 error
             }))
+    }
+}
+
+
+export const addNewClarification = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_CLARIFICATION_REQUEST,
+    successConst: ADD_NEW_CLARIFICATION_SUCCESS,
+    failConst: ADD_NEW_CLARIFICATION_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.ADD_NEW_CLARIFICATION,
+});
+
+export const addNewOccupationGroup = generateAddingOccupDcValRequestFunction({
+    requestConst: ADD_NEW_OCCUPATION_GROUP_REQUEST,
+    successConst: ADD_NEW_OCCUPATION_GROUP_SUCCESS,
+    failConst: ADD_NEW_OCCUPATION_GROUP_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.ADD_NEW_OCCUPATION_GROUP,
+});
+
+export function addNewClarificationAndUpdateForm({ newVal, resForm}) {
+    return addNewClarification({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_clarificationInpChange(results));
+            else
+                dispatch(addOccupForm_clarificationInpChange(results));
+        }
+    });
+}
+
+export function addNewOccupationGroupAndUpdateForm({ newVal, resForm}) {
+    return addNewOccupationGroup({
+        newVal,
+        onSuccess(dispatch, results) {
+            if(resForm == 'formEditOccup')
+                dispatch(editOccupForm_occupationGroupInpChange(results));
+            else
+                dispatch(addOccupForm_occupationGroupInpChange(results));
+        }
+    });
+}
+
+export function dismissModalAddNewClarificationAlert() {
+    return {
+        type: DISMISS_MODAL_ADD_NEW_CLARIFICATION_ALERT
+    }
+}
+
+export function dismissModalAddNewOccupationGroupAlert() {
+    return {
+        type: DISMISS_MODAL_ADD_NEW_OCCUPATION_GROUP_LIST
+    }
+}
+
+
+export const editClarification = generateEditingDcValRequestFunction({
+    requestConst: EDIT_CLARIFICATION_REQUEST,
+    successConst: EDIT_CLARIFICATION_SUCCESS,
+    failConst: EDIT_CLARIFICATION_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.EDIT_CLARIFICATION
+});
+
+export const editOccupGroup = generateEditingDcValRequestFunction({
+    requestConst: EDIT_OCCUPATION_GROUP_REQUEST,
+    successConst: EDIT_OCCUPATION_GROUP_SUCCESS,
+    failConst: EDIT_OCCUPATION_GROUP_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.EDIT_OCCUPATION_GROUP
+});
+
+export function editClarificationClearMsg() {
+    return {
+        type: EDIT_CLARIFICATION_CLEAR_MSG
+    }
+}
+
+export function editOccupGroupClearMsg() {
+    return {
+        type: EDIT_OCCUPATION_GROUP_CLEAR_MSG
+    }
+}
+
+
+export const delClarification = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_CLARIFICATION_REQUEST,
+    successConst: DEL_CLARIFICATION_SUCCESS,
+    failConst: DEL_CLARIFICATION_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.DEL_CLARIFICATION
+});
+
+export const delOccupGroup = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_OCCUPATION_GROUP_REQUEST,
+    successConst: DEL_OCCUPATION_GROUP_SUCCESS,
+    failConst: DEL_OCCUPATION_GROUP_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.DEL_OCCUPATION_GROUP
+});
+
+export function delClarificationClearMsg() {
+    return {
+        type: DEL_CLARIFICATION_CLEAR_MSG
+    }
+}
+
+export function delOccupGroupClearMsg() {
+    return {
+        type: DEL_OCCUPATION_GROUP_CLEAR_MSG
     }
 }

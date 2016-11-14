@@ -54,12 +54,33 @@ import {
     EDIT_DKHP_CODE_SUCCESS,
     EDIT_DKHP_CODE_FAIL,
     EDIT_DKHP_CODE_CLEAR_MSG,
+
+    DEL_KP_CODE_REQUEST,
+    DEL_KP_CODE_SUCCESS,
+    DEL_KP_CODE_FAIL,
+    DEL_KP_CODE_CLEAR_MSG,
+
+    DEL_ZKPPTR_CODE_REQUEST,
+    DEL_ZKPPTR_CODE_SUCCESS,
+    DEL_ZKPPTR_CODE_FAIL,
+    DEL_ZKPPTR_CODE_CLEAR_MSG,
+
+    DEL_ETDK_CODE_REQUEST,
+    DEL_ETDK_CODE_SUCCESS,
+    DEL_ETDK_CODE_FAIL,
+    DEL_ETDK_CODE_CLEAR_MSG,
+
+    DEL_DKHP_CODE_REQUEST,
+    DEL_DKHP_CODE_SUCCESS,
+    DEL_DKHP_CODE_FAIL,
+    DEL_DKHP_CODE_CLEAR_MSG,
 } from '../constants/occupCodesLists'
 
 import * as API_URIs from '../constants/API_URIs';
 
-import generateEditingDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
+import generateEditingOccupDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
 import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
+import generateDelOccupDcValRequestFunction from "../utils/generateDelOccupDcValRequestFunction"
 
 import {
     KPCodeInpChange as addOccupForm_KPCodeInpChange,
@@ -339,28 +360,28 @@ export function clearZKPPTRCodeAddingMsg() {
 }
 
 
-export const editKPCode = generateEditingDcValRequestFunction({
+export const editKPCode = generateEditingOccupDcValRequestFunction({
     requestConst: EDIT_KP_CODE_REQUEST,
     successConst: EDIT_KP_CODE_SUCCESS,
     failConst: EDIT_KP_CODE_FAIL,
     listName: "Коди КП",
     apiURI: API_URIs.EDIT_KP_CODE
 });
-export const editETDKCode = generateEditingDcValRequestFunction({
+export const editETDKCode = generateEditingOccupDcValRequestFunction({
     requestConst: EDIT_ETDK_CODE_REQUEST,
     successConst: EDIT_ETDK_CODE_SUCCESS,
     failConst: EDIT_ETDK_CODE_FAIL,
     listName: "Коди ЄТДК",
     apiURI: API_URIs.EDIT_ETDK_CODE
 });
-export const editDKHPCode = generateEditingDcValRequestFunction({
+export const editDKHPCode = generateEditingOccupDcValRequestFunction({
     requestConst: EDIT_DKHP_CODE_REQUEST,
     successConst: EDIT_DKHP_CODE_SUCCESS,
     failConst: EDIT_DKHP_CODE_FAIL,
     listName: "Коди ДКХП",
     apiURI: API_URIs.EDIT_DKHP_CODE
 });
-export const editZKPPTRCode = generateEditingDcValRequestFunction({
+export const editZKPPTRCode = generateEditingOccupDcValRequestFunction({
     requestConst: EDIT_ZKPPTR_CODE_REQUEST,
     successConst: EDIT_ZKPPTR_CODE_SUCCESS,
     failConst: EDIT_ZKPPTR_CODE_FAIL,
@@ -389,5 +410,59 @@ export function editDKHPCodeClearMsg() {
 export function editZKPPTRCodeClearMsg() {
     return {
         type: EDIT_ZKPPTR_CODE_CLEAR_MSG
+    }
+}
+
+
+export const delKPCode = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_KP_CODE_REQUEST,
+    successConst: DEL_KP_CODE_SUCCESS,
+    failConst: DEL_KP_CODE_FAIL,
+    listName: "Коди КП",
+    apiURI: API_URIs.DEL_KP_CODE
+});
+export const delETDKCode = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_ETDK_CODE_REQUEST,
+    successConst: DEL_ETDK_CODE_SUCCESS,
+    failConst: DEL_ETDK_CODE_FAIL,
+    listName: "Коди ЄТДК",
+    apiURI: API_URIs.DEL_ETDK_CODE
+});
+export const delDKHPCode = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_DKHP_CODE_REQUEST,
+    successConst: DEL_DKHP_CODE_SUCCESS,
+    failConst: DEL_DKHP_CODE_FAIL,
+    listName: "Коди ДКХП",
+    apiURI: API_URIs.DEL_DKHP_CODE
+});
+export const delZKPPTRCode = generateDelOccupDcValRequestFunction({
+    requestConst: DEL_ZKPPTR_CODE_REQUEST,
+    successConst: DEL_ZKPPTR_CODE_SUCCESS,
+    failConst: DEL_ZKPPTR_CODE_FAIL,
+    listName: "Коди ЗКППТР",
+    apiURI: API_URIs.DEL_ZKPPTR_CODE
+});
+
+export function delKPCodeClearMsg() {
+    return {
+        type: DEL_KP_CODE_CLEAR_MSG
+    }
+}
+
+export function delETDKCodeClearMsg() {
+    return {
+        type: DEL_ETDK_CODE_CLEAR_MSG
+    }
+}
+
+export function delDKHPCodeClearMsg() {
+    return {
+        type: DEL_DKHP_CODE_CLEAR_MSG
+    }
+}
+
+export function delZKPPTRCodeClearMsg() {
+    return {
+        type: DEL_ZKPPTR_CODE_CLEAR_MSG
     }
 }

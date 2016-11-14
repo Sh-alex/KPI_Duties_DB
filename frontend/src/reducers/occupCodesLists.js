@@ -3,7 +3,7 @@ import * as aTypes from '../constants/occupCodesLists'
 const initialState = {
     DKHPCodesList: {
         isFetching: false,
-        errors: [],
+        errors: [],                 //TODO: замінити на fetchingErrors
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -11,94 +11,34 @@ const initialState = {
         updatingSuccess: false,
         updatingError: null,
         items : [],
-        // items : [
-        //     {
-        //         "id": 0,
-        //         "textValue": "ergerg"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "k87k7"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "4545t"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "gergerg"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "hgfdfg"
-        //     }
-        // ]
     },
     ETDKCodesList: {
         isFetching: false,
-        errors: [],
+        errors: [],                 //TODO: замінити на fetchingErrors
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
+        isDeletingVal: false,
+        deletingSuccess: false,
+        deletingError: null,
         items : [],
-        // items : [
-        //     {
-        //         "id": 0,
-        //         "textValue": "hgtr4"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "73247j"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "567j67yj"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "yhj5"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "k87kkrfe"
-        //     }
-        // ]
     },
     ZKPPTRCodesList: {
         isFetching: false,
-        errors: [],
+        errors: [],                 //TODO: замінити на fetchingErrors
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
+        isDeletingVal: false,
+        deletingSuccess: false,
+        deletingError: null,
         items : [],
-        // items : [
-        //     {
-        //         "id": 0,
-        //         "textValue": "egrg"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "5656h56h"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "7h56h5"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "123f3"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "9ol879lk"
-        //     }
-        // ]
     },
     KPCodesList: {
         isFetching: false,
@@ -109,29 +49,10 @@ const initialState = {
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
+        isDeletingVal: false,
+        deletingSuccess: false,
+        deletingError: null,
         items : [],
-        // items : [
-        //     {
-        //         "id": 0,
-        //         "textValue": "egrg"
-        //     },
-        //     {
-        //         "id": 1,
-        //         "textValue": "5656h56h"
-        //     },
-        //     {
-        //         "id": 2,
-        //         "textValue": "2f3ff"
-        //     },
-        //     {
-        //         "id": 3,
-        //         "textValue": "123f3"
-        //     },
-        //     {
-        //         "id": 4,
-        //         "textValue": "9ol879lk"
-        //     }
-        // ]
     }
 };
 
@@ -616,6 +537,185 @@ export default function occupCodesList(state = initialState, action) {
                     updatingError: null
                 }
             };
+
+
+        case aTypes.DEL_KP_CODE_REQUEST:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_KP_CODE_SUCCESS:
+            let newKPCodesList = state.KPCodesList.items.slice(),
+                deletedItemIndex = newKPCodesList.findIndex(item => item.id === action.id);
+            newKPCodesList.splice(deletedItemIndex, 1);
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    items: newKPCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_KP_CODE_FAIL:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error
+                }
+            };
+        case aTypes.DEL_KP_CODE_CLEAR_MSG:
+            return {
+                ...state,
+                KPCodesList: {
+                    ...state.KPCodesList,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+
+        case aTypes.DEL_DKHP_CODE_REQUEST:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_DKHP_CODE_SUCCESS:
+            let newDKHPCodesList = state.DKHPCodesList.items.slice(),
+                deletedItemIndex2 = newDKHPCodesList.findIndex(item => item.id === action.id);
+            newDKHPCodesList.splice(deletedItemIndex2, 1);
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    items: newDKHPCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_DKHP_CODE_FAIL:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error
+                }
+            };
+        case aTypes.DEL_DKHP_CODE_CLEAR_MSG:
+            return {
+                ...state,
+                DKHPCodesList: {
+                    ...state.DKHPCodesList,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+
+        case aTypes.DEL_ETDK_CODE_REQUEST:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_ETDK_CODE_SUCCESS:
+            let newETDKCodesList = state.ETDKCodesList.items.slice(),
+                deletedItemIndex3 = newETDKCodesList.findIndex(item => item.id === action.id);
+            newETDKCodesList.splice(deletedItemIndex3, 1);
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    items: newETDKCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_ETDK_CODE_FAIL:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error
+                }
+            };
+        case aTypes.DEL_ETDK_CODE_CLEAR_MSG:
+            return {
+                ...state,
+                ETDKCodesList: {
+                    ...state.ETDKCodesList,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+
+        case aTypes.DEL_ZKPPTR_CODE_REQUEST:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    isDeletingVal: true,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_ZKPPTR_CODE_SUCCESS:
+            let newZKPPTRCodesList = state.ZKPPTRCodesList.items.slice(),
+                deletedItemIndex4 = newZKPPTRCodesList.findIndex(item => item.id === action.id);
+            newZKPPTRCodesList.splice(deletedItemIndex4, 1);
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    items: newZKPPTRCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: true,
+                    deletingError: null
+                }
+            };
+        case aTypes.DEL_ZKPPTR_CODE_FAIL:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    isDeletingVal: false,
+                    deletingSuccess: false,
+                    deletingError: action.error
+                }
+            };
+
+        case aTypes.DEL_ZKPPTR_CODE_CLEAR_MSG:
+            return {
+                ...state,
+                ZKPPTRCodesList: {
+                    ...state.ZKPPTRCodesList,
+                    deletingSuccess: false,
+                    deletingError: null
+                }
+            };
+
 
         default:
             return state
