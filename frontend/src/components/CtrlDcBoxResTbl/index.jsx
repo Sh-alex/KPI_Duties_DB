@@ -26,15 +26,17 @@ function bindEditListItemHandler(itemId, itemVal, props) {
     }
 }
 
-function bindDelListItemHandler(itemId, props) {
+function bindDelListItemHandler(itemId, itemVal, isUsedByOccup, props) {
     return () => {
-        //return props.onDelListItemBtnClick(itemId)
+        if(!isUsedByOccup)
+            return props.onDelListItemBtnClick(itemId, itemVal);
     }
 }
 
 export default function CtrlDcBoxResTbl(props) {
     let tblRows = props.listData.items.map((item, itemIndex) => {
         let isUsedByOccup = item.usingOccupations && item.usingOccupations.length,
+            isNowDeletingThisItem = props.deletingItemId === item.id,
             infoRowIsExpanded = props.shownOccupDescrTextsList && props.expandedItems[item.id],
             showUsingOccupRow = false,//props.shownUsingOccupRows[item.id],
             btnUsingOccupClassName = classNames({
@@ -45,7 +47,7 @@ export default function CtrlDcBoxResTbl(props) {
             btnDelOccupClassName = classNames({
                 "text-danger": true,
                 "action-btns-cell__btn": true,
-                "disabled": isUsedByOccup
+                "disabled": isUsedByOccup || isNowDeletingThisItem
             }),
             textCellClassName = classNames({
                 "big-text-cell--folded": !infoRowIsExpanded
@@ -88,11 +90,11 @@ export default function CtrlDcBoxResTbl(props) {
                             </a>
                             <br className="show-for-big-text"/> {" "}
                             <a
-                                onClick={bindDelListItemHandler(item.id, props)}
+                                onClick={bindDelListItemHandler(item.id, item.textValue, isUsedByOccup, props)}
                                 className={btnDelOccupClassName}
                                 title="Видалити елемент зі списку"
                             >
-                                <i className={`fa fa-trash`} />
+                                <i className={`fa ${isNowDeletingThisItem ? "fa-spinner fa-pulse" : "fa-trash"}`} />
                             </a>
                             <br className="show-for-big-text"/> {" "}
                             { btnExpandRow }

@@ -150,7 +150,9 @@ export default function CtrlDcBoxRes(props) {
                                     shownOccupDescrTextsList={props.shownOccupDescrTextsList}
                                     listData={props.activeList}
                                     onEditListItemBtnClick={props.onEditListItemBtnClick}
+                                    onDelListItemBtnClick={props.onDelListItemBtnClick}
                                     expandedItems={props.expandedItems}
+                                    deletingItemId={props.deletingItemId}
                                     onToggleExpandItemClick={props.onToggleExpandItem}
                                 />
                 }
