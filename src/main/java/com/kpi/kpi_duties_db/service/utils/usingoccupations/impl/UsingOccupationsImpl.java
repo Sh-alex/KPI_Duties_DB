@@ -6,6 +6,7 @@ import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -31,16 +32,17 @@ public class UsingOccupationsImpl implements UsingOccupations {
     @Transactional
     public IdNameListResponse findUsingOccupationsIdForCode(IdNameListResponse response, String nameParentId) {
 
-        Criteria criteriaRtCode = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesCodeEntity.class, "rtDutiesCode");
-        criteriaRtCode.createAlias("rtDutiesCode.rtCodeEntity", "rtCode");
+        Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesCodeEntity.class, "rtDutiesCode");
+        criteria.createAlias("rtDutiesCode.rtCodeEntity", "rtCode");
 
         List<IdNameResponse> idNameResponses = response.getIdNameResponses();
 
         for (IdNameResponse item : idNameResponses) {
 
-            criteriaRtCode.add(Restrictions.eq("rtCode." + nameParentId, item.getId()));
+            criteria.add(Restrictions.eq("rtCode." + nameParentId, item.getId()));
 
-            List<RtDutiesCodeEntity> list = criteriaRtCode.list();
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+            List<RtDutiesCodeEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getRtDutiesId()).collect(Collectors.toList());
 
@@ -63,6 +65,7 @@ public class UsingOccupationsImpl implements UsingOccupations {
 
             criteria.add(Restrictions.eq("rtDutiesMustKnowEntities.dcDutiesMustKnowId", item.getId()));
 
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
             List<RtDutiesEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).collect(Collectors.toList());
@@ -86,6 +89,7 @@ public class UsingOccupationsImpl implements UsingOccupations {
 
             criteria.add(Restrictions.eq("rtDutiesQualificationRequirementsEntities.dcDutiesQualificationRequirementsId", item.getId()));
 
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
             List<RtDutiesEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).collect(Collectors.toList());
@@ -109,6 +113,7 @@ public class UsingOccupationsImpl implements UsingOccupations {
 
             criteria.add(Restrictions.eq("rtDutiesTaskAndResponsibilitiesEntities.dcDutiesTasksAndResponsibilitiesId", item.getId()));
 
+            criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
             List<RtDutiesEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).collect(Collectors.toList());
