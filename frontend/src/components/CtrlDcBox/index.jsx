@@ -97,6 +97,7 @@ class CtrlDcBox extends Component {
         super(props);
 
         this.state = {
+            listItems: [],                              //елементи поточного списку; зберігаємо у стані компоненту щоб реалізувати функції сортування та фільтру, не викликаючи їх коли кожен раз міняється props чи state
             addingInpIsShown: false,                    //чи показано зараз поле для додавання нового значення
             activeListName: "OCCUP_GROUP",              //активний список, одне із: CLARIFICATION, CODE_KP, CODE_ZKPPTR, CODE_ETDK, CODE_DKHP, RESPONSIBILITIES, HAVE_TO_KNOW, QUALIFF_REQUIR
             editingItemId: null,                        //яка елемент(ID) зараз редагується(для нього показуємо модальне вікно)
@@ -107,7 +108,7 @@ class CtrlDcBox extends Component {
                                                         //Tip: це можна було б і розрахувати знаючи id, але так як у нас списки - масиви, доведеться пробігати по всьому масиву, тому краще вже зберігати значення в стані компоненту
             showModalConfirmDelOccupDcVal: false,       //чи показувати модальне вікно для підтвердження видалення елемента зі списку
             dontShowAgainDelModal: false,               //більше не показувати повідомлення із підтвердженням видалення посади
-            sortDirection: "SORT_ASC",                  //напрям сортування SORT_ASC/SORT_DESC
+            sortDirection: "NONE",                      //напрям сортування списку, одне із: NONE/SORT_ASC/SORT_DESC
             expandedItems: {},                          //які елементи розкриті(показується повне значення елемента списку чи скорочене)
         };
 
@@ -123,8 +124,16 @@ class CtrlDcBox extends Component {
         this.showModalConfirmDelOccupDcVal = this.showModalConfirmDelOccupDcVal.bind(this);
         this.hideModalConfirmDelOccupDcVal = this.hideModalConfirmDelOccupDcVal.bind(this);
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
+        this.triggerSorting = this.triggerSorting.bind(this);
+        this.sortListItems = this.sortListItems.bind(this);
+        this.selectAddNewOccupDcValSubmitHandler = this.selectAddNewOccupDcValSubmitHandler.bind(this);
+        this.selectAddNewOccupDcValClearMsgHandler = this.selectAddNewOccupDcValClearMsgHandler.bind(this);
         this.selectDelOccupDcValSubmitHandler = this.selectDelOccupDcValSubmitHandler.bind(this);
         this.selectDelOccupDcValClearMsgHandler = this.selectDelOccupDcValClearMsgHandler.bind(this);
+        this.selectEditOccupDcValSubmitHandler = this.selectEditOccupDcValSubmitHandler.bind(this);
+        this.selectEditOccupDcValClearMsgHandler = this.selectEditOccupDcValClearMsgHandler.bind(this);
+        this.getActiveListData = this.getActiveListData.bind(this);
+        this.getActiveListTitle = this.getActiveListTitle.bind(this);
     }
 
     componentDidMount() {
@@ -132,19 +141,57 @@ class CtrlDcBox extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        //визначаємо посилання на активні списки
+        let listNamesDict = {
+            OCCUP_GROUP: "occupationGroupList",
+            CLARIFICATION: "clarificationList",
+            CODE_KP: "KPCodesList",
+            CODE_ZKPPTR: "ZKPPTRCodesList",
+            CODE_ETDK: "ETDKCodesList",
+            CODE_DKHP: "DKHPCodesList",
+            RESPONSIBILITIES: "responsibilitiesTextsList",
+            HAVE_TO_KNOW: "haveToKnowTextsList",
+            QUALIFF_REQUIR: "qualiffRequirTextsList",
+        };
+        let prevPropsListData = this.props[listNamesDict[this.state.activeListName]],
+            nextPropsListData = nextProps[listNamesDict[this.state.activeListName]];
+
+        if(!prevPropsListData || !nextPropsListData)
+            return console.error("Can't calculate prevPropsListData or nextPropsListData!");
+
+        let successfullyAddedNewVal = !prevPropsListData.addingSuccess && nextPropsListData.addingSuccess,
+            successfullyEditedVal = !prevPropsListData.updatingSuccess && nextPropsListData.updatingSuccess,
+            fetchedList = prevPropsListData.isFetching && !nextPropsListData.isFetching,
+            successfullyDeletedItem = !prevPropsListData.deletingSuccess && nextPropsListData.deletingSuccess;
+
         //очищаємо значення поля для додавання нових елементів, якщо щойно у якогось списка включився стан addingSuccess
-        let successfullyAddedNewVal =
-            !this.props.occupationGroupList.addingSuccess && nextProps.occupationGroupList.addingSuccess ||
-            !this.props.KPCodesList.addingSuccess && nextProps.KPCodesList.addingSuccess ||
-            !this.props.ZKPPTRCodesList.addingSuccess && nextProps.ZKPPTRCodesList.addingSuccess ||
-            !this.props.ETDKCodesList.addingSuccess && nextProps.ETDKCodesList.addingSuccess ||
-            !this.props.DKHPCodesList.addingSuccess && nextProps.DKHPCodesList.addingSuccess ||
-            !this.props.responsibilitiesTextsList.addingSuccess && nextProps.responsibilitiesTextsList.addingSuccess ||
-            !this.props.haveToKnowTextsList.addingSuccess && nextProps.haveToKnowTextsList.addingSuccess ||
-            !this.props.qualiffRequirTextsList.addingSuccess && nextProps.qualiffRequirTextsList.addingSuccess ||
-            !this.props.clarificationList.addingSuccess && nextProps.clarificationList.addingSuccess;
         if(successfullyAddedNewVal)
             this.setState({ addingInpVal: "" });
+
+        //якщо список змінився, оновлюємо і закешовані дані, за потреби викликаючи сортування ще раз
+        if(successfullyEditedVal || successfullyAddedNewVal || fetchedList || successfullyDeletedItem)
+            this.setState({
+                listItems: this.sortListItems(nextPropsListData.items.slice(), this.state.sortDirection)
+            });
+    }
+
+    triggerSorting() {
+        let sortDirection = (this.state.sortDirection == "SORT_ASC") ? "SORT_DESC" : "SORT_ASC";
+        return this.setState({
+            sortDirection,
+            listItems: this.sortListItems(this.state.listItems, sortDirection)
+        });
+    }
+
+    sortListItems(listItems = this.state.listItems, sortDirection = this.state.sortDirection) {
+        switch(sortDirection) {
+            case "SORT_ASC":
+                return listItems.sort((a, b) => +(a.textValue.toLocaleLowerCase() > b.textValue.toLocaleLowerCase()) || +(a.textValue.toLocaleLowerCase() === b.textValue.toLocaleLowerCase()) - 1);
+            case "SORT_DESC":
+                return listItems.sort((a, b) => +(a.textValue.toLocaleLowerCase() < b.textValue.toLocaleLowerCase()) || +(a.textValue.toLocaleLowerCase() === b.textValue.toLocaleLowerCase()) - 1);
+            default:
+                return listItems;
+        }
     }
 
     selectAddNewOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
@@ -196,7 +243,7 @@ class CtrlDcBox extends Component {
                 return () => console.error(`Called CtrlDcBox.selectAddNewOccupDcValClearMsgHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
         }
     }
-    
+
     selectDelOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
         switch(activeListName) {
             case "OCCUP_GROUP":
@@ -296,7 +343,7 @@ class CtrlDcBox extends Component {
                 return () => console.error(`Called CtrlDcBox.selectEditOccupDcValClearMsgHandler, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
         }
     }
-    
+
     getActiveListData(activeListName = this.state.activeListName) {
         switch(activeListName) {
             case "OCCUP_GROUP":
@@ -391,8 +438,12 @@ class CtrlDcBox extends Component {
         this.setState({ addingInpVal: newVal });
     }
 
-    setActiveListName(newVal) {
-        this.setState({activeListName: newVal})
+    setActiveListName(newActiveListName) {
+        this.setState({
+            sortDirection: "NONE",
+            activeListName: newActiveListName,
+            listItems: this.getActiveListData(newActiveListName).items.slice(),
+        })
     }
 
     showModalEditOccupDcVal(itemId, oldVal) {
@@ -506,13 +557,17 @@ class CtrlDcBox extends Component {
                             addingErrors={activeList.addingErrors}
                             addingSuccess={activeList.addingSuccess}
                             isSavingNewVal={activeList.isAddingNewVal}
-                            activeList={activeList}
+                            isFetchingItems={activeList.isFetching}
+                            listDataItems={this.state.listItems}
+                            fetchingErrors={activeList.errors /*TODO: замінити на fetchingErrors*/}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
                             onDelListItemBtnClick={this.showModalConfirmDelOccupDcVal}
                             expandedItems={this.state.expandedItems}
                             deletingItemId={activeList.isDeletingVal ? this.state.deletingItemId : -1}
                             onToggleExpandItem={this.handleToggleExpandItem}
+                            onTriggerSorting={this.triggerSorting}
+                            sortDirection={this.state.sortDirection}
                         />
                     </div>
                 </div>

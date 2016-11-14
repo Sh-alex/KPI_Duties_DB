@@ -3,15 +3,15 @@ import { Alert } from 'react-bootstrap'
 
 import CtrlDcBoxResTbl from "../CtrlDcBoxResTbl"
 import LoadingBlock from "../LoadingBlock"
-
+import CtrlDcBoxResListSettingsMenu from "../CtrlDcBoxResListSettingsMenu"
 import replaceApostrophe from "../../utils/replaceApostrophe"
 
 import "./styles.less";
 
 export default function CtrlDcBoxRes(props) {
-    let listIsEmpty = !(props.activeList && props.activeList.items && props.activeList.items.length),
-        listIsLoading = !props.activeList || !props.activeList.items || props.activeList && props.activeList.isFetching,
-        listHasErrors = props.activeList && props.activeList.errors  && props.activeList.errors.length,
+    let listIsEmpty = !(props.listDataItems && props.listDataItems.length),
+        listIsLoading = props.isFetchingItems,
+        listHasErrors = props.fetchingErrors  && props.fetchingErrors.length,
         mainHeader = document.getElementsByClassName("main-header"),
         mainHeaderH = mainHeader.length && mainHeader[0].clientHeight || 73,
         mainFooter = document.getElementsByClassName("main-footer"),
@@ -21,8 +21,8 @@ export default function CtrlDcBoxRes(props) {
         marginBottom = 20,
         calcContainerH = window.innerHeight - marginTop - marginBottom - mainHeaderH - mainFooterH,
         ctrlDcBoxMenuH = ctrlDcBoxMenu.length && ctrlDcBoxMenu[0].clientHeight || 1,
+        //розраховуємо висоту блока з інформацією про список(доводиться робити через JS, бо через CSS не виходить)
         resBoxMaxHeight = Math.max(...[calcContainerH, ctrlDcBoxMenuH, 200]),
-        //TODO: коли реалізовуватиму рендерінг на основі переданих даних, обирати просто який тип TR рендерити, а не всієї таблиці
         msgListIsEmpty = listIsEmpty && (
                 <Alert bsStyle="warning">
                     <p>
@@ -35,7 +35,7 @@ export default function CtrlDcBoxRes(props) {
                 <Alert bsStyle="warning">
                     <p>
                         Сталася помлка :( <br/>
-                        { props.activeList.fetchingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) }
+                        { props.fetchingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) }
                     </p>
                 </Alert>
             ),
@@ -111,19 +111,6 @@ export default function CtrlDcBoxRes(props) {
                 <i className="fa fa-plus"/>
             </button>
         ),
-        inpFilterList = (
-            <div className="input-group">
-                <input type="text" className="form-control" placeholder="Пошук значень у списку" title="Відфільтрувати таблицю по введеному рядку" />
-                <div className="input-group-btn">
-                    <button type="button" className="btn btn-default btn-flat" title="Відфільтрувати таблицю по введеному рядку">
-                        <i className="fa fa-search"/>
-                    </button>
-                    <button type="button" className="btn btn-default btn-flat" title="Переключити сортування таблиці">
-                        <i className="fa fa-sort-amount-asc"/>
-                    </button>
-                </div>
-            </div>
-        ),
         hasBigText = props.shownOccupDescrTextsList ? "has-big-text" : "";
 
     return (
@@ -133,22 +120,25 @@ export default function CtrlDcBoxRes(props) {
             {/*</div>*/}
             <div className={`box-body ${hasBigText}`} style={{maxHeight: resBoxMaxHeight + "px"}}>
                 <div>
-                    <form>
-                        <div className="form-group">
-                            { !listIsEmpty && !listIsLoading && !listHasErrors && inpFilterList }
-                        </div>
-                    </form>
+                    {
+                        !listIsEmpty && !listIsLoading && !listHasErrors && (
+                            <CtrlDcBoxResListSettingsMenu
+                                sortDirection={props.sortDirection}
+                                onTriggerSorting={props.onTriggerSorting}
+                            />
+                        )
+                    }
                 </div>
                 {
                     listHasErrors ?
-                        msgListHasErrors:
+                        msgListHasErrors :
                         listIsLoading ?
                             <LoadingBlock caption="Іде завантаження списку..." /> :
                             listIsEmpty ?
                                 msgListIsEmpty :
                                 <CtrlDcBoxResTbl
                                     shownOccupDescrTextsList={props.shownOccupDescrTextsList}
-                                    listData={props.activeList}
+                                    listDataItems={props.listDataItems}
                                     onEditListItemBtnClick={props.onEditListItemBtnClick}
                                     onDelListItemBtnClick={props.onDelListItemBtnClick}
                                     expandedItems={props.expandedItems}

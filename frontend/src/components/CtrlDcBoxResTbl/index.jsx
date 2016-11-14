@@ -34,7 +34,7 @@ function bindDelListItemHandler(itemId, itemVal, isUsedByOccup, props) {
 }
 
 export default function CtrlDcBoxResTbl(props) {
-    let tblRows = props.listData.items.map((item, itemIndex) => {
+    let tblRows = props.listDataItems.map((item, itemIndex) => {
         let isUsedByOccup = item.usingOccupations && item.usingOccupations.length,
             isNowDeletingThisItem = props.deletingItemId === item.id,
             infoRowIsExpanded = props.shownOccupDescrTextsList && props.expandedItems[item.id],
