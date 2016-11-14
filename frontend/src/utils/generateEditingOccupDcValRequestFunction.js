@@ -26,7 +26,7 @@ export default function generateEditingOccupDcValRequestFunction(params) {
                     if( 499 < response.status && response.status < 600 )
                         throw `При редагуванні значення списку ${listName} сталася помилка ${response.status} на сервері!`;
 
-                    if(response.status == 200) {
+                    if(response.ok) {
                         dispatch({
                             type: params.successConst,
                             id,
@@ -37,7 +37,7 @@ export default function generateEditingOccupDcValRequestFunction(params) {
                             onSuccess(dispatch, {id, newVal});
                     }
                     else
-                        throw `Не вдалося змінити вказане значення списку ${listName}!`;
+                        throw `Не вдалося змінити вказане значення списку ${listName}! Код відповіді сервера = ${response.status}`;
                 })
                 .catch( error => {
                     dispatch({
