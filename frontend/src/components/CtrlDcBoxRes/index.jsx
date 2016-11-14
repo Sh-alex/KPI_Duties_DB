@@ -4,6 +4,8 @@ import { Alert } from 'react-bootstrap'
 import CtrlDcBoxResTbl from "../CtrlDcBoxResTbl"
 import LoadingBlock from "../LoadingBlock"
 
+import replaceApostrophe from "../../utils/replaceApostrophe"
+
 import "./styles.less";
 
 export default function CtrlDcBoxRes(props) {
@@ -22,48 +24,81 @@ export default function CtrlDcBoxRes(props) {
         resBoxMaxHeight = Math.max(...[calcContainerH, ctrlDcBoxMenuH, 200]),
         //TODO: коли реалізовуватиму рендерінг на основі переданих даних, обирати просто який тип TR рендерити, а не всієї таблиці
         msgListIsEmpty = listIsEmpty && (
-            <Alert bsStyle="warning">
-                <p>
-                    Список поки що пустий :( <br/>
-                    Але ви можете додати сюди нові значення.
-                </p>
-            </Alert>
-        ),
+                <Alert bsStyle="warning">
+                    <p>
+                        Список поки що пустий :( <br/>
+                        Але ви можете додати сюди нові значення.
+                    </p>
+                </Alert>
+            ),
         msgListHasErrors = listHasErrors && (
-            <Alert bsStyle="warning">
-                <p>
-                    Сталася помлка :( <br/>
-                    { props.activeList.errors.map(errMsg => <p>{errMsg}</p>) }
-                </p>
-            </Alert>
-        ),
+                <Alert bsStyle="warning">
+                    <p>
+                        Сталася помлка :( <br/>
+                        { props.activeList.fetchingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) }
+                    </p>
+                </Alert>
+            ),
+        // addingNewValMsgSuccess = props.addingSuccess && (
+        //     <Alert bsStyle="success" className="no-margin" onDismiss={props.addNewOccupDcValClearMsg}>
+        //         <h4>
+        //             <i className="icon fa fa-check" />
+        //             Успіх!
+        //         </h4>
+        //         <p> Нове значення успішно додано. </p>
+        //     </Alert>
+        // ) || "",
+        addingNewValMsgErrors = props.addingErrors && props.addingErrors.length && (
+                <Alert
+                    bsStyle="danger"
+                    className="alert--add-new-occup-dc-val"
+                    onDismiss={props.addNewOccupDcValClearMsg}
+                >
+                    <h4>
+                        <i className="icon fa fa-warning" />
+                        Помилка! :(
+                    </h4>
+                    <div> { props.addingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) } </div>
+                </Alert>
+            ) || "",
         inpNewVal = (
-            <div className="input-group">
+            <div>
+                <div className="input-group">
                 <textarea
+                    value={props.addingInpVal}
+                    onChange={e => props.handleAddingInpValChange( replaceApostrophe(e.target.value) ) }
                     className="form-control show-for-big-text"
                     placeholder="Нове значення у списку"
                     title="Введіть тут нове значення щоб додати його до списку"
                     rows="6" />
-                <input
-                    type="text"
-                    className="form-control hide-for-big-text"
-                    placeholder="Нове значення у списку"
-                    title="Введіть тут нове значення щоб додати його до списку" />
-                <div className="input-group-btn">
-                    <button type="button" className="btn btn-default btn-flat" title="Додати введене значення до списку">
-                        {/*Додати*/}
-                        <i className="fa fa-save"/>
-                    </button>
-                    <br className="show-for-big-text"/>
-                    <button
-                        type="button"
-                        className="btn btn-default btn-flat"
-                        title="Відмінити додавання нового значення"
-                        onClick={props.hideAddingInp}
-                    >
-                        <i className="fa fa-close"/>
-                    </button>
+                    <input
+                        type="text"
+                        value={props.addingInpVal}
+                        onChange={e => props.handleAddingInpValChange( replaceApostrophe(e.target.value) ) }
+                        className="form-control hide-for-big-text"
+                        placeholder="Нове значення у списку"
+                        title="Введіть тут нове значення щоб додати його до списку" />
+                    <div className="input-group-btn">
+                        <button
+                            type="button"
+                            className="btn btn-default btn-flat"
+                            title="Додати введене значення до списку"
+                            onClick={e => props.addNewOccupDcValSubmit(props.addingInpVal)}
+                        >
+                            <i className={`fa ${props.isSavingNewVal ? "fa-spinner" : "fa-save"}`} />
+                        </button>
+                        <br className="show-for-big-text"/>
+                        <button
+                            type="button"
+                            className="btn btn-default btn-flat"
+                            title="Відмінити додавання нового значення"
+                            onClick={props.hideAddingInp}
+                        >
+                            <i className="fa fa-close"/>
+                        </button>
+                    </div>
                 </div>
+                { addingNewValMsgErrors }
             </div>
         ),
         btnShowAddingInp = (
@@ -114,6 +149,9 @@ export default function CtrlDcBoxRes(props) {
                                 <CtrlDcBoxResTbl
                                     shownOccupDescrTextsList={props.shownOccupDescrTextsList}
                                     listData={props.activeList}
+                                    onEditListItemBtnClick={props.onEditListItemBtnClick}
+                                    expandedItems={props.expandedItems}
+                                    onToggleExpandItemClick={props.onToggleExpandItem}
                                 />
                 }
                 <div className="btn-show-adding-inp-wrapper">

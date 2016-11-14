@@ -8,7 +8,10 @@ import {
     ADD_NEW_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
     ADD_NEW_OCCUP_CLARIFICATION_INP_CHANGE,
     ADD_NEW_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
-
+    ADD_NEW_OCCUP_KP_CODE_INP_CHANGE,
+    ADD_NEW_OCCUP_DKHP_CODE_INP_CHANGE,
+    ADD_NEW_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+    ADD_NEW_OCCUP_ETDK_CODE_INP_CHANGE,
     ADD_NEW_OCCUP_INP_IS_VIRTUAL_CHANGE
 } from '../constants/addNewOccup'
 
@@ -88,7 +91,7 @@ export default function formEditOccupInfo(state, action) {
                 }
             };
 
-            switch(action.resultsType){
+            switch(action.resultsType) {
                 case ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES:
                     if(!action.data || !action.data.codes instanceof Array)
                         return state;
@@ -262,6 +265,96 @@ export default function formEditOccupInfo(state, action) {
                 console.log("Called ADD_NEW_OCCUP_OCCUPATION_GROUP_INP_CHANGE reducer, but state is empty");
                 return state;
             }
+
+        case ADD_NEW_OCCUP_KP_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeKP": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true,
+                        },
+                        "codeKPText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true,
+                        },
+                    }
+                })
+            };
+            break;
+        case ADD_NEW_OCCUP_DKHP_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeDKHP": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeDKHPText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        }
+                    }
+                })
+            };
+            break;
+        case ADD_NEW_OCCUP_ZKPPTR_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeZKPPTR": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeZKPPTRText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        }
+                    }
+                })
+            };
+            break;
+        case ADD_NEW_OCCUP_ETDK_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeETDK": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeETDKText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        },
+                    }
+                })
+            };
+            break;
+
         default:
             return state;
     }

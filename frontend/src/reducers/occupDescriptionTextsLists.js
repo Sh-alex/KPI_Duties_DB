@@ -3,26 +3,35 @@ import * as aTypes from '../constants/occupDescriptionTextsLists'
 const initialState = {
     haveToKnowTextsList: {
         isFetching: false,
+        errors: [],
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
-        errors: [],
+        isUpdatingVal: false,
+        updatingSuccess: false,
+        updatingError: null,
         items : []
     },
     responsibilitiesTextsList: {
         isFetching: false,
+        errors: [],
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
-        errors: [],
+        isUpdatingVal: false,
+        updatingSuccess: false,
+        updatingError: null,
         items : []
     },
     qualiffRequirTextsList: {
         isFetching: false,
+        errors: [],
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
-        errors: [],
+        isUpdatingVal: false,
+        updatingSuccess: false,
+        updatingError: null,
         items : []
     }
 };
@@ -235,6 +244,158 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                     ...state.qualiffRequirTextsList,
                     addingSuccess: false,
                     addingErrors: []
+                }
+            };
+
+
+        case aTypes.EDIT_HAVE_TO_KNOW_TEXT_REQUEST:
+            return {
+                ...state,
+                haveToKnowTextsList: {
+                    ...state.haveToKnowTextsList,
+                    isUpdatingVal: true,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_HAVE_TO_KNOW_TEXT_SUCCESS:
+            return {
+                ...state,
+                haveToKnowTextsList: {
+                    ...state.haveToKnowTextsList,
+                    items: state.haveToKnowTextsList.items.map(item => {
+                        if(item.id === action.id)
+                            return {
+                                id: action.id,
+                                textValue: action.newVal,
+                                usingOccupations: item.usingOccupations.slice() //shallow copy на всяк випадок
+                            };
+                        else
+                            return item;
+                    }),
+                    isUpdatingVal: false,
+                    updatingSuccess: true,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_HAVE_TO_KNOW_TEXT_FAIL:
+            return {
+                ...state,
+                haveToKnowTextsList: {
+                    ...state.haveToKnowTextsList,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: action.error,
+                }
+            };
+        case aTypes.EDIT_HAVE_TO_KNOW_TEXT_CLEAR_MSG:
+            return {
+                ...state,
+                haveToKnowTextsList: {
+                    ...state.haveToKnowTextsList,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+
+        case aTypes.EDIT_RESPONSIBILITIES_TEXT_REQUEST:
+            return {
+                ...state,
+                responsibilitiesTextsList: {
+                    ...state.responsibilitiesTextsList,
+                    isUpdatingVal: true,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_RESPONSIBILITIES_TEXT_SUCCESS:
+            return {
+                ...state,
+                responsibilitiesTextsList: {
+                    ...state.responsibilitiesTextsList,
+                    items: state.responsibilitiesTextsList.items.map(item => {
+                        if(item.id === action.id)
+                            return {
+                                id: action.id,
+                                textValue: action.newVal,
+                                usingOccupations: item.usingOccupations.slice() //shallow copy на всяк випадок
+                            };
+                        else
+                            return item;
+                    }),
+                    isUpdatingVal: false,
+                    updatingSuccess: true,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_RESPONSIBILITIES_TEXT_FAIL:
+            return {
+                ...state,
+                responsibilitiesTextsList: {
+                    ...state.responsibilitiesTextsList,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: action.error,
+                }
+            };
+        case aTypes.EDIT_RESPONSIBILITIES_TEXT_CLEAR_MSG:
+            return {
+                ...state,
+                responsibilitiesTextsList: {
+                    ...state.responsibilitiesTextsList,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+
+        case aTypes.EDIT_QUALIFF_REQUIR_TEXT_REQUEST:
+            return {
+                ...state,
+                qualiffRequirTextsList: {
+                    ...state.qualiffRequirTextsList,
+                    isUpdatingVal: true,
+                    updatingSuccess: false,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_QUALIFF_REQUIR_TEXT_SUCCESS:
+            return {
+                ...state,
+                qualiffRequirTextsList: {
+                    ...state.qualiffRequirTextsList,
+                    items: state.qualiffRequirTextsList.items.map(item => {
+                        if(item.id === action.id)
+                            return {
+                                id: action.id,
+                                textValue: action.newVal,
+                                usingOccupations: item.usingOccupations.slice() //shallow copy на всяк випадок
+                            };
+                        else
+                            return item;
+                    }),
+                    isUpdatingVal: false,
+                    updatingSuccess: true,
+                    updatingError: null
+                }
+            };
+        case aTypes.EDIT_QUALIFF_REQUIR_TEXT_FAIL:
+            return {
+                ...state,
+                qualiffRequirTextsList: {
+                    ...state.qualiffRequirTextsList,
+                    isUpdatingVal: false,
+                    updatingSuccess: false,
+                    updatingError: action.error,
+                }
+            };
+
+        case aTypes.EDIT_QUALIFF_REQUIR_TEXT_CLEAR_MSG:
+            return {
+                ...state,
+                qualiffRequirTextsList: {
+                    ...state.qualiffRequirTextsList,
+                    updatingSuccess: false,
+                    updatingError: null
                 }
             };
 
