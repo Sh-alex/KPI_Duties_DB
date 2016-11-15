@@ -129,6 +129,7 @@ public class UsingOccupationsImpl implements UsingOccupations {
 
             Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
 
+            criteria.add(Restrictions.eq("rtDuties.dcDutiesNameId", item.getId()));
             List<RtDutiesEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).distinct().collect(Collectors.toList());
@@ -151,6 +152,7 @@ public class UsingOccupationsImpl implements UsingOccupations {
 
             Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
 
+            criteria.add(Restrictions.eq("rtDuties.dcDutiesPartitionId", item.getId()));
             List<RtDutiesEntity> list = criteria.list();
 
             List<Integer> usingOccupationsId = list.stream().map(i -> i.getId()).distinct().collect(Collectors.toList());
