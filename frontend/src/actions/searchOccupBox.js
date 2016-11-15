@@ -88,20 +88,15 @@ function downloadSearchOccupResFail (error) {
     }
 }
 
-export function downloadSearchOccupRes(fields, dispatch) {
+export function downloadSearchOccupRes(fieldsArr, dispatch) {
     return function (dispatch, getState) {    //thunk щоб зробити асинхронний action
         let searchResData = getState().searchOccupBox.searchResData,
-            fieldsArr = [],
-            field, occupIds;
+            occupIds;
 
         if(!searchResData || !searchResData.itemsList || !searchResData.itemsList.length)
-            return dispatch(downloadSearchOccupResFail("Сталася неочікувана помилка при спробі завантажити результати пошуку: не вдалося визначити список посад які треба завантажити!"));
+            return dispatch(downloadSearchOccupResFail("Сталася неочікувана помилка при спробі завантажити результати пошуку: не вдалося визначити ідентифікатори посад які треба завантажити!"));
 
         occupIds = searchResData.itemsList;
-        for(field in fields) {
-            if(fields.hasOwnProperty(field) && fields[field]) // якщо відповідне поле == true
-                fieldsArr.push(field)
-        }
 
         if(!fieldsArr.length)
             return dispatch(downloadSearchOccupResFail("Не можна завантажити результати пошуку без жодного поля!"));
