@@ -50,7 +50,7 @@ export default function CtrlDcBoxRes(props) {
                 </Alert>
             ),
         msgListHasErrors = listHasErrors && (
-                <Alert bsStyle="warning">
+                <Alert bsStyle="danger" className="no-margin">
                     <p>
                         Сталася помлка :( <br/>
                         { props.fetchingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) }
