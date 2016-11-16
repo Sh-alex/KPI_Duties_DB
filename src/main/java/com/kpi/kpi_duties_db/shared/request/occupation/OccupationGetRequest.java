@@ -14,6 +14,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OccupationGetRequest {
 
+    @JsonProperty("occupIds")
+    private List<String> idList;
+
     private List<String> searchType;
 
     @JsonProperty("searchText")
@@ -34,6 +37,14 @@ public class OccupationGetRequest {
     private List<Date> stopTo;
 
     private List<String> inKpi;
+
+    public List<String> getIdList() {
+        return idList;
+    }
+
+    public void setIdList(List<String> idList) {
+        this.idList = idList;
+    }
 
     public List<String> getSearchType() {
         return searchType;

@@ -45,6 +45,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 Object value = paramsMap.get(paramName);
                 if (value != null) {
                     switch (paramName) {
+                        case "idList":
+                            criteria.add(Restrictions.in("id", (ArrayList) value));
+                            break;
                         case "rtDutiesName":
                             if (paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
