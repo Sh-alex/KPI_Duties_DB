@@ -168,6 +168,10 @@ export default function CtrlDcBoxRes(props) {
                                         expandedItems={props.expandedItems}
                                         deletingItemId={props.deletingItemId}
                                         onToggleExpandItemClick={props.onToggleExpandItem}
+                                        occupNamesById={props.occupNamesById}
+                                        onUsingOccupNameClick={props.onUsingOccupNameClick}
+                                        onToggleUsingOccupListBtnClick={props.onToggleUsingOccupListBtnClick}
+                                        shownUsingOccupRows={props.shownUsingOccupRows}
                                     />
                 }
                 <div className="btn-show-adding-inp-wrapper">

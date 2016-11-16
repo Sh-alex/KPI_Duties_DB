@@ -2,21 +2,16 @@ import React, {Component} from "react";
 import classNames from "classnames"
 import "./styles.less";
 
+import CtrlDcBoxResTblUsingOccupRow from "../CtrlDcBoxResTblUsingOccupRow"
+
 function bindToggleExpandItemHandler(itemId, props) {
     return () => {
         return props.onToggleExpandItemClick(itemId)
     }
 }
-
-function bindUsingOccupClickHandler(itemId, props) {
-    return () => {
-        //return props.onUsingOccupNameClick(itemId)
-    }
-}
-
 function bindToggleUsingOccupList(itemId, props) {
     return () => {
-        //return props.onToggleUsingOccupListBtnClick(itemId)
+        return props.onToggleUsingOccupListBtnClick(itemId)
     }
 }
 
@@ -38,7 +33,7 @@ export default function CtrlDcBoxResTbl(props) {
         let isUsedByOccup = item.usingOccupations && item.usingOccupations.length,
             isNowDeletingThisItem = props.deletingItemId === item.id,
             infoRowIsExpanded = props.shownOccupDescrTextsList && props.expandedItems[item.id],
-            showUsingOccupRow = false,//props.shownUsingOccupRows[item.id],
+            showUsingOccupRow = isUsedByOccup && props.shownUsingOccupRows[item.id],
             btnUsingOccupClassName = classNames({
                 "text-muted": true,
                 "action-btns-cell__btn": true,
@@ -102,32 +97,15 @@ export default function CtrlDcBoxResTbl(props) {
                     </th>
                 </tr>
             ),
-            //TODO: Рендерити список у окремому компоненті, який братиме назви посад із списку уточнень
-            usingOccupList = isUsedByOccup && showUsingOccupRow && item.usingOccupations.map((usingOccupId, i) => {
-                    return (
-                        <a
-                            title="Натисніть щоб відредагувати посаду"
-                            href="javascript:void(0)"
-                            key={item.id+i}
-                            onClick={bindUsingOccupClickHandler(usingOccupId)}
-                        >
-                            {props.occupNamesById[usingOccupId]}
-                        </a>
-                    );
-                }),
-            usingOccupRow = isUsedByOccup && showUsingOccupRow && (
-                    <tr className="row--details" key={item.id+"_2"}>
-                        <td className="" colSpan="10">
-                            <div>
-                                <i> Посади що використовують це значення: </i>
-                            </div>
-                            <div className="list-of-using-occup">
-                                {usingOccupList}
-                            </div>
-                        </td>
-                    </tr>
-                ) || "";
-
+            usingOccupRow = (
+                <CtrlDcBoxResTblUsingOccupRow
+                    key={item.id+"_2"}
+                    usingOccupationsArr={item.usingOccupations}
+                    show={showUsingOccupRow}
+                    occupNamesById={props.occupNamesById}
+                    onUsingOccupNameClick={props.onUsingOccupNameClick}
+                />
+            );
         return [infoRow, usingOccupRow];
     });
 

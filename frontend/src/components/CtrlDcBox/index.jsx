@@ -13,6 +13,7 @@ import "./styles.less";
 import {
     fetchOccupGroupList,
     fetchClarificationList,
+    fetchClarifiedOccupList,
 
     addNewClarification,
     dismissModalAddNewClarificationAlert,
@@ -111,6 +112,7 @@ class CtrlDcBox extends Component {
             dontShowAgainDelModal: false,               //більше не показувати повідомлення із підтвердженням видалення посади
             sortDirection: "NONE",                      //напрям сортування списку, одне із: NONE/SORT_ASC/SORT_DESC
             expandedItems: {},                          //які елементи розкриті(показується повне значення елемента списку чи скорочене)
+            shownUsingOccupRows: {},
         };
 
         this.showAddingInp = this.showAddingInp.bind(this);
@@ -138,6 +140,8 @@ class CtrlDcBox extends Component {
         this.selectEditOccupDcValClearMsgHandler = this.selectEditOccupDcValClearMsgHandler.bind(this);
         this.getActiveListData = this.getActiveListData.bind(this);
         this.getActiveListTitle = this.getActiveListTitle.bind(this);
+        this.handleToggleUsingOccupListBtnClick = this.handleToggleUsingOccupListBtnClick.bind(this);
+        this.handleUsingOccupNameClick = this.handleUsingOccupNameClick.bind(this);
     }
 
     componentDidMount() {
@@ -522,6 +526,27 @@ class CtrlDcBox extends Component {
         this.setState({ dontShowAgainDelModal: !this.state.dontShowAgainDelModal });
     }
 
+    handleToggleUsingOccupListBtnClick(itemId) {
+        if(this.state.shownUsingOccupRows[itemId]) {
+            let newShownUsingOccupRowsState = Object.assign({}, this.state.shownUsingOccupRows);
+            delete newShownUsingOccupRowsState[itemId];
+            this.setState({
+                shownUsingOccupRows: newShownUsingOccupRowsState
+            });
+        } else {
+            this.setState({
+                shownUsingOccupRows: {
+                    ...this.state.shownUsingOccupRows,
+                    [itemId]: true
+                }
+            });
+        }
+    }
+
+    handleUsingOccupNameClick(occupId) {
+        console.log("handleUsingOccupNameClick, occupId = " + occupId);
+    }
+
     render() {
         let shownOccupDescrTextsList = ["RESPONSIBILITIES", "HAVE_TO_KNOW", "QUALIFF_REQUIR"].includes(this.state.activeListName),
             showModalEditOccupDcVal = (this.state.editingItemId !== null),
@@ -583,6 +608,7 @@ class CtrlDcBox extends Component {
                             isSavingNewVal={activeList.isAddingNewVal}
                             isFetchingItems={activeList.isFetching}
                             listDataItems={this.state.listItems}
+                            occupNamesById={this.props.occupNamesById}
                             fetchingErrors={activeList.errors /*TODO: замінити на fetchingErrors*/}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
@@ -596,6 +622,9 @@ class CtrlDcBox extends Component {
                             filterList={this.filterList}
                             onChangeFilterListInpVal={this.onChangeFilterListInpVal}
                             resetFilterListInpVal={this.resetFilterListInpVal}
+                            onUsingOccupNameClick={this.handleUsingOccupNameClick}
+                            onToggleUsingOccupListBtnClick={this.handleToggleUsingOccupListBtnClick}
+                            shownUsingOccupRows={this.state.shownUsingOccupRows}
                         />
                     </div>
                 </div>
@@ -605,16 +634,28 @@ class CtrlDcBox extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    //Робимо хеш-таблицю з масиву для швидшого пошуку назв посад по id
+    let occupNamesById = {
+        fetchingError: state.occupationNameInfo.clarifiedOccupationList.errors.join(". "),
+        isFetching: state.occupationNameInfo.clarifiedOccupationList.isFetching,
+        items: {}
+    };
+    state.occupationNameInfo.clarifiedOccupationList.items.forEach(item => {
+        occupNamesById.items[item.id] = item.textValue;
+    });
+
     return {
         ...state.occupationNameInfo,
         ...state.occupCodesLists,
         ...state.occupDescriptionTextsLists,
+        occupNamesById
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchLists() {
+            dispatch(fetchClarifiedOccupList());
             dispatch(fetchOccupGroupList());
             dispatch(fetchClarificationList());
 
