@@ -16,6 +16,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OccupationGetDto {
 
+    private List<Integer> idList;
+
     @NotNull
     private String searchType;
 
@@ -34,6 +36,14 @@ public class OccupationGetDto {
     private Date stopTo;
 
     private String inKpi;
+
+    public List<Integer> getIdList() {
+        return idList;
+    }
+
+    public void setIdList(List<Integer> idList) {
+        this.idList = idList;
+    }
 
     public String getSearchType() {
         return searchType;
