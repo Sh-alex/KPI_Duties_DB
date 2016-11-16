@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Alert } from 'react-bootstrap'
-
+import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import {
     hideModalResDownloadSettings,
     dismissDownloadSearchOccupResAlert,
@@ -10,32 +10,162 @@ import {
 
 import './styles.less'
 
+const DragHookBtn = SortableHandle(() => <div className="drag-hook-btn">::</div>); // This can be any component you want
+
+const SortableItem = SortableElement( props => {
+    return (
+        <li className="list-res-download-settings-item">
+            <span className="order-num" title="Порядковий номер стовпця у результуючій таблиці">
+                { props.item.show ? props.orderNum : "-" }
+            </span>
+            <span className="checkbox">
+                <label title="Переключити наявність поля у результуючій таблиці">
+                    <input
+                        type="checkbox"
+                        checked={props.item.show}
+                        onChange={ e => props.onTriggerFieldShow(props.item.fieldId, e.currentTarget.checked) } />
+                    { props.item.fieldTitle }
+                </label>
+            </span>
+            <DragHookBtn />
+        </li>
+    )
+});
+
+const SortableList = SortableContainer( props => {
+    let orderNumOffset = 0; //номер який показуємо у таблиці менший на кількість вимкнених елементів
+    return (
+        <ul className="list-res-download-settings list-unstyled">
+            {
+                props.items.map((item, i) => {
+                    if(!item.show)
+                        ++orderNumOffset;
+                    return (
+                        <SortableItem
+                            key={`item-${i}`}
+                            index={i}
+                            orderNum={1 + i - orderNumOffset}
+                            onTriggerFieldShow={props.onTriggerFieldShow}
+                            item={item} />
+                    );
+                })
+            }
+        </ul>
+    );
+});
+
 class ModalResDownloadSettings extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            occupationName: true,
-            occupationNameMin: true,
-            occupationGroup: true,
-            qualiffRequirText: true,
-            qualiffRequirStartDate: true,
-            qualiffRequirEndDate: true,
-            responsibilitiesText: true,
-            responsibilitiesStartDate: true,
-            responsibilitiesEndDate: true,
-            haveToKnowText: true,
-            haveToKnowStartDate: true,
-            haveToKnowEndDate: true,
-            codeDKHP: true,
-            codeETDK: true,
-            codeKP: true,
-            codeZKPPTR: true,
-            codesStartDate: true,
-            codesEndDate: true,
-            durationsStartDate: true,
-            durationsStopDate: true,
-            inKpi: true
+            items: [
+                {
+                    fieldId: "occupationName",
+                    fieldTitle: "Назва посади",
+                    show: true
+                },
+                {
+                    fieldId: "occupationNameMin",
+                    fieldTitle: "Скорочена назва посади",
+                    show: true
+                },
+                {
+                    fieldId: "occupationGroup",
+                    fieldTitle: "Посадовий склад",
+                    show: true
+                },
+                {
+                    fieldId: "qualiffRequirText",
+                    fieldTitle: "Кваліфікаційні вимоги: текст",
+                    show: true
+                },
+                {
+                    fieldId: "qualiffRequirStartDate",
+                    fieldTitle: "Кваліфікаційні вимоги: дата прийняття тексту",
+                    show: true
+                },
+                {
+                    fieldId: "qualiffRequirEndDate",
+                    fieldTitle: "Кваліфікаційні вимоги: дата відміни тексту",
+                    show: true
+                },
+                {
+                    fieldId: "responsibilitiesText",
+                    fieldTitle: "Завдання, обов'язки та повноваження: текст",
+                    show: true
+                },
+                {
+                    fieldId: "responsibilitiesStartDate",
+                    fieldTitle: "Завдання, обов'язки та повноваження: дата прийняття тексту",
+                    show: true
+                },
+                {
+                    fieldId: "responsibilitiesEndDate",
+                    fieldTitle: "Завдання, обов'язки та повноваження: дата відміни тексту",
+                    show: true
+                },
+                {
+                    fieldId: "haveToKnowText",
+                    fieldTitle: "Повинен знати: текст",
+                    show: true
+                },
+                {
+                    fieldId: "haveToKnowStartDate",
+                    fieldTitle: "Повинен знати: дата прийняття тексту",
+                    show: true
+                },
+                {
+                    fieldId: "haveToKnowEndDate",
+                    fieldTitle: "Повинен знати: дата відміни тексту",
+                    show: true
+                },
+                {
+                    fieldId: "codeDKHP",
+                    fieldTitle: "Код ДКХП",
+                    show: true
+                },
+                {
+                    fieldId: "codeETDK",
+                    fieldTitle: "Код ЄТДК",
+                    show: true
+                },
+                {
+                    fieldId: "codeKP",
+                    fieldTitle: "Код КП",
+                    show: true
+                },
+                {
+                    fieldId: "codeZKPPTR",
+                    fieldTitle: "Код ЗКППТР",
+                    show: true
+                },
+                {
+                    fieldId: "codesStartDate",
+                    fieldTitle: "Дата прийняття кодів",
+                    show: true
+                },
+                {
+                    fieldId: "codesEndDate",
+                    fieldTitle: "Дата відміни кодів",
+                    show: true
+                },
+                {
+                    fieldId: "durationsStartDate",
+                    fieldTitle: "Дати створення посади",
+                    show: true
+                },
+                {
+                    fieldId: "durationsStopDate",
+                    fieldTitle: "Дати відміни посади",
+                    show: true
+                },
+                {
+                    fieldId: "inKpi",
+                    fieldTitle: "Приналежність до КПІ",
+                    show: true
+                },
+            ],
         };
 
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -43,11 +173,32 @@ class ModalResDownloadSettings extends Component {
 
     handleFormSubmit(e) {
         e.preventDefault();
-        this.props.downloadSearchOccupRes(this.state)
+        let filteredFieldsList = this.state.items
+            .filter(item => item.show)
+            .map(item => item.fieldId);
+        this.props.downloadSearchOccupRes(filteredFieldsList)
     }
 
+    onTriggerFieldShow = (fieldId, show) => {
+        this.setState({
+            items: this.state.items.map(item => {
+                if(item.fieldId == fieldId)
+                    return { ...item, show};
+                else
+                    return item
+            })
+        });
+    };
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.setState({
+            items: arrayMove(this.state.items, oldIndex, newIndex)
+        });
+    };
+
     render() {
-        let msgAlert = this.props.downloadResError && (
+        let selectedNoOneItem = !this.state.items.filter(item => item.show).length,
+            msgError = this.props.downloadResError && (
                 <div>
                     <br/>
                     <Alert bsStyle="danger" onDismiss={this.props.dismissDownloadSearchOccupResAlert} className="no-margin">
@@ -58,7 +209,19 @@ class ModalResDownloadSettings extends Component {
                         <p> { this.props.downloadResError } </p>
                     </Alert>
                 </div>
-            ) || "";
+            ) || "",
+            msgSelectedNoOneItem = selectedNoOneItem && (
+                    <div>
+                        <br/>
+                        <Alert bsStyle="warning" className="no-margin">
+                            <h4>
+                                <i className="icon fa fa-warning" />
+                                Увага!
+                            </h4>
+                            <p> Щоб завантажити результати, необхідно обрати хоча б одне поле. </p>
+                        </Alert>
+                    </div>
+                ) || "";
 
         return (
             <Modal show={this.props.showModal} onHide={this.props.onHideModal}>
@@ -69,202 +232,22 @@ class ModalResDownloadSettings extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <form role="form" onSubmit={this.handleFormSubmit} className="form-horizontal" id="form-res-download-settings">
-                        <div>
+                        <p className="text-center">
                             <b> Оберіть поля посад які треба експорувати у файл: </b>
-                        </div>
+                        </p>
                         <div className="form-inner">
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.occupationName}
-                                        onChange={ e => this.setState({ occupationName: e.currentTarget.checked }) } />
-                                    Назва посади
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.occupationNameMin}
-                                        onChange={ e => this.setState({ occupationNameMin: e.currentTarget.checked }) } />
-                                    Скорочена назва посади
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.occupationGroup}
-                                        onChange={ e => this.setState({ occupationGroup: e.currentTarget.checked }) } />
-                                    Посадовий склад
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.qualiffRequirText}
-                                        onChange={ e => this.setState({ qualiffRequirText: e.currentTarget.checked }) } />
-                                    Кваліфікаційні вимоги: текст
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.qualiffRequirStartDate}
-                                        onChange={ e => this.setState({ qualiffRequirStartDate: e.currentTarget.checked }) } />
-                                    Кваліфікаційні вимоги: дата прийняття тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.qualiffRequirEndDate}
-                                        onChange={ e => this.setState({ qualiffRequirEndDate: e.currentTarget.checked }) } />
-                                    Кваліфікаційні вимоги: дата відміни тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.responsibilitiesText}
-                                        onChange={ e => this.setState({ responsibilitiesText: e.currentTarget.checked }) } />
-                                    Завдання, обов'язки та повноваження: текст
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.responsibilitiesStartDate}
-                                        onChange={ e => this.setState({ responsibilitiesStartDate: e.currentTarget.checked }) } />
-                                    Завдання, обов'язки та повноваження: дата прийняття тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.responsibilitiesEndDate}
-                                        onChange={ e => this.setState({ responsibilitiesEndDate: e.currentTarget.checked }) } />
-                                    Завдання, обов'язки та повноваження: дата відміни тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.haveToKnowText}
-                                        onChange={ e => this.setState({ haveToKnowText: e.currentTarget.checked }) } />
-                                    Повинен знати: текст
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.haveToKnowStartDate}
-                                        onChange={ e => this.setState({ haveToKnowStartDate: e.currentTarget.checked }) } />
-                                    Повинен знати: дата прийняття тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.haveToKnowEndDate}
-                                        onChange={ e => this.setState({ haveToKnowEndDate: e.currentTarget.checked }) } />
-                                    Повинен знати: дата відміни тексту
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codeDKHP}
-                                        onChange={ e => this.setState({ codeDKHP: e.currentTarget.checked }) } />
-                                    Код ДКХП
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codeKP}
-                                        onChange={ e => this.setState({ codeKP: e.currentTarget.checked }) } />
-                                    Код КП
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codeZKPPTR}
-                                        onChange={ e => this.setState({ codeZKPPTR: e.currentTarget.checked }) } />
-                                    Код ЗКППТР
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codeETDK}
-                                        onChange={ e => this.setState({ codeETDK: e.currentTarget.checked }) } />
-                                    Код ЄТДК
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codesStartDate}
-                                        onChange={ e => this.setState({ codesStartDate: e.currentTarget.checked }) } />
-                                    Дата прийняття кодів
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.codesEndDate}
-                                        onChange={ e => this.setState({ codesEndDate: e.currentTarget.checked }) } />
-                                    Дата відміни кодів
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.durationsStartDate}
-                                        onChange={ e => this.setState({ durationsStartDate: e.currentTarget.checked }) } />
-                                    Дати створення посади
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.durationsStopDate}
-                                        onChange={ e => this.setState({ durationsStopDate: e.currentTarget.checked }) } />
-                                    Дати відміни посади
-                                </label>
-                            </div>
-                            <div className="checkbox">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.inKpi}
-                                        onChange={ e => this.setState({ inKpi: e.currentTarget.checked }) } />
-                                    Приналежність до КПІ
-                                </label>
-                            </div>
+                            <SortableList
+                                helperClass="list-res-download-settings-helper-item"
+                                lockAxis="y"
+                                items={this.state.items}
+                                onSortEnd={this.onSortEnd}
+                                onTriggerFieldShow={this.onTriggerFieldShow}
+                                useDragHandle={true}
+                            />
                         </div>
                     </form>
-                    { msgAlert }
+                    { msgError }
+                    { msgSelectedNoOneItem }
                 </Modal.Body>
                 <Modal.Footer>
                     <button type="button" className="btn btn-default pull-left" onClick={this.props.onHideModal}>
@@ -274,7 +257,7 @@ class ModalResDownloadSettings extends Component {
                         type="submit"
                         form="form-res-download-settings"
                         className="btn btn-primary"
-                        disabled={this.props.isLoading}
+                        disabled={this.props.isLoading || selectedNoOneItem}
                     >
                         <span className="btn-label"> Завантажити </span>
                         { this.props.isLoading && ( <i className="fa fa-spinner fa-pulse" /> ) }
