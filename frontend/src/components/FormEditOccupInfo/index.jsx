@@ -289,6 +289,8 @@ export default class FormEditOccupInfo extends Component {
                         portion.codeETDK.touched &&  portion.codeETDK.error ||
                         portion.codeZKPPTR.touched &&  portion.codeZKPPTR.error;
                 }, false) ||
+                mainInfoDocRef.docName && mainInfoDocRef.docName.touched && mainInfoDocRef.docName.error ||
+                mainInfoDocRef.docLink && mainInfoDocRef.docLink.touched && mainInfoDocRef.docLink.error ||
                 responsibilities.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
@@ -303,7 +305,9 @@ export default class FormEditOccupInfo extends Component {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
                         portion.text.touched &&  portion.text.error;
-                }, false);
+                }, false) ||
+                descriptionDocRef.docName && descriptionDocRef.docName.touched && descriptionDocRef.docName.error ||
+                descriptionDocRef.docLink && descriptionDocRef.docLink.touched && descriptionDocRef.docLink.error;
 
         return (
             <div className="form-edit-occup-info-wrapper">
@@ -506,7 +510,7 @@ export default class FormEditOccupInfo extends Component {
                                 </OverlayTrigger>
                                 <button
                                     type="submit"
-                                    disabled={submitting}
+                                    disabled={submitting || validationError}
                                     className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
                                 >
                                     {
