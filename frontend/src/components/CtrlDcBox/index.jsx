@@ -5,6 +5,7 @@ import CtrlDcBoxRes from '../CtrlDcBoxRes'
 import CtrlDcBoxMenu from '../CtrlDcBoxMenu'
 import ModalEditOccupDcVal from '../ModalEditOccupDcVal'
 import ModalConfirmDelItem from "../ModalConfirmDelItem"
+import ModalEditOccup from "../ModalEditOccup"
 
 import trimSubstr from "../../utils/trimSubstr"
 
@@ -92,6 +93,7 @@ import {
     delResponsibilitiesTextClearMsg,
 } from "../../actions/occupDescriptionTextsLists"
 
+import { showModalEditOccup } from "../../actions/editOccup"
 
 class CtrlDcBox extends Component {
     constructor(props) {
@@ -470,6 +472,8 @@ class CtrlDcBox extends Component {
         this.setState({
             sortDirection: "NONE",
             activeListName: newActiveListName,
+            expandedItems: {},                      //обнуляємо перелік розгорнутих елементів для іншого обраного списку
+            shownUsingOccupRows: {},                //обнуляємо перелік розгорнутих елементів для іншого обраного списку
             listItems: this.getActiveListData(newActiveListName).items.slice(),
         })
     }
@@ -544,7 +548,7 @@ class CtrlDcBox extends Component {
     }
 
     handleUsingOccupNameClick(occupId) {
-        console.log("handleUsingOccupNameClick, occupId = " + occupId);
+        this.props.showModalEditOccup(occupId);
     }
 
     render() {
@@ -569,6 +573,7 @@ class CtrlDcBox extends Component {
                         />
                     </div>
                     <div className="col-xs-12 col-sm-6">
+                        <ModalEditOccup />
                         <ModalEditOccupDcVal
                             additionalTitle={activeListTitle}
                             inpVal={this.state.editingInpVal}
@@ -730,6 +735,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         delHaveToKnowTextClearMsg: () => dispatch(delHaveToKnowTextClearMsg()),
         delQualiffRequirTextClearMsg: () => dispatch(delQualiffRequirTextClearMsg()),
         delResponsibilitiesTextClearMsg: () => dispatch(delResponsibilitiesTextClearMsg()),
+
+        showModalEditOccup(editingOccupId) {
+            dispatch(showModalEditOccup(editingOccupId));
+        },
     }
 };
 
