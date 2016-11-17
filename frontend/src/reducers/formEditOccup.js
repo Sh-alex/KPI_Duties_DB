@@ -23,7 +23,10 @@ import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
 } from '../constants/addingInfoFromAnotherOccup'
 
-import { SHOW_MODAL_EDIT_OCCUP } from '../constants/modalEditOccup'
+import {
+    SHOW_MODAL_EDIT_OCCUP,
+    FETCH_EDITING_OCCUP_DATA_SUCCESS
+} from '../constants/modalEditOccup'
 
 function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
     if(clarifiedOccupTextVal && clarificationTextVal)
@@ -203,7 +206,10 @@ export default function formEditOccup(state, action) {
 
 
         case SHOW_MODAL_EDIT_OCCUP:
-            let ShowModalEditOccupDescrTextMappingFunc = portion => {
+        case FETCH_EDITING_OCCUP_DATA_SUCCESS:
+            if(!action.editingData)
+                return state;
+            let showModalEditOccupDescrTextMappingFunc = portion => {
                 return {
                     "portionStartDate": {
                         "initial": null,
@@ -359,9 +365,9 @@ export default function formEditOccup(state, action) {
                         }
                     }
                 }),
-                responsibilities: action.editingData.data.responsibilities.map( ShowModalEditOccupDescrTextMappingFunc ),
-                haveToKnow: action.editingData.data.haveToKnow.map( ShowModalEditOccupDescrTextMappingFunc ),
-                qualiffRequir: action.editingData.data.qualiffRequir.map( ShowModalEditOccupDescrTextMappingFunc )
+                responsibilities: action.editingData.data.responsibilities.map( showModalEditOccupDescrTextMappingFunc ),
+                haveToKnow: action.editingData.data.haveToKnow.map( showModalEditOccupDescrTextMappingFunc ),
+                qualiffRequir: action.editingData.data.qualiffRequir.map( showModalEditOccupDescrTextMappingFunc )
             };
 
 
