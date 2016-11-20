@@ -101,49 +101,60 @@ export function downloadSearchOccupRes(fieldsArr, dispatch) {
         if(!fieldsArr.length)
             return dispatch(downloadSearchOccupResFail("Не можна завантажити результати пошуку без жодного поля!"));
 
-        dispatch(downloadSearchOccupResRequest(occupIds, fieldsArr));
+        //dispatch(downloadSearchOccupResRequest(occupIds, fieldsArr));
 
-        //   /api/occupations/downloadSearchResults?occupIds=2,5,8,10,16,22,23,27,28&fields=occupationName,occupationNameMin,occupationGroup,qualiffRequirText,responsibilitiesText,haveToKnowText,codeDKHP,codeETDK,codeKP,codeZKPPTR,durationsStartDate,durationsStopDate,inKpi
-        return fetch(
-            `${API_DOWNLOAD_SEARCH_OCCUP_RES}?occupIds=${occupIds}&fields=${fieldsArr}`,
-            {
-                credentials: 'include',
-                mode: 'cors',
-                method: 'get',
-                // headers: {
-                //     //'X-CSRFToken': CSRF_TOKEN
-                // }
-            }
-        )
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При спробі завантажити результати пошуку не знайдено відповідного методу на сервері!';
-                if(response.status === 400)
-                    throw 'Не вдалося завантажити результати пошуку: передано некоректні дані на сервер';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При завантажити результати пошуку сталася помилка ${response.status} на сервері!`;
-                if(response.status !== 200)
-                    throw 'Сталася невідома помилка при спробі завантажити результати пошуку!';
+        // api/occupations/downloadSearchResults?occupIds=2,5,8,10,16,22,23,27,28&fields=occupationName,occupationNameMin,occupationGroup,qualiffRequirText,responsibilitiesText,haveToKnowText,codeDKHP,codeETDK,codeKP,codeZKPPTR,durationsStartDate,durationsStopDate,inKpi
+        let searchURI = `${API_DOWNLOAD_SEARCH_OCCUP_RES}?occupIds=${occupIds}&fields=${fieldsArr}`;
 
-                // var contentType = response.headers.get("content-type");
-                // if(contentType && contentType.indexOf("text/plain") !== -1) {
-                    return response.text();
-                // }
-            })
-            .then( link => {
-                if(!link)   //TODO: перевіряти регулярним виразом
-                    throw "Отримано некоректне посилання на файл від сервера!";
+        window.open(searchURI, '_blank');
+        dispatch(hideModalResDownloadSettings());
 
-                window.open(link);
-
-                dispatch(downloadSearchOccupResSuccess(link));
-                dispatch(hideModalResDownloadSettings());
-            })
-            .catch( error => {
-                if(!error || !(typeof error == "string"))
-                    error = 'Сталася невідома помилка при спробі завантажити результати пошуку!';
-                dispatch(downloadSearchOccupResFail(error));
-            })
+        // Легше не відправляти ніяких запитів, а просто відкрити посилання у новій вкладці
+        // return fetch(
+        //     searchURI,
+        //     {
+        //         credentials: 'include',
+        //         mode: 'cors',
+        //         method: 'get',
+        //         // headers: {
+        //         //     //'X-CSRFToken': CSRF_TOKEN
+        //         // }
+        //     }
+        // )
+        //     .then( response => {
+        //         if(response.status === 404)
+        //             throw 'При спробі завантажити результати пошуку не знайдено відповідного методу на сервері!';
+        //         if(response.status === 400)
+        //             throw 'Не вдалося завантажити результати пошуку: передано некоректні дані на сервер';
+        //         if( 499 < response.status && response.status < 600 )
+        //             throw `При завантажити результати пошуку сталася помилка ${response.status} на сервері!`;
+        //         if(response.status !== 200)
+        //             throw 'Сталася невідома помилка при спробі завантажити результати пошуку!';
+        //
+        //         var contentType = response.headers.get("content-type");
+        //         if(contentType && contentType.indexOf("blob") !== -1) {
+        //             return response.blob();
+        //         }
+        //     })
+        //     .then( blob => {
+        //         if(!blob)
+        //             throw "Отримано некоректне посилання на файл від сервера!";
+        //
+        //         var link = document.createElement('a');
+        //         link.href = window.URL.createObjectURL(blob);
+        //         link.download="Результати пошуку " + new Date() + ".xlsx";
+        //         link.click();
+        //
+        //         window.open(link);
+        //
+        //         dispatch(downloadSearchOccupResSuccess(link));
+        //         dispatch(hideModalResDownloadSettings());
+        //     })
+        //     .catch( error => {
+        //         if(!error || !(typeof error == "string"))
+        //             error = 'Сталася невідома помилка при спробі завантажити результати пошуку!';
+        //         dispatch(downloadSearchOccupResFail(error));
+        //     })
     }
 }
 
