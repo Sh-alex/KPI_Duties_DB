@@ -17,14 +17,11 @@ import {
 } from '../constants/user'
 
 import {
-    ROUTING
-} from '../constants/Routing'
-
-import {
     LOGIN_USER as URI_LOGIN_USER,
     GET_USER_INFO_BY_TOKEN as URI_GET_USER_INFO_BY_TOKEN
 } from "../constants/API_URIs"
 
+import { push as historyPushStateAction, replace, go } from 'react-router-redux'
 
 
 function loginUserRequest (data) {
@@ -116,10 +113,10 @@ export function logInUser(authData, dispatch) {
 
 
 export function logOutUser() {
-    localStorage.removeItem('refresh_token');
-
-    return {
-        type: LOGOUT_SUCCESS
+    return function (dispatch) {
+        localStorage.removeItem('refresh_token');
+        dispatch(historyPushStateAction("/"));
+        dispatch({ type: LOGOUT_SUCCESS });
     }
 }
 
