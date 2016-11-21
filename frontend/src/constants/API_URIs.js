@@ -46,6 +46,5 @@ export const DELETE_OCCUPATION = '/api/occupations/';
 export const EDIT_OCCUPATION = '/api/occupations/';
 
 
-export const LOGIN_USER = '/api/auth/token';
-export const REFRESH_TOKEN = '/api/auth/token';
-export const GET_USER_INFO_BY_TOKEN = '/api/getUserInfo';
+export const LOGIN_USER = '/oauth/token';
+export const GET_USER_INFO_BY_TOKEN = '/api/userInfo';

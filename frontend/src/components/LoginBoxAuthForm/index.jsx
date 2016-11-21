@@ -34,13 +34,13 @@ class LoginBoxAuthForm extends Component {
             isLoading = this.props.user.isLoggingIn || this.props.user.isGettingUserInfo,
             loginFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  this.props.fields.login.touched && this.props.fields.login.error,
-                'has-success': this.props.fields.login.touched && !this.props.fields.login.error
+                'has-error':  this.props.fields.username.touched && this.props.fields.username.error,
+                'has-success': this.props.fields.username.touched && !this.props.fields.username.error
             }),
             passFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  this.props.fields.pass.touched && this.props.fields.pass.error,
-                'has-success': this.props.fields.pass.touched && !this.props.fields.pass.error
+                'has-error':  this.props.fields.password.touched && this.props.fields.password.error,
+                'has-success': this.props.fields.password.touched && !this.props.fields.password.error
             }),
             submitBtnSpinnerClass = classNames({
                 "btn-spinner": true,
@@ -58,30 +58,30 @@ class LoginBoxAuthForm extends Component {
                         <div className="input-group">
                             <span className="input-group-addon"> <i className="icon-append fa fa-user" /> </span>
                             <input
-                                {...this.props.fields.login}
-                                type="email"
+                                {...this.props.fields.username}
+                                type="text"
                                 className="form-control"
                                 id="auth-form-login"
-                                name="login"
+                                name="username"
                                 placeholder="Логін" />
                         </div>
                         <span className="help-block">
-                            { this.props.fields.login.touched && this.props.fields.login.error }
+                            { this.props.fields.username.touched && this.props.fields.username.error }
                         </span>
                     </div>
                     <div className={passFormGroupClass}>
                         <div className="input-group">
                             <span className="input-group-addon"> <i className="icon-append fa fa-lock" /> </span>
                             <input
-                                {...this.props.fields.pass}
+                                {...this.props.fields.password}
                                 type="password"
                                 className="form-control"
                                 id="auth-form-pass"
-                                name="pass"
+                                name="password"
                                 placeholder="Пароль" />
                         </div>
                         <span className="help-block">
-                            { this.props.fields.pass.touched && this.props.fields.pass.error }
+                            { this.props.fields.password.touched && this.props.fields.password.error }
                         </span>
                     </div>
                     <div className="form-group">
@@ -109,13 +109,13 @@ class LoginBoxAuthForm extends Component {
 
 function validateLogInForm(formFields, props) {
     var errors = {};
-    if(!formFields.login)
-        errors.login = "Це поле є обов'язковим!";
-    // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formFields.login))  //!!!! Змінити регулярний вираз
-    //     errors.login = 'Некорректна Е-mail адреса';
+    if(!formFields.username)
+        errors.username = "Це поле є обов'язковим!";
+    // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formFields.username))  //!!!! Змінити регулярний вираз
+    //     errors.username = 'Некорректна Е-mail адреса';
 
-    if(!formFields.pass)
-        errors.pass = "Це поле є обов'язковим!";
+    if(!formFields.password)
+        errors.password = "Це поле є обов'язковим!";
 
     return errors;
 }
@@ -124,8 +124,8 @@ export default reduxForm(
     {
         form: 'logInForm',
         fields: [
-            'login',
-            'pass'
+            'username',
+            'password'
         ],
         validate: validateLogInForm,
         onSubmit: logInUser
