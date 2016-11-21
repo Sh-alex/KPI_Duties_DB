@@ -6,6 +6,7 @@ import FormEditOccupInfoNameSection from "../FormEditOccupInfoNameSection"
 import FormEditOccupInfoDurationsSection from "../FormEditOccupInfoDurationsSection"
 import FormEditOccupInfoCodesSection from "../FormEditOccupInfoCodesSection"
 import FormEditOccupInfoDescriptionTextSection from "../FormEditOccupInfoDescriptionTextSection"
+import FormEditOccupInfoDocRefSection from "../FormEditOccupInfoDocRefSection"
 
 import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES,
@@ -35,7 +36,11 @@ export default class FormEditOccupInfo extends Component {
             showModalAddNewKPCode: false,
             showModalAddNewDKHPCode: false,
             showModalAddNewETDKCode: false,
-            showModalAddNewZKPPTRCode: false
+            showModalAddNewZKPPTRCode: false,
+            addNewKPCodeResPortionIndex: -1,
+            addNewETDKCodeResPortionIndex: -1,
+            addNewDKHPCodeResPortionIndex: -1,
+            addNewZKPPTRCodeResPortionIndex: -1,
         };
 
         this.handleAddCodesPortionBtnClick = this.handleAddCodesPortionBtnClick.bind(this);
@@ -68,7 +73,7 @@ export default class FormEditOccupInfo extends Component {
         this.props.fetchETDKCodesList();
         this.props.fetchDKHPCodesList();
     }
-
+//resPortionIndex
     handleAddCodesPortionBtnClick() {
         this.props.fields.codes.addField({
             'portionStartDate': null,
@@ -221,7 +226,7 @@ export default class FormEditOccupInfo extends Component {
 
     render() {
         const {
-            fields: { name, durations, codes, responsibilities, haveToKnow, qualiffRequir },
+            fields: { name, durations, codes, mainInfoDocRef, responsibilities, haveToKnow, qualiffRequir, descriptionDocRef },
             handleSubmit,
             handleServerRespMsgDismiss,
             shouldShowServerRespMsg,
@@ -284,6 +289,8 @@ export default class FormEditOccupInfo extends Component {
                         portion.codeETDK.touched &&  portion.codeETDK.error ||
                         portion.codeZKPPTR.touched &&  portion.codeZKPPTR.error;
                 }, false) ||
+                mainInfoDocRef.docName && mainInfoDocRef.docName.touched && mainInfoDocRef.docName.error ||
+                mainInfoDocRef.docLink && mainInfoDocRef.docLink.touched && mainInfoDocRef.docLink.error ||
                 responsibilities.reduce(function(res, portion, portionIndex, fullArr) {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
@@ -298,7 +305,9 @@ export default class FormEditOccupInfo extends Component {
                     return res || portion.portionStartDate.touched &&  portion.portionStartDate.error ||
                         portion.portionEndDate.touched &&  portion.portionEndDate.error ||
                         portion.text.touched &&  portion.text.error;
-                }, false);
+                }, false) ||
+                descriptionDocRef.docName && descriptionDocRef.docName.touched && descriptionDocRef.docName.error ||
+                descriptionDocRef.docLink && descriptionDocRef.docLink.touched && descriptionDocRef.docLink.error;
 
         return (
             <div className="form-edit-occup-info-wrapper">
@@ -339,7 +348,7 @@ export default class FormEditOccupInfo extends Component {
                     errors={this.props.occupCodesLists.KPCodesList.addingErrors}
                     success={this.props.occupCodesLists.KPCodesList.addingSuccess}
                     isLoading={this.props.occupCodesLists.KPCodesList.isAddingNewVal || this.props.occupCodesLists.KPCodesList.isFetching}
-                    onSave={this.props.addNewKPCode}
+                    onSave={val => this.props.addNewKPCode(val, this.state.addNewKPCodeResPortionIndex)}
                     onAlertDismiss={ this.props.dismissModalAddNewKPCodeAlert }
                     onHide={ () => {
                         this.setState({showModalAddNewKPCode: false});
@@ -353,7 +362,7 @@ export default class FormEditOccupInfo extends Component {
                     errors={this.props.occupCodesLists.ETDKCodesList.addingErrors}
                     success={this.props.occupCodesLists.ETDKCodesList.addingSuccess}
                     isLoading={this.props.occupCodesLists.ETDKCodesList.isAddingNewVal || this.props.occupCodesLists.ETDKCodesList.isFetching}
-                    onSave={this.props.addNewETDKCode}
+                    onSave={val => this.props.addNewETDKCode(val, this.state.addNewETDKCodeResPortionIndex)}
                     onAlertDismiss={ this.props.dismissModalAddNewETDKCodeAlert }
                     onHide={ () => {
                         this.setState({showModalAddNewETDKCode: false});
@@ -367,7 +376,7 @@ export default class FormEditOccupInfo extends Component {
                     errors={this.props.occupCodesLists.DKHPCodesList.addingErrors}
                     success={this.props.occupCodesLists.DKHPCodesList.addingSuccess}
                     isLoading={this.props.occupCodesLists.DKHPCodesList.isAddingNewVal || this.props.occupCodesLists.DKHPCodesList.isFetching}
-                    onSave={this.props.addNewDKHPCode}
+                    onSave={val => this.props.addNewDKHPCode(val, this.state.addNewDKHPCodeResPortionIndex)}
                     onAlertDismiss={ this.props.dismissModalAddNewDKHPCodeAlert }
                     onHide={ () => {
                         this.setState({showModalAddNewDKHPCode: false});
@@ -381,7 +390,7 @@ export default class FormEditOccupInfo extends Component {
                     errors={this.props.occupCodesLists.ZKPPTRCodesList.addingErrors}
                     success={this.props.occupCodesLists.ZKPPTRCodesList.addingSuccess}
                     isLoading={this.props.occupCodesLists.ZKPPTRCodesList.isAddingNewVal || this.props.occupCodesLists.ZKPPTRCodesList.isFetching}
-                    onSave={this.props.addNewZKPPTRCode}
+                    onSave={val => this.props.addNewZKPPTRCode(val, this.state.addNewZKPPTRCodeResPortionIndex)}
                     onAlertDismiss={ this.props.dismissModalAddNewZKPPTRCodeAlert }
                     onHide={ () => {
                         this.setState({showModalAddNewZKPPTRCode: false});
@@ -412,13 +421,27 @@ export default class FormEditOccupInfo extends Component {
                             fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
                             fetchETDKCodesList={this.props.fetchETDKCodesList}
                             fetchDKHPCodesList={this.props.fetchDKHPCodesList}
-                            openModalAddNewKPCode={() => this.setState({ showModalAddNewKPCode: true })}
-                            openModalAddNewDKHPCode={() => this.setState({ showModalAddNewDKHPCode: true })}
-                            openModalAddNewZKPPTRCode={() => this.setState({ showModalAddNewZKPPTRCode: true })}
-                            openModalAddNewETDKCode={() => this.setState({ showModalAddNewETDKCode: true })}
+                            openModalAddNewKPCode={resPortionIndex => this.setState({
+                                showModalAddNewKPCode: true,
+                                addNewKPCodeResPortionIndex: resPortionIndex
+                            })}
+                            openModalAddNewDKHPCode={resPortionIndex => this.setState({
+                                showModalAddNewDKHPCode: true,
+                                addNewDKHPCodeResPortionIndex: resPortionIndex
+                            })}
+                            openModalAddNewZKPPTRCode={resPortionIndex => this.setState({
+                                showModalAddNewZKPPTRCode: true,
+                                addNewZKPPTRCodeResPortionIndex: resPortionIndex })}
+                            openModalAddNewETDKCode={resPortionIndex => this.setState({
+                                showModalAddNewETDKCode: true,
+                                addNewETDKCodeResPortionIndex: resPortionIndex
+                            })}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
+                        <FormEditOccupInfoDocRefSection
+                            headline="Посилання на правові документи про загальну інформацію"
+                            fields={mainInfoDocRef} />
                         <FormEditOccupInfoDescriptionTextSection
                             fields={responsibilities}
                             headline={"Завдання, обов'язки та повноваження"}
@@ -443,6 +466,9 @@ export default class FormEditOccupInfo extends Component {
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />
+                        <FormEditOccupInfoDocRefSection
+                            headline="Посилання на правові документи про тексти з описом посади"
+                            fields={descriptionDocRef} />
                         <div>
                             { formAlert }
                             { validationError && (
@@ -468,7 +494,12 @@ export default class FormEditOccupInfo extends Component {
                             )}
 
                             <div className={this.props.cancelSearch ? "text-right" : "text-center"}>
-                                <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverSubmitReset}>
+                                <OverlayTrigger
+                                    trigger="click"
+                                    rootClose={true}
+                                    placement="top"
+                                    overlay={popoverSubmitReset}
+                                >
                                     <button
                                         type="reset"
                                         disabled={submitting}
@@ -479,7 +510,7 @@ export default class FormEditOccupInfo extends Component {
                                 </OverlayTrigger>
                                 <button
                                     type="submit"
-                                    disabled={submitting}
+                                    disabled={submitting || validationError}
                                     className="btn btn-primary form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--submit"
                                 >
                                     {

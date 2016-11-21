@@ -13,6 +13,11 @@ import {
     addInfoFromAnotherOccupation
 } from '../../actions/addingInfoFromAnotherOccup'
 
+import {
+    priorSearchOccupations,
+    priorSearchOccupReset
+} from '../../actions/searchOccupations'
+
 import './styles.less'
 
 
@@ -21,6 +26,11 @@ class ModalAddInfoFromAnotherOccup extends Component {
         let searchForm = (
                 <SearchOccupationsForm
                     searchError={this.props.searchError}
+                    priorSearchOccupations={this.props.priorSearchOccupations}
+                    priorSearchOccupReset={this.props.priorSearchOccupReset}
+                    searchTextWillSucceed={this.props.searchTextWillSucceed}
+                    searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                    searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
                     onSubmitSearchForm={this.props.onSubmitSearchForm}
                     onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                     isSubmittngSearchForm={this.props.isSubmittngSearchForm}
@@ -68,6 +78,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onHide() {
             dispatch(hideModalAddInfoFromAnotherOccup());
+        },
+        priorSearchOccupations(...data) {
+            dispatch(priorSearchOccupations(...data, dispatch))
+        },
+        priorSearchOccupReset() {
+            dispatch(priorSearchOccupReset())
         },
         onSubmitSearchForm(data) {
             dispatch(submitFormAddInfoFromAnotherOccup(data, dispatch))

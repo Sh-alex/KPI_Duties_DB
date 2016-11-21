@@ -6,7 +6,11 @@ import { ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_CODES } from '../../constants/
 
 export default class FormEditOccupInfoCodesSection extends Component {
     render() {
-        let originalHandler = this.props.handleDelCodesPortionBtnClick,
+        let originalDelCodesPortionHandler = this.props.handleDelCodesPortionBtnClick,
+            originalOpenModalAddNewKPCode = this.props.openModalAddNewKPCode,
+            originalOpenModalAddNewDKHPCode = this.props.openModalAddNewDKHPCode,
+            originalOpenModalAddNewZKPPTRCode = this.props.openModalAddNewZKPPTRCode,
+            originalOpenModalAddNewETDKCode = this.props.openModalAddNewETDKCode,
             handleBtnAddInfoFromAnotherOccupClick = () => {
                 this.props.handleBtnAddInfoFromAnotherOccupClick({
                     typeText: "коди",
@@ -17,19 +21,31 @@ export default class FormEditOccupInfoCodesSection extends Component {
             portionsMarkup = this.props.codesFields.map((codesFieldsItem, i, codesFieldsArr) => {
                 //прив'язуємо обробник видалення до номера порції
                 let decoratedDelHandler = (index => {
-                    return () => originalHandler(index)
-                })(i);
-                return(
+                        return () => originalDelCodesPortionHandler(index)
+                    })(i),
+                    decoratedOpenModalAddNewKPCode = (resPortionIndex => {
+                        return () => originalOpenModalAddNewKPCode(resPortionIndex)
+                    })(i),
+                    decoratedOpenModalAddNewDKHPCode = (resPortionIndex => {
+                        return () => originalOpenModalAddNewDKHPCode(resPortionIndex)
+                    })(i),
+                    decoratedOpenModalAddNewZKPPTRCode = (resPortionIndex => {
+                        return () => originalOpenModalAddNewZKPPTRCode(resPortionIndex)
+                    })(i),
+                    decoratedOpenModalAddNewETDKCode = (resPortionIndex => {
+                        return () => originalOpenModalAddNewETDKCode(resPortionIndex)
+                    })(i);
+                return (
                     <FormEditOccupInfoCodesPortion
                         codesPortionFields={codesFieldsItem}
                         showDelBtn={ codesFieldsArr.length > 1 }
                         portionItemClassName={ i===0 ? "is-first-item" : "" }
                         key={i}
                         portionKey={i}
-                        openModalAddNewKPCode={this.props.openModalAddNewKPCode}
-                        openModalAddNewDKHPCode={this.props.openModalAddNewDKHPCode}
-                        openModalAddNewZKPPTRCode={this.props.openModalAddNewZKPPTRCode}
-                        openModalAddNewETDKCode={this.props.openModalAddNewETDKCode}
+                        openModalAddNewKPCode={decoratedOpenModalAddNewKPCode}
+                        openModalAddNewDKHPCode={decoratedOpenModalAddNewDKHPCode}
+                        openModalAddNewZKPPTRCode={decoratedOpenModalAddNewZKPPTRCode}
+                        openModalAddNewETDKCode={decoratedOpenModalAddNewETDKCode}
                         handleDelCodesPortionBtnClick={decoratedDelHandler}
                         fetchKPCodesList={this.props.fetchKPCodesList}
                         fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
