@@ -311,10 +311,8 @@ app.get('/api/occupations/downloadSearchResults', function(req, res) {
         });
 });
 
-
-// Activate proxy for API
-app.use(/\/api\/(.*)/, (req, res) => {
-    fetch(SERVER_ADDRESS + ":" + API_PORT + req.originalUrl, {
+function proxyJavaServer(req, res) {
+    return fetch(SERVER_ADDRESS + ":" + API_PORT + req.originalUrl, {
         'web-security': false,
         mode: 'cors',
         method: req.method,
@@ -333,7 +331,10 @@ app.use(/\/api\/(.*)/, (req, res) => {
     ).catch(function(e) {
         res.send(e)
     });
-});
+}
+// Activate proxy for API
+app.use(/\/oauth\/(.*)/, proxyJavaServer);
+app.use(/\/api\/(.*)/, proxyJavaServer);
 
 var rootPath = __dirname + '/public';
 app.use('/', Express.static(rootPath));

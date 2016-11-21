@@ -123,6 +123,11 @@ module.exports = {
                 target : `http://localhost:${API_PORT}`,
                 changeOrigin: true,
                 secure: false
+            },
+            "/oauth": {
+                target : `http://localhost:${API_PORT}`,
+                changeOrigin: true,
+                secure: false
             }
         },
         hot: true,

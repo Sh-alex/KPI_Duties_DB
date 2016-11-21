@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { refreshTokenAndGetUserInfo } from '../../actions/user';
+import { getUserInfo } from '../../actions/user';
 import mathDocumentTitleByPathName from "../../utils/mathDocumentTitleByPathName"
 
 class App extends Component {
     componentWillMount() {
-        this.props.refreshTokenAndGetUserInfo();
+        this.props.getUserInfo();
         document.title = mathDocumentTitleByPathName(this.props.location && this.props.location.pathname);
     }
 
@@ -25,7 +25,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        refreshTokenAndGetUserInfo: () => dispatch(refreshTokenAndGetUserInfo())
+        getUserInfo: () => dispatch(getUserInfo())
     }
 };
 
