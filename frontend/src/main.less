@@ -1,0 +1,68 @@
+//@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,700,700italic&subset=latin,cyrillic-ext);
+
+body {
+  min-width: 320px;
+  min-height: 240px;
+//  font-family: 'Roboto', sans-serif;
+}
+/*
+.btn-spinner {
+  display: none;
+}
+*/
+.box-header .box-title {
+  font-size: 24px;
+}
+
+.rw-widget {
+  border-radius: 0;
+}
+
+label {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.alert-sm {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.alert--with-margin {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+
+.popover-title-inner--warning {
+  margin: -8px -14px;
+  padding: 8px 14px;
+  font-weight: bold;
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+}
+
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-right: 3px;
+    padding-left: 3px;
+  }
+}
+
+
+//HACK
+.rw-i.rw-loading {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
+  color: #555;
+  height: auto;
+}
+
+.rw-i.rw-loading:before {
+  content: "\F110";
+}

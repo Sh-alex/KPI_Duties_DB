@@ -1,0 +1,36 @@
+.main-footer {
+  padding: 0;
+  font-weight: bold;
+  font-style: italic;
+
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+
+    .footer-info-block {
+      padding: 5px;
+      flex-grow: 2;
+    }
+
+    .footer-kpi-logo-wrapper {
+      flex-grow: 1;
+
+      .footer-kpi-logo {
+        flex-grow: 1;
+        width: auto;
+        max-width: 40px;
+        max-height: 40px;
+      }
+    }
+  }
+}
+
+@media all and (max-width : 767px) {
+  .footer-kpi-logo-wrapper {
+    width: 100%;
+  }
+}

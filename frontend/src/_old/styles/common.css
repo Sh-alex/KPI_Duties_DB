@@ -1,0 +1,200 @@
+body {
+    min-width: 800px;
+    min-height: 400px;
+}
+
+.btn-spinner {
+    display: none;
+}
+
+
+
+
+.main-header {
+
+}
+
+    .header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+        .header-inner > * {
+            flex-grow: 1;
+            flex-basis: 1px;
+        }
+
+        .header-logo {
+            /*background: url("../img/lines-small-part.png") transparent 0 18px no-repeat;*/
+        }
+
+            .header-logo-img {
+
+            }
+
+            .header-logo-text {
+                text-transform: uppercase;
+                color: white;
+                /*margin: 0 0 0 30px;*/
+                padding: 10px 10px 0px 25px;
+            }
+            .header-logo-text--abbr {
+                font-size: 1.5em;
+            }
+            .header-logo-text--full {
+                /*font-size: 1.25em;*/
+            }
+
+        .header-menu {
+            display: flex;
+            align-items: center;
+            flex-grow: 1.5;
+        }
+
+            .header-menu-navbar {
+                margin: 0 auto;
+                font-size: 1.2em;
+            }
+
+                .header-menu-navbar > li > a {
+                    line-height: 2.6em;
+                }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-left: 10px;
+        }
+        .header-user:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+            .header-user-link {
+                vertical-align: middle;
+                line-height: 1.1em;
+                display: inline-flex;
+                align-items: center;
+                /*margin-bottom: 30px;*/
+                font-style: italic;
+                color: white;
+            }
+            .header-user-link:hover,
+            .header-user-link:focus{
+                color: white;
+                text-decoration: underline;
+            }
+
+                .header-user-img {
+                    padding: 1px;
+                    border: 1px solid #eee;
+                }
+
+                .header-user-caption {
+                    padding: 7px;
+                }
+
+            .main-header .header-user-menu {
+                left: 0;
+                right: 0;
+                border-top: 1px solid #eee;
+                background-color: #3C8DBC /*#367FAA*/;
+                border-radius: 0;
+                margin: 0 auto;
+                padding: 0;
+            }
+
+                .header-user-menu > li > .header-user-menu-item {
+                    color: white;
+                    font-size: 1.2em !important;
+                    padding: 7px 20px;
+                }
+                .header-user-menu > li > .header-user-menu-item:hover,
+                .header-user-menu > li > .header-user-menu-item:focus {
+                    background: rgba(0,0,0,0.1);
+                    color: white;
+                }
+
+
+.main-row {
+
+}
+
+    .main {
+
+    }
+
+        .form-inner {
+            padding: 0 10px;
+        }
+
+            .form-fieldset {
+                border: 1px solid #c0c0c0;
+                margin: 0;
+                padding: 0.35em 0.625em 0.75em;
+            }
+
+                .form-legend {
+                    border: none;
+                    width: auto;
+                }
+
+                    .form-checkbox {
+                        width: 18px;
+                        border-radius: 0;
+                        border: none;
+                        box-shadow: none;
+                    }
+
+                    .box-header .box-title {
+                        font-size: 24px;
+                    }
+
+
+label {
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+
+.inp-name-block--radio-uses-multiselect .inp-name-block__input {
+    display: none;
+}
+.inp-name-block--radio-uses-multiselect .inp-name-block__multiselect {
+    display: block;
+}
+
+.inp-name-block--radio-uses-input .inp-name-block__input {
+    display: block;
+}
+.inp-name-block--radio-uses-input .inp-name-block__multiselect {
+    display: none;
+}
+
+
+
+
+
+.main-footer {
+    padding: 0;
+    font-weight: bold;
+    font-style: italic;
+}
+
+    .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .footer-info-block {
+            padding: 5px;
+        }
+
+            .footer-kpi-logo {
+                width: auto;
+                max-width: 40px;
+                max-height: 40px;
+            }

@@ -1,0 +1,3 @@
+export const ROUTING = 'ROUTING';
+
+export const CHANGE_SEARCH_PAGE_URI = 'CHANGE_SEARCH_PAGE_URI';
