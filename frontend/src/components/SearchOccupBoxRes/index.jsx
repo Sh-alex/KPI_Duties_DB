@@ -4,8 +4,9 @@ import "./styles.less";
 
 import BoxExpandBtn from "../BoxExpandBtn"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
-import ModalConfirmDelOccup from "../ModalConfirmDelOccup"
+import ModalConfirmDelItem from "../ModalConfirmDelItem"
 import ModalEditOccup from "../ModalEditOccup"
+import ModalResDownloadSettings from "../ModalResDownloadSettings"
 import PaginationSizeSelect from "../PaginationSizeSelect"
 
 import {
@@ -193,15 +194,17 @@ export default class SearchOccupBoxRes extends Component {
                     </div>
                 </div>
                 <div className="box-body">
-                    <ModalConfirmDelOccup
-                        additionalTitle={modalConfirmDelOccupAdditionalTitle}
+                    <ModalResDownloadSettings />
+                    <ModalConfirmDelItem
+                        headline={"Підтвердіть видалення інформації про посаду " + modalConfirmDelOccupAdditionalTitle}
+                        successMsgAlertTitle={"Посаду успішно видалено."}
                         onTriggerDontShowAgain={this.triggerDontShowAgainDel}
                         dontShowAgain={this.state.dontShowAgainDelModal}
                         show={this.state.showModalConfirmDelOccup}
                         error={this.props.delOccupationError}
                         success={this.props.delOccupationSuccess}
                         onAlertDismiss={this.props.dismissDelOccupationAlert}
-                        isDeletingOccupation={this.props.isDeletingOccupation}
+                        isDeletingItem={this.props.isDeletingOccupation}
                         onSubmit={this.handleDeleteItem}
                         onHide={ this.hideModalConfirmDelOccup }
                     />
@@ -237,13 +240,23 @@ export default class SearchOccupBoxRes extends Component {
                 {
                     this.state.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
-                            <div className="col-sm-6">
+                            <div className="col-sm-4">
                                 <PaginationSizeSelect
                                     selectedSize={this.state.paginationSize}
                                     onSizeSelect={this.handlePaginationSizeSelect}
                                     sizesArr={this.state.paginationSizesArr} />
                             </div>
-                            <div className="col-sm-6 text-right">
+                            <div className="col-sm-4 text-center">
+                                <button
+                                    className="btn btn-default btn-download-search-res"
+                                    title="Заватажити результати у Excel файл"
+                                    onClick={this.props.showModalResDownloadSettings}
+                                >
+                                    <i className="fa fa-download" />
+                                    {" "} Заватажити результати
+                                </button>
+                            </div>
+                            <div className="col-sm-4 text-right">
                                 <Pagination
                                     prev
                                     next

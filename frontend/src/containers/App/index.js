@@ -1,12 +1,33 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { refreshTokenAndGetUserInfo } from '../../actions/user';
+import mathDocumentTitleByPathName from "../../utils/mathDocumentTitleByPathName"
 
-//ТУТ БУДЕ НАЛАШТУВАННЯ АНІМАЦІЇ
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    )
-  }
+class App extends Component {
+    componentWillMount() {
+        this.props.refreshTokenAndGetUserInfo();
+        document.title = mathDocumentTitleByPathName(this.props.location && this.props.location.pathname);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        document.title = mathDocumentTitleByPathName(nextProps.location && nextProps.location.pathname);
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.children}
+            </div>
+        )
+    }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        refreshTokenAndGetUserInfo: () => dispatch(refreshTokenAndGetUserInfo())
+    }
+};
+
+
+export default connect(null, mapDispatchToProps)(App);

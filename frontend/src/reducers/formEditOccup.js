@@ -8,7 +8,10 @@ import {
     EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
     EDIT_OCCUP_CLARIFICATION_INP_CHANGE,
     EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
-
+    EDIT_OCCUP_KP_CODE_INP_CHANGE,
+    EDIT_OCCUP_DKHP_CODE_INP_CHANGE,
+    EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+    EDIT_OCCUP_ETDK_CODE_INP_CHANGE,
     EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE
 } from '../constants/modalEditOccup'
 
@@ -20,7 +23,10 @@ import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
 } from '../constants/addingInfoFromAnotherOccup'
 
-import { SHOW_MODAL_EDIT_OCCUP } from '../constants/modalEditOccup'
+import {
+    SHOW_MODAL_EDIT_OCCUP,
+    FETCH_EDITING_OCCUP_DATA_SUCCESS
+} from '../constants/modalEditOccup'
 
 function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
     if(clarifiedOccupTextVal && clarificationTextVal)
@@ -200,7 +206,10 @@ export default function formEditOccup(state, action) {
 
 
         case SHOW_MODAL_EDIT_OCCUP:
-            let ShowModalEditOccupDescrTextMappingFunc = portion => {
+        case FETCH_EDITING_OCCUP_DATA_SUCCESS:
+            if(!action.editingData)
+                return state;
+            let showModalEditOccupDescrTextMappingFunc = portion => {
                 return {
                     "portionStartDate": {
                         "initial": null,
@@ -356,9 +365,9 @@ export default function formEditOccup(state, action) {
                         }
                     }
                 }),
-                responsibilities: action.editingData.data.responsibilities.map( ShowModalEditOccupDescrTextMappingFunc ),
-                haveToKnow: action.editingData.data.haveToKnow.map( ShowModalEditOccupDescrTextMappingFunc ),
-                qualiffRequir: action.editingData.data.qualiffRequir.map( ShowModalEditOccupDescrTextMappingFunc )
+                responsibilities: action.editingData.data.responsibilities.map( showModalEditOccupDescrTextMappingFunc ),
+                haveToKnow: action.editingData.data.haveToKnow.map( showModalEditOccupDescrTextMappingFunc ),
+                qualiffRequir: action.editingData.data.qualiffRequir.map( showModalEditOccupDescrTextMappingFunc )
             };
 
 
@@ -436,6 +445,97 @@ export default function formEditOccup(state, action) {
             console.log("Called EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE reducer, but state is empty");
             return state;
         }
+
+
+        case EDIT_OCCUP_KP_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeKP": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true,
+                        },
+                        "codeKPText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true,
+                        },
+                    }
+                })
+            };
+            break;
+        case EDIT_OCCUP_DKHP_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeDKHP": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeDKHPText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        }
+                    }
+                })
+            };
+            break;
+        case EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeZKPPTR": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeZKPPTRText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        }
+                    }
+                })
+            };
+            break;
+        case EDIT_OCCUP_ETDK_CODE_INP_CHANGE:
+            return {
+                ...state,
+                codes: state.codes.map( (portion, portionIndex) => {
+                    if(portionIndex != action.resPortionIndex)
+                        return portion;
+                    return {
+                        ...portion,
+                        "codeETDK": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.id || null,
+                            "_isFieldValue": true
+                        },
+                        "codeETDKText": {
+                            "initial": null,
+                            "value": action.newVal && action.newVal.textValue || null,
+                            "_isFieldValue": true
+                        },
+                    }
+                })
+            };
+            break;
+
         default:
             return state;
     }

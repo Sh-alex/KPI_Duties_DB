@@ -6,8 +6,14 @@ import SearchOccupBoxRes from "../SearchOccupBoxRes";
 
 import {
     searchOccupBoxFormSubmit,
-    dismissSearchOccupBoxFormAlert
+    dismissSearchOccupBoxFormAlert,
+    showModalResDownloadSettings,
 } from '../../actions/searchOccupBox'
+
+import {
+    priorSearchOccupations,
+    priorSearchOccupReset
+} from '../../actions/searchOccupations'
 
 import {
     fetchOccupGroupList,
@@ -57,6 +63,11 @@ class SearchOccupBox extends Component {
                     <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
+                        priorSearchOccupations={this.props.priorSearchOccupations}
+                        priorSearchOccupReset={this.props.priorSearchOccupReset}
+                        searchTextWillSucceed={this.props.searchTextWillSucceed}
+                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                         isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                         tagsList={this.props.clarificationList}
@@ -77,6 +88,7 @@ class SearchOccupBox extends Component {
                         toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
 
                         dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
+                        showModalResDownloadSettings={this.props.showModalResDownloadSettings}
                         delOccupationError={this.props.delOccupationError}
                         delOccupationSuccess={this.props.delOccupationSuccess}
                         isDeletingOccupation={this.props.isDeletingOccupation}
@@ -89,6 +101,11 @@ class SearchOccupBox extends Component {
                     <SearchOccupBoxFormWrapper
                         searchError={this.props.searchError}
                         onSubmitSearchForm={this.props.onSubmitSearchForm}
+                        priorSearchOccupations={this.props.priorSearchOccupations}
+                        priorSearchOccupReset={this.props.priorSearchOccupReset}
+                        searchTextWillSucceed={this.props.searchTextWillSucceed}
+                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
                         onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                         isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                         tagsList={this.props.clarificationList}
@@ -118,20 +135,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(fetchClarifiedOccupList());
             dispatch(fetchClarificationList());
         },
+        priorSearchOccupations(...data) {
+            dispatch(priorSearchOccupations(...data, dispatch))
+        },
+        priorSearchOccupReset() {
+            dispatch(priorSearchOccupReset())
+        },
         onSubmitSearchForm(data) {
             dispatch(searchOccupBoxFormSubmit(data, dispatch))
         },
         handleSearchFormAlertDismiss() {
             dispatch(dismissSearchOccupBoxFormAlert())
         },
-        handleEditItem(editingOccupData) {
-            dispatch(showModalEditOccup(editingOccupData));
+        handleEditItem(editingOccupId) {
+            dispatch(showModalEditOccup(editingOccupId));
         },
         dismissDelOccupationAlert() {
             dispatch(dismissDelOccupationAlert())
         },
         handleDeleteItem(itemId) {
             dispatch(delOccupation(itemId, dispatch))
+        },
+        showModalResDownloadSettings() {
+            dispatch(showModalResDownloadSettings());
         }
     }
 };

@@ -1,14 +1,24 @@
 import moment from "moment";
-import { SEARCH_OCCUPATION } from '../constants/API_URIs';
+import {
+    PRIOR_SEARCH_OCCUP as PRIOR_SEARCH_OCCUP_URI,
+    SEARCH_OCCUPATION as SEARCH_OCCUPATION_URI
+} from '../constants/API_URIs';
+
+import {
+    PRIOR_SEARCH_OCCUP_REQUEST,
+    PRIOR_SEARCH_OCCUP_SUCCESS,
+    PRIOR_SEARCH_OCCUP_FAIL,
+    PRIOR_SEARCH_OCCUP_RESET
+} from '../constants/searchOccupationsForm'
 
 export default function searchOccupations({data, onRequest, onSucces, onFail}) {
     let searchGetParams = "?" +
         "searchType=" + data.searchType +
+        "&occupIds=" + (data.occupIds || "") +
         "&occupGroupVal=" + (data.occupGroupVal || "") +
         "&searchText=" + data.searchText +
         "&searchTags=" + data.searchTags +
         "&inKpi=" + data.inKpi +
-        "&searchTags=" + data.searchTags +
         "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
         "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
         "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +
@@ -16,7 +26,7 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
     onRequest(data, searchGetParams);
 
-    return fetch(SEARCH_OCCUPATION + searchGetParams, {
+    return fetch(SEARCH_OCCUPATION_URI + searchGetParams, {
         credentials: 'include',
         mode: 'cors',
         method: 'get',
@@ -56,4 +66,52 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
             let errorText = error && error._error || 'Сталася невідома помилка при пошуку посад!';
             return onFail(errorText);
         });
+}
+
+
+
+export function priorSearchOccupations(searchType, searchText) {
+    return function (dispatch) {
+        let searchParams = `?searchType=${searchType}&searchText=${searchText}`;
+
+        dispatch({
+            type: PRIOR_SEARCH_OCCUP_REQUEST,
+            searchType,
+            searchText
+        });
+
+        return fetch(PRIOR_SEARCH_OCCUP_URI + searchParams)
+            .then( response => {
+                if(response.status === 404)
+                    throw 'При попередньому пошуку посад не знайдено відповідного методу на сервері!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При попередньому пошуку посад сталася помилка ${response.status} на сервері!`;
+
+                var contentType = response.headers.get("content-type");
+                if(contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                } else {
+                    return Promise.reject("Отримано некоректні дані при попередньому пошуку посад");
+                }
+            })
+            .then( data => {
+                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
+                    return Promise.reject("Отримано некоректні дані при попередньому пошуку посад");
+                dispatch({
+                    type: PRIOR_SEARCH_OCCUP_SUCCESS,
+                    response: data.idNameResponses.length
+                })
+            })
+            .catch( error => dispatch({
+                type: PRIOR_SEARCH_OCCUP_FAIL,
+                error
+            }))
+    }
+}
+
+
+export function priorSearchOccupReset() {
+    return {
+        type: PRIOR_SEARCH_OCCUP_RESET
+    }
 }

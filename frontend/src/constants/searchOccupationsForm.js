@@ -1,0 +1,15 @@
+//тип пошуку
+export const SOME_TAGS = "SOME_TAGS";
+export const MATCH_STRING = "MATCH_STRING";
+export const CONTAINS_STRING = "CONTAINS_STRING";
+export const ALL_TAGS = "ALL_TAGS";
+export const ANY ="ANY";
+
+//приналежність КПІ
+export const ONLY_IN_KPI = "ONLY_IN_KPI";
+export const ONLY_IN_STATE = "ONLY_IN_STATE";
+
+export const PRIOR_SEARCH_OCCUP_REQUEST = 'PRIOR_SEARCH_OCCUP_REQUEST';
+export const PRIOR_SEARCH_OCCUP_SUCCESS = 'PRIOR_SEARCH_OCCUP_SUCCESS';
+export const PRIOR_SEARCH_OCCUP_FAIL = 'PRIOR_SEARCH_OCCUP_FAIL';
+export const PRIOR_SEARCH_OCCUP_RESET = 'PRIOR_SEARCH_OCCUP_RESET';

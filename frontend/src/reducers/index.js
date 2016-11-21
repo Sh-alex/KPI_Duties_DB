@@ -6,6 +6,7 @@ import formAddNewOccup from './formAddNewOccup'
 import formEditOccup from './formEditOccup'
 import delOccupation from "./delOccupation"
 import occupationNameInfo from './occupationNameInfo'
+import occupDescriptionTextsLists from './occupDescriptionTextsLists'
 import occupCodesLists from './occupCodesLists'
 import searchOccupBox from './searchOccupBox'
 import {reducer as formReducer} from 'redux-form'
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
     user,
     occupationNameInfo,
     occupCodesLists,
+    occupDescriptionTextsLists,
     modals,
     searchOccupBox,
     delOccupation,
