@@ -430,6 +430,8 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             dataInItem.setDcDutiesPartitionId(entity.getDcDutiesPartitionId());
 
+            dataInItem.setDcDutiesPartitionName(entity.getDcDutiesPartitionEntity().getName());
+
             dataInItem.setRtDutiesParentId(entity.getParentId());
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
