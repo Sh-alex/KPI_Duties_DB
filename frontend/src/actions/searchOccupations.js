@@ -14,11 +14,11 @@ import {
 export default function searchOccupations({data, onRequest, onSucces, onFail}) {
     let searchGetParams = "?" +
         "searchType=" + data.searchType +
+        "&occupIds=" + (data.occupIds || "") +
         "&occupGroupVal=" + (data.occupGroupVal || "") +
         "&searchText=" + data.searchText +
         "&searchTags=" + data.searchTags +
         "&inKpi=" + data.inKpi +
-        "&searchTags=" + data.searchTags +
         "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
         "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
         "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +

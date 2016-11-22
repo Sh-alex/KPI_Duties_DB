@@ -15,6 +15,7 @@ function LoginBox(props) {
     let loginBoxBody = props.userState.isAuthenticated ? (
         <LoginBoxNav
             logOutUser={props.logOutUser}
+            userName={props.userState.userName}
         />
     ) : (
         <LoginBoxAuthForm />

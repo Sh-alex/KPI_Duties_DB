@@ -147,8 +147,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleSearchFormAlertDismiss() {
             dispatch(dismissSearchOccupBoxFormAlert())
         },
-        handleEditItem(editingOccupData) {
-            dispatch(showModalEditOccup(editingOccupData));
+        handleEditItem(editingOccupId) {
+            dispatch(showModalEditOccup(editingOccupId));
         },
         dismissDelOccupationAlert() {
             dispatch(dismissDelOccupationAlert())

@@ -1,4 +1,8 @@
 import {
+    FETCH_EDITING_OCCUP_DATA_REQUEST,
+    FETCH_EDITING_OCCUP_DATA_SUCCESS,
+    FETCH_EDITING_OCCUP_DATA_FAIL,
+
     EDIT_OCCUP_SUBMIT_REQUEST,
     EDIT_OCCUP_SUBMIT_FAIL,
     EDIT_OCCUP_SUBMIT_SUCCESS,
@@ -17,6 +21,8 @@ import {
     HIDE_MODAL_EDIT_OCCUP,
     SHOW_MODAL_EDIT_OCCUP,
 } from '../constants/modalEditOccup'
+
+import searchOccupations from "./searchOccupations"
 
 import { EDIT_OCCUPATION as API_EDIT_OCCUPATION} from '../constants/API_URIs';
 
@@ -198,11 +204,39 @@ export function hideModalEditOccup() {
     }
 }
 
-export function showModalEditOccup(editingData, dispatch) {
+export function showModalEditOccup(editingOccupId, dispatch) {
     return function (dispatch, getState) {
-        dispatch( {
-            type: SHOW_MODAL_EDIT_OCCUP,
-            editingData
-        });
+        let editingData = getState().searchOccupBox.searchResData && getState().searchOccupBox.searchResData.itemsById[editingOccupId];
+        if(editingData)
+            return dispatch( {
+                type: SHOW_MODAL_EDIT_OCCUP,
+                editingData
+            });
+        else
+            return searchOccupations({
+                data: {
+                    occupIds: [editingOccupId]
+                },
+                onRequest: () => {
+                    dispatch( {
+                        type: FETCH_EDITING_OCCUP_DATA_REQUEST,
+                        editingOccupId
+                    });
+                    dispatch( {
+                        type: SHOW_MODAL_EDIT_OCCUP,
+                        editingData: null
+                    });
+                },
+                onSucces: (foundOccupations) => {
+                    dispatch( {
+                        type: FETCH_EDITING_OCCUP_DATA_SUCCESS,
+                        editingData: foundOccupations.itemsById[editingOccupId]
+                    });
+                },
+                onFail: errorText => dispatch({
+                    type: FETCH_EDITING_OCCUP_DATA_FAIL,
+                    error: errorText
+                })
+            });
     }
 }

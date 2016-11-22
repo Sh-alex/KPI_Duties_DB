@@ -38,10 +38,11 @@ export default function SearchOccupBoxFormWrapper(props) {
                 querySearchType : ANY,
             occupGroupVal: queryOccupGroupVal,
             searchText: props.searchQuery.searchText,
-            searchTags: props.searchQuery.searchTags.reduce( (res, item) => {
-                if(item) res.push(item);
-                return res;
-            }, []) || [],
+            searchTags: (typeof props.searchQuery.searchTags == "string") &&
+                props.searchQuery.searchTags.split(",").reduce( (res, item) => {
+                    if(item) res.push(item);
+                    return res;
+                }, []) || [],
             inKpi: [ONLY_IN_KPI, ONLY_IN_STATE, ANY].includes(queryInKpi) ? queryInKpi : ANY,
             startFrom: props.searchQuery.startFrom &&
                 (new Date(props.searchQuery.startFrom) !== "Invalid Date") &&

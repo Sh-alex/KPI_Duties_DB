@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { reduxForm } from 'redux-form';
-import { Modal } from 'react-bootstrap'
+import { Modal, Alert } from 'react-bootstrap'
 
 import FormEditOccupInfo from '../FormEditOccupInfo'
+import LoadingBlock from "../LoadingBlock"
 
 import {
     hideModalEditOccup
@@ -128,6 +129,32 @@ class ModalEditOccup extends Component {
     }
 
     render() {
+        let innerBlock;
+        if(this.props.modalState.fetchDataError)
+            innerBlock = (
+                <Alert bsStyle="danger" className="no-margin">
+                    <p> Сталася помлка при отриманні інформації про посаду :( </p>
+                </Alert>
+            );
+        else if(this.props.modalState.isFetchingData)
+            innerBlock = <LoadingBlock caption="Іде завантаження даних про посаду..." />;
+        else if(!this.props.modalState.editingData)
+            innerBlock = (
+                <Alert bsStyle="danger" className="no-margin text-center">
+                    <h4> Не знайдено інформації про посаду :( </h4>
+                    <p> Спробуйте оновити сторінку </p>
+                </Alert>
+            );
+        else
+            innerBlock = (
+                <FormEditOccupInfo
+                    {...this.props}
+                    submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
+                    successMsgText={"Зміни успішно збережено"}
+                    cancelSearch={this.props.onHideModalEditOccup}
+                />
+            );
+
         return (
             <Modal show={this.props.modalState.show} onHide={this.props.onHideModalEditOccup} bsSize="large">
                 <Modal.Header closeButton>
@@ -136,12 +163,7 @@ class ModalEditOccup extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormEditOccupInfo
-                        {...this.props}
-                        submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
-                        successMsgText={"Зміни успішно збережено"}
-                        cancelSearch={this.props.onHideModalEditOccup}
-                    />
+                    { innerBlock }
                 </Modal.Body>
             </Modal>
         );

@@ -260,6 +260,9 @@ class ModalResDownloadSettings extends Component {
                         disabled={this.props.isLoading || selectedNoOneItem}
                     >
                         <span className="btn-label"> Завантажити </span>
+                        <span className="btn-icon">
+                            <img className="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC3klEQVRoQ+2ZP2zTUBDG71whdSBS2IChZIJKIHwtLEw4Y4AiwgBq2QC10AlRiQERETVMSI2YClQCJgrqQCMa1DFsDPQPzQQssFAYK5WBIe1D52Lz6jwHO4niV+S3JHGe7e9399096xlhhw/c4fohBog6g3EG/tsM9OYptWsTTNw0SICwEIGqheU97QZui4UO3ybqQjCFYRAIQYhoqYRWC0ttuZ987dAXPHKHLAPAFGgQCkGASEGj2lEAylNyYwNNFGgJAEIUBICpoGIjz8DRXL9oRazq3J7+nqYuKQA+vMmW+lQn+1pIJwAWXs6WlFpjgDCeaNZCcQbCRLnR3JXxRffvgVLW/j53btb3FGeONhmIFODSiSG4lRlzo5WbzcPr5Tn3d6J7N8zfLEOiO2Efuz8/Ac/fTW+LbqQArIQF7k/us0V9W1uFU8UBVyDDMSSPTz8+w4XJwTprRF7Ex1PH4MnlKVfYlafDsPB10YZiOGc4x70EkQOwoAdDE5Du3XpWe/9lAa4+G4FCNg9n+7aywbZie6lG5BZiUd5os1gG4LH+6ydkiqftT20BWNj19AhcSw//Eb3esHBlEC0ywIK448yMvnQLulHhygBa1IADILdMVVdSWUgbALllrq59dzPxqDIFDyuPlf7ng1pYSG6lXKy5V3ftzuSMTPEMMJS2RSwvZk7EeW1gMLm1agmwvfv8bZneBe7G9BhUPr6tY4i0Bg7tPQgzoy9cUV6/y4sZP2ZcnBysWw8iBZBtwh5nr8vDu8Dxgxw/0Gm5Dvi2mX/8oUUXala8Nm20FYBIa6AV4c65MYAiivG+UBhrNW0hASvl8yXlJrJvBnhzt1YDMsCwBApCAbwTfSCMYO/cju5O+wm1t9fRIGFvrQMhoBkUSgsAlVh+wWF0AaEwyM4W4EnVPG0BVGLtV0w1zpANZaFAqt5bSgbNVtB5od/QBL1wp+bFAJ2KtN994gzEGWgxAr8Byt6WQDtv/5IAAAAASUVORK5CYII=" height="17" />
+                        </span>
                         { this.props.isLoading && ( <i className="fa fa-spinner fa-pulse" /> ) }
                     </button>
                 </Modal.Footer>

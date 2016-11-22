@@ -5,11 +5,12 @@ import LoginBoxBody from "../LoginBoxBody";
 import "./styles.less";
 
 export default function LoginBoxNav(props) {
-    var elClassName = classnames([LoginBoxBody.className, "loginUser-box-body--nav"]);
+    let elClassName = classnames([LoginBoxBody.className, "loginUser-box-body--nav"]),
+        userName = props.userState.userName || "Шановний користувач";
     return (
         <LoginBoxBody {...props} className={elClassName}>
             <p className="login-box-msg">
-                Доброго дня, Генаш Максим!
+                Доброго дня, {userName}!
             </p>
             <div className="list-group text-center">
                 <NavLink to="/add" className="list-group-item">
