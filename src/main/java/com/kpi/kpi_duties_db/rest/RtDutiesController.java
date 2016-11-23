@@ -63,15 +63,6 @@ public class RtDutiesController {
     private RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
-    private DcDutiesMustKnowService dcDutiesMustKnowService;
-
-    @Autowired
-    private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
-
-    @Autowired
-    private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
-
-    @Autowired
     private Validator validator;
 
     @Autowired
