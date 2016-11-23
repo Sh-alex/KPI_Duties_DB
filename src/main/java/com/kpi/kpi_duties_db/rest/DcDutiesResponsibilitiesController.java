@@ -9,7 +9,6 @@ import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -30,9 +29,6 @@ public class DcDutiesResponsibilitiesController {
 
     @Autowired
     private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
-
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private IdNameConverter idNameConverter;
