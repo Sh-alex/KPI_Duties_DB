@@ -554,14 +554,14 @@ class CtrlDcBox extends Component {
     render() {
         let shownOccupDescrTextsList = ["RESPONSIBILITIES", "HAVE_TO_KNOW", "QUALIFF_REQUIR"].includes(this.state.activeListName),
             showModalEditOccupDcVal = (this.state.editingItemId !== null),
-            modalConfirmDelItemHeadline = `Підтвердіть видалення елемента "${trimSubstr(this.state.deletingItemVal, 80)}" зі списку "${activeListTitle}"`,
             activeList = this.getActiveListData(),
             activeListTitle = this.getActiveListTitle(),
             editOccupDcValClearMsg = this.selectEditOccupDcValClearMsgHandler(),
             editOccupDcValSubmit = this.selectEditOccupDcValSubmitHandler(),
             delOccupDcValClearMsgHandler = this.selectDelOccupDcValClearMsgHandler(),
             addNewOccupDcValClearMsg = this.selectAddNewOccupDcValClearMsgHandler(),
-            addNewOccupDcValSubmit = this.selectAddNewOccupDcValSubmitHandler();
+            addNewOccupDcValSubmit = this.selectAddNewOccupDcValSubmitHandler(),
+            modalConfirmDelItemHeadline = `Підтвердіть видалення елемента "${trimSubstr(this.state.deletingItemVal, 80)}" зі списку "${activeListTitle}"`;
 
         return (
             <div className="container">
@@ -570,6 +570,25 @@ class CtrlDcBox extends Component {
                         <CtrlDcBoxMenu
                             activeListName={this.state.activeListName}
                             setActiveListName={this.setActiveListName}
+                            fetchClarifiedOccupList={this.props.fetchClarifiedOccupList}
+                            fetchOccupGroupList={this.props.fetchOccupGroupList}
+                            fetchClarificationList={this.props.fetchClarificationList}
+                            fetchKPCodesList={this.props.fetchKPCodesList}
+                            fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
+                            fetchETDKCodesList={this.props.fetchETDKCodesList}
+                            fetchDKHPCodesList={this.props.fetchDKHPCodesList}
+                            fetchHaveToKnowTextsList={this.props.fetchHaveToKnowTextsList}
+                            fetchResponsibilitiesTextsList={this.props.fetchResponsibilitiesTextsList}
+                            fetchQualiffRequirTextsList={this.props.fetchQualiffRequirTextsList}
+                            occupGroupListIsLoading={this.props.occupationGroupList.isFetching}
+                            clarificationListIsLoading={this.props.clarificationList.isFetching}
+                            KPCodesListIsLoading={this.props.KPCodesList.isFetching}
+                            ETDKCodesListIsLoading={this.props.ETDKCodesList.isFetching}
+                            ZKPPTRCodesListIsLoading={this.props.ZKPPTRCodesList.isFetching}
+                            DKHPCodesListIsLoading={this.props.DKHPCodesList.isFetching}
+                            responsibilitiesTextsListIsLoading={this.props.responsibilitiesTextsList.isFetching}
+                            haveToKnowTextsListIsLoading={this.props.haveToKnowTextsList.isFetching}
+                            qualiffRequirTextsListIsLoading={this.props.qualiffRequirTextsList.isFetching}
                         />
                     </div>
                     <div className="col-xs-12 col-sm-6">
@@ -673,6 +692,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(fetchResponsibilitiesTextsList());
             dispatch(fetchQualiffRequirTextsList());
         },
+        fetchClarifiedOccupList: newVal => dispatch(fetchClarifiedOccupList()),
+        fetchOccupGroupList: newVal => dispatch(fetchOccupGroupList()),
+        fetchClarificationList: newVal => dispatch(fetchClarificationList()),
+        fetchKPCodesList: newVal => dispatch(fetchKPCodesList()),
+        fetchZKPPTRCodesList: newVal => dispatch(fetchZKPPTRCodesList()),
+        fetchETDKCodesList: newVal => dispatch(fetchETDKCodesList()),
+        fetchDKHPCodesList: newVal => dispatch(fetchDKHPCodesList()),
+        fetchHaveToKnowTextsList: newVal => dispatch(fetchHaveToKnowTextsList()),
+        fetchResponsibilitiesTextsList: newVal => dispatch(fetchResponsibilitiesTextsList()),
+        fetchQualiffRequirTextsList: newVal => dispatch(fetchQualiffRequirTextsList()),
+
         addNewOccupGroup: newVal => dispatch(addNewOccupationGroup({newVal})),
         addNewClarification: newVal => dispatch(addNewClarification({newVal})),
         addNewOccupGroupClearMsg: () => dispatch(dismissModalAddNewOccupationGroupAlert()),
