@@ -58,7 +58,17 @@ class ModalResDownloadSettings extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.getInitState = this.getInitState.bind(this);
+        this.resetForm = this.resetForm.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.onTriggerFieldShow = this.onTriggerFieldShow.bind(this);
+        this.onSortEnd = this.onSortEnd.bind(this);
+
+        this.state = this.getInitState();
+    }
+
+    getInitState(){
+        return {
             items: [
                 {
                     fieldId: "occupationName",
@@ -167,8 +177,10 @@ class ModalResDownloadSettings extends Component {
                 },
             ],
         };
+    };
 
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    resetForm() {
+        this.setState(this.getInitState());
     }
 
     handleFormSubmit(e) {
@@ -179,7 +191,7 @@ class ModalResDownloadSettings extends Component {
         this.props.downloadSearchOccupRes(filteredFieldsList)
     }
 
-    onTriggerFieldShow = (fieldId, show) => {
+    onTriggerFieldShow(fieldId, show) {
         this.setState({
             items: this.state.items.map(item => {
                 if(item.fieldId == fieldId)
@@ -188,13 +200,13 @@ class ModalResDownloadSettings extends Component {
                     return item
             })
         });
-    };
+    }
 
-    onSortEnd = ({oldIndex, newIndex}) => {
+    onSortEnd({oldIndex, newIndex}) {
         this.setState({
             items: arrayMove(this.state.items, oldIndex, newIndex)
         });
-    };
+    }
 
     render() {
         let selectedNoOneItem = !this.state.items.filter(item => item.show).length,
@@ -224,7 +236,7 @@ class ModalResDownloadSettings extends Component {
                 ) || "";
 
         return (
-            <Modal show={this.props.showModal} onHide={this.props.onHideModal}>
+            <Modal show={this.props.showModal} className="modal-res-download-settings" onHide={this.props.onHideModal}>
                 <Modal.Header closeButton>
                     <Modal.Title className="text-center">
                         Налаштувати завантаження результатів пошуку у Excel файл
@@ -250,21 +262,31 @@ class ModalResDownloadSettings extends Component {
                     { msgSelectedNoOneItem }
                 </Modal.Body>
                 <Modal.Footer>
-                    <button type="button" className="btn btn-default pull-left" onClick={this.props.onHideModal}>
-                        Відміна
-                    </button>
-                    <button
-                        type="submit"
-                        form="form-res-download-settings"
-                        className="btn btn-primary"
-                        disabled={this.props.isLoading || selectedNoOneItem}
-                    >
-                        <span className="btn-label"> Завантажити </span>
-                        <span className="btn-icon">
-                            <img className="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC3klEQVRoQ+2ZP2zTUBDG71whdSBS2IChZIJKIHwtLEw4Y4AiwgBq2QC10AlRiQERETVMSI2YClQCJgrqQCMa1DFsDPQPzQQssFAYK5WBIe1D52Lz6jwHO4niV+S3JHGe7e9399096xlhhw/c4fohBog6g3EG/tsM9OYptWsTTNw0SICwEIGqheU97QZui4UO3ybqQjCFYRAIQYhoqYRWC0ttuZ987dAXPHKHLAPAFGgQCkGASEGj2lEAylNyYwNNFGgJAEIUBICpoGIjz8DRXL9oRazq3J7+nqYuKQA+vMmW+lQn+1pIJwAWXs6WlFpjgDCeaNZCcQbCRLnR3JXxRffvgVLW/j53btb3FGeONhmIFODSiSG4lRlzo5WbzcPr5Tn3d6J7N8zfLEOiO2Efuz8/Ac/fTW+LbqQArIQF7k/us0V9W1uFU8UBVyDDMSSPTz8+w4XJwTprRF7Ex1PH4MnlKVfYlafDsPB10YZiOGc4x70EkQOwoAdDE5Du3XpWe/9lAa4+G4FCNg9n+7aywbZie6lG5BZiUd5os1gG4LH+6ydkiqftT20BWNj19AhcSw//Eb3esHBlEC0ywIK448yMvnQLulHhygBa1IADILdMVVdSWUgbALllrq59dzPxqDIFDyuPlf7ng1pYSG6lXKy5V3ftzuSMTPEMMJS2RSwvZk7EeW1gMLm1agmwvfv8bZneBe7G9BhUPr6tY4i0Bg7tPQgzoy9cUV6/y4sZP2ZcnBysWw8iBZBtwh5nr8vDu8Dxgxw/0Gm5Dvi2mX/8oUUXala8Nm20FYBIa6AV4c65MYAiivG+UBhrNW0hASvl8yXlJrJvBnhzt1YDMsCwBApCAbwTfSCMYO/cju5O+wm1t9fRIGFvrQMhoBkUSgsAlVh+wWF0AaEwyM4W4EnVPG0BVGLtV0w1zpANZaFAqt5bSgbNVtB5od/QBL1wp+bFAJ2KtN994gzEGWgxAr8Byt6WQDtv/5IAAAAASUVORK5CYII=" height="17" />
-                        </span>
-                        { this.props.isLoading && ( <i className="fa fa-spinner fa-pulse" /> ) }
-                    </button>
+                    <div className="bottom-btns-part">
+                        <div className="text-left">
+                            <button type="button" className="btn btn-default" onClick={this.props.onHideModal}>
+                                Відміна
+                            </button>
+                            <button type="button" className="btn btn-default" onClick={this.resetForm}>
+                                Повернути початковий стан {" "}
+                                <i className="fa fa-undo"/>
+                            </button>
+                        </div>
+                        <div className="text-right">
+                            <button
+                                type="submit"
+                                form="form-res-download-settings"
+                                className="btn btn-primary"
+                                disabled={this.props.isLoading || selectedNoOneItem}
+                            >
+                                <span className="btn-label"> Завантажити </span>
+                                <span className="btn-icon">
+                                    <img className="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC3klEQVRoQ+2ZP2zTUBDG71whdSBS2IChZIJKIHwtLEw4Y4AiwgBq2QC10AlRiQERETVMSI2YClQCJgrqQCMa1DFsDPQPzQQssFAYK5WBIe1D52Lz6jwHO4niV+S3JHGe7e9399096xlhhw/c4fohBog6g3EG/tsM9OYptWsTTNw0SICwEIGqheU97QZui4UO3ybqQjCFYRAIQYhoqYRWC0ttuZ987dAXPHKHLAPAFGgQCkGASEGj2lEAylNyYwNNFGgJAEIUBICpoGIjz8DRXL9oRazq3J7+nqYuKQA+vMmW+lQn+1pIJwAWXs6WlFpjgDCeaNZCcQbCRLnR3JXxRffvgVLW/j53btb3FGeONhmIFODSiSG4lRlzo5WbzcPr5Tn3d6J7N8zfLEOiO2Efuz8/Ac/fTW+LbqQArIQF7k/us0V9W1uFU8UBVyDDMSSPTz8+w4XJwTprRF7Ex1PH4MnlKVfYlafDsPB10YZiOGc4x70EkQOwoAdDE5Du3XpWe/9lAa4+G4FCNg9n+7aywbZie6lG5BZiUd5os1gG4LH+6ydkiqftT20BWNj19AhcSw//Eb3esHBlEC0ywIK448yMvnQLulHhygBa1IADILdMVVdSWUgbALllrq59dzPxqDIFDyuPlf7ng1pYSG6lXKy5V3ftzuSMTPEMMJS2RSwvZk7EeW1gMLm1agmwvfv8bZneBe7G9BhUPr6tY4i0Bg7tPQgzoy9cUV6/y4sZP2ZcnBysWw8iBZBtwh5nr8vDu8Dxgxw/0Gm5Dvi2mX/8oUUXala8Nm20FYBIa6AV4c65MYAiivG+UBhrNW0hASvl8yXlJrJvBnhzt1YDMsCwBApCAbwTfSCMYO/cju5O+wm1t9fRIGFvrQMhoBkUSgsAlVh+wWF0AaEwyM4W4EnVPG0BVGLtV0w1zpANZaFAqt5bSgbNVtB5od/QBL1wp+bFAJ2KtN994gzEGWgxAr8Byt6WQDtv/5IAAAAASUVORK5CYII=" height="17" />
+                                </span>
+                                { this.props.isLoading && ( <i className="fa fa-spinner fa-pulse" /> ) }
+                            </button>
+                        </div>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

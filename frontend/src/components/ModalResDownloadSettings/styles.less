@@ -1,47 +1,64 @@
-.list-res-download-settings-helper-item {
-  z-index: 2000;
-  box-shadow: 0 5px 5px -5px rgba(0,0,0,.2), 0 -5px 5px -5px rgba(0,0,0,.2);
-  background-color: #fff;
-}
+.modal-res-download-settings {
 
-.list-res-download-settings {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 100%;
-}
-
-.list-res-download-settings-item {
-  background-color: #fff;
-  padding: 5px 15px 5px 5px;
-  position: relative;
-  border-top: 1px solid #f4f4f4;
-  list-style: none;
-  margin: 0 auto;
-
-  .order-num {
-    width: 2em;
-    text-align: right;
-    padding: 0 7px 0 0;
-    display: inline-block;
+  .list-res-download-settings-helper-item {
+    z-index: 2000;
+    box-shadow: 0 5px 5px -5px rgba(0,0,0,.2), 0 -5px 5px -5px rgba(0,0,0,.2);
+    background-color: #fff;
   }
 
-  &:last-child {
-    border-bottom: 1px solid #f4f4f4;
+  .list-res-download-settings {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
   }
 
-  .checkbox {
-    padding: 0 !important;
-    display: inline;
+  .list-res-download-settings-item {
+    background-color: #fff;
+    padding: 5px 15px 5px 5px;
+    position: relative;
+    border-top: 1px solid #f4f4f4;
+    list-style: none;
+    margin: 0 auto;
+
+    .order-num {
+      width: 2em;
+      text-align: right;
+      padding: 0 7px 0 0;
+      display: inline-block;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid #f4f4f4;
+    }
+
+    .checkbox {
+      padding: 0 !important;
+      display: inline;
+    }
+
+    .drag-hook-btn {
+      cursor: row-resize;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      height: 100%;
+      width: 12px;
+    }
   }
 
-  .drag-hook-btn {
-    cursor: row-resize;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    height: 100%;
-    width: 12px;
+  .bottom-btns-part {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & > * {
+      flex-grow: 1;
+    }
+
+    .btn + .btn {
+      margin-left: 5px;
+    }
   }
 }
 
@@ -51,6 +68,20 @@
     .order-num {
       display: block;
       text-align: left;
+    }
+  }
+
+  .modal-res-download-settings {
+    .bottom-btns-part {
+
+      & > * {
+        width: 100%;
+        text-align: center !important;
+      }
+
+      .btn {
+        margin-bottom: 5px !important;
+      }
     }
   }
 }
