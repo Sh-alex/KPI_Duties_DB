@@ -455,7 +455,7 @@ export default class SearchOccupationsForm extends Component {
                             disabled={this.props.isSubmittngSearchForm}
                         >
                             Очистити поля {" "}
-                            <i className="fa fa-refresh" title="Очистити поля форми" />
+                            <i className="fa fa-undo" title="Очистити поля форми" />
                         </button>
                         <button
                             type="submit"

@@ -505,7 +505,7 @@ export default class FormEditOccupInfo extends Component {
                                         disabled={submitting}
                                         className="btn btn-default form-edit-occup-info__btn-form-action form-edit-occup-info__btn-form-action--reset"
                                     >
-                                        Очистити форму <i className="fa fa-refresh" />
+                                        Очистити форму <i className="fa fa-undo" />
                                     </button>
                                 </OverlayTrigger>
                                 <button
