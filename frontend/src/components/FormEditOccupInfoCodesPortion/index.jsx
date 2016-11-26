@@ -60,12 +60,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
             <input
                 type="hidden"
                 {...props.codesPortionFields.id} />
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={portionStartDateFormGroupClass}>
-                    <label htmlFor={"inp-codes-portion-start-date"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-codes-portion-start-date"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Дата прийняття набору кодів
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <DateTimePicker
                             {...props.codesPortionFields.portionStartDate}
                             type="date"
@@ -85,12 +85,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={portionEndDateFormGroupClass}>
-                    <label htmlFor={"inp-codes-portion-stop-date"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-codes-portion-stop-date"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Дата припинення дії набору кодів
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <DateTimePicker
                             {...props.codesPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
@@ -111,12 +111,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
             </div>
         </div>
         <div className="row">
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeKPFormGroupClass}>
-                    <label htmlFor={"inp-code-KP"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-KP"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код КП
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -168,12 +168,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeZKPPTRFormGroupClass}>
-                    <label htmlFor={"inp-code-ZKPPTR"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-ZKPPTR"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ЗКППТР
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -228,12 +228,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
         </div>
 
         <div className="row">
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeETDKFormGroupClass}>
-                    <label htmlFor={"inp-code-ETDK"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-ETDK"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ЄТДК
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -285,12 +285,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeDKHPFormGroupClass}>
-                    <label htmlFor={"inp-code-DKHP"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-DKHP"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ДКХП
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -335,7 +335,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.DKHPCodesList.fetchingError ||
+                                props.DKHPCodesList.errors && props.DKHPCodesList.fetchingError ||
                                 props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error
                             }
                         </span>

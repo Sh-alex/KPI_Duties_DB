@@ -50,7 +50,7 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
             {topCtrlPart}
             <div className="clearfix">
-                <div className="col-sm-8">
+                <div className="col-xs-12 col-md-8">
                     <div className={portionTextFormGroupClass}>
                         <div className="input-group">
                             <input
@@ -97,7 +97,7 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
                         </span>
                     </div>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-xs-12 col-md-4">
                     <input
                         type="hidden"
                         {...props.fields.idDates} />

@@ -43,8 +43,8 @@ export default class FormEditOccupInfoNameSection extends Component {
             <div>
                 <h4> Назва посади </h4>
                 <div className={occupGroupFormGroupClass}>
-                    <label htmlFor="inp-occupation-group" className="col-sm-2 control-label"> Посадовий склад </label>
-                    <div className="col-sm-10">
+                    <label htmlFor="inp-occupation-group" className="col-xs-12 col-md-2 control-label"> Посадовий склад </label>
+                    <div className="col-xs-12 col-md-10">
                         <div className="input-group input-group--occupation-group">
                             <DropdownList
                                 {...nameFields.occupationGroup}
@@ -89,12 +89,12 @@ export default class FormEditOccupInfoNameSection extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-xs-12 col-md-6">
                         <div className={clarifiedOccupFormGroupClass}>
-                            <label htmlFor="select-clarified-occup" className="col-sm-4 control-label">
+                            <label htmlFor="select-clarified-occup" className="col-xs-12 col-md-4 control-label">
                                 Уточнювана посада
                             </label>
-                            <div className="col-sm-8">
+                            <div className="col-xs-12 col-md-8">
                                 <div className="input-group input-group--clarified-occup">
                                     <DropdownList
                                         {...nameFields.clarifiedOccup}
@@ -147,12 +147,12 @@ export default class FormEditOccupInfoNameSection extends Component {
                             }
                         </div>
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-xs-12 col-md-6">
                         <div className={clarificationFormGroupClass}>
-                            <label htmlFor="select-clarification" className="col-sm-4 control-label">
+                            <label htmlFor="select-clarification" className="col-xs-12 col-md-4 control-label">
                                 Уточнення
                             </label>
-                            <div className="col-sm-8">
+                            <div className="col-xs-12 col-md-8">
                                 <div className="input-group">
                                     <DropdownList
                                         {...nameFields.clarification}
@@ -199,8 +199,8 @@ export default class FormEditOccupInfoNameSection extends Component {
                     </div>
                 </div>
                 <div className={occupationNameFormGroupClass}>
-                    <label htmlFor="inp-occupation-name" className="col-sm-2 control-label"> Повна назва посади </label>
-                    <div className="col-sm-10">
+                    <label htmlFor="inp-occupation-name" className="col-xs-12 col-md-2 control-label"> Повна назва посади </label>
+                    <div className="col-xs-12 col-md-10">
                         <input
                             {...nameFields.occupationName}
                             onChange={ e => {
@@ -219,10 +219,10 @@ export default class FormEditOccupInfoNameSection extends Component {
                     </div>
                 </div>
                 <div className={occupationNameMinFormGroupClass}>
-                    <label htmlFor="inp-occupation-name-min" className="col-sm-2 control-label">
+                    <label htmlFor="inp-occupation-name-min" className="col-xs-12 col-md-2 control-label">
                         Скорочена назва посади
                     </label>
-                    <div className="col-sm-10">
+                    <div className="col-xs-12 col-md-10">
                         <input
                             {...nameFields.occupationNameMin}
                             onChange={ e => {

@@ -42,15 +42,15 @@ export default function FormEditOccupInfoDurationsPortion(props) {
             {topCtrlPart}
             <div className="clearfix">
                 <div className="row">
-                    <div className="col-sm-6">
+                    <div className="col-xs-12 col-md-6">
                         <div className={startStateDateFormGroupClass}>
                             <label
                                 htmlFor={"inp-occupation-start-date--"+props.portionKey}
-                                className="col-sm-4 control-label"
+                                className="col-xs-12 col-md-4 control-label"
                             >
                                 Дата створення посади
                             </label>
-                            <div className="col-sm-8">
+                            <div className="col-xs-12 col-md-8">
                                 <DateTimePicker
                                     {...props.fields.start}
                                     type="date"
@@ -68,15 +68,15 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-xs-12 col-md-6">
                         <div className={stopFormGroupClass}>
                             <label
                                 htmlFor={"inp-occupation-stop-date--"+props.portionKey}
-                                className="col-sm-4 control-label"
+                                className="col-xs-12 col-md-4 control-label"
                             >
                                 Дата відміни посади
                             </label>
-                            <div className="col-sm-8">
+                            <div className="col-xs-12 col-md-8">
                                 <DateTimePicker
                                     {...props.fields.stop}
                                     type="date"
@@ -96,9 +96,9 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xs-12 col-sm-6">
+                    <div className="col-xs-12 col-xs-12 col-md-6">
                         <div className="form-group">
-                            <div className="col-xs-12 col-sm-offset-4 col-sm-8">
+                            <div className="col-xs-12 col-xs-12 col-md-offset-4 col-xs-12 col-md-8">
                                 <div className="checkbox">
                                     <label>
                                         <input {...props.fields.inKpi} type="checkbox" />
@@ -108,9 +108,9 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-xs-12 col-sm-6">
+                    <div className="col-xs-12 col-md-6">
                         <div className="form-group">
-                            <div className="col-xs-12 col-sm-offset-4 col-sm-8">
+                            <div className="col-xs-12 col-md-offset-4 col-md-8">
                                 <div className="checkbox">
                                     <label>
                                         <input {...props.fields.virtual} type="checkbox" />

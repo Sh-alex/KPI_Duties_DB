@@ -60,7 +60,7 @@ export default class FormEditOccupInfoCodesSection extends Component {
 
         return (
             <div>
-                <div className="col-sm-7 pull-right text-right">
+                <div className="col-xs-12 col-md-7 pull-right text-right">
                     <a href="javascript:void(0)" className="" onClick={handleBtnAddInfoFromAnotherOccupClick}>
                         <i> Заповнити коди із аналогічної посади </i>
                         <i className="fa fa-link" />
