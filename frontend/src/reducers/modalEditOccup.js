@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
                 show: false,
                 editingData: null,
                 fetchDataError: null,
-                isFetchingData: true,
+                isFetchingData: false,
             };
 
 
