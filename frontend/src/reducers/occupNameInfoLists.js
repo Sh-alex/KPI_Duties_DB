@@ -46,7 +46,7 @@ import {
 const initialState = {
     occupationGroupList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         items : [],
         isAddingNewVal: false,
         addingSuccess: false,
@@ -87,12 +87,12 @@ const initialState = {
     },
     clarifiedOccupationList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         items : []
     },
     clarificationList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         items : [],
         isAddingNewVal: false,
         addingErrors: [],
@@ -106,7 +106,7 @@ const initialState = {
     }
 };
 
-export default function occupationNameInfo(state = initialState, action) {
+export default function occupNameInfoLists(state = initialState, action) {
     switch (action.type) {
         case ADD_NEW_CLARIFICATION_REQUEST:
             return {
@@ -198,7 +198,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 occupationGroupList: {
                     ...state.occupationGroupList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_OCCUP_GROUP_LIST_SUCCESS:
@@ -207,7 +207,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 occupationGroupList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_OCCUP_GROUP_LIST_FAIL:
@@ -216,7 +216,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 occupationGroupList: {
                     ...state.occupationGroupList,
                     isFetching: false,
-                    errors: [...state.occupationGroupList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -226,7 +226,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarificationList: {
                     ...state.clarificationList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_CLARIFICATION_LIST_SUCCESS:
@@ -235,7 +235,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarificationList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_CLARIFICATION_LIST_FAIL:
@@ -244,7 +244,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarificationList: {
                     ...state.clarificationList,
                     isFetching: false,
-                    errors: [...state.clarificationList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -254,7 +254,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarifiedOccupationList: {
                     ...state.clarifiedOccupationList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_CLARIFIED_OCCUP_LIST_SUCCESS:
@@ -263,7 +263,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarifiedOccupationList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case FETCH_CLARIFIED_OCCUP_LIST_FAIL:
@@ -272,7 +272,7 @@ export default function occupationNameInfo(state = initialState, action) {
                 clarifiedOccupationList: {
                     ...state.clarifiedOccupationList,
                     isFetching: false,
-                    errors: [...state.clarifiedOccupationList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 

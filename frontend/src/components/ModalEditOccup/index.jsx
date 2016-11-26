@@ -230,7 +230,7 @@ export default reduxForm(
         return {
             modalState: state.modals.editOccup,
             editingOccupId: state.modals.editOccup.editingData && state.modals.editOccup.editingData.id || null,
-            occupNameInfoLists: state.occupationNameInfo,
+            occupNameInfoLists: state.occupNameInfoLists,
             occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.formEditOccup.shouldShowServerRespMsg
         }

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-export default function BoxExpandBtn (props) {
+export default function BtnExpandBox (props) {
     return (
         <button type="button"
                 onClick={props.toggleExpand}

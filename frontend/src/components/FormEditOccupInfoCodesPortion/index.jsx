@@ -29,23 +29,23 @@ export default function FormEditOccupInfoCodesPortion(props) {
         }),
         codeKPFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.KPCodesList.errors && props.KPCodesList.errors.length || props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error,
-            'has-success': props.codesPortionFields.codeKP.touched && !props.codesPortionFields.codeKP.error && !props.KPCodesList.errors.length
+            'has-error':  props.KPCodesList.fetchingError || props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error,
+            'has-success': props.codesPortionFields.codeKP.touched && !props.codesPortionFields.codeKP.error && !props.KPCodesList.fetchingError
         }),
         codeETDKFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.ETDKCodesList.errors && props.ETDKCodesList.errors.length || props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error,
-            'has-success': props.codesPortionFields.codeETDK.touched && !props.codesPortionFields.codeETDK.error && !props.ETDKCodesList.errors.length
+            'has-error':  props.ETDKCodesList.fetchingError && props.ETDKCodesList.fetchingError || props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error,
+            'has-success': props.codesPortionFields.codeETDK.touched && !props.codesPortionFields.codeETDK.error && !props.ETDKCodesList.fetchingError
         }),
         codeDKHPFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.DKHPCodesList.errors && props.DKHPCodesList.errors.length || props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error,
-            'has-success': props.codesPortionFields.codeDKHP.touched && !props.codesPortionFields.codeDKHP.error && !props.DKHPCodesList.errors.length
+            'has-error':  props.DKHPCodesList.fetchingError && props.DKHPCodesList.fetchingError || props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error,
+            'has-success': props.codesPortionFields.codeDKHP.touched && !props.codesPortionFields.codeDKHP.error && !props.DKHPCodesList.fetchingError
         }),
         codeZKPPTRFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.ZKPPTRCodesList.errors && props.ZKPPTRCodesList.errors.length || props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error,
-            'has-success': props.codesPortionFields.codeZKPPTR.touched && !props.codesPortionFields.codeZKPPTR.error && !props.ZKPPTRCodesList.errors.length
+            'has-error':  props.ZKPPTRCodesList.fetchingError && props.ZKPPTRCodesList.fetchingError || props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error,
+            'has-success': props.codesPortionFields.codeZKPPTR.touched && !props.codesPortionFields.codeZKPPTR.error && !props.ZKPPTRCodesList.fetchingError
         }),
         portionStartDateValue = props.codesPortionFields.portionStartDate.value &&
             (new Date(props.codesPortionFields.portionStartDate.value) !== "Invalid Date") &&
@@ -161,7 +161,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.KPCodesList.errors && props.KPCodesList.errors.length && props.KPCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.KPCodesList.fetchingError ||
                                 props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error
                             }
                         </span>
@@ -218,7 +218,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.ZKPPTRCodesList.errors && props.ZKPPTRCodesList.errors.length && props.ZKPPTRCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.ZKPPTRCodesList.fetchingError ||
                                 props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error
                             }
                         </span>
@@ -278,7 +278,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.ETDKCodesList.errors && props.ETDKCodesList.errors.length && props.ETDKCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.ETDKCodesList.fetchingError ||
                                 props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error
                             }
                         </span>
@@ -335,7 +335,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.DKHPCodesList.errors && props.DKHPCodesList.errors.length && props.DKHPCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.DKHPCodesList.fetchingError ||
                                 props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error
                             }
                         </span>

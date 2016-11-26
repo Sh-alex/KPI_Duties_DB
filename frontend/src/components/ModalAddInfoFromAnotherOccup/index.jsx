@@ -70,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
     let modalState = state.modals.addInfoFromAnotherOccup;
     return {
         ...modalState,
-        ...state.occupationNameInfo,
+        ...state.occupNameInfoLists,
     };
 };
 

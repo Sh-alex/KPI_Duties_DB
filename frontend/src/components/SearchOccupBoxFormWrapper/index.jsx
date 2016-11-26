@@ -13,7 +13,7 @@ import {
 } from "../../constants/searchOccupationsForm"
 
 import SearchOccupationsForm from "../SearchOccupationsForm"
-import BoxExpandBtn from "../BoxExpandBtn"
+import BtnExpandBox from "../BtnExpandBox"
 
 export default function SearchOccupBoxFormWrapper(props) {
     let formFields;
@@ -66,7 +66,7 @@ export default function SearchOccupBoxFormWrapper(props) {
                     Пошук посад
                 </h3>
                 <div className="box-tools pull-right">
-                    <BoxExpandBtn
+                    <BtnExpandBox
                         toggleExpand={props.toggleExpand}
                         expanded={props.boxIsExpanded}
                     />

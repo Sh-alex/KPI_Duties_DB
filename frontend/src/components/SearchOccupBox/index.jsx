@@ -122,7 +122,7 @@ class SearchOccupBox extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        ...state.occupationNameInfo,
+        ...state.occupNameInfoLists,
         ...state.delOccupation,
         ...state.searchOccupBox
     };

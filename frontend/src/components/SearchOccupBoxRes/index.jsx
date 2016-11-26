@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Alert, Pagination } from 'react-bootstrap'
 import "./styles.less";
 
-import BoxExpandBtn from "../BoxExpandBtn"
+import BtnExpandBox from "../BtnExpandBox"
 import SearchOccupBoxResTbl from "../SearchOccupBoxResTbl"
 import ModalConfirmDelItem from "../ModalConfirmDelItem"
 import ModalEditOccup from "../ModalEditOccup"
@@ -187,7 +187,7 @@ export default class SearchOccupBoxRes extends Component {
                         Результати пошуку
                     </h3>
                     <div className="box-tools pull-right">
-                        <BoxExpandBtn
+                        <BtnExpandBox
                             toggleExpand={this.props.toggleExpand}
                             expanded={this.props.boxIsExpanded}
                         />

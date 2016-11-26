@@ -15,28 +15,28 @@ export default class FormEditOccupInfoNameSection extends Component {
             } = this.props,
             occupGroupFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  occupationGroupList.errors && occupationGroupList.errors.length || nameFields.occupationGroup.touched && nameFields.occupationGroup.error,
-                'has-success': nameFields.occupationGroup.touched && !nameFields.occupationGroup.error && !occupationGroupList.errors.length
+                'has-error':  occupationGroupList.fetchingError || nameFields.occupationGroup.touched && nameFields.occupationGroup.error,
+                'has-success': nameFields.occupationGroup.touched && !nameFields.occupationGroup.error && !occupationGroupList.fetchingError
             }),
             occupationNameFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  nameFields.occupationName.touched && nameFields.occupationName.error,
+                'has-error': nameFields.occupationName.touched && nameFields.occupationName.error,
                 'has-success': nameFields.occupationName.touched && !nameFields.occupationName.error
             }),
             occupationNameMinFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  nameFields.occupationNameMin.touched && nameFields.occupationNameMin.error,
+                'has-error': nameFields.occupationNameMin.touched && nameFields.occupationNameMin.error,
                 'has-success': nameFields.occupationNameMin.touched && !nameFields.occupationNameMin.error
             }),
             clarificationFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  clarificationList.errors && clarificationList.errors.length || nameFields.clarification.touched && nameFields.clarification.error,
-                'has-success': nameFields.clarification.touched && !nameFields.clarification.error && !clarificationList.errors.length
+                'has-error': clarificationList.fetchingError || nameFields.clarification.touched && nameFields.clarification.error,
+                'has-success': nameFields.clarification.touched && !nameFields.clarification.error && !clarificationList.fetchingError
             }),
             clarifiedOccupFormGroupClass = classNames({
                 'form-group': true,
-                'has-error':  clarifiedOccupationList.errors && clarifiedOccupationList.errors.length || nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error,
-                'has-success': nameFields.clarifiedOccup.touched && !nameFields.clarifiedOccup.error && !clarifiedOccupationList.errors.length
+                'has-error': clarifiedOccupationList.fetchingError || nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error,
+                'has-success': nameFields.clarifiedOccup.touched && !nameFields.clarifiedOccup.error && !clarifiedOccupationList.fetchingError
             });
 
         return (
@@ -81,12 +81,11 @@ export default class FormEditOccupInfoNameSection extends Component {
                             </div>
                         </div>
                         <span className="help-block">
-                        {
-                            occupationGroupList.errors && occupationGroupList.errors.length &&
-                            occupationGroupList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
-                            nameFields.occupationGroup.touched && nameFields.occupationGroup.error
-                        }
-                    </span>
+                            {
+                                occupationGroupList.fetchingError ||
+                                nameFields.occupationGroup.touched && nameFields.occupationGroup.error
+                            }
+                        </span>
                     </div>
                 </div>
                 <div className="row">
@@ -135,12 +134,11 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     </div>
                                 </div>
                                 <span className="help-block">
-                            {
-                                clarifiedOccupationList.errors && clarifiedOccupationList.errors.length &&
-                                clarifiedOccupationList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
-                                nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error
-                            }
-                        </span>
+                                    {
+                                        clarifiedOccupationList.fetchingError ||
+                                        nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error
+                                    }
+                                </span>
                             </div>
                             {/*
                              disabled={true}
@@ -191,12 +189,11 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     </div>
                                 </div>
                                 <span className="help-block">
-                            {
-                                clarificationList.errors && clarificationList.errors.length &&
-                                clarificationList.errors.map( (err, i) => <span key={i}> {err.toString()} <br /> </span>)  ||
-                                nameFields.clarification.touched && nameFields.clarification.error
-                            }
-                        </span>
+                                    {
+                                        clarificationList.fetchingError ||
+                                        nameFields.clarification.touched && nameFields.clarification.error
+                                    }
+                                </span>
                             </div>
                         </div>
                     </div>

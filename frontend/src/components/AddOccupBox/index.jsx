@@ -189,7 +189,7 @@ export default reduxForm(
     },
     (state, ownProps) => {    //mapStateToProps
         return {
-            occupNameInfoLists: state.occupationNameInfo,
+            occupNameInfoLists: state.occupNameInfoLists,
             occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.addForm.shouldShowServerRespMsg
         }

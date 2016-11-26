@@ -398,7 +398,7 @@ class CtrlDcBox extends Component {
                 console.error(`Called CtrlDcBox.getActiveListData, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
                 return {
                     isFetching: false,
-                    errors: [],                 //TODO: замінити на fetchingErrors
+                    fetchingError: "",
                     items : [],
                     isAddingNewVal: false,
                     addingErrors: [],
@@ -633,7 +633,7 @@ class CtrlDcBox extends Component {
                             isFetchingItems={activeList.isFetching}
                             listDataItems={this.state.listItems}
                             occupNamesById={this.props.occupNamesById}
-                            fetchingErrors={activeList.errors /*TODO: замінити на fetchingErrors*/}
+                            fetchingError={activeList.fetchingError}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
                             onDelListItemBtnClick={this.showModalConfirmDelOccupDcVal}
@@ -660,16 +660,16 @@ class CtrlDcBox extends Component {
 const mapStateToProps = (state, ownProps) => {
     //Робимо хеш-таблицю з масиву для швидшого пошуку назв посад по id
     let occupNamesById = {
-        fetchingError: state.occupationNameInfo.clarifiedOccupationList.errors.join(". "),
-        isFetching: state.occupationNameInfo.clarifiedOccupationList.isFetching,
+        fetchingError: state.occupNameInfoLists.clarifiedOccupationList.fetchingError,
+        isFetching: state.occupNameInfoLists.clarifiedOccupationList.isFetching,
         items: {}
     };
-    state.occupationNameInfo.clarifiedOccupationList.items.forEach(item => {
+    state.occupNameInfoLists.clarifiedOccupationList.items.forEach(item => {
         occupNamesById.items[item.id] = item.textValue;
     });
 
     return {
-        ...state.occupationNameInfo,
+        ...state.occupNameInfoLists,
         ...state.occupCodesLists,
         ...state.occupDescriptionTextsLists,
         occupNamesById

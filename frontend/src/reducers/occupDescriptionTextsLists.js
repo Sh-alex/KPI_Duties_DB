@@ -3,7 +3,7 @@ import * as aTypes from '../constants/occupDescriptionTextsLists'
 const initialState = {
     haveToKnowTextsList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -17,7 +17,7 @@ const initialState = {
     },
     responsibilitiesTextsList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -31,7 +31,7 @@ const initialState = {
     },
     qualiffRequirTextsList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -53,7 +53,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 haveToKnowTextsList: {
                     ...state.haveToKnowTextsList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_HAVE_TO_KNOW_TEXTS_LIST_SUCCESS:
@@ -62,7 +62,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 haveToKnowTextsList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_HAVE_TO_KNOW_TEXTS_LIST_FAIL:
@@ -71,7 +71,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 haveToKnowTextsList: {
                     ...state.haveToKnowTextsList,
                     isFetching: false,
-                    errors: [...state.haveToKnowTextsList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -81,7 +81,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 responsibilitiesTextsList: {
                     ...state.responsibilitiesTextsList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_RESPONSIBILITIES_TEXTS_LIST_SUCCESS:
@@ -90,7 +90,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 responsibilitiesTextsList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_RESPONSIBILITIES_TEXTS_LIST_FAIL:
@@ -99,7 +99,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 responsibilitiesTextsList: {
                     ...state.responsibilitiesTextsList,
                     isFetching: false,
-                    errors: [...state.responsibilitiesTextsList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -109,7 +109,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 qualiffRequirTextsList: {
                     ...state.qualiffRequirTextsList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_QUALIFF_REQUIR_TEXTS_LIST_SUCCESS:
@@ -118,7 +118,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 qualiffRequirTextsList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_QUALIFF_REQUIR_TEXTS_LIST_FAIL:
@@ -127,7 +127,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 qualiffRequirTextsList: {
                     ...state.qualiffRequirTextsList,
                     isFetching: false,
-                    errors: [...state.qualiffRequirTextsList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 

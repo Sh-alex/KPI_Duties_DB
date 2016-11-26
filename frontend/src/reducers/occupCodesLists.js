@@ -3,7 +3,7 @@ import * as aTypes from '../constants/occupCodesLists'
 const initialState = {
     DKHPCodesList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -14,7 +14,7 @@ const initialState = {
     },
     ETDKCodesList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -28,7 +28,7 @@ const initialState = {
     },
     ZKPPTRCodesList: {
         isFetching: false,
-        errors: [],                 //TODO: замінити на fetchingErrors
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -42,7 +42,7 @@ const initialState = {
     },
     KPCodesList: {
         isFetching: false,
-        errors: [],
+        fetchingError: "",
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -64,7 +64,7 @@ export default function occupCodesList(state = initialState, action) {
                 DKHPCodesList: {
                     ...state.DKHPCodesList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_DKHP_CODES_LIST_SUCCESS:
@@ -73,7 +73,7 @@ export default function occupCodesList(state = initialState, action) {
                 DKHPCodesList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_DKHP_CODES_LIST_FAIL:
@@ -82,7 +82,7 @@ export default function occupCodesList(state = initialState, action) {
                 DKHPCodesList: {
                     ...state.DKHPCodesList,
                     isFetching: false,
-                    errors: [...state.DKHPCodesList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -92,7 +92,7 @@ export default function occupCodesList(state = initialState, action) {
                 ETDKCodesList: {
                     ...state.ETDKCodesList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_ETDK_CODES_LIST_SUCCESS:
@@ -101,7 +101,7 @@ export default function occupCodesList(state = initialState, action) {
                 ETDKCodesList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_ETDK_CODES_LIST_FAIL:
@@ -110,7 +110,7 @@ export default function occupCodesList(state = initialState, action) {
                 ETDKCodesList: {
                     ...state.ETDKCodesList,
                     isFetching: false,
-                    errors: [...state.ETDKCodesList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -120,7 +120,7 @@ export default function occupCodesList(state = initialState, action) {
                 ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_ZKPPTR_CODES_LIST_SUCCESS:
@@ -129,7 +129,7 @@ export default function occupCodesList(state = initialState, action) {
                 ZKPPTRCodesList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_ZKPPTR_CODES_LIST_FAIL:
@@ -138,7 +138,7 @@ export default function occupCodesList(state = initialState, action) {
                 ZKPPTRCodesList: {
                     ...state.ZKPPTRCodesList,
                     isFetching: false,
-                    errors: [...state.ZKPPTRCodesList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 
@@ -148,7 +148,7 @@ export default function occupCodesList(state = initialState, action) {
                 KPCodesList: {
                     ...state.KPCodesList,
                     isFetching: true,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_KP_CODES_LIST_SUCCESS:
@@ -157,7 +157,7 @@ export default function occupCodesList(state = initialState, action) {
                 KPCodesList: {
                     items: action.data,
                     isFetching: false,
-                    errors: []
+                    fetchingError: ""
                 }
             };
         case aTypes.FETCH_KP_CODES_LIST_FAIL:
@@ -166,7 +166,7 @@ export default function occupCodesList(state = initialState, action) {
                 KPCodesList: {
                     ...state.KPCodesList,
                     isFetching: false,
-                    errors: [...state.KPCodesList.errors, action.error]
+                    fetchingError: action.error
                 }
             };
 

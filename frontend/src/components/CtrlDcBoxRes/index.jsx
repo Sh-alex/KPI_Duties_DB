@@ -11,7 +11,7 @@ import "./styles.less";
 export default function CtrlDcBoxRes(props) {
     let listIsEmpty = !(props.listDataItems && props.listDataItems.length),
         listIsLoading = props.isFetchingItems,
-        listHasErrors = props.fetchingErrors  && props.fetchingErrors.length,
+        listHasErrors = props.fetchingError,
         mainHeader = document.getElementsByClassName("main-header"),
         mainHeaderH = mainHeader.length && mainHeader[0].clientHeight || 73,
         mainFooter = document.getElementsByClassName("main-footer"),
@@ -53,7 +53,7 @@ export default function CtrlDcBoxRes(props) {
                 <Alert bsStyle="danger" className="no-margin">
                     <p>
                         Сталася помлка :( <br/>
-                        { props.fetchingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) }
+                        { props.fetchingError }
                     </p>
                 </Alert>
             ),
