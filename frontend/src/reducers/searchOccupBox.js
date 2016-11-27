@@ -2,8 +2,22 @@ import {
     SEARCH_OCCUP_BOX_FORM_SUBMIT_REQUEST,
     SEARCH_OCCUP_BOX_FORM_SUBMIT_FAIL,
     SEARCH_OCCUP_BOX_FORM_SUBMIT_SUCCESS,
-    DISMISS_SEARCH_OCCUP_BOX_FORM_ALERT
+    DISMISS_SEARCH_OCCUP_BOX_FORM_ALERT,
+
+    DOWNLOAD_SEARCH_OCCUP_RES_REQUEST,
+    DOWNLOAD_SEARCH_OCCUP_RES_SUCCESS,
+    DOWNLOAD_SEARCH_OCCUP_RES_FAIL,
+    DISMISS_DOWNLOAD_SEARCH_OCCUP_RES_ALERT,
+    SHOW_MODAL_RES_DOWNLOAD_SETTINGS,
+    HIDE_MODAL_RES_DOWNLOAD_SETTINGS
 } from '../constants/searchOccupBox'
+
+import {
+    PRIOR_SEARCH_OCCUP_REQUEST,
+    PRIOR_SEARCH_OCCUP_SUCCESS,
+    PRIOR_SEARCH_OCCUP_FAIL,
+    PRIOR_SEARCH_OCCUP_RESET
+} from '../constants/searchOccupationsForm'
 
 import { EDIT_OCCUP_SUBMIT_SUCCESS } from '../constants/modalEditOccup'
 
@@ -12,17 +26,27 @@ import { DEL_OCCUP_SUCCESS } from "../constants/delOccupation"
 const initialState = {
     isSubmittngSearchForm: false,
     searchResData: null,
-    searchError: null
+    searchError: "",
+
+    downloadResError: "",
+    isDownloadingResError: false,
+    showModalResDownloadSettings: false,
+
+
+    //попередній пошук посад по введеному рядку
+    searchTextWillSucceed: undefined,   //undefined, true, false,
+    searchTextResIsPrefetching: false,
+    searchTextResPrefetchingError: "",
 };
 
 export default function (state = initialState, action) {
     let newSearchResData;
     switch(action.type) {
-
         case SEARCH_OCCUP_BOX_FORM_SUBMIT_REQUEST:
             return {
                 ...state,
                 searchError: null,
+                searchResData: null,
                 isSubmittngSearchForm: true,
             };
         case SEARCH_OCCUP_BOX_FORM_SUBMIT_SUCCESS:
@@ -35,6 +59,7 @@ export default function (state = initialState, action) {
         case SEARCH_OCCUP_BOX_FORM_SUBMIT_FAIL:
             return {
                 ...state,
+                searchResData: null,
                 isSubmittngSearchForm: false,
                 searchError: action.error,
             };
@@ -44,6 +69,38 @@ export default function (state = initialState, action) {
                 ...state,
                 searchError: null
             };
+
+
+        case PRIOR_SEARCH_OCCUP_REQUEST:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,
+                searchTextResIsPrefetching: true,
+                searchTextResPrefetchingError: "",
+            };
+        case PRIOR_SEARCH_OCCUP_SUCCESS:
+            return {
+                ...state,
+                searchTextWillSucceed: !!action.response,   //undefined, true, false,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: "",
+            };
+        case PRIOR_SEARCH_OCCUP_FAIL:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: action.error,
+            };
+
+        case PRIOR_SEARCH_OCCUP_RESET:
+            return {
+                ...state,
+                searchTextWillSucceed: undefined,   //undefined, true, false,
+                searchTextResIsPrefetching: false,
+                searchTextResPrefetchingError: "",
+            };
+
 
         case DEL_OCCUP_SUCCESS:
             newSearchResData = Object.assign({}, state.searchResData);
@@ -112,6 +169,41 @@ export default function (state = initialState, action) {
                 console.error("Caught error when tried to apply edited occupation data to search results", e);
                 return state;
             }
+
+
+        case DOWNLOAD_SEARCH_OCCUP_RES_REQUEST:
+            return {
+                ...state,
+                downloadResError: "",
+                isDownloadingResError: true,
+            };
+        case DOWNLOAD_SEARCH_OCCUP_RES_SUCCESS:
+            return {
+                ...state,
+                downloadResError: "",
+                isDownloadingResError: false,
+            };
+        case DOWNLOAD_SEARCH_OCCUP_RES_FAIL:
+            return {
+                ...state,
+                isDownloadingResError: false,
+                downloadResError: action.error,
+            };
+        case DISMISS_DOWNLOAD_SEARCH_OCCUP_RES_ALERT:
+            return {
+                ...state,
+                downloadResError: ""
+            };
+        case SHOW_MODAL_RES_DOWNLOAD_SETTINGS:
+            return {
+                ...state,
+                showModalResDownloadSettings: true
+            };
+        case HIDE_MODAL_RES_DOWNLOAD_SETTINGS:
+            return {
+                ...state,
+                showModalResDownloadSettings: false
+            };
 
         default:
             return state;

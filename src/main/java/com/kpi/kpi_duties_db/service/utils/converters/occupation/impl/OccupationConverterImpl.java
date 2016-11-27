@@ -316,6 +316,25 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
         OccupationGetDto occupationGetDto = new OccupationGetDto();
 
+        if (request.getIdList() != null && !request.getIdList().isEmpty()) {
+            String[] split = request.getIdList().get(0).split(",");
+            if (!split[0].equals("")) {
+                List<String> list = new ArrayList<>(Arrays.asList(split));
+                occupationGetDto.setIdList(new ArrayList<>());
+                List<Integer> collect;
+                try {
+                    collect = list.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+                } catch (Exception e) {
+                    String msg = "Illegal arguments in DcDutiesPartitionIdList. Must by array of integer";
+                    logger.error(msg);
+                    throw new IllegalArgumentException(msg);
+                }
+                for (Integer tag : collect) {
+                    occupationGetDto.getIdList().add(tag);
+                }
+            }
+        }
+
         if (request.getSearchType() != null && !request.getSearchType().isEmpty()) {
             occupationGetDto.setSearchType(request.getSearchType().get(0));
         }
@@ -330,7 +349,7 @@ public class OccupationConverterImpl implements OccupationConverter {
             occupationGetDto.setStartTo(request.getStartTo().get(0));
         }
         if (request.getStopFrom() != null && !request.getStopFrom().isEmpty()) {
-            occupationGetDto.setStartFrom(request.getStopFrom().get(0));
+            occupationGetDto.setStopFrom(request.getStopFrom().get(0));
         }
         if (request.getStopTo() != null && !request.getStopTo().isEmpty()) {
             occupationGetDto.setStopTo(request.getStopTo().get(0));
@@ -380,6 +399,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         Map<String, Object> params = new HashMap<>();
 
+        params.put("idList", dto.getIdList());
         params.put("searchType", dto.getSearchType());
         params.put("rtDutiesName", dto.getRtDutiesName());
         params.put("dcDutiesPartitionId", dto.getDcDutiesPartitionIdList());
@@ -409,6 +429,8 @@ public class OccupationConverterImpl implements OccupationConverter {
             dataInItem.setRtDutiesNameShort(entity.getNameShort());
 
             dataInItem.setDcDutiesPartitionId(entity.getDcDutiesPartitionId());
+
+            dataInItem.setDcDutiesPartitionName(entity.getDcDutiesPartitionEntity().getName());
 
             dataInItem.setRtDutiesParentId(entity.getParentId());
 

@@ -29,23 +29,23 @@ export default function FormEditOccupInfoCodesPortion(props) {
         }),
         codeKPFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.KPCodesList.errors && props.KPCodesList.errors.length || props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error,
-            'has-success': props.codesPortionFields.codeKP.touched && !props.codesPortionFields.codeKP.error && !props.KPCodesList.errors.length
+            'has-error':  props.KPCodesList.fetchingError || props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error,
+            'has-success': props.codesPortionFields.codeKP.touched && !props.codesPortionFields.codeKP.error && !props.KPCodesList.fetchingError
         }),
         codeETDKFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.ETDKCodesList.errors && props.ETDKCodesList.errors.length || props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error,
-            'has-success': props.codesPortionFields.codeETDK.touched && !props.codesPortionFields.codeETDK.error && !props.ETDKCodesList.errors.length
+            'has-error':  props.ETDKCodesList.fetchingError && props.ETDKCodesList.fetchingError || props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error,
+            'has-success': props.codesPortionFields.codeETDK.touched && !props.codesPortionFields.codeETDK.error && !props.ETDKCodesList.fetchingError
         }),
         codeDKHPFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.DKHPCodesList.errors && props.DKHPCodesList.errors.length || props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error,
-            'has-success': props.codesPortionFields.codeDKHP.touched && !props.codesPortionFields.codeDKHP.error && !props.DKHPCodesList.errors.length
+            'has-error':  props.DKHPCodesList.fetchingError && props.DKHPCodesList.fetchingError || props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error,
+            'has-success': props.codesPortionFields.codeDKHP.touched && !props.codesPortionFields.codeDKHP.error && !props.DKHPCodesList.fetchingError
         }),
         codeZKPPTRFormGroupClass = classNames({
             'form-group': true,
-            'has-error':  props.ZKPPTRCodesList.errors && props.ZKPPTRCodesList.errors.length || props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error,
-            'has-success': props.codesPortionFields.codeZKPPTR.touched && !props.codesPortionFields.codeZKPPTR.error && !props.ZKPPTRCodesList.errors.length
+            'has-error':  props.ZKPPTRCodesList.fetchingError && props.ZKPPTRCodesList.fetchingError || props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error,
+            'has-success': props.codesPortionFields.codeZKPPTR.touched && !props.codesPortionFields.codeZKPPTR.error && !props.ZKPPTRCodesList.fetchingError
         }),
         portionStartDateValue = props.codesPortionFields.portionStartDate.value &&
             (new Date(props.codesPortionFields.portionStartDate.value) !== "Invalid Date") &&
@@ -60,12 +60,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
             <input
                 type="hidden"
                 {...props.codesPortionFields.id} />
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={portionStartDateFormGroupClass}>
-                    <label htmlFor={"inp-codes-portion-start-date"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-codes-portion-start-date"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Дата прийняття набору кодів
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <DateTimePicker
                             {...props.codesPortionFields.portionStartDate}
                             type="date"
@@ -85,12 +85,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={portionEndDateFormGroupClass}>
-                    <label htmlFor={"inp-codes-portion-stop-date"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-codes-portion-stop-date"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Дата припинення дії набору кодів
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <DateTimePicker
                             {...props.codesPortionFields.portionEndDate}
                             format="DD.MM.YYYY"
@@ -111,12 +111,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
             </div>
         </div>
         <div className="row">
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeKPFormGroupClass}>
-                    <label htmlFor={"inp-code-KP"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-KP"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код КП
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -161,19 +161,19 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.KPCodesList.errors && props.KPCodesList.errors.length && props.KPCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.KPCodesList.fetchingError ||
                                 props.codesPortionFields.codeKP.touched && props.codesPortionFields.codeKP.error
                             }
                         </span>
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeZKPPTRFormGroupClass}>
-                    <label htmlFor={"inp-code-ZKPPTR"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-ZKPPTR"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ЗКППТР
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -218,7 +218,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.ZKPPTRCodesList.errors && props.ZKPPTRCodesList.errors.length && props.ZKPPTRCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.ZKPPTRCodesList.fetchingError ||
                                 props.codesPortionFields.codeZKPPTR.touched && props.codesPortionFields.codeZKPPTR.error
                             }
                         </span>
@@ -228,12 +228,12 @@ export default function FormEditOccupInfoCodesPortion(props) {
         </div>
 
         <div className="row">
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeETDKFormGroupClass}>
-                    <label htmlFor={"inp-code-ETDK"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-ETDK"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ЄТДК
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -278,19 +278,19 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.ETDKCodesList.errors && props.ETDKCodesList.errors.length && props.ETDKCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.ETDKCodesList.fetchingError ||
                                 props.codesPortionFields.codeETDK.touched && props.codesPortionFields.codeETDK.error
                             }
                         </span>
                     </div>
                 </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-xs-12 col-md-6">
                 <div className={codeDKHPFormGroupClass}>
-                    <label htmlFor={"inp-code-DKHP"+props.portionKey} className="col-sm-4 control-label">
+                    <label htmlFor={"inp-code-DKHP"+props.portionKey} className="col-xs-12 col-md-4 control-label">
                         Код ДКХП
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-xs-12 col-md-8">
                         <div className="input-group">
                             <input
                                 type="hidden"
@@ -335,7 +335,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                         </div>
                         <span className="help-block">
                             {
-                                props.DKHPCodesList.errors && props.DKHPCodesList.errors.length && props.DKHPCodesList.errors.map( err => <span> {err} <br /> </span>)  ||
+                                props.DKHPCodesList.errors && props.DKHPCodesList.fetchingError ||
                                 props.codesPortionFields.codeDKHP.touched && props.codesPortionFields.codeDKHP.error
                             }
                         </span>

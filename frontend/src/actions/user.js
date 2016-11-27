@@ -3,51 +3,202 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
 
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+
+    GET_USER_INFO_REQUEST,
+    GET_USER_INFO_SUCCESS,
+    GET_USER_INFO_FAIL,
+
+    CLEAR_LOG_IN_ERROR
 } from '../constants/user'
 
 import {
-    ROUTING
-} from '../constants/Routing'
+    LOGIN_USER as URI_LOGIN_USER,
+    GET_USER_INFO_BY_TOKEN as URI_GET_USER_INFO_BY_TOKEN
+} from "../constants/API_URIs"
 
+import { push as historyPushStateAction, replace, go } from 'react-router-redux'
+
+
+function loginUserRequest (data) {
+    return {
+        type: LOGIN_REQUEST,
+        data
+    }
+}
+
+function loginUserSuccess (response) {
+    return {
+        type: LOGIN_SUCCESS,
+        response
+    }
+}
+
+function loginUserFail (errorMsg) {
+    return {
+        type: LOGIN_FAIL,
+        errorMsg
+    }
+}
 
 /**
  * @param {Object} authData - дані авторизації користувача
  * @param {String} authData.login - логін
  * @param {String} authData.pass - пароль
  */
-export function login(authData) {
-    return (dispatch) => {
-        dispatch({
-            type: LOGIN_REQUEST,
-            authData
-        });
+export function logInUser(authData, dispatch) {
+    authData.grant_type = "password";   //дописуємо, бо так вимагає сервер
+    dispatch( loginUserRequest(authData) );
 
-        setTimeout(() => {
-            dispatch({
-                type: LOGIN_SUCCESS,
-                userInfo: {
-                    userName: "Генаш Максим Геннадійович",
-                    userAvatar: "1.jpg",
-                    role: "admin",
-                    permissions: {/**/}
+    localStorage.removeItem('jwtToken');
+
+    //тут проміс треба для redux-form
+    return new Promise((resolve, reject) => {
+        return fetch(
+            URI_LOGIN_USER,
+            {
+                credentials: 'include',
+                mode: 'cors',
+                method: 'post',
+                body: JSON.stringify(authData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    //'X-CSRFToken': CSRF_TOKEN
                 }
+            })
+            .then( response => {
+                if(response.status === 404)
+                    throw 'При авторизації користувача не знайдено відповідного методу на сервері!';
+                if(response.status === 400)
+                    throw 'При авторизації користувача передано некоректні дані на сервері!';
+                if(response.status === 401)
+                    throw 'Не знайдено користувача із таким логіном і паролем!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При авторизації користувача сталася помилка ${response.status} на сервері!`;
+
+                var contentType = response.headers.get("content-type");
+                if(contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                }
+                throw 'Сталася невідома помилка при авторизації користувача!';
+            })
+            .then( json => {
+                if(!json || !json.access_token || !json.expires_in)
+                    throw "При авторизації отримано некоректні дані від сервера!";
+
+                //store JWT Token to browser localStorage
+                localStorage.jwtToken = json.access_token;
+
+                setTimeout(() => {
+                    //якщо додаток не закриється до того як термін дії токена витіче, кажемо що термін дії ключа авторизації витік, треба авторизуватися знову
+                    //alert("Термін дії ключа авторизації витік, необхідна повторна авторизація");
+                    //logOutUser();
+
+                    logInUser(authData, dispatch);
+                }, json.expires_in);
+
+                dispatch(loginUserSuccess(json));
+                //отримуємо дані про користувача по цьому токену
+                dispatch(getUserInfo(json.access_token));
+                resolve(json);
+            })
+            .catch( error => {
+                if(!error || !(typeof error == "string"))
+                    error = 'Сталася невідома помилка при авторизації користувача!';
+                dispatch(loginUserFail(error));
+                reject({ _error: error.message || error });
             });
-            /*
-             dispatch({
-             type: ROUTING,
-             payload: {
-             method: 'replace',
-             nextUrl: '/admin'
-             }
-             })
-             */
-        },2000)
+    });
+}
+
+
+
+export function logOutUser() {
+    return function (dispatch) {
+        localStorage.removeItem('jwtToken');
+        dispatch(historyPushStateAction("/"));
+        dispatch({ type: LOGOUT_SUCCESS });
     }
 }
 
-export function logout() {
+
+
+
+
+function getUserInfoRequest (data) {
     return {
-        type: LOGOUT_SUCCESS
+        type: GET_USER_INFO_REQUEST,
+        data
+    }
+}
+
+function getUserInfoSuccess (response) {
+    return {
+        type: GET_USER_INFO_SUCCESS,
+        response
+    }
+}
+
+function getUserInfoFail (errorMsg) {
+    return {
+        type: GET_USER_INFO_FAIL,
+        errorMsg
+    }
+}
+
+export function getUserInfo(access_token = localStorage.jwtToken) {
+    return function (dispatch) {
+        if(!access_token || access_token === '') { //if there is no token, dont bother
+            return console.log("called getUserInfo with empty argument 'access_token'");
+        }
+
+        dispatch( getUserInfoRequest(access_token) );
+
+        return fetch(
+            URI_GET_USER_INFO_BY_TOKEN,
+            {
+                credentials: 'include',
+                mode: 'cors',
+                method: 'post',
+                body: JSON.stringify({access_token}),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.jwtToken
+                    //'X-CSRFToken': CSRF_TOKEN
+                }
+            })
+            .then( response => {
+                if(response.status === 404)
+                    throw 'При отриманні інформації про користувача не знайдено відповідного методу на сервері!';
+                if(response.status === 400)
+                    throw 'При отриманні інформації про користувача передано некоректні дані на сервері!';
+                if(response.status === 401)
+                    throw 'Не вдалося отримати інформацію про авторизованого користувача!';
+                if( 499 < response.status && response.status < 600 )
+                    throw `При отриманні інформації про користувача сталася помилка ${response.status} на сервері!`;
+
+                var contentType = response.headers.get("content-type");
+                if(contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                }
+                throw 'Сталася невідома помилка при отриманні інформації про користувача!';
+            })
+            .then( json => {
+                if(!json || !json.userName /* || !json.smthElse */)
+                    throw "При запиті інформації про користувача отримано некоректні дані від сервера!";
+
+                dispatch(getUserInfoSuccess(json));
+            })
+            .catch( error => {
+                if(!error || !(typeof error == "string"))
+                    error = 'Сталася невідома помилка при отриманні інформації про користувача!';
+                dispatch(getUserInfoFail(error));
+            });
+    }
+}
+
+export function clearLogInError() {
+    return {
+        type: CLEAR_LOG_IN_ERROR
     }
 }

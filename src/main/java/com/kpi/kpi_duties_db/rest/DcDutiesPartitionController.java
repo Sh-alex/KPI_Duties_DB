@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
+import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,19 @@ public class DcDutiesPartitionController {
     @Autowired
     private IdNameConverter idNameConverter;
 
+    @Autowired
+    private UsingOccupations usingOccupations;
+
+    @GET
+    public Response getAll() {
+
+        List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        response = usingOccupations.findUsingOccupationsIdForDcDutiesPartition(response);
+
+        return Response.ok(response).build();
+    }
+
     @POST
     public Response add(@NotNull NewValueRequest request){
 
@@ -43,12 +57,24 @@ public class DcDutiesPartitionController {
         return Response.ok().entity(entity).build();
     }
 
-    @GET
-    public Response getAll() {
+    @PUT
+    @Path("/{id}")
+    public Response update(@NotNull NewValueRequest request, @PathParam("id") Integer id) {
 
-        List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
-        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        DcDutiesPartitionEntity entity = new DcDutiesPartitionEntity();
+        entity.setId(id);
+        entity.setName(request.getNewVal());
+        dcDutiesPartitionEntityService.update(entity);
 
-        return Response.ok(response).build();
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Integer id) {
+
+        dcDutiesPartitionEntityService.delete(id);
+
+        return Response.ok().build();
     }
 }

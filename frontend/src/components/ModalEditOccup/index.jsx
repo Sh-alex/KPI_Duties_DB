@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { reduxForm } from 'redux-form';
-import { Modal } from 'react-bootstrap'
+import { Modal, Alert } from 'react-bootstrap'
 
 import FormEditOccupInfo from '../FormEditOccupInfo'
+import LoadingBlock from "../LoadingBlock"
 
 import {
     hideModalEditOccup
@@ -12,8 +13,8 @@ import {
     fetchOccupGroupList,
     fetchClarifiedOccupList,
     fetchClarificationList,
-    addNewClarification,
-    addNewOccupationGroup,
+    addNewClarificationAndUpdateForm,
+    addNewOccupationGroupAndUpdateForm,
     dismissModalAddNewOccupationGroupAlert,
     dismissModalAddNewClarificationAlert
 } from "../../actions/occupationNameInfo"
@@ -23,10 +24,10 @@ import {
     fetchZKPPTRCodesList,
     fetchETDKCodesList,
     fetchDKHPCodesList,
-    addNewKPCode,
-    addNewDKHPCode,
-    addNewETDKCode,
-    addNewZKPPTRCode,
+    addNewKPCodeAndUpdateForm,
+    addNewDKHPCodeAndUpdateForm,
+    addNewETDKCodeAndUpdateForm,
+    addNewZKPPTRCodeAndUpdateForm,
     clearKPCodeAddingMsg,
     clearDKHPCodeAddingMsg,
     clearETDKCodeAddingMsg,
@@ -83,6 +84,10 @@ class ModalEditOccup extends Component {
                     'codeDKHPText': ""
                 }
             ],
+            mainInfoDocRef: {
+                docName: "",
+                docLink: ""
+            },
             responsibilities: [
                 {
                     'updateTextInRelativeOccup': -1,
@@ -115,11 +120,41 @@ class ModalEditOccup extends Component {
                     'idDates': null,
                     'idText': null
                 }
-            ]
+            ],
+            descriptionDocRef: {
+                docName: "",
+                docLink: ""
+            },
         });
     }
 
     render() {
+        let innerBlock;
+        if(this.props.modalState.fetchDataError)
+            innerBlock = (
+                <Alert bsStyle="danger" className="no-margin">
+                    <p> Сталася помлка при отриманні інформації про посаду :( </p>
+                </Alert>
+            );
+        else if(this.props.modalState.isFetchingData)
+            innerBlock = <LoadingBlock caption="Іде завантаження даних про посаду..." />;
+        else if(!this.props.modalState.editingData)
+            innerBlock = (
+                <Alert bsStyle="danger" className="no-margin text-center">
+                    <h4> Не знайдено інформації про посаду :( </h4>
+                    <p> Спробуйте оновити сторінку </p>
+                </Alert>
+            );
+        else
+            innerBlock = (
+                <FormEditOccupInfo
+                    {...this.props}
+                    submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
+                    successMsgText={"Зміни успішно збережено"}
+                    cancelSearch={this.props.onHideModalEditOccup}
+                />
+            );
+
         return (
             <Modal show={this.props.modalState.show} onHide={this.props.onHideModalEditOccup} bsSize="large">
                 <Modal.Header closeButton>
@@ -128,12 +163,7 @@ class ModalEditOccup extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormEditOccupInfo
-                        {...this.props}
-                        submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
-                        successMsgText={"Зміни успішно збережено"}
-                        cancelSearch={this.props.onHideModalEditOccup}
-                    />
+                    { innerBlock }
                 </Modal.Body>
             </Modal>
         );
@@ -166,6 +196,8 @@ export default reduxForm(
             'codes[].codeETDKText',
             'codes[].codeZKPPTRText',
             'codes[].codeDKHPText',
+            'mainInfoDocRef.docName',
+            'mainInfoDocRef.docLink',
             'responsibilities[].text',
             'responsibilities[].idText',
             'responsibilities[].idDates',
@@ -187,6 +219,8 @@ export default reduxForm(
             'qualiffRequir[].occupationsUsingText',
             'qualiffRequir[].portionStartDate',
             'qualiffRequir[].portionEndDate',
+            'descriptionDocRef.docName',
+            'descriptionDocRef.docLink',
         ],
         touchOnChange: true,
         validate: validateFormOccupInfo,
@@ -196,7 +230,7 @@ export default reduxForm(
         return {
             modalState: state.modals.editOccup,
             editingOccupId: state.modals.editOccup.editingData && state.modals.editOccup.editingData.id || null,
-            occupNameInfoLists: state.occupationNameInfo,
+            occupNameInfoLists: state.occupNameInfoLists,
             occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.formEditOccup.shouldShowServerRespMsg
         }
@@ -237,28 +271,28 @@ export default reduxForm(
                 return dispatch(fetchDKHPCodesList());
             },
             addNewOccupationGroup(newVal) {
-                return dispatch(addNewOccupationGroup({
+                return dispatch(addNewOccupationGroupAndUpdateForm({
                     newVal,
                     resForm: 'formEditOccup'
                 }));
             },
             addNewClarification(newVal) {
-                return dispatch(addNewClarification({
+                return dispatch(addNewClarificationAndUpdateForm({
                     newVal,
                     resForm: 'formEditOccup'
                 }));
             },
-            addNewKPCode(val) {
-                return dispatch(addNewKPCode(val));
+            addNewKPCode(newVal, resPortionIndex) {
+                return dispatch(addNewKPCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewDKHPCode(val) {
-                return dispatch(addNewDKHPCode(val));
+            addNewDKHPCode(newVal, resPortionIndex) {
+                return dispatch(addNewDKHPCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewETDKCode(val) {
-                return dispatch(addNewETDKCode(val));
+            addNewETDKCode(newVal, resPortionIndex) {
+                return dispatch(addNewETDKCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
-            addNewZKPPTRCode(val) {
-                return dispatch(addNewZKPPTRCode(val));
+            addNewZKPPTRCode(newVal, resPortionIndex) {
+                return dispatch(addNewZKPPTRCodeAndUpdateForm( {newVal, resForm: 'formEditOccup', resPortionIndex} ));
             },
             handleOccupationGroupInpChange(newVal) {
                 return dispatch(occupationGroupInpChange(newVal));

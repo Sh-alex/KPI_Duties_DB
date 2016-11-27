@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.rest;
 import com.kpi.kpi_duties_db.domain.DcCodeEtkdEntity;
 import com.kpi.kpi_duties_db.service.DcCodeEtkdService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
+import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,15 @@ public class DcCodeEtkdController {
     @Autowired
     private IdNameConverter idNameConverter;
 
+    @Autowired
+    private UsingOccupations usingOccupations;
+
     @GET
     public Response getAll() {
 
         List<DcCodeEtkdEntity> all = dcCodeEtkdService.getAll();
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        response = usingOccupations.findUsingOccupationsIdForCode(response, "codeETKDId");
 
         return Response.ok(response).build();
     }

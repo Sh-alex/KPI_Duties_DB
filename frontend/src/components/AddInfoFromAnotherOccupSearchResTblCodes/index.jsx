@@ -33,7 +33,7 @@ export default function AddInfoFromAnotherOccupSearchResTblCodes(props) {
                             <td> - </td>
                             <td> - </td>
                         </tr>
-                    )
+                    );
                 else
                     return (
                         <tr

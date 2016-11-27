@@ -55,15 +55,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
-
-    //compile("org.springframework.boot:spring-boot-starter-security")
-    compile group: 'org.springframework.social', name: 'spring-social-core', version: '1.1.4.RELEASE'
-    compile group: 'org.springframework.social', name: 'spring-social-security', version: '1.1.4.RELEASE'
-
-}
-
-bootRun {
-    //systemProperties System.properties
 }
 
 bootRepackage {

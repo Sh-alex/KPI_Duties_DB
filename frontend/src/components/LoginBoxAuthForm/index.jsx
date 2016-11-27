@@ -1,81 +1,100 @@
 import React, {Component} from "react";
-import classnames from "classnames";
+import { reduxForm } from 'redux-form';
+import classNames from "classnames";
+import { Alert } from 'react-bootstrap'
+
 import LoginBoxBody from "../LoginBoxBody";
+
 import "./styles.less";
 
-export default class LoginBoxAuthForm extends Component {
+import {
+    clearLogInError,
+    logInUser
+} from "../../actions/user"
+
+class LoginBoxAuthForm extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            loginFieldVal: "",
-            passFieldVal: ""
-        };
-
-        this.handleLoginBtnClick = this.handleLoginBtnClick.bind(this);
-        this.handleLoginFieldChange = this.handleLoginFieldChange.bind(this);
-        this.handlePassFieldChange = this.handlePassFieldChange.bind(this);
-    }
-
-    handleLoginBtnClick (e) {
-        e.preventDefault();
-        this.props.logInUser({
-            login: this.state.loginFieldVal,
-            pass: this.state.passFieldVal
-        });
-    }
-
-    handleLoginFieldChange(e) {
-        this.setState({ loginFieldVal: e.currentTarget.value });
-    }
-
-    handlePassFieldChange(e) {
-        this.setState({ passFieldVal: e.currentTarget.value });
     }
 
     render() {
-        var elClassName = classnames([LoginBoxBody.className, "login-box-body--auth-form-wrapper"]);
+        var elClassName = classNames([LoginBoxBody.className, "loginUser-box-body--auth-form-wrapper"]),
+            errorMsg = this.props.user.loginError || this.props.user.getUserInfoError,
+            errorAlert = errorMsg && (
+                    <Alert bsStyle="danger" onDismiss={this.props.handleServerRespMsgDismiss}>
+                        <h4>
+                            <i className="icon fa fa-warning" />
+                            Помилка! :(
+                        </h4>
+                        <p>
+                            { errorMsg }
+                        </p>
+                    </Alert>
+                ) || "",
+            isLoading = this.props.user.isLoggingIn || this.props.user.isGettingUserInfo,
+            loginFormGroupClass = classNames({
+                'form-group': true,
+                'has-error':  this.props.fields.username.touched && this.props.fields.username.error,
+                'has-success': this.props.fields.username.touched && !this.props.fields.username.error
+            }),
+            passFormGroupClass = classNames({
+                'form-group': true,
+                'has-error':  this.props.fields.password.touched && this.props.fields.password.error,
+                'has-success': this.props.fields.password.touched && !this.props.fields.password.error
+            }),
+            submitBtnSpinnerClass = classNames({
+                "btn-spinner": true,
+                "hidden": !isLoading
+            });
+
         return (
             <LoginBoxBody {...this.props} className={elClassName}>
                 <p className="login-box-msg">
                     Авторизуйтесь для початку роботи із сервісом
                 </p>
 
-                <form id="auth-form" action="/api/auth" method="post" className="auth-form" role="form">
-                    <div className="form-group">
+                <form id="auth-form" onSubmit={this.props.handleSubmit} className="auth-form" role="form">
+                    <div className={loginFormGroupClass}>
                         <div className="input-group">
                             <span className="input-group-addon"> <i className="icon-append fa fa-user" /> </span>
                             <input
-                                value={this.state.loginFieldVal}
-                                onChange={this.handleLoginFieldChange}
-                                type="email"
+                                {...this.props.fields.username}
+                                type="text"
                                 className="form-control"
                                 id="auth-form-login"
-                                name="login"
+                                name="username"
                                 placeholder="Логін" />
                         </div>
+                        <span className="help-block">
+                            { this.props.fields.username.touched && this.props.fields.username.error }
+                        </span>
                     </div>
-                    <div className="form-group">
+                    <div className={passFormGroupClass}>
                         <div className="input-group">
                             <span className="input-group-addon"> <i className="icon-append fa fa-lock" /> </span>
                             <input
-                                value={this.state.passFieldVal}
-                                onChange={this.handlePassFieldChange}
+                                {...this.props.fields.password}
                                 type="password"
                                 className="form-control"
                                 id="auth-form-pass"
-                                name="pass"
+                                name="password"
                                 placeholder="Пароль" />
                         </div>
+                        <span className="help-block">
+                            { this.props.fields.password.touched && this.props.fields.password.error }
+                        </span>
+                    </div>
+                    <div className="form-group">
+                        { errorAlert }
                     </div>
                     <div className="form-group text-right">
                         <button
-                            onClick={this.handleLoginBtnClick}
+                            disabled={isLoading}
                             type="submit"
                             className="btn btn-primary btn-flat auth-form-submit-btn"
                         >
                             <span className="btn-label"> Увійти </span>
-                            <span className={classnames({"btn-spinner": true, "hidden": !this.props.isLoggingIn })} >
+                            <span className={submitBtnSpinnerClass} >
                                 <i className="fa fa-spinner fa-pulse" />
                             </span>
                         </button>
@@ -86,3 +105,40 @@ export default class LoginBoxAuthForm extends Component {
         );
     }
 }
+
+
+function validateLogInForm(formFields, props) {
+    var errors = {};
+    if(!formFields.username)
+        errors.username = "Це поле є обов'язковим!";
+    // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formFields.username))  //!!!! Змінити регулярний вираз
+    //     errors.username = 'Некорректна Е-mail адреса';
+
+    if(!formFields.password)
+        errors.password = "Це поле є обов'язковим!";
+
+    return errors;
+}
+
+export default reduxForm(
+    {
+        form: 'logInForm',
+        fields: [
+            'username',
+            'password'
+        ],
+        validate: validateLogInForm,
+        onSubmit: logInUser
+    },
+    (state, ownProps) => {    //mapStateToProps
+        return {
+            user: state.user,
+        }
+    },
+    (dispatch, ownProps) => { //mapDispatchToProps
+        return {
+            //logInUser: userData => dispatch(logInUser(userData)),
+            handleServerRespMsgDismiss: () => dispatch( clearLogInError() )
+        }
+    }
+)(LoginBoxAuthForm);

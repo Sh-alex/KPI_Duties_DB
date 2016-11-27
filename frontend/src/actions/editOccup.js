@@ -1,4 +1,8 @@
 import {
+    FETCH_EDITING_OCCUP_DATA_REQUEST,
+    FETCH_EDITING_OCCUP_DATA_SUCCESS,
+    FETCH_EDITING_OCCUP_DATA_FAIL,
+
     EDIT_OCCUP_SUBMIT_REQUEST,
     EDIT_OCCUP_SUBMIT_FAIL,
     EDIT_OCCUP_SUBMIT_SUCCESS,
@@ -8,11 +12,17 @@ import {
     EDIT_OCCUP_OCCUPATION_GROUP_INP_CHANGE,
     EDIT_OCCUP_CLARIFICATION_INP_CHANGE,
     EDIT_OCCUP_CLARIFIED_OCCUP_INP_CHANGE,
+    EDIT_OCCUP_KP_CODE_INP_CHANGE,
+    EDIT_OCCUP_DKHP_CODE_INP_CHANGE,
+    EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+    EDIT_OCCUP_ETDK_CODE_INP_CHANGE,
     EDIT_OCCUP_INP_IS_VIRTUAL_CHANGE,
 
     HIDE_MODAL_EDIT_OCCUP,
     SHOW_MODAL_EDIT_OCCUP,
 } from '../constants/modalEditOccup'
+
+import searchOccupations from "./searchOccupations"
 
 import { EDIT_OCCUPATION as API_EDIT_OCCUPATION} from '../constants/API_URIs';
 
@@ -152,6 +162,39 @@ export function clarifiedOccupInpChange(newVal) {
 }
 
 
+export function KPCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_KP_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function DKHPCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_DKHP_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function ZKPPTRCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_ZKPPTR_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+export function ETDKCodeInpChange(newVal, resPortionIndex) {
+    return {
+        type: EDIT_OCCUP_ETDK_CODE_INP_CHANGE,
+        newVal,
+        resPortionIndex
+    }
+}
+
+
 export function hideModalEditOccup() {
     return function (dispatch, getState) {
         dispatch( {
@@ -161,11 +204,39 @@ export function hideModalEditOccup() {
     }
 }
 
-export function showModalEditOccup(editingData, dispatch) {
+export function showModalEditOccup(editingOccupId, dispatch) {
     return function (dispatch, getState) {
-        dispatch( {
-            type: SHOW_MODAL_EDIT_OCCUP,
-            editingData
-        });
+        let editingData = getState().searchOccupBox.searchResData && getState().searchOccupBox.searchResData.itemsById[editingOccupId];
+        if(editingData)
+            return dispatch( {
+                type: SHOW_MODAL_EDIT_OCCUP,
+                editingData
+            });
+        else
+            return searchOccupations({
+                data: {
+                    occupIds: [editingOccupId]
+                },
+                onRequest: () => {
+                    dispatch( {
+                        type: FETCH_EDITING_OCCUP_DATA_REQUEST,
+                        editingOccupId
+                    });
+                    dispatch( {
+                        type: SHOW_MODAL_EDIT_OCCUP,
+                        editingData: null
+                    });
+                },
+                onSucces: (foundOccupations) => {
+                    dispatch( {
+                        type: FETCH_EDITING_OCCUP_DATA_SUCCESS,
+                        editingData: foundOccupations.itemsById[editingOccupId]
+                    });
+                },
+                onFail: errorText => dispatch({
+                    type: FETCH_EDITING_OCCUP_DATA_FAIL,
+                    error: errorText
+                })
+            });
     }
 }

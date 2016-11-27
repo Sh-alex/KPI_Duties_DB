@@ -2,15 +2,18 @@ package com.kpi.kpi_duties_db.rest;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
+import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
+import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.request.NewValueRequest;
+import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -28,7 +31,20 @@ public class DcDutiesResponsibilitiesController {
     private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
 
     @Autowired
-    private EntityManager em;
+    private IdNameConverter idNameConverter;
+
+    @Autowired
+    private UsingOccupations usingOccupations;
+
+    @GET
+    public Response getAll() {
+
+        List<DcDutiesTasksAndResponsibilitiesEntity> all = dcDutiesTaskAndResponsibilitiesService.getAll();
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        response = usingOccupations.findUsingOccupationsIdForRtDutiesTaskAndResponsibilities(response);
+
+        return Response.ok(response).build();
+    }
 
     @POST
     public Response add(@NotNull NewValueRequest request) {

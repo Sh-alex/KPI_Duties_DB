@@ -21,6 +21,9 @@ public class DataInItem {
     @JsonProperty("occupationGroup")
     private Integer dcDutiesPartitionId;
 
+    @JsonProperty("occupationGroupName")
+    private String dcDutiesPartitionName;
+
     @JsonProperty("clarifiedOccup")
     private Integer rtDutiesParentId;
 
@@ -59,6 +62,14 @@ public class DataInItem {
 
     public void setDcDutiesPartitionId(Integer dcDutiesPartitionId) {
         this.dcDutiesPartitionId = dcDutiesPartitionId;
+    }
+
+    public String getDcDutiesPartitionName() {
+        return dcDutiesPartitionName;
+    }
+
+    public void setDcDutiesPartitionName(String dcDutiesPartitionName) {
+        this.dcDutiesPartitionName = dcDutiesPartitionName;
     }
 
     public Integer getRtDutiesParentId() {

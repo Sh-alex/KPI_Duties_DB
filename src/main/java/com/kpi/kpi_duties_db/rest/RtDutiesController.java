@@ -63,15 +63,6 @@ public class RtDutiesController {
     private RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
-    private DcDutiesMustKnowService dcDutiesMustKnowService;
-
-    @Autowired
-    private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
-
-    @Autowired
-    private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
-
-    @Autowired
     private Validator validator;
 
     @Autowired
@@ -160,10 +151,19 @@ public class RtDutiesController {
 
     @GET
     @Path("/clarifiedOccup")
-    public IdNameListResponse getAllDutiesNames() {
-        List<RtDutiesEntity> all = rtDutiesService.getAll();
+    public IdNameListResponse getAllDutiesNames(@Context UriInfo uriInfo) {
+        MultivaluedMap parameters = uriInfo.getQueryParameters();
+        OccupationGetRequest occupationRequest = null;
+        if (parameters.size() != 0) {
+            final ObjectMapper mapper = new ObjectMapper();
+            occupationRequest = mapper.convertValue(parameters, OccupationGetRequest.class);
+        }
 
-        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
+        OccupationGetDto occupationGetDto = converter.toOccupationDtoFromOccupationGetRequest(occupationRequest);
+
+        List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
+
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(result);
 
         return response;
     }

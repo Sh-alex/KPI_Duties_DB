@@ -2,19 +2,8 @@ import React, {Component} from "react";
 import {DateTimePicker} from "react-widgets";
 import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
 import classNames from "classnames"
-import debounce from "../../utils/debounce"
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 import "./styles.less";
-
-// let handleTextareaChange = function (newVal, reduxChangeHandler) {
-//         reduxChangeHandler( replaceApostrophe(newVal) );
-//     },
-//     debouncedHandleTextareaChange = debounce(handleTextareaChange, 500),
-//     persistedHandler = function (e, reduxChangeHandler) {
-//         //e.persist();
-//         let newVal = e.target.value;
-//         debouncedHandleTextareaChange(newVal, reduxChangeHandler);
-//     };
 
 export default function FormEditOccupInfoDescriptionTextPortion(props) {
     let topCtrlPart = props.showDelBtn ? (
@@ -61,7 +50,7 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
             {topCtrlPart}
             <div className="clearfix">
-                <div className="col-sm-8">
+                <div className="col-xs-12 col-md-8">
                     <div className={portionTextFormGroupClass}>
                         <div className="input-group">
                             <input
@@ -108,7 +97,7 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
                         </span>
                     </div>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-xs-12 col-md-4">
                     <input
                         type="hidden"
                         {...props.fields.idDates} />

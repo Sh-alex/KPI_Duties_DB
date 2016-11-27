@@ -20,8 +20,8 @@ import {
 import "./styles.less";
 
 
-function bindOnEditItem(onEditItem, itemData) {
-    return () => onEditItem(itemData)
+function bindOnEditItem(onEditItem, itemId) {
+    return () => onEditItem(itemId)
 }
 
 function bindOnDeleteItem(onDeleteItem, itemId) {
@@ -44,7 +44,7 @@ export default function SearchOccupBoxResTbl(props) {
                     key={itemId+"_0"}
                     itemIndex={itemIndex + props.tblStartIndex}
                     data={props.searchResData.itemsById[itemId].data}
-                    onEditItem={bindOnEditItem(props.onEditItem, props.searchResData.itemsById[itemId])}
+                    onEditItem={bindOnEditItem(props.onEditItem, itemId)}
                     onDeleteItem={bindOnDeleteItem(props.onDeleteItem, itemId)}
                     onToggleExpandItem={bindOnExpandItem(props.onToggleExpandItem, itemId)}
                     isExpanded={props.expandedItems[itemId]}

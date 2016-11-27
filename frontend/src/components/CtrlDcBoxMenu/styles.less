@@ -1,0 +1,25 @@
+.ctrl-dc-box-menu {
+
+  .list-group-item {
+
+    .btn-reset-list {
+      margin: -10px -15px;
+      padding: 10px;
+    }
+    .btn-reset-list.is-loading {
+      -webkit-animation: fa-spin 2s infinite linear;
+      animation: fa-spin 2s infinite linear;
+    }
+  }
+
+  .list-group-item.active {
+
+    .btn-reset-list {
+      color: white;
+
+      &:hover {
+        text-shadow: 0 0 10px white;
+      }
+    }
+  }
+}

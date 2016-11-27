@@ -11,8 +11,18 @@ export default function validateFormEditOccupInfo(formFields, props) {
         codes: [ ],
         responsibilities: [ ],
         haveToKnow: [ ],
-        qualiffRequir: [ ]
-    };
+        qualiffRequir: [ ],
+        descriptionDocRef: {
+            docName: null,
+            docLink: null
+        },
+        mainInfoDocRef: {
+            docName: null,
+            docLink: null
+        },
+    },
+        inputtedAnyText = false;
+
     if(!formFields.name.occupationGroup)
         errors.name.occupationGroup = "Це поле є обов'язковим!";
     if(!formFields.name.clarification && props.fields.includes('name.clarification'))
@@ -43,6 +53,8 @@ export default function validateFormEditOccupInfo(formFields, props) {
     });
 
     errors.responsibilities = formFields.responsibilities.map( (portion, portionIndex, fullArr) => {
+        if(portion.text)
+            inputtedAnyText = true;
         return {
             'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             //'portionEndDate': (fullArr.length > 1 && portionIndex < fullArr.length && !portion.portionEndDate) ? "Для попередніх наборів має бути встановлена дата припинення дії тексту!" : null,
@@ -51,6 +63,8 @@ export default function validateFormEditOccupInfo(formFields, props) {
         };
     });
     errors.haveToKnow = formFields.haveToKnow.map( (portion, portionIndex, fullArr) => {
+        if(portion.text)
+            inputtedAnyText = true;
         return {
             'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
@@ -58,12 +72,24 @@ export default function validateFormEditOccupInfo(formFields, props) {
         };
     });
     errors.qualiffRequir = formFields.qualiffRequir.map( (portion, portionIndex, fullArr) => {
+        if(portion.text)
+            inputtedAnyText = true;
         return {
             'portionStartDate': portion.text && !portion.portionStartDate && "Не обрано дати прийняття тексту!",
             'portionEndDate': portion.portionEndDate && (portion.portionStartDate > portion.portionEndDate) && "Дата припинення дії має бути більшою за дату прийняття",
             // 'text': !portion.text && "Не введено тексту!",
         };
     });
+
+    if(!formFields.mainInfoDocRef.docName)
+        errors.mainInfoDocRef.docName = "Це поле є обов'язковим!";
+    if(!formFields.mainInfoDocRef.docLink)
+        errors.mainInfoDocRef.docLink = "Це поле є обов'язковим!";
+
+    if(inputtedAnyText && !formFields.descriptionDocRef.docName)
+        errors.descriptionDocRef.docName = "Це поле є обов'язковим!";
+    if(inputtedAnyText && !formFields.descriptionDocRef.docLink)
+        errors.descriptionDocRef.docLink = "Це поле є обов'язковим!";
 
     return errors
 }
