@@ -99,10 +99,22 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                     <div className="col-xs-12 col-xs-12 col-md-6">
                         <div className="form-group">
                             <div className="col-xs-12 col-xs-12 col-md-offset-4 col-xs-12 col-md-8">
-                                <div className="checkbox">
-                                    <label>
-                                        <input {...props.fields.inKpi} type="checkbox" />
+                                <div className="inp-toggler-block">
+                                    <label htmlFor="toggle2" className="inp-toggler__label" >
                                         В КПІ
+                                    </label>
+
+                                    <div className="inp-toggler__wrapper">
+                                        <input {...props.fields.inKpi} type="checkbox" id="toggle2" className="inp-toggler__checkbox" />
+
+                                        <div className="inp-toggler__icon-wrapper">
+                                            <i className="fa fa-toggle-on inp-toggler__icon--off" />
+                                            <i className="fa fa-toggle-on fa-flip-horizontal inp-toggler__icon--on" />
+                                        </div>
+                                    </div>
+
+                                    <label htmlFor="toggle2" className="inp-toggler__label" >
+                                        В Державі
                                     </label>
                                 </div>
                             </div>

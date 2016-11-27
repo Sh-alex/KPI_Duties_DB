@@ -1,0 +1,54 @@
+.inp-toggler-block {
+  align-items: center;
+  display: inline-flex;
+  cursor: pointer;
+
+  .inp-toggler__label {
+    margin: 0;
+  }
+
+  .inp-toggler__wrapper {
+    position: relative;
+    width: 46px;
+    height: 40px;
+
+    .inp-toggler__checkbox {
+      opacity: 0;
+      border: 0;
+      background: transparent;
+      width: 46px;
+      height: 35px;
+      margin: 0;
+      z-index: 20;
+      position: absolute;
+      cursor: pointer;
+
+      &~.inp-toggler__icon-wrapper {
+        .inp-toggler__icon--off {
+          display: inline-block;
+        }
+        .inp-toggler__icon--on {
+          display: none;
+        }
+      }
+      &:checked~.inp-toggler__icon-wrapper {
+        .inp-toggler__icon--off {
+          display: none;
+        }
+        .inp-toggler__icon--on {
+          display: inline-block;
+        }
+      }
+    }
+
+    .inp-toggler__icon-wrapper {
+      display: inline-block;
+      margin: 0 7px;
+      font-size: 2em;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+
+}
