@@ -716,8 +716,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         addNewDKHPCode: (newVal) => dispatch(addNewDKHPCode({newVal})),
         addNewZKPPTRCode: (newVal) => dispatch(addNewZKPPTRCode({newVal})),
         addNewKPCodeClearMsg: () => dispatch(clearKPCodeAddingMsg()),
-        addNewETDKCodeClearMsg: () => dispatch(clearDKHPCodeAddingMsg()),
-        addNewDKHPCodeClearMsg: () => dispatch(clearETDKCodeAddingMsg()),
+        addNewDKHPCodeClearMsg: () => dispatch(clearDKHPCodeAddingMsg()),
+        addNewETDKCodeClearMsg: () => dispatch(clearETDKCodeAddingMsg()),
         addNewZKPPTRCodeClearMsg: () => dispatch(clearZKPPTRCodeAddingMsg()),
 
         addNewHaveToKnowText: (newVal) => dispatch(addNewHaveToKnowText({newVal})),
