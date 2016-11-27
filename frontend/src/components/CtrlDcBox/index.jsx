@@ -457,18 +457,21 @@ class CtrlDcBox extends Component {
     }
 
     showAddingInp() {
-        this.setState({addingInpIsShown: true})
+        this.setState({addingInpIsShown: true});
     }
 
     hideAddingInp() {
-        this.setState({addingInpIsShown: false})
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
+        this.setState({addingInpIsShown: false});
     }
 
     changeAddingInpVal(newVal) {
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
         this.setState({ addingInpVal: newVal });
     }
 
     setActiveListName(newActiveListName) {
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
         this.setState({
             sortDirection: "NONE",
             activeListName: newActiveListName,

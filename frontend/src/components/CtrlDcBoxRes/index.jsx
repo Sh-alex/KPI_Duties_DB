@@ -25,7 +25,7 @@ export default function CtrlDcBoxRes(props) {
         resBoxMaxHeight = Math.max(...[calcContainerH, ctrlDcBoxMenuH, 200]),
         showMsgFilterMadeListEmpty = listIsEmpty && props.filterListInpVal,
         showMsgListIsEmpty = listIsEmpty && !props.filterListInpVal,
-        msgListIsEmpty = showMsgListIsEmpty && (
+        MsgListIsEmpty = showMsgListIsEmpty && (
                 <Alert bsStyle="warning">
                     <p>
                         Список поки що пустий :( <br/>
@@ -33,7 +33,7 @@ export default function CtrlDcBoxRes(props) {
                     </p>
                 </Alert>
             ),
-        msgFilterMadeListEmpty = showMsgFilterMadeListEmpty && (
+        MsgFilterMadeListEmpty = showMsgFilterMadeListEmpty && (
                 <Alert bsStyle="warning">
                     <p>
                         Не знайдено результатів що відповідють вказаним критеріям :( <br/>
@@ -49,7 +49,7 @@ export default function CtrlDcBoxRes(props) {
                     </p>
                 </Alert>
             ),
-        msgListHasErrors = listHasErrors && (
+        MsgListHasErrors = listHasErrors && (
                 <Alert bsStyle="danger" className="no-margin">
                     <p>
                         Сталася помлка :( <br/>
@@ -66,7 +66,7 @@ export default function CtrlDcBoxRes(props) {
         //         <p> Нове значення успішно додано. </p>
         //     </Alert>
         // ) || "",
-        addingNewValMsgErrors = props.addingErrors && props.addingErrors.length && (
+        AddingNewValMsgErrors = props.addingErrors && props.addingErrors.length && (
                 <Alert
                     bsStyle="danger"
                     className="alert--add-new-occup-dc-val"
@@ -76,19 +76,19 @@ export default function CtrlDcBoxRes(props) {
                         <i className="icon fa fa-warning" />
                         Помилка! :(
                     </h4>
-                    <div> { props.addingErrors.map((errMsg, i) => <p key={i}>{errMsg}</p>) } </div>
+                    <div> { props.addingErrors.map((errMsg, i) => (<p key={i}>{errMsg.toString()}</p>) ) } </div>
                 </Alert>
             ) || "",
-        inpNewVal = (
+        InpNewVal = (
             <div>
                 <div className="input-group">
-                <textarea
-                    value={props.addingInpVal}
-                    onChange={e => props.handleAddingInpValChange( replaceApostrophe(e.target.value) ) }
-                    className="form-control show-for-big-text"
-                    placeholder="Нове значення у списку"
-                    title="Введіть тут нове значення щоб додати його до списку"
-                    rows="6" />
+                    <textarea
+                        value={props.addingInpVal}
+                        onChange={e => props.handleAddingInpValChange( replaceApostrophe(e.target.value) ) }
+                        className="form-control show-for-big-text"
+                        placeholder="Нове значення у списку"
+                        title="Введіть тут нове значення щоб додати його до списку"
+                        rows="6" />
                     <input
                         type="text"
                         value={props.addingInpVal}
@@ -101,9 +101,10 @@ export default function CtrlDcBoxRes(props) {
                             type="button"
                             className="btn btn-default btn-flat"
                             title="Додати введене значення до списку"
+                            disabled={props.isSavingNewVal}
                             onClick={e => props.addNewOccupDcValSubmit(props.addingInpVal)}
                         >
-                            <i className={`fa ${props.isSavingNewVal ? "fa-spinner" : "fa-save"}`} />
+                            <i className={`fa ${props.isSavingNewVal ? "fa-spinner fa-pulse" : "fa-save"}`} />
                         </button>
                         <br className="show-for-big-text"/>
                         <button
@@ -116,10 +117,10 @@ export default function CtrlDcBoxRes(props) {
                         </button>
                     </div>
                 </div>
-                { addingNewValMsgErrors }
+                { AddingNewValMsgErrors }
             </div>
         ),
-        btnShowAddingInp = (
+        BtnShowAddingInp = (
             <button
                 type="button"
                 className="btn btn-default btn-sm btn-block btn-show-adding-inp"
@@ -153,13 +154,13 @@ export default function CtrlDcBoxRes(props) {
                 </div>
                 {
                     listHasErrors ?
-                        msgListHasErrors :
+                        MsgListHasErrors :
                         listIsLoading ?
                             <LoadingBlock caption="Іде завантаження списку..." /> :
                             showMsgListIsEmpty ?
-                                msgListIsEmpty :
+                                MsgListIsEmpty :
                                 showMsgFilterMadeListEmpty ?
-                                    msgFilterMadeListEmpty :
+                                    MsgFilterMadeListEmpty :
                                     <CtrlDcBoxResTbl
                                         shownOccupDescrTextsList={props.shownOccupDescrTextsList}
                                         listDataItems={props.listDataItems}
@@ -178,8 +179,8 @@ export default function CtrlDcBoxRes(props) {
                     {
                         (listIsLoading || listHasErrors) ? "" :
                             props.addingInpIsShown ?
-                                inpNewVal :
-                                btnShowAddingInp
+                                InpNewVal :
+                                BtnShowAddingInp
                     }
                 </div>
             </div>
