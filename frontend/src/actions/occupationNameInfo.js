@@ -58,119 +58,32 @@ import * as API_URIs from '../constants/API_URIs';
 import generateEditingDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
 import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
 import generateDelOccupDcValRequestFunction from "../utils/generateDelOccupDcValRequestFunction"
+import generateFetchingOccupDcValRequestFunction from "../utils/generateFetchingOccupDcValRequestFunction"
 
 
-export function fetchClarificationList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_CLARIFICATION_LIST_REQUEST
-        });
+export const fetchClarificationList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_CLARIFICATION_LIST_REQUEST,
+    successConst: FETCH_CLARIFICATION_LIST_SUCCESS,
+    failConst: FETCH_CLARIFICATION_LIST_FAIL,
+    listName: "Уточнення",
+    apiURI: API_URIs.FETCH_CLARIFICATION_LIST,
+});
 
-        return fetch(API_URIs.FETCH_CLARIFICATION_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Уточнення не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Уточнення сталася помилка ${response.status} на сервері!`;
+export const fetchOccupGroupList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_OCCUP_GROUP_LIST_REQUEST,
+    successConst: FETCH_OCCUP_GROUP_LIST_SUCCESS,
+    failConst: FETCH_OCCUP_GROUP_LIST_FAIL,
+    listName: "Посадовий склад",
+    apiURI: API_URIs.FETCH_OCCUPATION_GROUP_LIST,
+});
 
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Уточнення");
-                }
-            })
-            .then( data => {
-                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Уточнення");
-                if (data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_CLARIFICATION_LIST_SUCCESS,
-                    data
-                })
-            })
-            .catch( error => dispatch({
-                type: FETCH_CLARIFICATION_LIST_FAIL,
-                error
-            }))
-    }
-}
-
-export function fetchOccupGroupList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_OCCUP_GROUP_LIST_REQUEST
-        });
-
-        return fetch(API_URIs.FETCH_OCCUPATION_GROUP_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Посадовий склад не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Посадовий склад сталася помилка ${response.status} на сервері!`;
-
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Посадовий склад");
-                }
-            })
-            .then( data => {
-                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Посадовий склад");
-                if (data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_OCCUP_GROUP_LIST_SUCCESS,
-                    data
-                })
-            })
-            .catch( error => dispatch({
-                type: FETCH_OCCUP_GROUP_LIST_FAIL,
-                error
-            }))
-    }
-}
-
-export function fetchClarifiedOccupList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_CLARIFIED_OCCUP_LIST_REQUEST
-        });
-
-        return fetch(API_URIs.FETCH_CLARIFIED_OCCUP_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Уточнювана посада не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Уточнювана посада сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json();
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Уточнювана посада");
-                }
-            })
-            .then( data => {
-                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Уточнювана посада");
-                if (data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_CLARIFIED_OCCUP_LIST_SUCCESS,
-                    data
-                })
-            })
-            .catch( error => dispatch({
-                type: FETCH_CLARIFIED_OCCUP_LIST_FAIL,
-                error
-            }))
-    }
-}
+export const fetchClarifiedOccupList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_CLARIFIED_OCCUP_LIST_REQUEST,
+    successConst: FETCH_CLARIFIED_OCCUP_LIST_SUCCESS,
+    failConst: FETCH_CLARIFIED_OCCUP_LIST_FAIL,
+    listName: "Уточнювана посада",
+    apiURI: API_URIs.FETCH_CLARIFIED_OCCUP_LIST,
+});
 
 
 export const addNewClarification = generateAddingOccupDcValRequestFunction({

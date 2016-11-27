@@ -30,7 +30,7 @@ function delOccupationFail (error, occupId) {
 }
 
 export function delOccupation(occupId, dispatch) {
-    return function (dispatch) {    //thunk щоб зробити асинхронний action
+    return function (dispatch) {
         dispatch(delOccupationRequest(occupId));
 
         return fetch(DELETE_OCCUPATION + occupId, {
@@ -42,18 +42,22 @@ export function delOccupation(occupId, dispatch) {
             // }
         })
             .then((response) => {
-                if(response.status == 200)
+                if(response.ok)
                     return dispatch(delOccupationSuccess(occupId));
                 else if (response.status == 410)
-                    throw {_error: `Посаду з таким id = ${occupId} вже було видалено`};
+                    throw `Посаду з таким id = ${occupId} вже було видалено`;
                 else if (response.status === 404)
-                    throw( {_error: `Не знайдено відповідного методу на сервері або не існує такої посади з переданим id = ${occupId}!`} );
+                    throw `Не знайдено відповідного методу на сервері або не існує такої посади з переданим id = ${occupId}!`;
                 else if (499 < response.status && response.status < 600)
-                    throw( {_error: `Сталася помилка ${response.status} на сервері!`} );
+                    throw `Сталася помилка ${response.status} на сервері!`;
             })
             .catch(error => {
-                let errorText = error && error._error || 'Сталася невідома помилка при видаленні посади!';
-                return dispatch(delOccupationFail(errorText, occupId));
+                if(error && error.message === "Failed to fetch")
+                    error = `Сталася невідома помилка при видаленні посади! Перевірте роботу мережі.`;
+                else if(!error || !(typeof error == "string"))
+                    error = `Сталася невідома помилка при видаленні посади`;
+
+                return dispatch(delOccupationFail(error, occupId));
             });
     }
 }

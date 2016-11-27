@@ -42,7 +42,7 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
                 if (contentType && contentType.indexOf("application/json") !== -1)
                     return response.json();
                 else
-                    throw {_error: 'Отримано некоректну відповідь із результатами пошуку від сервера: очікувався JSON'}
+                    throw {_error: 'Отримано некоректну відповідь із результатами пошуку від сервера: очікувався об\'єкт формату JSON'}
             }
             else if (response.status === 404)
                 throw( {_error: 'Не знайдено відповідного методу на сервері!'} );
@@ -63,7 +63,14 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
                 throw ( {_error: 'Отримано некоректний результат від сервера'} );
         })
         .catch(error => {
-            let errorText = error && error._error || 'Сталася невідома помилка при пошуку посад!';
+            let errorText;
+            if(error && error._error)
+                errorText = error._error;
+            if(error && error.message === "Failed to fetch")
+                errorText = `Сталася невідома помилка при пошуку посад! Перевірте роботу мережі.`;
+            else
+                errorText = `Сталася невідома помилка при пошуку посад`;
+            
             return onFail(errorText);
         });
 }
@@ -88,24 +95,30 @@ export function priorSearchOccupations(searchType, searchText) {
                     throw `При попередньому пошуку посад сталася помилка ${response.status} на сервері!`;
 
                 var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
+                if(contentType && contentType.indexOf("application/json") !== -1)
                     return response.json();
-                } else {
-                    return Promise.reject("Отримано некоректні дані при попередньому пошуку посад");
-                }
+                else
+                    throw "Отримано некоректні дані при попередньому пошуку посад";
             })
             .then( data => {
                 if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані при попередньому пошуку посад");
+                    throw "Отримано некоректні дані при попередньому пошуку посад";
                 dispatch({
                     type: PRIOR_SEARCH_OCCUP_SUCCESS,
                     response: data.idNameResponses.length
                 })
             })
-            .catch( error => dispatch({
-                type: PRIOR_SEARCH_OCCUP_FAIL,
-                error
-            }))
+            .catch( error => {
+                if(error && error.message === "Failed to fetch")
+                    error = `Сталася неочікувана помилка при попередньому пошуку посад! Перевірте роботу мережі.`;
+                else if(!error || !(typeof error == "string"))
+                    error = `Сталася неочікувана помилка при попередньому пошуку посад`;
+
+                dispatch({
+                    type: PRIOR_SEARCH_OCCUP_FAIL,
+                    error
+                })
+            })
     }
 }
 

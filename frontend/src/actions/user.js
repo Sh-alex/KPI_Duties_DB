@@ -45,6 +45,7 @@ function loginUserFail (errorMsg) {
  * @param {Object} authData - дані авторизації користувача
  * @param {String} authData.login - логін
  * @param {String} authData.pass - пароль
+ * @param {Function} dispatch - функція dispatch
  */
 export function logInUser(authData, dispatch) {
     authData.grant_type = "password";   //дописуємо, бо так вимагає сервер
@@ -103,10 +104,13 @@ export function logInUser(authData, dispatch) {
                 resolve(json);
             })
             .catch( error => {
+                if(error && error.message === "Failed to fetch")
+                    error = `Сталася неочікувана помилка при авторизації користувача! Перевірте роботу мережі.`;
                 if(!error || !(typeof error == "string"))
                     error = 'Сталася невідома помилка при авторизації користувача!';
+
                 dispatch(loginUserFail(error));
-                reject({ _error: error.message || error });
+                reject({ _error: error });
             });
     });
 }
@@ -190,8 +194,11 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                 dispatch(getUserInfoSuccess(json));
             })
             .catch( error => {
-                if(!error || !(typeof error == "string"))
-                    error = 'Сталася невідома помилка при отриманні інформації про користувача!';
+                if(error && error.message === "Failed to fetch")
+                    error = `Сталася неочікувана помилка при отриманні інформації про користувача! Перевірте роботу мережі.`;
+                else if(!error || !(typeof error == "string"))
+                    error = `Сталася неочікувана помилка при отриманні інформації про користувача`;
+
                 dispatch(getUserInfoFail(error));
             });
     }

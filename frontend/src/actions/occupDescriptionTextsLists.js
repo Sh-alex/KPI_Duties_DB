@@ -78,117 +78,30 @@ import {
 import generateEditingOccupDcValRequestFunction from "../utils/generateEditingOccupDcValRequestFunction"
 import generateAddingOccupDcValRequestFunction from "../utils/generateAddingOccupDcValRequestFunction"
 import generateDelOccupDcValRequestFunction from "../utils/generateDelOccupDcValRequestFunction"
+import generateFetchingOccupDcValRequestFunction from "../utils/generateFetchingOccupDcValRequestFunction"
 
-export function fetchHaveToKnowTextsList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_HAVE_TO_KNOW_TEXTS_LIST_REQUEST
-        });
 
-        return fetch(API_FETCH_HAVE_TO_KNOW_TEXTS_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Повинен знати не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Повинен знати сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json()
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Повинен знати");
-                }
-            })
-            .then( data => {
-                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Повинен знати");
-                if (data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_HAVE_TO_KNOW_TEXTS_LIST_SUCCESS,
-                    data
-                })
-            })
-            .catch( error => dispatch({
-                type: FETCH_HAVE_TO_KNOW_TEXTS_LIST_FAIL,
-                error
-            }))
-    }
-}
-
-export function fetchResponsibilitiesTextsList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_RESPONSIBILITIES_TEXTS_LIST_REQUEST
-        });
-
-        return fetch(API_FETCH_RESPONSIBILITIES_TEXTS_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Завдання, обов\'язки та повноваження не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Завдання, обов\'язки та повноваження сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json()
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Завдання, обов\'язки та повноваження");
-                }
-            })
-            .then( data => {
-                if( !(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Завдання, обов\'язки та повноваження");
-                if(data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_RESPONSIBILITIES_TEXTS_LIST_SUCCESS,
-                    data
-                })
-            })
-            .catch( error => dispatch({
-                type: FETCH_RESPONSIBILITIES_TEXTS_LIST_FAIL,
-                error
-            }))
-    }
-}
-
-export function fetchQualiffRequirTextsList() {
-    return function (dispatch) {
-        dispatch({
-            type: FETCH_QUALIFF_REQUIR_TEXTS_LIST_REQUEST
-        });
-
-        return fetch(API_FETCH_QUALIFF_REQUIR_TEXTS_LIST)
-            .then( response => {
-                if(response.status === 404)
-                    throw 'При отриманні списку Кваліфікаційні вимоги не знайдено відповідного методу на сервері!';
-                if( 499 < response.status && response.status < 600 )
-                    throw `При отриманні списку Кваліфікаційні вимоги сталася помилка ${response.status} на сервері!`;
-
-                var contentType = response.headers.get("content-type");
-                if(contentType && contentType.indexOf("application/json") !== -1) {
-                    return response.json()
-                } else {
-                    return Promise.reject("Отримано некоректні дані для списку Кваліфікаційні вимоги");
-                }
-            })
-            .then( data => {
-                if (!(data instanceof Array) && !(data.idNameResponses instanceof Array))
-                    return Promise.reject("Отримано некоректні дані для списку Кваліфікаційні вимоги");
-                if (data && data.idNameResponses)
-                    data = data.idNameResponses;
-                dispatch({
-                    type: FETCH_QUALIFF_REQUIR_TEXTS_LIST_SUCCESS,
-                    data
-                });
-            })
-            .catch( error => dispatch({
-                type: FETCH_QUALIFF_REQUIR_TEXTS_LIST_FAIL,
-                error
-            }))
-    }
-}
+export const fetchHaveToKnowTextsList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_HAVE_TO_KNOW_TEXTS_LIST_REQUEST,
+    successConst: FETCH_HAVE_TO_KNOW_TEXTS_LIST_SUCCESS,
+    failConst: FETCH_HAVE_TO_KNOW_TEXTS_LIST_FAIL,
+    listName: "Повинен знати",
+    apiURI: API_FETCH_HAVE_TO_KNOW_TEXTS_LIST,
+});
+export const fetchResponsibilitiesTextsList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_RESPONSIBILITIES_TEXTS_LIST_REQUEST,
+    successConst: FETCH_RESPONSIBILITIES_TEXTS_LIST_SUCCESS,
+    failConst: FETCH_RESPONSIBILITIES_TEXTS_LIST_FAIL,
+    listName: "Завдання, обов\'язки та повноваження",
+    apiURI: API_FETCH_RESPONSIBILITIES_TEXTS_LIST,
+});
+export const fetchQualiffRequirTextsList = generateFetchingOccupDcValRequestFunction({
+    requestConst: FETCH_QUALIFF_REQUIR_TEXTS_LIST_REQUEST,
+    successConst: FETCH_QUALIFF_REQUIR_TEXTS_LIST_SUCCESS,
+    failConst: FETCH_QUALIFF_REQUIR_TEXTS_LIST_FAIL,
+    listName: "Кваліфікаційні вимоги",
+    apiURI: API_FETCH_QUALIFF_REQUIR_TEXTS_LIST,
+});
 
 
 export const addNewHaveToKnowText = generateAddingOccupDcValRequestFunction({
