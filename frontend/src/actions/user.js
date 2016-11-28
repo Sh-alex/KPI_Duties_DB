@@ -47,10 +47,14 @@ function loginUserFail (errorMsg) {
  * @param {String} authData.pass - пароль
  */
 export function logInUser(authData, dispatch) {
-    authData.grant_type = "password";   //дописуємо, бо так вимагає сервер
-    dispatch( loginUserRequest(authData) );
+    //дописуємо, бо так вимагає сервер
+    Object.assign(authData, {
+        "grant_type": "password",
+        "client_id": "web_app",
+        "client_secret" : "secret"
+    });
 
-    localStorage.removeItem('jwtToken');
+    dispatch( loginUserRequest(authData) );
 
     //тут проміс треба для redux-form
     return new Promise((resolve, reject) => {
@@ -95,7 +99,7 @@ export function logInUser(authData, dispatch) {
                     //logOutUser();
 
                     logInUser(authData, dispatch);
-                }, json.expires_in);
+                }, json.expires_in * 1000); //json.expires_in у секундах, а таймер у мс
 
                 dispatch(loginUserSuccess(json));
                 //отримуємо дані про користувача по цьому токену
@@ -105,6 +109,9 @@ export function logInUser(authData, dispatch) {
             .catch( error => {
                 if(!error || !(typeof error == "string"))
                     error = 'Сталася невідома помилка при авторизації користувача!';
+
+                localStorage.removeItem('jwtToken');
+
                 dispatch(loginUserFail(error));
                 reject({ _error: error.message || error });
             });
@@ -159,11 +166,11 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
             {
                 credentials: 'include',
                 mode: 'cors',
-                method: 'post',
-                body: JSON.stringify({access_token}),
+                method: 'get',
+                //body: JSON.stringify({access_token}),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.jwtToken
+                    'Authorization': 'Bearer ' + access_token
                     //'X-CSRFToken': CSRF_TOKEN
                 }
             })
@@ -172,8 +179,10 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                     throw 'При отриманні інформації про користувача не знайдено відповідного методу на сервері!';
                 if(response.status === 400)
                     throw 'При отриманні інформації про користувача передано некоректні дані на сервері!';
-                if(response.status === 401)
-                    throw 'Не вдалося отримати інформацію про авторизованого користувача!';
+                if(response.status === 401) {
+                    localStorage.removeItem('jwtToken');
+                    throw 'Термін дії ключа авторизації витік, необхідна повторна авторизація.';
+                }
                 if( 499 < response.status && response.status < 600 )
                     throw `При отриманні інформації про користувача сталася помилка ${response.status} на сервері!`;
 
@@ -184,12 +193,18 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                 throw 'Сталася невідома помилка при отриманні інформації про користувача!';
             })
             .then( json => {
-                if(!json || !json.userName /* || !json.smthElse */)
+                if(!json || !json.Surname || !json.Name )
                     throw "При запиті інформації про користувача отримано некоректні дані від сервера!";
 
-                dispatch(getUserInfoSuccess(json));
+                let resUserData = {
+                    "userName": `${json.Name} ${json.Surname}`,
+                    "userAvatar": json.img && "data:image/png;base64,"+json.img || "",
+                };
+                dispatch(getUserInfoSuccess(resUserData));
             })
             .catch( error => {
+                if(location.pathname !== "\/")
+                    dispatch(historyPushStateAction("/"));
                 if(!error || !(typeof error == "string"))
                     error = 'Сталася невідома помилка при отриманні інформації про користувача!';
                 dispatch(getUserInfoFail(error));
