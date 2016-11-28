@@ -28,11 +28,6 @@ public class AppConfig {
     Environment environment;
 
 
-//   @Bean
-//    JsonToUrlEncodedAuthenticationFilter jsonToUrlEncodedAuthenticationFilter(){
-//       return new JsonToUrlEncodedAuthenticationFilter();
-//   }
-//
     @Bean
     public Validator validator() {
         return Validation.buildDefaultValidatorFactory().getValidator();
