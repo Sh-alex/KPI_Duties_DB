@@ -24,10 +24,13 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
+
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("web_app")
+                .accessTokenValiditySeconds(30)
                 .scopes("FOO")
                 .secret("secret")
                 .autoApprove(true)
@@ -54,6 +57,13 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtTokenEnhancer());
     }
+
+//    @Bean
+//    protected OAuth2ProtectedResourceDetails resource() {
+//        AuthorizationCodeResourceDetails resource = new AuthorizationCodeResourceDetails();
+//        resource.setClientId("yar");
+//        return resource;
+//    }
 
 
 //
