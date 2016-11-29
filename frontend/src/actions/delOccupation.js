@@ -32,14 +32,16 @@ function delOccupationFail (error, occupId) {
 export function delOccupation(occupId, dispatch) {
     return function (dispatch) {
         dispatch(delOccupationRequest(occupId));
+        let access_token = localStorage.jwtToken;
 
         return fetch(DELETE_OCCUPATION + occupId, {
             credentials: 'include',
             mode: 'cors',
             method: 'delete',
-            // headers: {
-            //     //'X-CSRFToken': CSRF_TOKEN
-            // }
+            headers: {
+                'Authorization': access_token ? 'Bearer ' + access_token : ""
+                //'X-CSRFToken': CSRF_TOKEN
+            }
         })
             .then((response) => {
                 if(response.ok)

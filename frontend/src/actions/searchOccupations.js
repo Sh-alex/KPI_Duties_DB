@@ -26,12 +26,15 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
     onRequest(data, searchGetParams);
 
+    let access_token = localStorage.jwtToken;
+
     return fetch(SEARCH_OCCUPATION_URI + searchGetParams, {
         credentials: 'include',
         mode: 'cors',
         method: 'get',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': access_token ? 'Bearer ' + access_token : ""
             //'X-CSRFToken': CSRF_TOKEN
         }
     })
@@ -79,7 +82,8 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
 export function priorSearchOccupations(searchType, searchText) {
     return function (dispatch) {
-        let searchParams = `?searchType=${searchType}&searchText=${searchText}`;
+        let searchParams = `?searchType=${searchType}&searchText=${searchText}`,
+            access_token = localStorage.jwtToken;
 
         dispatch({
             type: PRIOR_SEARCH_OCCUP_REQUEST,
@@ -87,7 +91,16 @@ export function priorSearchOccupations(searchType, searchText) {
             searchText
         });
 
-        return fetch(PRIOR_SEARCH_OCCUP_URI + searchParams)
+        return fetch(PRIOR_SEARCH_OCCUP_URI + searchParams, {
+            credentials: 'include',
+            mode: 'cors',
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': access_token ? 'Bearer ' + access_token : ""
+                //'X-CSRFToken': CSRF_TOKEN
+            }
+        })
             .then( response => {
                 if(response.status === 404)
                     throw 'При попередньому пошуку посад не знайдено відповідного методу на сервері!';

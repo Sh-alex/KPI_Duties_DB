@@ -6,13 +6,15 @@ export default function generateDelOccupDcValRequestFunction(params) {
                 type: params.requestConst,
                 id,
             });
+            let access_token = localStorage.jwtToken;
 
             return fetch( params.apiURI + id, {
                 credentials: 'include',
                 mode: 'cors',
                 method: 'delete',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': access_token ? 'Bearer ' + access_token : ""
                     //'X-CSRFToken': CSRF_TOKEN
                 }
             })

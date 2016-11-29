@@ -172,7 +172,7 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                 method: 'get',
                 //body: JSON.stringify({access_token}),
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
                     'Authorization': 'Bearer ' + access_token
                     //'X-CSRFToken': CSRF_TOKEN
                 }

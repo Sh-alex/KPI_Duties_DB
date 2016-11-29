@@ -7,6 +7,7 @@ export default function generateEditingOccupDcValRequestFunction(params) {
                 newVal,
                 id
             });
+            let access_token = localStorage.jwtToken;
 
             return fetch( params.apiURI + id, {
                 credentials: 'include',
@@ -14,7 +15,8 @@ export default function generateEditingOccupDcValRequestFunction(params) {
                 method: 'put',
                 body: JSON.stringify( { newVal } ),
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': access_token ? 'Bearer ' + access_token : ""
                     //'X-CSRFToken': CSRF_TOKEN
                 }
             })

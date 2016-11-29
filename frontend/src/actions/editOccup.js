@@ -85,6 +85,8 @@ export function editOccup(editingOccupId, formData, dispatch) {
 
     //тут проміс треба для redux-form
     return new Promise((resolve, reject) => {
+        let access_token = localStorage.jwtToken;
+
         return fetch(
             API_EDIT_OCCUPATION + editingOccupId,
             {
@@ -93,7 +95,8 @@ export function editOccup(editingOccupId, formData, dispatch) {
                 method: 'put',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': access_token ? 'Bearer ' + access_token : ""
                     //'X-CSRFToken': CSRF_TOKEN
                 }
             })

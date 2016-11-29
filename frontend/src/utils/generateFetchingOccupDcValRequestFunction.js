@@ -4,12 +4,15 @@ export default function generateFetchingOccupDcValRequestFunction(params) {
         return function (dispatch) {
             dispatch({ type: params.requestConst });
 
+            let access_token = localStorage.jwtToken;
+
             return fetch( params.apiURI, {
                 credentials: 'include',
                 mode: 'cors',
                 method: 'get',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': access_token ? 'Bearer ' + access_token : ""
                     //'X-CSRFToken': CSRF_TOKEN
                 }
             })
