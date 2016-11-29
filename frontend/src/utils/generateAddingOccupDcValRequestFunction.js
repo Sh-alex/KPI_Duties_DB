@@ -53,9 +53,14 @@ export default function generateAddingOccupDcValRequestFunction(params) {
                         onSuccess(dispatch, resObj);
                 })
                 .catch( error => {
+                    if(error && error.message === "Failed to fetch")
+                        error = `Сталася неочікувана помилка при додаванні нового значення до списку ${listName}! Перевірте роботу мережі.`;
+                    else if(!error || !(typeof error == "string"))
+                        error = `Сталася неочікувана помилка при додаванні нового значення до списку ${listName}!`;
+
                     dispatch({
                         type: params.failConst,
-                        error: error || `Сталася неочікувана помилка при додаванні нового значення до списку ${listName}!`
+                        error
                     });
 
                     if(onFail instanceof Function)

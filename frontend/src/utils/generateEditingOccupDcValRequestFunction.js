@@ -20,11 +20,11 @@ export default function generateEditingOccupDcValRequestFunction(params) {
             })
                 .then( response => {
                     if(response.status === 400)
-                        throw `При редагуванні значення списку ${listName} на сервер передано некоректні дані!`;
+                        throw `При оновленні значення списку ${listName} на сервер передано некоректні дані!`;
                     if(response.status === 404)
-                        throw `При редагуванні значення списку ${listName} не знайдено відповідного методу на сервері!`;
+                        throw `При оновленні значення списку ${listName} не знайдено відповідного методу на сервері!`;
                     if( 499 < response.status && response.status < 600 )
-                        throw `При редагуванні значення списку ${listName} сталася помилка ${response.status} на сервері!`;
+                        throw `При оновленні значення списку ${listName} сталася помилка ${response.status} на сервері!`;
 
                     if(response.ok) {
                         dispatch({
@@ -40,9 +40,14 @@ export default function generateEditingOccupDcValRequestFunction(params) {
                         throw `Не вдалося змінити вказане значення списку ${listName}! Код відповіді сервера = ${response.status}`;
                 })
                 .catch( error => {
+                    if(error && error.message === "Failed to fetch")
+                        error = `Сталася неочікувана помилка при оновленні значення списку  ${listName}! Перевірте роботу мережі.`;
+                    else if(!error || !(typeof error == "string"))
+                        error = `Сталася неочікувана помилка при оновленні значення списку  ${listName}!`;
+                    
                     dispatch({
                         type: params.failConst,
-                        error: error || `Сталася неочікувана помилка при редагуванні значення списку ${listName}!`
+                        error
                     });
 
                     if(onFail instanceof Function)

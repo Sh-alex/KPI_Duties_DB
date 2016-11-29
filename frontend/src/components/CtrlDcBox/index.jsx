@@ -457,18 +457,21 @@ class CtrlDcBox extends Component {
     }
 
     showAddingInp() {
-        this.setState({addingInpIsShown: true})
+        this.setState({addingInpIsShown: true});
     }
 
     hideAddingInp() {
-        this.setState({addingInpIsShown: false})
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
+        this.setState({addingInpIsShown: false});
     }
 
     changeAddingInpVal(newVal) {
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
         this.setState({ addingInpVal: newVal });
     }
 
     setActiveListName(newActiveListName) {
+        this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
         this.setState({
             sortDirection: "NONE",
             activeListName: newActiveListName,
@@ -713,8 +716,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         addNewDKHPCode: (newVal) => dispatch(addNewDKHPCode({newVal})),
         addNewZKPPTRCode: (newVal) => dispatch(addNewZKPPTRCode({newVal})),
         addNewKPCodeClearMsg: () => dispatch(clearKPCodeAddingMsg()),
-        addNewETDKCodeClearMsg: () => dispatch(clearDKHPCodeAddingMsg()),
-        addNewDKHPCodeClearMsg: () => dispatch(clearETDKCodeAddingMsg()),
+        addNewDKHPCodeClearMsg: () => dispatch(clearDKHPCodeAddingMsg()),
+        addNewETDKCodeClearMsg: () => dispatch(clearETDKCodeAddingMsg()),
         addNewZKPPTRCodeClearMsg: () => dispatch(clearZKPPTRCodeAddingMsg()),
 
         addNewHaveToKnowText: (newVal) => dispatch(addNewHaveToKnowText({newVal})),

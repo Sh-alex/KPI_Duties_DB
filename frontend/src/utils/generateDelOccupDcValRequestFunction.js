@@ -37,9 +37,14 @@ export default function generateDelOccupDcValRequestFunction(params) {
                         throw `Не вдалося видалити вказане значення зі списку ${listName}! Код відповіді сервера = ${response.status}`;
                 })
                 .catch( error => {
+                    if(error && error.message === "Failed to fetch")
+                        error = `Сталася неочікувана помилка при видаленні значення зі списку ${listName}! Перевірте роботу мережі.`;
+                    else if(!error || !(typeof error == "string"))
+                        error = `Сталася неочікувана помилка при видаленні значення зі списку ${listName}!`;
+
                     dispatch({
                         type: params.failConst,
-                        error: error || `Сталася неочікувана помилка при видаленні значення зі списку ${listName}!`
+                        error
                     });
 
                     if(onFail instanceof Function)

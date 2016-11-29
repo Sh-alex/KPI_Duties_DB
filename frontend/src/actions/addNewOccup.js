@@ -57,12 +57,11 @@ export function submitFormAddNewOccup(data, dispatch) {
                 }
             })
             .then((response) => {
-                if (response.status === 200) {
+                if (response.ok) {
                     dispatch(submitFormSuccess(response));
                     resolve();
-                }
-                else if (response.status === 400) {
-                    throw(new Error("Передано некоректні дані на сервер!"));
+                } else if (response.status === 400)
+                    throw "Передано некоректні дані на сервер!";
                     /*
                      //перевіряємо щоб сервер поверув JSON з інформацією про помилку
                      var errorsObj,
@@ -70,22 +69,24 @@ export function submitFormAddNewOccup(data, dispatch) {
                      if(contentType && contentType.indexOf("application/json") !== -1 && (errorsObj = response.json().errors instanceof Object)) {
                      return reject(errorsObj);
                      } else {
-                     throw(new Error("Отримано некоректну відповідь від сервера!"));
+                     throw "Отримано некоректну відповідь від сервера!";
                      }
                      */
-                } else if(response.status === 404) {
-                    throw(new Error('Не знайдено відповідного методу на сервері!'));
-                } else if( 499 < response.status && response.status < 600 ) {
-                    throw(new Error(`Сталася помилка ${response.status} на сервері!`));
-                } else {
-                    // we're not sure what happened, but handle it:
-                    // our Error will get passed straight to `.catch()`
-                    throw(new Error('Сталася невідома помилка при додаванні посади!'));
-                }
+                else if(response.status === 404)
+                    throw 'Не знайдено відповідного методу на сервері!';
+                else if( 499 < response.status && response.status < 600 )
+                    throw `Сталася помилка ${response.status} на сервері!`;
+                else
+                    throw 'Сталася невідома помилка при додаванні посади!';
             })
-            .catch( (error = 'Сталася невідома помилка при додаванні посади!') => {
+            .catch( error => {
+                if(error && error.message === "Failed to fetch")
+                    error = `Сталася невідома помилка при додаванні посади! Перевірте роботу мережі.`;
+                else if(!error || !(typeof error == "string"))
+                    error = `Сталася невідома помилка при додаванні посади`;
+
                 dispatch(submitFormFail(error));
-                reject({ _error: error.message || error });
+                reject({ _error: error });
             });
     });
 }
