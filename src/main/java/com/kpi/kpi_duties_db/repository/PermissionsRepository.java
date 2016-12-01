@@ -18,3 +18,4 @@ public interface PermissionsRepository extends JpaRepository<Employees2, Integer
     @Query("select b from Passports b where  b.employee.permissions.login = :name")
     Passports getPassportsByName(@Param("name") String name);
 
+}

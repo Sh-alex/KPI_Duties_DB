@@ -1,26 +1,18 @@
 package com.kpi.kpi_duties_db;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/**
- * @author Olexandr Shevchenko
- * @version 1.0
- */
 
-@SpringBootApplication(scanBasePackages = {"com.kpi.kpi_duties_db"})
-@EnableTransactionManagement
-public class KpiDutiesApplication extends SpringBootServletInitializer {
+@EnableAutoConfiguration
+@SpringBootApplication
+public class KpiDutiesApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KpiDutiesApplication.class, args);
-    }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(KpiDutiesApplication.class);
+        new SpringApplicationBuilder(KpiDutiesApplication.class).run(args);
     }
 }
+
+
