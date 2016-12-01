@@ -1,3 +1,4 @@
+
 buildscript {
     ext {
         springBootVersion = '1.3.5.RELEASE'
@@ -12,18 +13,13 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
 
-
-war {
-    baseName = 'kpi_duties_db'
+jar {
+    baseName = 'demo'
     version = '0.0.1-SNAPSHOT'
-    manifest{
-        attributes 'Main-Class':'com.kpi.kpi_duties_db.KpiDutiesApplication'
-    }
 }
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -31,32 +27,25 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    providedRuntime
-}
-
 ext {
     jodaTimeVersion = '2.9.4'
 }
 
-
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-jersey')
-    compile('org.springframework.boot:spring-boot-starter-web')
-
-
-    compile files('C:\\Users\\Olexandr\\.m2\\repository\\com\\microsoft\\sqlserver\\sqljdbc42\\6.0\\sqljdbc42-6.0.jar')
-    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
     compile("joda-time:joda-time:$jodaTimeVersion")
-    compile("org.apache.tomcat:tomcat-dbcp:9.0.0.M9")
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.6.0'
     compile group: 'org.jadira.usertype', name: 'usertype.jodatime', version: '2.0.1'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE')
+    compile('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-jersey')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile files('C:\\Users\\Yaroslav\\Desktop\\sqljdbc42.jar')
+    compile("org.apache.tomcat:tomcat-dbcp:9.0.0.M9")
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
+    compile group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.5.2'
 }
 
-bootRepackage {
-    mainClass = 'com.kpi.kpi_duties_db.KpiDutiesApplication'
-}
