@@ -55,6 +55,8 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
+
+    compile group: 'org.apache.poi', name: 'poi', version: '3.15'
 }
 
 bootRepackage {
