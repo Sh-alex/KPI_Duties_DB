@@ -6,7 +6,7 @@ import {OCCUPATION_MIN_DATE} from "../../constants/common";
 import "./styles.less";
 
 export default function FormEditOccupInfoDescriptionTextPortion(props) {
-    let topCtrlPart = props.showDelBtn ? (
+    let TopCtrlPart = props.showDelBtn ? (
         <div>
             <hr />
             <button
@@ -16,7 +16,17 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
                 <span aria-hidden={true}>&times;</span>
             </button>
         </div>
-    ) : "";
+    ) : "",
+        BtnAddInfoFromAnotherOccup = props.showBtnAddInfoFromAnotherOccupations ? (
+            <button
+                type="button"
+                title="Додати інформацію з аналогічної посади"
+                className="btn btn-default btn-flat btn-add-info-from-another-occup"
+                onClick={props.handleBtnAddInfoFromAnotherOccupClick}
+            >
+                <i className="fa fa-link" />
+            </button>
+        ) : null;
 
     let portionStartDateFormGroupClass = classNames({
             'form-group': true,
@@ -48,11 +58,11 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
 
     return (
         <div className={`inp-portions__item ${props.portionItemClassName}`}>
-            {topCtrlPart}
+            {TopCtrlPart}
             <div className="clearfix">
                 <div className="col-xs-12 col-md-8">
                     <div className={portionTextFormGroupClass}>
-                        <div className="input-group">
+                        <div className={props.showBtnAddInfoFromAnotherOccupations ? "input-group" : ""}>
                             <input
                                 type="hidden"
                                 {...props.fields.idText} />
@@ -63,15 +73,8 @@ export default function FormEditOccupInfoDescriptionTextPortion(props) {
                                 className="form-control"
                                 placeholder={"Введіть тут текст про " + props.headline}
                                 rows="6" />
-                            <div className="input-group-btn">
-                                <button
-                                    type="button"
-                                    title="Додати інформацію з аналогічної посади"
-                                    className="btn btn-default btn-flat btn-add-info-from-another-occup"
-                                    onClick={props.handleBtnAddInfoFromAnotherOccupClick}
-                                >
-                                    <i className="fa fa-link" />
-                                </button>
+                            <div className={"input-group-btn"}>
+                                { BtnAddInfoFromAnotherOccup }
                                 <br/>
                                 {
                                     showBtnUpdateRelative && (

@@ -44,6 +44,8 @@ export default function SearchOccupBoxResTbl(props) {
                     key={itemId+"_0"}
                     itemIndex={itemIndex + props.tblStartIndex}
                     data={props.searchResData.itemsById[itemId].data}
+                    showBtnDelOccupations={props.showBtnDelOccupations}
+                    showBtnEditOccupations={props.showBtnEditOccupations}
                     onEditItem={bindOnEditItem(props.onEditItem, itemId)}
                     onDeleteItem={bindOnDeleteItem(props.onDeleteItem, itemId)}
                     onToggleExpandItem={bindOnExpandItem(props.onToggleExpandItem, itemId)}

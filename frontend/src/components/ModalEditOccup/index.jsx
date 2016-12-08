@@ -129,24 +129,30 @@ class ModalEditOccup extends Component {
     }
 
     render() {
-        let innerBlock;
-        if(this.props.modalState.fetchDataError)
-            innerBlock = (
-                <Alert bsStyle="danger" className="no-margin">
-                    <p> Сталася помлка при отриманні інформації про посаду :( </p>
+        let InnerBlock;
+        if(!this.props.userMayEditOccupations)
+            InnerBlock = (
+                <Alert bsStyle="danger" className="no-margin text-center">
+                    <h4 className="no-margin"> У вас для цього не достатньо прав доступу! </h4>
+                </Alert>
+            );
+        else if(this.props.modalState.fetchDataError)
+            InnerBlock = (
+                <Alert bsStyle="danger" className="no-margin text-center">
+                    <h5 className="no-margin"> Сталася помлка при отриманні інформації про посаду :( </h5>
                 </Alert>
             );
         else if(this.props.modalState.isFetchingData)
-            innerBlock = <LoadingBlock caption="Іде завантаження даних про посаду..." />;
+            InnerBlock = <LoadingBlock caption="Іде завантаження даних про посаду..." />;
         else if(!this.props.modalState.editingData)
-            innerBlock = (
+            InnerBlock = (
                 <Alert bsStyle="danger" className="no-margin text-center">
                     <h4> Не знайдено інформації про посаду :( </h4>
                     <p> Спробуйте оновити сторінку </p>
                 </Alert>
             );
         else
-            innerBlock = (
+            InnerBlock = (
                 <FormEditOccupInfo
                     {...this.props}
                     submitBtnText={["Зберегти зміни ", <i className="fa fa-save" key={Math.random()}/>]}
@@ -163,7 +169,7 @@ class ModalEditOccup extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    { innerBlock }
+                    { InnerBlock }
                 </Modal.Body>
             </Modal>
         );
@@ -227,7 +233,20 @@ export default reduxForm(
         onSubmit: (formData, dispatch, props) => editOccup(props.editingOccupId, formData, dispatch)
     },
     (state, ownProps) => {    //mapStateToProps
+        let userMayEditOccupations = state.user.isAuthenticated &&
+                state.user.permissions &&
+                state.user.permissions.forms &&
+                state.user.permissions.forms.editOccupations &&
+                state.user.permissions.forms.editOccupations.show,
+            userMayAddInfoFromAnotherOccupations = state.user.isAuthenticated &&
+                state.user.permissions &&
+                state.user.permissions.forms &&
+                state.user.permissions.forms.addInfoFromAnotherOccupations &&
+                state.user.permissions.forms.addInfoFromAnotherOccupations.show;
+
         return {
+            userMayEditOccupations,
+            userMayAddInfoFromAnotherOccupations,
             modalState: state.modals.editOccup,
             editingOccupId: state.modals.editOccup.editingData && state.modals.editOccup.editingData.id || null,
             occupNameInfoLists: state.occupNameInfoLists,

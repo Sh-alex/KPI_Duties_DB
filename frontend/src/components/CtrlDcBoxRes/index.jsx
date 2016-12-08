@@ -162,6 +162,10 @@ export default function CtrlDcBoxRes(props) {
                                 showMsgFilterMadeListEmpty ?
                                     MsgFilterMadeListEmpty :
                                     <CtrlDcBoxResTbl
+                                        showBtnDelValues={props.userMayDelValues}
+                                        showBtnEditValues={props.userMayEditValues}
+                                        showBtnToggleUsingOccupList={props.userMaySeeUsingOccupationsValues}
+
                                         shownOccupDescrTextsList={props.shownOccupDescrTextsList}
                                         listDataItems={props.listDataItems}
                                         onEditListItemBtnClick={props.onEditListItemBtnClick}
@@ -177,7 +181,7 @@ export default function CtrlDcBoxRes(props) {
                 }
                 <div className="btn-show-adding-inp-wrapper">
                     {
-                        (listIsLoading || listHasErrors) ? "" :
+                        (listIsLoading || listHasErrors || !props.userMayAddNewValues) ? null :
                             props.addingInpIsShown ?
                                 InpNewVal :
                                 BtnShowAddingInp

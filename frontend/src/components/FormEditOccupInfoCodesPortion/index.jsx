@@ -6,7 +6,7 @@ import { OCCUPATION_MIN_DATE } from "../../constants/common"
 import './styles.less'
 
 export default function FormEditOccupInfoCodesPortion(props) {
-    let topCtrlPart = props.showDelBtn ? (
+    let TopCtrlPart = props.showDelBtn ? (
             <div>
                 <hr />
                 <button
@@ -55,7 +55,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
             new Date(props.codesPortionFields.portionEndDate.value) || null;
 
     return <div className={`inp-portions__item ${props.portionItemClassName}`}>
-        {topCtrlPart}
+        {TopCtrlPart}
         <div className="row">
             <input
                 type="hidden"

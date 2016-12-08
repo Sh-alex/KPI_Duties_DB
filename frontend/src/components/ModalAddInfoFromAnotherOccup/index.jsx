@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal } from 'react-bootstrap'
+import { Modal, Alert } from 'react-bootstrap'
 
 import SearchOccupationsForm from '../SearchOccupationsForm'
 import AddInfoFromAnotherOccupSearchRes from '../AddInfoFromAnotherOccupSearchRes'
@@ -23,7 +23,27 @@ import './styles.less'
 
 class ModalAddInfoFromAnotherOccup extends Component {
     render() {
-        let searchForm = (
+        let InnerBlock;
+        if(!this.props.userMayAddInfoFromAnotherOccupations)
+            InnerBlock = (
+                <Alert bsStyle="danger" className="no-margin text-center">
+                    <h4 className="no-margin"> У вас для цього не достатньо прав доступу! </h4>
+                </Alert>
+            );
+        else if(this.props.showResults)
+            InnerBlock = (
+                <AddInfoFromAnotherOccupSearchRes
+                    resForm={this.props.resForm}
+                    cancelSearch={this.props.onHide}
+                    searchResData={this.props.searchResData}
+                    resultsType={this.props.resultsType}
+                    resPortionIndex={this.props.resPortionIndex}
+                    goBackToSearchForm={this.props.goBackToSearchForm}
+                    handleAddInfoBtnClick={this.props.handleAddInfoBtnClick}
+                />
+            );
+        else
+            InnerBlock = (
                 <SearchOccupationsForm
                     searchError={this.props.searchError}
                     priorSearchOccupations={this.props.priorSearchOccupations}
@@ -38,17 +58,6 @@ class ModalAddInfoFromAnotherOccup extends Component {
                     tagsList={this.props.clarificationList}
                     occupationGroupList={this.props.occupationGroupList}
                 />
-            ),
-            resultsBlock = (
-                <AddInfoFromAnotherOccupSearchRes
-                    resForm={this.props.resForm}
-                    cancelSearch={this.props.onHide}
-                    searchResData={this.props.searchResData}
-                    resultsType={this.props.resultsType}
-                    resPortionIndex={this.props.resPortionIndex}
-                    goBackToSearchForm={this.props.goBackToSearchForm}
-                    handleAddInfoBtnClick={this.props.handleAddInfoBtnClick}
-                />
             );
 
         return (
@@ -59,7 +68,7 @@ class ModalAddInfoFromAnotherOccup extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    { this.props.showResults ? resultsBlock : searchForm }
+                    { InnerBlock }
                 </Modal.Body>
             </Modal>
         );
@@ -67,10 +76,16 @@ class ModalAddInfoFromAnotherOccup extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let modalState = state.modals.addInfoFromAnotherOccup;
+    let modalState = state.modals.addInfoFromAnotherOccup,
+        userMayAddInfoFromAnotherOccupations = state.user.isAuthenticated &&
+            state.user.permissions &&
+            state.user.permissions.forms &&
+            state.user.permissions.forms.addInfoFromAnotherOccupations &&
+            state.user.permissions.forms.addInfoFromAnotherOccupations.show;
     return {
         ...modalState,
         ...state.occupNameInfoLists,
+        userMayAddInfoFromAnotherOccupations
     };
 };
 

@@ -9,7 +9,9 @@ import {
     GET_USER_INFO_SUCCESS,
     GET_USER_INFO_FAIL,
 
-    CLEAR_LOG_IN_ERROR
+    CLEAR_LOG_IN_ERROR,
+
+    DENY_ACCESS_TO_THE_USER
 } from '../constants/user'
 
 import {
@@ -196,12 +198,54 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                 throw 'Сталася невідома помилка при отриманні інформації про користувача!';
             })
             .then( json => {
-                if(!json || !json.Surname || !json.Name )
+                if(!json || !json.Surname || !json.Name)
                     throw "При запиті інформації про користувача отримано некоректні дані від сервера!";
 
                 let resUserData = {
                     "userName": `${json.Name} ${json.Surname}`,
                     "userAvatar": json.img && "data:image/png;base64,"+json.img || "",
+                    permissions: Object.assign({
+                        "accessName": "Доступ заборонено",
+                        "forms": { }
+                    }, json.permissions),
+                // {    Example:
+                //         "accessName": "Перегляд, редагування, вставка",
+                //         "forms": {
+                //             "addNewOccupations": {
+                //                 "show": true,
+                //                 "parts": {}
+                //             },
+                //             "delOccupations": {
+                //                 "show": false,
+                //                 "parts": {}
+                //             },
+                //             "editOccupations": {
+                //                 "show": true,
+                //                 "parts": {}
+                //             },
+                //             "searchOccupations": {
+                //                 "show": true,
+                //                 "parts": {}
+                //             },
+                //             "downloadSearchResults": {
+                //                 "show": true,
+                //                 "parts": {}
+                //             },
+                //             "addInfoFromAnotherOccupations": {
+                //                 "show": false,
+                //                 "parts": {}
+                //             },
+                //             "ctrlDc": {
+                //                 "show": true,
+                //                 "parts": {
+                //                     "addNewValues": true,
+                //                     "delValues": true,
+                //                     "editValues": true,
+                //                     "showUsingOccupations": true
+                //                 }
+                //             }
+                //         }
+                //     }
                 };
                 dispatch(getUserInfoSuccess(resUserData));
             })
@@ -221,5 +265,20 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
 export function clearLogInError() {
     return {
         type: CLEAR_LOG_IN_ERROR
+    }
+}
+
+
+
+export function denyAccessToTheUser() {
+    return{
+        type: DENY_ACCESS_TO_THE_USER
+    };
+}
+
+export function denyAccessToTheUserWithRedirect() {
+    return function (dispatch) {
+        dispatch(denyAccessToTheUser());
+        dispatch(historyPushStateAction("/"));
     }
 }

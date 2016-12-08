@@ -240,14 +240,14 @@ export default class FormEditOccupInfo extends Component {
                 </div>
             ),
             popoverSubmitReset = (
-            <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
-                <div className="text-center">
-                    <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
-                        <span className="btn-label"> Очистити </span>
-                    </button>
-                </div>
-            </Popover>
-        );
+                <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
+                    <div className="text-center">
+                        <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
+                            <span className="btn-label"> Очистити </span>
+                        </button>
+                    </div>
+                </Popover>
+            );
 
         let formAlert = !shouldShowServerRespMsg ?
                 "" :
@@ -436,6 +436,7 @@ export default class FormEditOccupInfo extends Component {
                                 showModalAddNewETDKCode: true,
                                 addNewETDKCodeResPortionIndex: resPortionIndex
                             })}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
@@ -447,6 +448,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Завдання, обов'язки та повноваження"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES}
                             handleTextChange={this.handleResponsibTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
@@ -455,6 +457,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Повинен знати"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW}
                             handleTextChange={this.handleHaveToKnowTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
@@ -463,6 +466,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Кваліфікаційні вимоги"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR}
                             handleTextChange={this.handleQualiffRequirTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />

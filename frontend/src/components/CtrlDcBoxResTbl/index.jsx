@@ -37,12 +37,19 @@ export default function CtrlDcBoxResTbl(props) {
             btnUsingOccupClassName = classNames({
                 "text-muted": true,
                 "action-btns-cell__btn": true,
+                "hidden": !props.showBtnToggleUsingOccupList,
                 "disabled": !isUsedByOccup
             }),
             btnDelOccupClassName = classNames({
                 "text-danger": true,
                 "action-btns-cell__btn": true,
+                "hidden": !props.showBtnDelValues,
                 "disabled": isUsedByOccup || isNowDeletingThisItem
+            }),
+            btnEditOccupClassName = classNames({
+                "text-warning": true,
+                "action-btns-cell__btn": true,
+                "hidden": !props.showBtnEditValues,
             }),
             textCellClassName = classNames({
                 "big-text-cell--folded": !infoRowIsExpanded
@@ -78,7 +85,7 @@ export default function CtrlDcBoxResTbl(props) {
                             <br className="show-for-big-text"/> {" "}
                             <a
                                 onClick={bindEditListItemHandler(item.id, item.textValue, props)}
-                                className="action-btns-cell__btn text-warning"
+                                className={btnEditOccupClassName}
                                 title="Редагувати елемент"
                             >
                                 <i className="fa fa-edit" />

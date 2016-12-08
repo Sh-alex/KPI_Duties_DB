@@ -18,7 +18,15 @@ export default class FormEditOccupInfoCodesSection extends Component {
                     resPortionIndex: null
                 })
             },
-            portionsMarkup = this.props.codesFields.map((codesFieldsItem, i, codesFieldsArr) => {
+            BtnAddInfoFromAnotherOccup = this.props.showBtnAddInfoFromAnotherOccupations ? (
+                <div className="col-xs-12 col-md-7 pull-right text-right">
+                    <a href="javascript:void(0)" className="" onClick={handleBtnAddInfoFromAnotherOccupClick}>
+                        <i> Заповнити коди із аналогічної посади </i>
+                        <i className="fa fa-link" />
+                    </a>
+                </div>
+            ) : null,
+            PortionsMarkup = this.props.codesFields.map((codesFieldsItem, i, codesFieldsArr) => {
                 //прив'язуємо обробник видалення до номера порції
                 let decoratedDelHandler = (index => {
                         return () => originalDelCodesPortionHandler(index)
@@ -57,18 +65,13 @@ export default class FormEditOccupInfoCodesSection extends Component {
                         KPCodesList={this.props.KPCodesList} />
                 )
             });
-
+        
         return (
             <div>
-                <div className="col-xs-12 col-md-7 pull-right text-right">
-                    <a href="javascript:void(0)" className="" onClick={handleBtnAddInfoFromAnotherOccupClick}>
-                        <i> Заповнити коди із аналогічної посади </i>
-                        <i className="fa fa-link" />
-                    </a>
-                </div>
+                { BtnAddInfoFromAnotherOccup }
                 <h4> Коди </h4>
                 <div className="inp-portions codes-portions">
-                    { portionsMarkup }
+                    { PortionsMarkup }
                     <div className="inp-portions__btn-add-wrapper">
                         <hr />
                         <button
