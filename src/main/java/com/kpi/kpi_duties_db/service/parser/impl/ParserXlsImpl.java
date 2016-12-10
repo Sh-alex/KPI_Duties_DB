@@ -1,8 +1,9 @@
 package com.kpi.kpi_duties_db.service.parser.impl;
 
+import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
+import com.kpi.kpi_duties_db.domain.RtCodeEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
-import com.kpi.kpi_duties_db.service.DutiesValidityDateService;
-import com.kpi.kpi_duties_db.service.RtDutiesService;
+import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.parser.ParserXls;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 import com.kpi.kpi_duties_db.service.parser.support.converter.OccupationXlsConverter;
@@ -19,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,13 +33,22 @@ import java.util.List;
 public class ParserXlsImpl implements ParserXls {
 
     @Autowired
-    OccupationXlsConverter converter;
+    private OccupationXlsConverter converter;
 
     @Autowired
-    RtDutiesService rtDutiesService;
+    private RtDutiesService rtDutiesService;
 
     @Autowired
-    DutiesValidityDateService dutiesValidityDateService;
+    private DutiesValidityDateService dutiesValidityDateService;
+
+    @Autowired
+    private RtCodeService rtCodeService;
+
+    @Autowired
+    private RtDutiesCodeService rtDutiesCodeService;
+
+    @Autowired
+    private DcDutiesNameService dcDutiesNameService;
 
     private final static Logger logger = LoggerFactory.getLogger(ParserXlsImpl.class);
 
@@ -184,22 +195,91 @@ public class ParserXlsImpl implements ParserXls {
 
                 RtDutiesEntity rtDutiesEntity = null;
                 if (rtDutiesService.findByName(entity.getName()) != null) {
-                    entity.setId(rtDutiesService.findByName(entity.getName()).getId());
-                    rtDutiesEntity = rtDutiesService.update(entity);
+                    parentId = rtDutiesService.findByName(entity.getName()).getId();
+                    continue;
                 } else
                     rtDutiesEntity = rtDutiesService.add(entity);
 
                 parentId = rtDutiesEntity.getId();
             }
 
+            dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationXls(occupationFromXls, parentId));
 
-           dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationXls(occupationFromXls, parentId));
+            List<RtCodeEntity> rtCode = rtCodeService.add(converter.toRtCodeEntityListFromOccupationXls(occupationFromXls));
 
-            /*List<RtCodeEntity> rtCodes = rtCodeService.add(converter.toRtCodeEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+            rtDutiesCodeService.add(parentId, rtCode);
 
-            rtDutiesCodeService.add(rtDutiesEntity.getId(), rtCodes);*/
+            if (occupationFromXls.getClarificationCat() != null && !occupationFromXls.getClarificationCat().equals("")) {
+                createCategoryForOccupation(parentId, occupationFromXls, occupationFromXls.getClarificationCat());
+            }
 
-            number++;
+            System.out.println("Saving to DB: " + number++);
         }
+    }
+
+    private void createCategoryForOccupation(Integer id, OccupationFromXls occupationFromXls, String clarificationCat) {
+
+        List<String> catList = Arrays.asList("Провідний", "Головний", "1 категорії", "2 категорії", "3 категорії", "без категорії");
+        List<String> rozList = Arrays.asList("1 розряду", "2 розряду", "3 розряду", "4 розряду", "5 розряду");
+        List<String> stList = Arrays.asList("старший");
+
+        List<String> clarificationList = null;
+
+        RtDutiesEntity parentEntity = rtDutiesService.getById(id);
+
+
+        switch (clarificationCat) {
+            case "кат":
+                clarificationList = catList;
+                break;
+            case "роз":
+                clarificationList = rozList;
+                break;
+            case "ст":
+                clarificationList = stList;
+                break;
+            default:
+                return;
+            /*case "клас":
+                break;
+            case "ранг":
+                break;*/
+        }
+
+        for (int i = 0; i < clarificationList.size(); i++) {
+            RtDutiesEntity rtDutiesEntity = new RtDutiesEntity();
+            rtDutiesEntity.setDcDutiesPartitionId(parentEntity.getDcDutiesPartitionId());
+            rtDutiesEntity.setName(parentEntity.getName());
+            rtDutiesEntity.setNameShort(parentEntity.getNameShort());
+
+            DcDutiesNameEntity entityClarification = new DcDutiesNameEntity();
+            if (dcDutiesNameService.findByName(clarificationList.get(i)) == null) {
+                entityClarification.setName(clarificationList.get(i));
+                entityClarification = dcDutiesNameService.add(entityClarification);
+            } else
+                entityClarification = dcDutiesNameService.findByName(clarificationList.get(i));
+
+
+            rtDutiesEntity.setParentId(id);
+            rtDutiesEntity.setDcDutiesNameId(entityClarification.getId());
+
+            if (clarificationCat.equals("кат") && i <= 1) {
+                rtDutiesEntity.setName(clarificationList.get(i) + " " + parentEntity.getName());
+            } else
+                rtDutiesEntity.setName(parentEntity.getName() + " " + clarificationList.get(i));
+
+            if (rtDutiesService.findByName(rtDutiesEntity.getName()) == null)
+                rtDutiesEntity = rtDutiesService.add(rtDutiesEntity);
+            else
+                continue;
+
+            dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationXls(occupationFromXls, rtDutiesEntity.getId()));
+
+            List<RtCodeEntity> rtCode = rtCodeService.add(converter.toRtCodeEntityListFromOccupationXls(occupationFromXls));
+
+            rtDutiesCodeService.add(rtDutiesEntity.getId(), rtCode);
+
+        }
+
     }
 }

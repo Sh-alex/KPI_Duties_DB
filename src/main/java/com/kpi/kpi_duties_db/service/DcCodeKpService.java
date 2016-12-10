@@ -9,4 +9,6 @@ import com.kpi.kpi_duties_db.domain.DcCodeKpEntity;
  */
 
 public interface DcCodeKpService extends BaseService<DcCodeKpEntity> {
+
+    DcCodeKpEntity findByName(String name);
 }

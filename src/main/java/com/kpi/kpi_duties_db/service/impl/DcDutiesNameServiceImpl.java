@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class DcDutiesNameServiceImpl extends BaseServiceImpl<DcDutiesNameEntity> implements DcDutiesNameService {
 
     @Autowired
-    DcDutiesNameRepository repository;
+    private DcDutiesNameRepository repository;
 
     @Override
     public DcDutiesNameEntity findByName(String name){

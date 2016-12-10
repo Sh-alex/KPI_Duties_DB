@@ -1,15 +1,15 @@
 package com.kpi.kpi_duties_db.service.parser.support.converter.impl;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
-import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
-import com.kpi.kpi_duties_db.service.DcDutiesNameService;
+import com.kpi.kpi_duties_db.domain.*;
+import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 import com.kpi.kpi_duties_db.service.parser.support.converter.OccupationXlsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Olexandr Shevchenko
@@ -21,7 +21,19 @@ import javax.transaction.Transactional;
 public class OccupationXlsConverterImpl implements OccupationXlsConverter {
 
     @Autowired
-    DcDutiesNameService dcDutiesNameService;
+    private DcDutiesNameService dcDutiesNameService;
+
+    @Autowired
+    private DcCodeDkhpService dcCodeDkhpService;
+
+    @Autowired
+    private DcCodeEtkdService dcCodeEtkdService;
+
+    @Autowired
+    private DcCodeZkpptrService dcCodeZkpptrService;
+
+    @Autowired
+    private DcCodeKpService dcCodeKpService;
 
     @Override
     @Transactional
@@ -165,5 +177,57 @@ public class OccupationXlsConverterImpl implements OccupationXlsConverter {
 
 
         return entity;
+    }
+
+    @Override
+    @Transactional
+    public List<RtCodeEntity> toRtCodeEntityListFromOccupationXls(OccupationFromXls occupationFromXls) {
+
+        List<RtCodeEntity> list = new ArrayList<>();
+
+        DcCodeDkhpEntity dkhpEntity = new DcCodeDkhpEntity();
+        if (dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp()) == null){
+            dkhpEntity.setName(occupationFromXls.getCodeDkhp());
+            dkhpEntity = dcCodeDkhpService.add(dkhpEntity);
+        }
+        else
+            dkhpEntity = dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp());
+
+        DcCodeEtkdEntity etkdEntity = new DcCodeEtkdEntity();
+        if (dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd()) == null){
+            etkdEntity.setName(occupationFromXls.getCodeEtkd());
+            etkdEntity = dcCodeEtkdService.add(etkdEntity);
+        }
+        else
+            etkdEntity = dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd());
+
+        DcCodeKpEntity kpEntity = new DcCodeKpEntity();
+        if (dcCodeKpService.findByName(occupationFromXls.getCodeKP()) == null){
+            kpEntity.setName(occupationFromXls.getCodeKP());
+            kpEntity = dcCodeKpService.add(kpEntity);
+        }
+        else
+            kpEntity = dcCodeKpService.findByName(occupationFromXls.getCodeKP());
+
+        DcCodeZkpptrEntity zkpptrEntity = new DcCodeZkpptrEntity();
+        if (dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr()) == null){
+            zkpptrEntity.setName(occupationFromXls.getCodeZkpptr());
+            zkpptrEntity = dcCodeZkpptrService.add(zkpptrEntity);
+        }
+        else
+            zkpptrEntity = dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr());
+
+
+        RtCodeEntity entity = new RtCodeEntity();
+        entity.setCodeDKHPId(dkhpEntity.getId());
+        entity.setCodeETKDId(etkdEntity.getId());
+        entity.setCodeKPId(kpEntity.getId());
+        entity.setCodeZKPPTRId(zkpptrEntity.getId());
+        entity.setDateStart(occupationFromXls.getDate());
+        //entity.setDateStop(occupationFromXls.getPortionEndDate());
+
+        list.add(entity);
+
+        return list;
     }
 }

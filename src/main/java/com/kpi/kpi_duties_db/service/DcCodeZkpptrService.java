@@ -9,4 +9,6 @@ import com.kpi.kpi_duties_db.domain.DcCodeZkpptrEntity;
  */
 
 public interface DcCodeZkpptrService extends BaseService<DcCodeZkpptrEntity> {
+
+    DcCodeZkpptrEntity findByName(String name);
 }

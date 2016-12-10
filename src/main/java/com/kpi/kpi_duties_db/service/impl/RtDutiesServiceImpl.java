@@ -21,13 +21,13 @@ import java.util.List;
 public class RtDutiesServiceImpl extends BaseServiceImpl<RtDutiesEntity> implements RtDutiesService {
 
     @Autowired
-    RtDutiesDao dao;
+    private RtDutiesDao dao;
 
     @Autowired
-    OccupationConverter converter;
+    private OccupationConverter converter;
 
     @Autowired
-    RtDutiesRepository repository;
+    private RtDutiesRepository repository;
 
 
     @Override
