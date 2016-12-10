@@ -1,6 +1,7 @@
 package com.kpi.kpi_duties_db.service.parser.impl;
 
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.service.DutiesValidityDateService;
 import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.service.parser.ParserXls;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
@@ -34,6 +35,9 @@ public class ParserXlsImpl implements ParserXls {
 
     @Autowired
     RtDutiesService rtDutiesService;
+
+    @Autowired
+    DutiesValidityDateService dutiesValidityDateService;
 
     private final static Logger logger = LoggerFactory.getLogger(ParserXlsImpl.class);
 
@@ -189,9 +193,7 @@ public class ParserXlsImpl implements ParserXls {
             }
 
 
-
-
-           //dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+           dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationXls(occupationFromXls, parentId));
 
             /*List<RtCodeEntity> rtCodes = rtCodeService.add(converter.toRtCodeEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
 

@@ -1,6 +1,7 @@
 package com.kpi.kpi_duties_db.service.parser.support.converter.impl;
 
 import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
+import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesNameService;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
@@ -54,7 +55,10 @@ public class OccupationXlsConverterImpl implements OccupationXlsConverter {
         entityName = getClarificationName(occupationFromXls, clarification + 1);
         if (entityName == null || entityName.equals("") || clarification + 1 == 5) {
             entity.setName(occupationFromXls.getName());
-            entity.setNameShort(occupationFromXls.getShortName());
+            if (occupationFromXls.getShortName() == null || occupationFromXls.getShortName().equals(""))
+                entity.setNameShort(occupationFromXls.getName());
+            else
+                entity.setNameShort(occupationFromXls.getShortName());
         } else {
             String name = createNameByClarifications(occupationFromXls, clarification);
             entity.setName(name);
@@ -147,5 +151,19 @@ public class OccupationXlsConverterImpl implements OccupationXlsConverter {
         }
 
         return name;
+    }
+
+    @Override
+    public DutiesValidityDateEntity toDutiesValidityDateEntityListFromOccupationXls(OccupationFromXls occupationFromXls, Integer rtDutiesId) {
+
+        DutiesValidityDateEntity entity = new DutiesValidityDateEntity();
+
+        entity.setStart(occupationFromXls.getDate());
+        //entity.setStop(date.getStop());
+        entity.setInKpi(occupationFromXls.getKpi());
+        entity.setRtDutiesId(rtDutiesId);
+
+
+        return entity;
     }
 }

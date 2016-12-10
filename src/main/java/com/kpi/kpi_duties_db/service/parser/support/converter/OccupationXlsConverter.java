@@ -1,5 +1,6 @@
 package com.kpi.kpi_duties_db.service.parser.support.converter;
 
+import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 
@@ -12,4 +13,6 @@ import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 public interface OccupationXlsConverter {
 
     RtDutiesEntity toRtDutiesEntityFromOccupationXls(OccupationFromXls occupationFromXls, Integer clarification, Integer parentId);
+
+    DutiesValidityDateEntity toDutiesValidityDateEntityListFromOccupationXls(OccupationFromXls occupationFromXls, Integer rtDutiesId);
 }
