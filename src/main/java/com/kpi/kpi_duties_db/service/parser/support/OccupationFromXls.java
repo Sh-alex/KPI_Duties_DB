@@ -17,7 +17,7 @@ public class OccupationFromXls {
     private String clarification3;
     private String clarification4;
 
-    //private String cat;
+    private String clarificationCat;
 
     private String name;
 
@@ -72,6 +72,14 @@ public class OccupationFromXls {
 
     public void setClarification4(String clarification4) {
         this.clarification4 = clarification4;
+    }
+
+    public String getClarificationCat() {
+        return clarificationCat;
+    }
+
+    public void setClarificationCat(String clarificationCat) {
+        this.clarificationCat = clarificationCat;
     }
 
     public String getName() {
@@ -142,7 +150,7 @@ public class OccupationFromXls {
         return isKpi;
     }
 
-    public void setIsKpi(Boolean isKpi) {
-        this.isKpi = isKpi;
+    public void setKpi(Boolean kpi) {
+        isKpi = kpi;
     }
 }

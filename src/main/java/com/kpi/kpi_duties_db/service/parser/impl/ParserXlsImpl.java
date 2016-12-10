@@ -1,13 +1,18 @@
 package com.kpi.kpi_duties_db.service.parser.impl;
 
+import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.service.parser.ParserXls;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
+import com.kpi.kpi_duties_db.service.parser.support.converter.OccupationXlsConverter;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,6 +28,12 @@ import java.util.List;
 
 @Component
 public class ParserXlsImpl implements ParserXls {
+
+    @Autowired
+    OccupationXlsConverter converter;
+
+    @Autowired
+    RtDutiesService rtDutiesService;
 
     private final static Logger logger = LoggerFactory.getLogger(ParserXlsImpl.class);
 
@@ -41,9 +52,7 @@ public class ParserXlsImpl implements ParserXls {
 
         HSSFSheet sheet = excelFile.getSheetAt(1);
 
-
-        Integer rowNumber = 2;
-
+        Integer rowNumber = 2; //номер рядка в Excel
 
         for (int i = 1; i <= 12671; i++) {
             try {
@@ -70,6 +79,10 @@ public class ParserXlsImpl implements ParserXls {
                 if (row.getCell(6) != null) {
                     row.getCell(6).setCellType(1);
                     occupation.setClarification4(row.getCell(6).getStringCellValue());
+                }
+                if (row.getCell(1) != null) {
+                    row.getCell(1).setCellType(1);
+                    occupation.setClarificationCat(row.getCell(1).getStringCellValue());
                 }
 
                 if (row.getCell(7) != null) {
@@ -127,9 +140,9 @@ public class ParserXlsImpl implements ParserXls {
                 if (row.getCell(27) != null) {
                     row.getCell(27).setCellType(1);
                     if (row.getCell(27).getStringCellValue().equals("0"))
-                        occupation.setIsKpi(true);
+                        occupation.setKpi(true);
                     else
-                        occupation.setIsKpi(false);
+                        occupation.setKpi(false);
                 }
 
 
@@ -147,5 +160,44 @@ public class ParserXlsImpl implements ParserXls {
             e.printStackTrace();
         }
         return resultList;
+    }
+
+    @Override
+    @Transactional
+    public void saveOccupationsToDB(List<OccupationFromXls> occupationsFromXls) {
+
+        Integer number = 0;
+        for (OccupationFromXls occupationFromXls : occupationsFromXls) {
+
+            RtDutiesEntity entity = null;
+            Integer parentId = null;
+            for (int i = 0; i < 5; i++) {
+
+                entity = converter.toRtDutiesEntityFromOccupationXls(occupationFromXls, i, parentId);
+
+                if (entity == null)
+                    break;
+
+                RtDutiesEntity rtDutiesEntity = null;
+                if (rtDutiesService.findByName(entity.getName()) != null) {
+                    entity.setId(rtDutiesService.findByName(entity.getName()).getId());
+                    rtDutiesEntity = rtDutiesService.update(entity);
+                } else
+                    rtDutiesEntity = rtDutiesService.add(entity);
+
+                parentId = rtDutiesEntity.getId();
+            }
+
+
+
+
+           //dutiesValidityDateService.add(converter.toDutiesValidityDateEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+
+            /*List<RtCodeEntity> rtCodes = rtCodeService.add(converter.toRtCodeEntityListFromOccupationRequest(request, rtDutiesEntity.getId()));
+
+            rtDutiesCodeService.add(rtDutiesEntity.getId(), rtCodes);*/
+
+            number++;
+        }
     }
 }

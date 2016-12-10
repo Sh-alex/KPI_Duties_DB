@@ -23,4 +23,12 @@ public class ParserXlsImplTest {
         parserXls.parseXlsToOccupations();
     }
 
+    @Test
+    public void saveOccupationsToDB() throws Exception {
+
+        parserXls.saveOccupationsToDB(parserXls.parseXlsToOccupations());
+    }
+
+
+
 }

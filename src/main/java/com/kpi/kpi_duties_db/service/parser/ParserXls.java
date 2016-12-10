@@ -13,4 +13,6 @@ import java.util.List;
 public interface ParserXls {
 
     List<OccupationFromXls> parseXlsToOccupations();
+
+    void saveOccupationsToDB(List<OccupationFromXls> occupationsFromXls);
 }
