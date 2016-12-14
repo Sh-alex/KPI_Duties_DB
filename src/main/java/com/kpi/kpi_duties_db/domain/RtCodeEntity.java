@@ -39,19 +39,19 @@ public class RtCodeEntity {
     @Column(name = "CodeZKPPTRId")
     private Integer codeZKPPTRId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeDKHPId", insertable = false, updatable = false)
     DcCodeDkhpEntity codeDkhpEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeETKDId", insertable = false, updatable = false)
     DcCodeEtkdEntity codeEtkdEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeKPId", insertable = false, updatable = false)
     DcCodeKpEntity codeKpEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CodeZKPPTRId", insertable = false, updatable = false)
     DcCodeZkpptrEntity codeZkpptrEntity;
 

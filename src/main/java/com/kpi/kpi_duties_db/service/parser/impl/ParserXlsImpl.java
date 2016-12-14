@@ -74,64 +74,64 @@ public class ParserXlsImpl implements ParserXls {
                 OccupationFromXls occupation = new OccupationFromXls();
                 Row row = sheet.getRow(i);
 
-                if (row.getCell(2) != null) {
+                if (row.getCell(2) != null && !row.getCell(2).equals("") && !row.getCell(2).equals(" ")) {
                     row.getCell(2).setCellType(1);
                     occupation.setDuties(row.getCell(2).getStringCellValue().replace(String.valueOf((char) 160), " ").trim()); //replace(String.valueOf((char) 160), " ") - ставлю коректний whitespace і урізаю його
                 }
 
-                if (row.getCell(3) != null) {
+                if (row.getCell(3) != null && !row.getCell(3).equals("") && !row.getCell(3).equals(" ")) {
                     row.getCell(3).setCellType(1);
                     occupation.setClarification1(row.getCell(3).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(4) != null) {
+                if (row.getCell(4) != null && !row.getCell(4).equals("") && !row.getCell(4).equals(" ")) {
                     row.getCell(4).setCellType(1);
                     occupation.setClarification2(row.getCell(4).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(5) != null) {
+                if (row.getCell(5) != null && !row.getCell(5).equals("") && !row.getCell(5).equals(" ")) {
                     row.getCell(5).setCellType(1);
                     occupation.setClarification3(row.getCell(5).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(6) != null) {
+                if (row.getCell(6) != null && !row.getCell(6).equals("") && !row.getCell(6).equals(" ")) {
                     row.getCell(6).setCellType(1);
                     occupation.setClarification4(row.getCell(6).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(1) != null) {
+                if (row.getCell(1) != null && !row.getCell(1).equals("") && !row.getCell(1).equals(" ")) {
                     row.getCell(1).setCellType(1);
                     occupation.setClarificationCat(row.getCell(1).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
-                if (row.getCell(7) != null) {
+                if (row.getCell(7) != null && !row.getCell(7).equals("") && !row.getCell(7).equals(" ")) {
                     row.getCell(7).setCellType(1);
                     occupation.setName(row.getCell(7).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(26) != null) {
+                if (row.getCell(26) != null && !row.getCell(26).equals("") && !row.getCell(26).equals(" ")) {
                     row.getCell(26).setCellType(1);
                     occupation.setShortName(row.getCell(26).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
-                if (row.getCell(8) != null) {
+                if (row.getCell(8) != null && !row.getCell(8).equals("") && !row.getCell(8).equals(" ")) {
                     row.getCell(8).setCellType(1);
                     occupation.setPartition(row.getCell(8).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
-                if (row.getCell(9) != null) {
+                if (row.getCell(9) != null && !row.getCell(9).equals("") && !row.getCell(9).equals(" ")) {
                     row.getCell(9).setCellType(1);
                     occupation.setCodeKP(row.getCell(9).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(10) != null) {
+                if (row.getCell(10) != null && !row.getCell(10).equals("") && !row.getCell(10).equals(" ")) {
                     row.getCell(10).setCellType(1);
                     occupation.setCodeZkpptr(row.getCell(10).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(11) != null) {
+                if (row.getCell(11) != null && !row.getCell(11).equals("") && !row.getCell(11).equals(" ")) {
                     row.getCell(11).setCellType(1);
                     occupation.setCodeEtkd(row.getCell(11).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
-                if (row.getCell(12) != null) {
+                if (row.getCell(12) != null && !row.getCell(12).equals("") && !row.getCell(12).equals(" ")) {
                     row.getCell(12).setCellType(1);
                     occupation.setCodeDkhp(row.getCell(12).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
-                if (row.getCell(25) != null) {
+                if (row.getCell(25) != null && !row.getCell(25).equals("") && !row.getCell(25).equals(" ")) {
                     Date date = null;
                     row.getCell(25).setCellType(0);
                     switch ((int) row.getCell(25).getNumericCellValue()) {
