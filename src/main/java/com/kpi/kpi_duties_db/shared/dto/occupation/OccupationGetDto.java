@@ -37,6 +37,10 @@ public class OccupationGetDto {
 
     private String inKpi;
 
+    private Integer limit;
+
+    private Integer offset;
+
     public List<Integer> getIdList() {
         return idList;
     }
@@ -115,5 +119,21 @@ public class OccupationGetDto {
 
     public void setInKpi(String inKpi) {
         this.inKpi = inKpi;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 }

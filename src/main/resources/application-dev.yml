@@ -6,7 +6,7 @@ datasource:
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   dialect: org.hibernate.dialect.SQLServerDialect
   ddl-auto : none
-  show-sql : true
+  show-sql : false
   format-sql : true
   entitymanager.packages.to.scan: com.kpi.kpi_duties_db.domain
 

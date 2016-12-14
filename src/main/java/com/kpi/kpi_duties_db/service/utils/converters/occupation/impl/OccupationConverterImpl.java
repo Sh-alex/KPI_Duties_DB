@@ -17,7 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -357,6 +357,12 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getInKpi() != null && !request.getInKpi().isEmpty()) {
             occupationGetDto.setInKpi(request.getInKpi().get(0));
         }
+        if (request.getOffset() != null && !request.getOffset().isEmpty()) {
+            occupationGetDto.setOffset(request.getOffset().get(0));
+        }
+        if (request.getLimit() != null && !request.getLimit().isEmpty()) {
+            occupationGetDto.setLimit(request.getLimit().get(0));
+        }
 
         if (request.getDcDutiesPartitionIdList() != null && !request.getDcDutiesPartitionIdList().isEmpty()) {
             String[] split = request.getDcDutiesPartitionIdList().get(0).split(",");
@@ -409,6 +415,8 @@ public class OccupationConverterImpl implements OccupationConverter {
         params.put("stopFrom", dto.getStopFrom());
         params.put("stopTo", dto.getStopTo());
         params.put("inKpi", dto.getInKpi());
+        params.put("offset", dto.getOffset());
+        params.put("limit", dto.getLimit());
 
         return params;
     }
