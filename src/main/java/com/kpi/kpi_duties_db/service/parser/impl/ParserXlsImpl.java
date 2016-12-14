@@ -57,7 +57,7 @@ public class ParserXlsImpl implements ParserXls {
 
         HSSFWorkbook excelFile = null;
         try {
-            FileInputStream s = new FileInputStream("D:\\Google Диск\\KPI\\посади\\для ЛП.xls");
+            FileInputStream s = new FileInputStream("D:\\Google Диск\\KPI\\посади\\для ЛП.xls"); //Шлях до файлу
             excelFile = new HSSFWorkbook(s);
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,8 +67,8 @@ public class ParserXlsImpl implements ParserXls {
 
         HSSFSheet sheet = excelFile.getSheetAt(1);
 
-        Integer rowNumber = 2; //номер рядка в Excel
-
+        Integer rowNumber = 2; //номер рядка в Excel(для debug)
+        //Зчитування комірок
         for (int i = 1; i <= 12671; i++) {
             try {
                 OccupationFromXls occupation = new OccupationFromXls();
@@ -76,59 +76,59 @@ public class ParserXlsImpl implements ParserXls {
 
                 if (row.getCell(2) != null) {
                     row.getCell(2).setCellType(1);
-                    occupation.setDuties(row.getCell(2).getStringCellValue());
+                    occupation.setDuties(row.getCell(2).getStringCellValue().replace(String.valueOf((char) 160), " ").trim()); //replace(String.valueOf((char) 160), " ") - ставлю коректний whitespace і урізаю його
                 }
 
                 if (row.getCell(3) != null) {
                     row.getCell(3).setCellType(1);
-                    occupation.setClarification1(row.getCell(3).getStringCellValue());
+                    occupation.setClarification1(row.getCell(3).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(4) != null) {
                     row.getCell(4).setCellType(1);
-                    occupation.setClarification2(row.getCell(4).getStringCellValue());
+                    occupation.setClarification2(row.getCell(4).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(5) != null) {
                     row.getCell(5).setCellType(1);
-                    occupation.setClarification3(row.getCell(5).getStringCellValue());
+                    occupation.setClarification3(row.getCell(5).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(6) != null) {
                     row.getCell(6).setCellType(1);
-                    occupation.setClarification4(row.getCell(6).getStringCellValue());
+                    occupation.setClarification4(row.getCell(6).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(1) != null) {
                     row.getCell(1).setCellType(1);
-                    occupation.setClarificationCat(row.getCell(1).getStringCellValue());
+                    occupation.setClarificationCat(row.getCell(1).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
                 if (row.getCell(7) != null) {
                     row.getCell(7).setCellType(1);
-                    occupation.setName(row.getCell(7).getStringCellValue());
+                    occupation.setName(row.getCell(7).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(26) != null) {
                     row.getCell(26).setCellType(1);
-                    occupation.setShortName(row.getCell(26).getStringCellValue());
+                    occupation.setShortName(row.getCell(26).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
                 if (row.getCell(8) != null) {
                     row.getCell(8).setCellType(1);
-                    occupation.setPartition(row.getCell(8).getStringCellValue());
+                    occupation.setPartition(row.getCell(8).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
                 if (row.getCell(9) != null) {
                     row.getCell(9).setCellType(1);
-                    occupation.setCodeKP(row.getCell(9).getStringCellValue());
+                    occupation.setCodeKP(row.getCell(9).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(10) != null) {
                     row.getCell(10).setCellType(1);
-                    occupation.setCodeZkpptr(row.getCell(10).getStringCellValue());
+                    occupation.setCodeZkpptr(row.getCell(10).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(11) != null) {
                     row.getCell(11).setCellType(1);
-                    occupation.setCodeEtkd(row.getCell(11).getStringCellValue());
+                    occupation.setCodeEtkd(row.getCell(11).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
                 if (row.getCell(12) != null) {
                     row.getCell(12).setCellType(1);
-                    occupation.setCodeDkhp(row.getCell(12).getStringCellValue());
+                    occupation.setCodeDkhp(row.getCell(12).getStringCellValue().replace(String.valueOf((char) 160), " ").trim());
                 }
 
                 if (row.getCell(25) != null) {
@@ -154,7 +154,7 @@ public class ParserXlsImpl implements ParserXls {
 
                 if (row.getCell(27) != null) {
                     row.getCell(27).setCellType(1);
-                    if (row.getCell(27).getStringCellValue().equals("0"))
+                    if (row.getCell(27).getStringCellValue().replace(String.valueOf((char) 160), " ").trim().equals("0"))
                         occupation.setKpi(true);
                     else
                         occupation.setKpi(false);
@@ -182,7 +182,7 @@ public class ParserXlsImpl implements ParserXls {
     public void saveOccupationsToDB(List<OccupationFromXls> occupationsFromXls) {
 
         Integer number = 0;
-        for (OccupationFromXls occupationFromXls : occupationsFromXls) {
+        for (OccupationFromXls occupationFromXls : occupationsFromXls.subList(12000, occupationsFromXls.size())) { // підмножина задається occupationsFromXls.subList
 
             RtDutiesEntity entity = null;
             Integer parentId = null;
@@ -213,7 +213,7 @@ public class ParserXlsImpl implements ParserXls {
                 createCategoryForOccupation(parentId, occupationFromXls, occupationFromXls.getClarificationCat());
             }
 
-            System.out.println("Saving to DB: " + number++);
+            System.out.println("Saved to DB: " + number++);
         }
     }
 
@@ -221,7 +221,11 @@ public class ParserXlsImpl implements ParserXls {
 
         List<String> catList = Arrays.asList("Провідний", "Головний", "1 категорії", "2 категорії", "3 категорії", "без категорії");
         List<String> rozList = Arrays.asList("1 розряду", "2 розряду", "3 розряду", "4 розряду", "5 розряду");
-        List<String> stList = Arrays.asList("старший");
+        List<String> clasList = Arrays.asList("1 класу", "2 класу", "3 класу");
+        List<String> rangList = Arrays.asList("1 рангу", "2 рангу", "3 рангу", "4 рангу", "5 рангу",
+                                              "6 рангу", "7 рангу", "8 рангу", "9 рангу", "10 рангу",
+                                             "11 рангу", "12 рангу", "13 рангу", "14 рангу", "15 рангу");
+        List<String> stList = Arrays.asList("Старший");
 
         List<String> clarificationList = null;
 
@@ -240,10 +244,12 @@ public class ParserXlsImpl implements ParserXls {
                 break;
             default:
                 return;
-            /*case "клас":
+            case "клас":
+                clarificationList = clasList;
                 break;
             case "ранг":
-                break;*/
+                clarificationList = rangList;
+                break;
         }
 
         for (int i = 0; i < clarificationList.size(); i++) {
@@ -263,10 +269,15 @@ public class ParserXlsImpl implements ParserXls {
             rtDutiesEntity.setParentId(id);
             rtDutiesEntity.setDcDutiesNameId(entityClarification.getId());
 
-            if (clarificationCat.equals("кат") && i <= 1) {
+            if (clarificationCat.equals("кат") && i <= 1 || clarificationCat.equals("ст")) { //Поставити в початок
                 rtDutiesEntity.setName(clarificationList.get(i) + " " + parentEntity.getName());
-            } else
+                rtDutiesEntity.setNameShort(clarificationList.get(i).substring(0, 5) + "." + " " + rtDutiesEntity.getNameShort());
+
+            } else {
                 rtDutiesEntity.setName(parentEntity.getName() + " " + clarificationList.get(i));
+                rtDutiesEntity.setNameShort(rtDutiesEntity.getNameShort() + " " + clarificationList.get(i).substring(0, 5) + ".");
+            }
+
 
             if (rtDutiesService.findByName(rtDutiesEntity.getName()) == null)
                 rtDutiesEntity = rtDutiesService.add(rtDutiesEntity);

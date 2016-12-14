@@ -66,7 +66,7 @@ public class OccupationXlsConverterImpl implements OccupationXlsConverter {
         //Якщо це посада останнього рівня в ієрархії
         entityName = getClarificationName(occupationFromXls, clarification + 1);
         if (entityName == null || entityName.equals("") || clarification + 1 == 5) {
-            entity.setName(occupationFromXls.getName());
+            entity.setName(occupationFromXls.getName().trim());
             if (occupationFromXls.getShortName() == null || occupationFromXls.getShortName().equals(""))
                 entity.setNameShort(occupationFromXls.getName());
             else

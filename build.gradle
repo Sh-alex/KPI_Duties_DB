@@ -52,8 +52,8 @@ dependencies {
     compile("joda-time:joda-time:$jodaTimeVersion")
     compile("org.apache.tomcat:tomcat-dbcp:9.0.0.M9")
     compile group: 'org.jadira.usertype', name: 'usertype.jodatime', version: '2.0.1'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.1.0.Final'
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.11.Final'
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.11.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
 
     compile group: 'org.apache.poi', name: 'poi', version: '3.15'
