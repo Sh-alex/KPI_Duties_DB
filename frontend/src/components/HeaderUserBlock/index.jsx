@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./styles.less";
 import { Popover, OverlayTrigger } from 'react-bootstrap'
+import { Link } from 'react-router'
 
 function HeaderUserMenu(props) {
     let accessNameText = props.userState && props.userState.permissions && props.userState.permissions.accessName || "Невідомо";
@@ -12,6 +13,13 @@ function HeaderUserMenu(props) {
                     <i> {accessNameText} </i>
                 </li>
                 <li role="separator" className="divider" />
+                <li className="">
+                    <Link to="/help" className="btn-block btn-flat header-user-menu-item" title="Керівництво користувачу">
+                        Допомога {" "}
+                        <i className="fa fa-question-circle" />
+                    </Link>
+                </li>
+            <li role="separator" className="divider" />
                 <li className="">
                     <a
                         href="javascript:void(0)"

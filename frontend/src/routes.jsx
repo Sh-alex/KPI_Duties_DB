@@ -5,6 +5,7 @@ import App from "./containers/App";
 import LoginBox from "./components/LoginBox";
 import SearchOccupBox from "./components/SearchOccupBox"
 import AddOccupBox from "./components/AddOccupBox";
+import HelpBox from "./components/HelpBox";
 import MainLayout from "./components/MainLayout";
 import CtrlDcBox from "./components/CtrlDcBox"
 
@@ -16,6 +17,7 @@ export const routes = (
                 <Route path="add" component={AddOccupBox} />
                 <Route path="search*" component={SearchOccupBox} />
                 <Route path="ctrldict" component={CtrlDcBox}/>
+                <Route path="help" component={HelpBox}/>
             </Route>
             <Route path='*' component={NotFound} />
         </Route>

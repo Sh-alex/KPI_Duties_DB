@@ -64,6 +64,10 @@ export default function LoginBoxNav(props) {
                         </NavLink>
                     ) || ""
                 }
+                <NavLink to="/help" className="list-group-item">
+                    <i className="fa fa-question-circle" /> {" "}
+                    Допомога
+                </NavLink>
                 <a
                     onClick={props.logOutUser}
                     href="javascript:void(0)"
