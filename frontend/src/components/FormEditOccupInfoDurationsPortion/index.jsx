@@ -104,7 +104,7 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                                         В КПІ
                                     </label>
 
-                                    <div className="inp-toggler__wrapper">
+                                    <div className="inp-toggler__wrapper" title="Клікніть щоб переключити">
                                         <input {...props.fields.inKpi} type="checkbox" id="toggle2" className="inp-toggler__checkbox" />
 
                                         <div className="inp-toggler__icon-wrapper">
