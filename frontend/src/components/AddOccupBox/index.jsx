@@ -61,6 +61,13 @@ let initialFormState = {
             "stop": null,
             "inKpi": false,
             "virtual": false
+        },
+        {
+            "id": null,
+            "start": null,
+            "stop": null,
+            "inKpi": true,
+            "virtual": false
         }
     ],
     codes: [
