@@ -57,6 +57,7 @@ export default class FormEditOccupInfo extends Component {
         this.handleOccupationGroupInpChange = this.handleOccupationGroupInpChange.bind(this);
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
         this.handleClarificationInpChange = this.handleClarificationInpChange.bind(this);
+        this.handleInKpiInpChange = this.handleInKpiInpChange.bind(this);
 
         this.handleQualiffRequirTextChange = this.handleQualiffRequirTextChange.bind(this);
         this.handleHaveToKnowTextChange = this.handleHaveToKnowTextChange.bind(this);
@@ -164,6 +165,21 @@ export default class FormEditOccupInfo extends Component {
     handleClarificationInpChange(newVal) {
         this.props.fields.name.clarification && this.props.fields.name.clarification.onChange(newVal.id);
         this.props.handleClarificationInpChange(newVal);
+    }
+
+    handleInKpiInpChange(isInKPI, portionIndex) {
+        if(!this.props.fields.durations || !this.props.fields.durations[portionIndex])
+            return console.error("Called handleInKpiInpChange, but !this.props.fields.durations || !this.props.fields.durations[portionIndex]");
+
+        this.props.fields.durations[portionIndex].inKpi && this.props.fields.durations[portionIndex].inKpi.onChange(isInKPI);
+
+        //якщо ця порція дат для держави, а не для КПІ,
+        // обнуляємо на всяк випадок значення поля "посада є віртуальною",
+        // бо в державі не може бути віртуальних посад
+        let shouldResetInpIsVirtual = !isInKPI &&
+            this.props.fields.durations[portionIndex].virtual;
+        if(shouldResetInpIsVirtual)
+            this.props.fields.durations[portionIndex].virtual.onChange(false);
     }
 
     handleResponsibTextChange(newVal, resPortionIndex) {
@@ -411,6 +427,7 @@ export default class FormEditOccupInfo extends Component {
                             openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
                         <FormEditOccupInfoDurationsSection
                             durationsFields={durations}
+                            handleInKpiInpChange={this.handleInKpiInpChange}
                             handleAddPortionBtnClick={this.handleAddDurationsPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelDurationsPortionBtnClick}
                         />

@@ -100,12 +100,17 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                         <div className="form-group">
                             <div className="col-xs-12 col-xs-12 col-md-offset-4 col-xs-12 col-md-8">
                                 <div className="inp-toggler-block">
-                                    <label htmlFor="toggle2" className="inp-toggler__label" >
+                                    <label htmlFor={"inp-toggler__checkbox--"+props.portionKey} className="inp-toggler__label" >
                                         В КПІ
                                     </label>
-
                                     <div className="inp-toggler__wrapper" title="Клікніть щоб переключити">
-                                        <input {...props.fields.inKpi} type="checkbox" id="toggle2" className="inp-toggler__checkbox" />
+                                        <input
+                                            {...props.fields.inKpi}
+                                            type="checkbox"
+                                            id={"inp-toggler__checkbox--"+props.portionKey}
+                                            onChange={props.handleInKpiInpChange}
+                                            className="inp-toggler__checkbox"
+                                        />
 
                                         <div className="inp-toggler__icon-wrapper">
                                             <i className="fa fa-toggle-on inp-toggler__icon--off" />
@@ -113,25 +118,32 @@ export default function FormEditOccupInfoDurationsPortion(props) {
                                         </div>
                                     </div>
 
-                                    <label htmlFor="toggle2" className="inp-toggler__label" >
+                                    <label htmlFor={"inp-toggler__checkbox--"+props.portionKey} className="inp-toggler__label" >
                                         В Державі
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-xs-12 col-md-6">
-                        <div className="form-group">
-                            <div className="col-xs-12 col-md-offset-4 col-md-8">
-                                <div className="checkbox">
-                                    <label>
-                                        <input {...props.fields.virtual} type="checkbox" />
-                                        Є "віртуальною посадою"
-                                    </label>
+                    {
+                        props.showInpIsVirtual && (
+                            <div className="col-xs-12 col-md-6">
+                                <div className="form-group">
+                                    <div className="col-xs-12 col-md-offset-4 col-md-8">
+                                        <div className="checkbox">
+                                            <label>
+                                                <input
+                                                    {...props.fields.virtual}
+                                                    type="checkbox"
+                                                />
+                                                Є "віртуальною посадою"
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    }
                 </div>
             </div>
         </div>
