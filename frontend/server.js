@@ -22,18 +22,7 @@ const STATICS_SERVER_PORT = 80,
     SERVER_ADDRESS = "http://localhost",
     SEARCH_OCCUPATION_URI = '/api/occupations';
 
-let logFileStream = fs.createWriteStream(__dirname + '/node_server_log.log', {flags: 'a'});
-
-app.use( morgan('dev', {stream: logFileStream}) );
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+var logFileStream = fs.createWriteStream(__dirname + '/node_server_log.log', {flags: 'a'});
 
 
 function handleAPIResp (apiServerResp, frontEndReq, frontEndRes) {
@@ -62,7 +51,7 @@ function handleAPIResp (apiServerResp, frontEndReq, frontEndRes) {
 }
 
 function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
-    let fieldsHashTable = {
+    var fieldsHashTable = {
         "occupationName": {
             "fieldCaption": "Назва посади",
             generateCellData(dataSource) {
@@ -95,7 +84,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.qualiffRequir || !dataSource.qualiffRequir.length)
                     return "-";
-                let d = Math.max.apply(this,dataSource.qualiffRequir.map(el => new Date(el.portionStartDate)));
+                var d = Math.max.apply(this,dataSource.qualiffRequir.map(el => new Date(el.portionStartDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -104,7 +93,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.qualiffRequir || !dataSource.qualiffRequir.length)
                     return "-";
-                let d = Math.max.apply(this,dataSource.qualiffRequir.map(el => new Date(el.portionEndDate)));
+                var d = Math.max.apply(this,dataSource.qualiffRequir.map(el => new Date(el.portionEndDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -112,9 +101,9 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             "fieldCaption": "Завдання, обов'язки та повноваження: текст",
             generateCellData(dataSource) {
                 return dataSource.responsibilities && dataSource.responsibilities.length &&
-                   dataSource.responsibilities.reduce((res, currEl) => {
-                    return (new Date(currEl.portionStartDate) > new Date(res.portionStartDate)) ? currEl : res;
-                }).text || "-";
+                    dataSource.responsibilities.reduce((res, currEl) => {
+                        return (new Date(currEl.portionStartDate) > new Date(res.portionStartDate)) ? currEl : res;
+                    }).text || "-";
             }
         },
         "responsibilitiesStartDate": {
@@ -122,7 +111,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.responsibilities || !dataSource.responsibilities.length)
                     return "-";
-                let d = Math.max.apply(this, dataSource.responsibilities.map(el => new Date(el.portionStartDate)));
+                var d = Math.max.apply(this, dataSource.responsibilities.map(el => new Date(el.portionStartDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -131,7 +120,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.responsibilities || !dataSource.responsibilities.length)
                     return "-";
-                let d = Math.max.apply(this,dataSource.responsibilities.map(el => new Date(el.portionEndDate)));
+                var d = Math.max.apply(this,dataSource.responsibilities.map(el => new Date(el.portionEndDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -140,8 +129,8 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 return dataSource.haveToKnow && dataSource.haveToKnow.length &&
                     dataSource.haveToKnow.reduce((res, currEl) => {
-                    return (new Date(currEl.portionStartDate) > new Date(res.portionStartDate)) ? currEl : res;
-                }).text || "-";
+                        return (new Date(currEl.portionStartDate) > new Date(res.portionStartDate)) ? currEl : res;
+                    }).text || "-";
             }
         },
         "haveToKnowStartDate": {
@@ -149,7 +138,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.haveToKnow || !dataSource.haveToKnow.length)
                     return "-";
-                let d = Math.max.apply(this,dataSource.haveToKnow.map(el => new Date(el.portionStartDate)));
+                var d = Math.max.apply(this,dataSource.haveToKnow.map(el => new Date(el.portionStartDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -158,7 +147,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.haveToKnow || !dataSource.haveToKnow.length)
                     return "-";
-                let d = Math.max.apply(this,dataSource.haveToKnow.map(el => new Date(el.portionEndDate)));
+                var d = Math.max.apply(this,dataSource.haveToKnow.map(el => new Date(el.portionEndDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -195,7 +184,7 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.codes || !dataSource.codes.length)
                     return "-";
-                let d = Math.max.apply(this, dataSource.codes.map(el => new Date(el.portionStartDate)));
+                var d = Math.max.apply(this, dataSource.codes.map(el => new Date(el.portionStartDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -204,21 +193,21 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
             generateCellData(dataSource) {
                 if(!dataSource.codes || !dataSource.codes.length)
                     return "-";
-                let d = Math.max.apply(this, dataSource.codes.map(el => new Date(el.portionEndDate)));
+                var d = Math.max.apply(this, dataSource.codes.map(el => new Date(el.portionEndDate)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
         "durationsStartDate": {
             "fieldCaption": "Дати створення посади",
             generateCellData(dataSource) {
-                let d = Math.max.apply(this, dataSource.durations.map(el => new Date(el.start)));
+                var d = Math.max.apply(this, dataSource.durations.map(el => new Date(el.start)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
         "durationsStopDate": {
             "fieldCaption": "Дати відміни посади",
             generateCellData(dataSource) {
-                let d = Math.max.apply(this, dataSource.durations.map(el => new Date(el.stop)));
+                var d = Math.max.apply(this, dataSource.durations.map(el => new Date(el.stop)));
                 return d && moment(d).format('DD.MM.YYYY') || "-";
             }
         },
@@ -261,14 +250,46 @@ function generanteExcelFile(foundOccupations, occupIds, fieldsArr) {
     });
 }
 
+function proxyJavaServer(req, res) {
+    return fetch(SERVER_ADDRESS + ":" + API_PORT + req.originalUrl, {
+        'web-security': false,
+        mode: 'cors',
+        method: req.method,
+        body: JSON.stringify(req.body),
+        headers: req.headers,
+    }).then(
+        function(apiServerResp) {
+            handleAPIResp(apiServerResp, req, res)
+        },
+        function(apiServerResp) {
+            handleAPIResp(apiServerResp, req, res)
+        }
+    ).catch(function(e) {
+        res.send(e)
+    });
+}
+
+
+
+app.use( morgan('dev', {stream: logFileStream}) );
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //API для генерації EXCEL-файла із результатами пошуку
 app.get('/api/occupations/downloadSearchResults', function(req, res) {
+    if(!req.headers.authorization)
+        req.headers.authorization = req.query.a;    //якщо не передали як хедер, мб передали як параметр юрл
     fetch(`${SERVER_ADDRESS}:${API_PORT}${SEARCH_OCCUPATION_URI}?occupIds=${req.query.occupIds}`, {
         mode: 'cors',
         method: "get",
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: req.headers,
     })
         .then((response) => {
             console.log("DOWNLOAD SEARCH RESULTS: :\n  " + req.method + " " + response.url + " - " + response.status);
@@ -281,6 +302,8 @@ app.get('/api/occupations/downloadSearchResults', function(req, res) {
                 else
                     throw {_error: 'Отримано некоректну відповідь із результатами пошуку від сервера API: очікувався JSON'}
             }
+            else if (response.status === 401)
+                throw( {_error: `Відмовлено у доступі неавторизованому користувачу!`} );
             else if (response.status === 404)
                 throw( {_error: 'Не знайдено відповідного методу при отриманні інформації від сервера API!'} );
             else if (499 < response.status && response.status < 600)
@@ -293,7 +316,7 @@ app.get('/api/occupations/downloadSearchResults', function(req, res) {
                 res.setHeader('Content-Type', 'application/vnd.openxmlformats');
                 res.setHeader("Content-Disposition", `attachment; filename=Search_results_${(new Date()).toJSON()}.xlsx`);
                 try {
-                    let excelFile = generanteExcelFile(json.foundOccupations, req.query.occupIds.split(","), req.query.fields.split(","));
+                    var excelFile = generanteExcelFile(json.foundOccupations, req.query.occupIds.split(","), req.query.fields.split(","));
                     res.end(excelFile, 'binary');
                 } catch(e) {
                     throw ( {_error: 'При генерації файлу сталася помилка: '+e} );
@@ -304,34 +327,13 @@ app.get('/api/occupations/downloadSearchResults', function(req, res) {
             else
                 throw ( {_error: 'Отримано некоректний результат від сервера API'} );
         })
-        .catch(error => {
-            res.setHeader('Content-Type', 'text/xml');
-            let errorText = error && error._error || 'Сталася невідома помилка :(';
+        .catch(function(error) {
+            var errorText = error && error._error || 'Сталася невідома помилка :(';
+            res.setHeader('Content-Type', 'text/plain');
             res.send(errorText);
         });
 });
 
-function proxyJavaServer(req, res) {
-    return fetch(SERVER_ADDRESS + ":" + API_PORT + req.originalUrl, {
-        'web-security': false,
-        mode: 'cors',
-        method: req.method,
-        body: JSON.stringify(req.body),
-        headers: {
-            'Accept': req.get('Accept'),
-            'Content-Type': req.get('content-type')
-        },
-    }).then(
-        function(apiServerResp) {
-            handleAPIResp(apiServerResp, req, res)
-        },
-        function(apiServerResp) {
-            handleAPIResp(apiServerResp, req, res)
-        }
-    ).catch(function(e) {
-        res.send(e)
-    });
-}
 // Activate proxy for API
 app.use(/\/oauth\/(.*)/, proxyJavaServer);
 app.use(/\/api\/(.*)/, proxyJavaServer);
