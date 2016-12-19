@@ -186,44 +186,62 @@ public class OccupationXlsConverterImpl implements OccupationXlsConverter {
         List<RtCodeEntity> list = new ArrayList<>();
 
         DcCodeDkhpEntity dkhpEntity = new DcCodeDkhpEntity();
-        if (dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp()) == null){
-            dkhpEntity.setName(occupationFromXls.getCodeDkhp());
-            dkhpEntity = dcCodeDkhpService.add(dkhpEntity);
+        if (occupationFromXls.getCodeDkhp() != null) {
+            if (dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp()) == null){
+                dkhpEntity.setName(occupationFromXls.getCodeDkhp());
+                dkhpEntity = dcCodeDkhpService.add(dkhpEntity);
+            }
+            else
+                dkhpEntity = dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp());
         }
-        else
-            dkhpEntity = dcCodeDkhpService.findByName(occupationFromXls.getCodeDkhp());
 
         DcCodeEtkdEntity etkdEntity = new DcCodeEtkdEntity();
-        if (dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd()) == null){
-            etkdEntity.setName(occupationFromXls.getCodeEtkd());
-            etkdEntity = dcCodeEtkdService.add(etkdEntity);
+        if (occupationFromXls.getCodeEtkd() != null) {
+            if (dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd()) == null){
+                etkdEntity.setName(occupationFromXls.getCodeEtkd());
+                etkdEntity = dcCodeEtkdService.add(etkdEntity);
+            }
+            else
+                etkdEntity = dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd());
         }
-        else
-            etkdEntity = dcCodeEtkdService.findByName(occupationFromXls.getCodeEtkd());
 
         DcCodeKpEntity kpEntity = new DcCodeKpEntity();
-        if (dcCodeKpService.findByName(occupationFromXls.getCodeKP()) == null){
-            kpEntity.setName(occupationFromXls.getCodeKP());
-            kpEntity = dcCodeKpService.add(kpEntity);
+        if (occupationFromXls.getCodeKP() != null) {
+            if (dcCodeKpService.findByName(occupationFromXls.getCodeKP()) == null){
+                kpEntity.setName(occupationFromXls.getCodeKP());
+                kpEntity = dcCodeKpService.add(kpEntity);
+            }
+            else
+                kpEntity = dcCodeKpService.findByName(occupationFromXls.getCodeKP());
         }
-        else
-            kpEntity = dcCodeKpService.findByName(occupationFromXls.getCodeKP());
 
         DcCodeZkpptrEntity zkpptrEntity = new DcCodeZkpptrEntity();
-        if (dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr()) == null){
-            zkpptrEntity.setName(occupationFromXls.getCodeZkpptr());
-            zkpptrEntity = dcCodeZkpptrService.add(zkpptrEntity);
+        if (occupationFromXls.getCodeZkpptr() != null) {
+            if (dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr()) == null){
+                zkpptrEntity.setName(occupationFromXls.getCodeZkpptr());
+                zkpptrEntity = dcCodeZkpptrService.add(zkpptrEntity);
+            }
+            else
+                zkpptrEntity = dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr());
         }
-        else
-            zkpptrEntity = dcCodeZkpptrService.findByName(occupationFromXls.getCodeZkpptr());
 
 
         RtCodeEntity entity = new RtCodeEntity();
-        entity.setCodeDKHPId(dkhpEntity.getId());
-        entity.setCodeETKDId(etkdEntity.getId());
-        entity.setCodeKPId(kpEntity.getId());
-        entity.setCodeZKPPTRId(zkpptrEntity.getId());
-        entity.setDateStart(occupationFromXls.getDate());
+        if (dkhpEntity.getId() != null) {
+            entity.setCodeDKHPId(dkhpEntity.getId());
+        }
+        if (etkdEntity.getId() != null) {
+            entity.setCodeETKDId(etkdEntity.getId());
+        }
+        if (kpEntity.getId() != null) {
+            entity.setCodeKPId(kpEntity.getId());
+        }
+        if (zkpptrEntity.getId() != null) {
+            entity.setCodeZKPPTRId(zkpptrEntity.getId());
+        }
+        if (occupationFromXls.getDate() != null) {
+            entity.setDateStart(occupationFromXls.getDate());
+        }
         //entity.setDateStop(occupationFromXls.getPortionEndDate());
 
         list.add(entity);
