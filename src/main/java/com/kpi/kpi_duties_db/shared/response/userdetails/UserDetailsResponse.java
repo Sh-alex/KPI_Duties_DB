@@ -60,7 +60,7 @@ public class UserDetailsResponse {
            formsResponse.setParts(controlsInf);
            mapForms.put(formName, formsResponse);
        }
-       resultMap.put("permissioms", mapForms);
+       resultMap.put("permissions", mapForms);
 
        return resultMap;
    }

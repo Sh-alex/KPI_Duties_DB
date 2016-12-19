@@ -204,10 +204,10 @@ export function getUserInfo(access_token = localStorage.jwtToken) {
                 let resUserData = {
                     "userName": `${json.Name} ${json.Surname}`,
                     "userAvatar": json.img && "data:image/png;base64,"+json.img || "",
-                    permissions: Object.assign({
-                        "accessName": "Доступ заборонено",
-                        "forms": { }
-                    }, json.permissions),
+                    permissions: {
+                        "accessName": json.permissions.accessName || "Доступ заборонено",
+                        "forms": json.permissions || {}
+                    },
                 // {    Example:
                 //         "accessName": "Перегляд, редагування, вставка",
                 //         "forms": {

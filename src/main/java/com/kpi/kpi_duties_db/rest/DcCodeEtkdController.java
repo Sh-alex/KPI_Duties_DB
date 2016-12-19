@@ -23,7 +23,6 @@ import java.util.List;
  */
 
 @Path("/code/etkd")
-@PreAuthorize("hasAuthority('ROLE_USER')")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component

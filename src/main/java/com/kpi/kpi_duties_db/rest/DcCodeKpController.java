@@ -25,7 +25,6 @@ import java.util.List;
 @Path("/code/kp")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @Component
 public class DcCodeKpController {
 
