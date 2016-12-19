@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Yaroslav on 31.10.2016.
  */
 @Service
-public class DetailServiceImpl implements DetailService {
+public class DetailServiceImpl  implements DetailService {
 
     @Autowired
     private PermissionsRepository permissionsRepository;
@@ -26,15 +26,15 @@ public class DetailServiceImpl implements DetailService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Passports getPassportsByName(String name) {
-
-        return permissionsRepository.getPassportsByName(name);
-    }
-
-    @Override
     public Employees2 getEmployeeByName(String username) {
         return employeeRepository.getEmployeeByName(username);
     }
+
+    @Override
+    public Passports getPassportsByName(String name) {
+        return permissionsRepository.getPassportsByName(name);
+    }
+
 
     @Override
     public Passports add(Passports entity) {

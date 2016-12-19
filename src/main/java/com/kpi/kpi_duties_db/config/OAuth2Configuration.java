@@ -30,7 +30,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("web_app")
-                .accessTokenValiditySeconds(30)
+                .accessTokenValiditySeconds(5000000)
                 .scopes("FOO")
                 .secret("secret")
                 .autoApprove(true)

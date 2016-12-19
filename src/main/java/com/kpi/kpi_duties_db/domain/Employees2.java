@@ -1,5 +1,7 @@
 package com.kpi.kpi_duties_db.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -8,6 +10,7 @@ import java.util.Arrays;
  * Created by Yaroslav on 31.10.2016.
  */
 @Entity
+@Table(name = "Employee2", schema = "dbo", catalog = "details")
 public class Employees2 {
     private int idEmployee;
     private Integer idNationality;
@@ -134,16 +137,18 @@ public class Employees2 {
         return result;
     }
 
-    @OneToOne(mappedBy = "employees2")
-    public Permissions getPermissions() {
-        return permissions;
-    }
-
     public void setPermissions(Permissions permissions) {
         this.permissions = permissions;
     }
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employees2")
+    @JsonIgnore
+    public Permissions getPermissions() {
+        return permissions;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
+    @JsonIgnore
     public Passports getPassports() {
         return passports;
     }

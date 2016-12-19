@@ -1,5 +1,7 @@
 package com.kpi.kpi_duties_db.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -7,6 +9,7 @@ import java.sql.Timestamp;
  * Created by Yaroslav on 31.10.2016.
  */
 @Entity
+@Table(name = "Passports", schema = "dbo", catalog = "details")
 public class Passports {
     private int idPassport;
     private boolean active;
@@ -214,6 +217,7 @@ public class Passports {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_Employee_Owner", insertable = false, updatable = false)
+    @JsonIgnore
     public Employees2 getEmployee() {
         return employee;
     }

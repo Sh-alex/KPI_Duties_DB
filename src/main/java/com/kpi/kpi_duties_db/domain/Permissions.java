@@ -1,5 +1,9 @@
 package com.kpi.kpi_duties_db.domain;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yaroslav on 31.10.2016.
@@ -16,7 +20,19 @@ public class Permissions {
     private String salt;
     private String keypass;
     private String initialvector;
+    private PermissionsForProject permissionForProjects;
+
+
     private Employees2 employees2;
+
+    @OneToOne( mappedBy = "permission")
+    public PermissionsForProject getPermissionForProjects() {
+        return permissionForProjects;
+    }
+
+    public void setPermissionForProjects(PermissionsForProject permissionForProjects) {
+        this.permissionForProjects = permissionForProjects;
+    }
 
     @Id
     @Column(name = "id")
@@ -28,11 +44,11 @@ public class Permissions {
         this.id = id;
     }
 
-
     @Column(name = "id_employee")
     public int getIdEmployee() {
         return idEmployee;
     }
+
 
     public void setIdEmployee(int idEmployee) {
         this.idEmployee = idEmployee;
@@ -155,14 +171,19 @@ public class Permissions {
         return result;
     }
 
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_employee", insertable = false, updatable = false)
+    @JsonIgnore
     public Employees2 getEmployees2() {
         return employees2;
     }
 
+
     public void setEmployees2(Employees2 employees2) {
         this.employees2 = employees2;
     }
+
+
+
+
 }
