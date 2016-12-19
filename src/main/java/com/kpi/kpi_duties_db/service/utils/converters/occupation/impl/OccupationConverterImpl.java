@@ -457,9 +457,7 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
 
-            //////////////////////////////////////////
-
-            /////////////////////////////////////////
+            dataInItem.setClarifications(createClarifications(entity));
 
             Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
             if (dutiesValidityDateEntities != null) {
@@ -617,6 +615,21 @@ public class OccupationConverterImpl implements OccupationConverter {
         return response;
     }
 
+    private List<String> createClarifications(RtDutiesEntity entity) {
+        List<String> clarifications = new ArrayList<>();
+
+        if (entity.getParentEntity() == null) {
+            clarifications.add(entity.getDcDutiesNameEntity().getName());
+            return clarifications;
+        }
+
+
+        clarifications.addAll(createClarifications(entity.getParentEntity()));
+        clarifications.add(entity.getDcDutiesNameEntity().getName());
+
+        return clarifications;
+    }
+
     @Override
     @Transactional
     public void deleteParentEntitiesWithoutChildren(RtDutiesEntity rtDutiesEntity) {
@@ -657,21 +670,21 @@ public class OccupationConverterImpl implements OccupationConverter {
         }
 
         //Шукаю тексти, які більше ніде не використовуються і видаляю
-        for(RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : rtDutiesEntity.getRtDutiesTaskAndResponsibilitiesEntities()){
+        for (RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : rtDutiesEntity.getRtDutiesTaskAndResponsibilitiesEntities()) {
             Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesTaskAndResponsibilitiesEntity.class);
             criteria.add(Restrictions.eq("dcDutiesTasksAndResponsibilitiesId", rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId()));
             if (criteria.list().size() == 1) {
                 tasksAndResponsibilitiesEntityList.add(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity());
             }
         }
-        for(RtDutiesMustKnowEntity rtDutiesMustKnowEntity : rtDutiesEntity.getRtDutiesMustKnowEntities()){
+        for (RtDutiesMustKnowEntity rtDutiesMustKnowEntity : rtDutiesEntity.getRtDutiesMustKnowEntities()) {
             Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesMustKnowEntity.class);
             criteria.add(Restrictions.eq("dcDutiesMustKnowId", rtDutiesMustKnowEntity.getDcDutiesMustKnowId()));
             if (criteria.list().size() == 1) {
                 mustKnowEntityList.add(rtDutiesMustKnowEntity.getDcDutiesMustKnowEntity());
             }
         }
-        for(RtDutiesQualificationRequirementsEntity qualificationRequirementsEntity : rtDutiesEntity.getRtDutiesQualificationRequirementsEntities()){
+        for (RtDutiesQualificationRequirementsEntity qualificationRequirementsEntity : rtDutiesEntity.getRtDutiesQualificationRequirementsEntities()) {
             Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesQualificationRequirementsEntity.class);
             criteria.add(Restrictions.eq("dcDutiesQualificationRequirementsId", qualificationRequirementsEntity.getDcDutiesQualificationRequirementsId()));
             if (criteria.list().size() == 1) {
