@@ -457,6 +457,10 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
 
+            //////////////////////////////////////////
+
+            /////////////////////////////////////////
+
             Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
             if (dutiesValidityDateEntities != null) {
                 List<Duration> durations = new ArrayList<>();

@@ -40,6 +40,8 @@ public class DataInItem {
 
     private List<Requirement> qualiffRequir;
 
+    private List<String> clarifications;
+
     public String getRtDutiesName() {
         return rtDutiesName;
     }
@@ -126,5 +128,13 @@ public class DataInItem {
 
     public void setQualiffRequir(List<Requirement> qualiffRequir) {
         this.qualiffRequir = qualiffRequir;
+    }
+
+    public List<String> getClarifications() {
+        return clarifications;
+    }
+
+    public void setClarifications(List<String> clarifications) {
+        this.clarifications = clarifications;
     }
 }

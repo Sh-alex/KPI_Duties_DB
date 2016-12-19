@@ -42,6 +42,10 @@ public class RtDutiesEntity {
     private DcDutiesNameEntity dcDutiesNameEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ParentId", insertable = false, updatable = false)
+    private RtDutiesEntity parentEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DcDutiesPartitionId", insertable = false, updatable = false)
     private DcDutiesPartitionEntity dcDutiesPartitionEntity;
 
@@ -115,6 +119,14 @@ public class RtDutiesEntity {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    public RtDutiesEntity getParentEntity() {
+        return parentEntity;
+    }
+
+    public void setParentEntity(RtDutiesEntity parentEntity) {
+        this.parentEntity = parentEntity;
     }
 
     public Timestamp getVcChangeDate() {
