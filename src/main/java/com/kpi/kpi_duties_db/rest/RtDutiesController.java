@@ -124,8 +124,11 @@ public class RtDutiesController {
 
     @DELETE
     @Path("/{id}")
+    @Transactional
     public Response delete(@PathParam("id") Integer id) {
-        rtDutiesService.delete(id);
+
+        RtDutiesEntity entity = rtDutiesService.getById(id);
+        converter.deleteParentEntitiesWithoutChildren(entity);
 
         return Response.ok().build();
     }

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,43 +34,55 @@ import java.util.stream.Collectors;
 public class OccupationConverterImpl implements OccupationConverter {
 
     @Autowired
-    DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
+    private DcDutiesTaskAndResponsibilitiesService dcDutiesTaskAndResponsibilitiesService;
 
     @Autowired
-    DcDutiesMustKnowService dcDutiesMustKnowService;
+    private DcDutiesMustKnowService dcDutiesMustKnowService;
 
     @Autowired
-    DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
+    private DcDutiesQualificationRequirementsService dcDutiesQualificationRequirementsService;
 
     @Autowired
-    DcDutiesPartitionService dcDutiesPartitionService;
+    private DcDutiesPartitionService dcDutiesPartitionService;
 
     @Autowired
-    DcDutiesNameService dcDutiesNameService;
+    private DcDutiesNameService dcDutiesNameService;
 
     @Autowired
-    RtDutiesService rtDutiesService;
+    private RtDutiesService rtDutiesService;
 
     @Autowired
-    RtDutiesTaskAndResponsibilitiesService rtDutiesTaskAndResponsibilitiesService;
+    private RtDutiesTaskAndResponsibilitiesService rtDutiesTaskAndResponsibilitiesService;
 
     @Autowired
-    RtDutiesMustKnowService rtDutiesMustKnowService;
+    private RtDutiesMustKnowService rtDutiesMustKnowService;
 
     @Autowired
-    RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
+    private RtDutiesQualificationRequirementsService rtDutiesQualificationRequirementsService;
 
     @Autowired
-    DutiesValidityDateService dutiesValidityDateService;
+    private DutiesValidityDateService dutiesValidityDateService;
 
     @Autowired
-    RtDutiesCodeService rtDutiesCodeService;
+    private RtDutiesCodeService rtDutiesCodeService;
 
     @Autowired
-    RtCodeService rtCodeService;
+    private RtCodeService rtCodeService;
 
     @Autowired
-    HibernateTemplate hibernateTemplate;
+    private HibernateTemplate hibernateTemplate;
+
+    @Autowired
+    private DcCodeDkhpService dcCodeDkhpService;
+
+    @Autowired
+    private DcCodeKpService dcCodeKpService;
+
+    @Autowired
+    private DcCodeEtkdService dcCodeEtkdService;
+
+    @Autowired
+    private DcCodeZkpptrService dcCodeZkpptrService;
 
     private final static Logger logger = LoggerFactory.getLogger(OccupationConverterImpl.class);
 
@@ -525,7 +538,7 @@ public class OccupationConverterImpl implements OccupationConverter {
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesMustKnowEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesMustKnowId", rtDutiesMustKnowEntity.getDcDutiesMustKnowId()));
                 List<RtDutiesMustKnowEntity> usingText = criteria.list();
-                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item -> item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
                 List<String> rtDutiesNames = new ArrayList<>();
                 rtDutiesIdList.forEach(item -> {
                     rtDutiesNames.add(rtDutiesService.getById(item).getName());
@@ -550,7 +563,7 @@ public class OccupationConverterImpl implements OccupationConverter {
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesTaskAndResponsibilitiesEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesTasksAndResponsibilitiesId", rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId()));
                 List<RtDutiesTaskAndResponsibilitiesEntity> usingText = criteria.list();
-                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item -> item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
                 List<String> rtDutiesNames = new ArrayList<>();
                 rtDutiesIdList.forEach(item -> {
                     rtDutiesNames.add(rtDutiesService.getById(item).getName());
@@ -575,7 +588,7 @@ public class OccupationConverterImpl implements OccupationConverter {
                 Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesQualificationRequirementsEntity.class);
                 criteria.add(Restrictions.eq("dcDutiesQualificationRequirementsId", rtDutiesQualificationRequirementsEntity.getDcDutiesQualificationRequirementsId()));
                 List<RtDutiesQualificationRequirementsEntity> usingText = criteria.list();
-                List<Integer> rtDutiesIdList = usingText.stream().filter(item->item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
+                List<Integer> rtDutiesIdList = usingText.stream().filter(item -> item.getRtDutiesId() != entity.getId()).map(item -> item.getRtDutiesId()).collect(Collectors.toList());
                 List<String> rtDutiesNames = new ArrayList<>();
                 rtDutiesIdList.forEach(item -> {
                     rtDutiesNames.add(rtDutiesService.getById(item).getName());
@@ -598,5 +611,87 @@ public class OccupationConverterImpl implements OccupationConverter {
         response.getFoundOccupations().setItemsList(itemsList);
         response.getFoundOccupations().setItemsById(itemsById);
         return response;
+    }
+
+    @Override
+    @Transactional
+    public void deleteParentEntitiesWithoutChildren(RtDutiesEntity rtDutiesEntity) {
+
+        List<DcCodeDkhpEntity> dkhpEntityList = new ArrayList<>();
+        List<DcCodeEtkdEntity> etkdEntityList = new ArrayList<>();
+        List<DcCodeKpEntity> kpEntityList = new ArrayList<>();
+        List<DcCodeZkpptrEntity> zkpptrEntityList = new ArrayList<>();
+        List<DcDutiesTasksAndResponsibilitiesEntity> tasksAndResponsibilitiesEntityList = new ArrayList<>();
+        List<DcDutiesMustKnowEntity> mustKnowEntityList = new ArrayList<>();
+        List<DcDutiesQualificationRequirementsEntity> qualificationRequirementsEntityList = new ArrayList<>();
+        List<DcDutiesNameEntity> dutiesNameEntityList = new ArrayList<>();
+
+        //Шукаю коди, які більше ніде не використовуються і видаляю
+        for (RtDutiesCodeEntity rtDutiesCodeEntity : rtDutiesEntity.getRtDutiesCodeEntities()) {
+            RtCodeEntity rtCodeEntity = rtDutiesCodeEntity.getRtCodeEntity();
+
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtCodeEntity.class);
+            criteria.add(Restrictions.eq("codeDKHPId", rtCodeEntity.getCodeDKHPId()));
+            if (criteria.list().size() == 1 && rtCodeEntity.getCodeDKHPId() != null) {
+                dkhpEntityList.add(rtCodeEntity.getCodeDkhpEntity());
+            }
+            criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtCodeEntity.class);
+            criteria.add(Restrictions.eq("codeETKDId", rtCodeEntity.getCodeETKDId()));
+            if (criteria.list().size() == 1 && rtCodeEntity.getCodeETKDId() != null) {
+                etkdEntityList.add(rtCodeEntity.getCodeEtkdEntity());
+            }
+            criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtCodeEntity.class);
+            criteria.add(Restrictions.eq("codeKPId", rtCodeEntity.getCodeKPId()));
+            if (criteria.list().size() == 1 && rtCodeEntity.getCodeKPId() != null) {
+                kpEntityList.add(rtCodeEntity.getCodeKpEntity());
+            }
+            criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtCodeEntity.class);
+            criteria.add(Restrictions.eq("codeZKPPTRId", rtCodeEntity.getCodeZKPPTRId()));
+            if (criteria.list().size() == 1 && rtCodeEntity.getCodeZKPPTRId() != null) {
+                zkpptrEntityList.add(rtCodeEntity.getCodeZkpptrEntity());
+            }
+        }
+
+        //Шукаю тексти, які більше ніде не використовуються і видаляю
+        for(RtDutiesTaskAndResponsibilitiesEntity rtDutiesTaskAndResponsibilitiesEntity : rtDutiesEntity.getRtDutiesTaskAndResponsibilitiesEntities()){
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesTaskAndResponsibilitiesEntity.class);
+            criteria.add(Restrictions.eq("dcDutiesTasksAndResponsibilitiesId", rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesId()));
+            if (criteria.list().size() == 1) {
+                tasksAndResponsibilitiesEntityList.add(rtDutiesTaskAndResponsibilitiesEntity.getDcDutiesTasksAndResponsibilitiesEntity());
+            }
+        }
+        for(RtDutiesMustKnowEntity rtDutiesMustKnowEntity : rtDutiesEntity.getRtDutiesMustKnowEntities()){
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesMustKnowEntity.class);
+            criteria.add(Restrictions.eq("dcDutiesMustKnowId", rtDutiesMustKnowEntity.getDcDutiesMustKnowId()));
+            if (criteria.list().size() == 1) {
+                mustKnowEntityList.add(rtDutiesMustKnowEntity.getDcDutiesMustKnowEntity());
+            }
+        }
+        for(RtDutiesQualificationRequirementsEntity qualificationRequirementsEntity : rtDutiesEntity.getRtDutiesQualificationRequirementsEntities()){
+            Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesQualificationRequirementsEntity.class);
+            criteria.add(Restrictions.eq("dcDutiesQualificationRequirementsId", qualificationRequirementsEntity.getDcDutiesQualificationRequirementsId()));
+            if (criteria.list().size() == 1) {
+                qualificationRequirementsEntityList.add(qualificationRequirementsEntity.getDcDutiesQualificationRequirementsEntity());
+            }
+        }
+
+        //Шукаю уточнення, які більше ніде не використовуються і видаляю
+        Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class);
+        criteria.add(Restrictions.eq("dcDutiesNameId", rtDutiesEntity.getDcDutiesNameId()));
+        if (criteria.list().size() == 1 && rtDutiesEntity.getDcDutiesNameId() != null) {
+            dutiesNameEntityList.add(rtDutiesEntity.getDcDutiesNameEntity());
+        }
+
+
+        rtDutiesService.delete(rtDutiesEntity.getId());
+        dcCodeDkhpService.delete(dkhpEntityList);
+        dcCodeEtkdService.delete(etkdEntityList);
+        dcCodeKpService.delete(kpEntityList);
+        dcCodeZkpptrService.delete(zkpptrEntityList);
+        dcDutiesTaskAndResponsibilitiesService.delete(tasksAndResponsibilitiesEntityList);
+        dcDutiesMustKnowService.delete(mustKnowEntityList);
+        dcDutiesQualificationRequirementsService.delete(qualificationRequirementsEntityList);
+        dcDutiesNameService.delete(dutiesNameEntityList);
+
     }
 }
