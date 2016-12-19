@@ -16,10 +16,10 @@ const morgan = require('morgan');
 const moment = require('moment');
 
 const STATICS_SERVER_PORT = 80,
-    //API_PORT = 80,
-    API_PORT = 52300,
-    //SERVER_ADDRESS = "http://occupations.azurewebsites.net";
-    SERVER_ADDRESS = "http://localhost",
+    API_PORT = 80,
+    //API_PORT = 52300,
+    SERVER_ADDRESS = "http://occupations.azurewebsites.net",
+    //SERVER_ADDRESS = "http://localhost",
     SEARCH_OCCUPATION_URI = '/api/occupations';
 
 var logFileStream = fs.createWriteStream(__dirname + '/node_server_log.log', {flags: 'a'});
