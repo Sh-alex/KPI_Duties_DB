@@ -9,7 +9,7 @@ export default class Footer extends Component {
         <div className="footer-info-block">
           <a href="http://kpi.ua/">
             Національний технічний університет України <br />
-            "Київський політехнічний інститут" www.kpi.ua
+            "Київський політехнічний інститут імені Ігоря Сікорського" www.kpi.ua
           </a>
         </div>
         <div className="footer-kpi-logo-wrapper">

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getUserInfo } from '../../actions/user';
 import mathDocumentTitleByPathName from "../../utils/mathDocumentTitleByPathName"
+import LoginBox from "../../components/LoginBox";
 
 class App extends Component {
     componentWillMount() {
@@ -14,14 +15,30 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <div>
-                {this.props.children}
-            </div>
-        )
+        if(this.props.user.isGettingUserInfo || (!this.props.user.isAuthenticated) )
+            return (
+                <div>
+                    <LoginBox />
+                    {/*<div className="hidden">*/}
+                        {/*{this.props.children}*/}
+                    {/*</div>*/}
+                </div>
+            );
+        else
+            return (
+                <div>
+                    <div>
+                        {this.props.children}
+                    </div>
+                </div>
+        );
     }
 }
-
+const mapStateToProps = (state, ownProps) => {
+    return {
+        user: state.user
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -29,5 +46,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -102,9 +102,10 @@ export function downloadSearchOccupRes(fieldsArr, dispatch) {
             return dispatch(downloadSearchOccupResFail("Не можна завантажити результати пошуку без жодного поля!"));
 
         //dispatch(downloadSearchOccupResRequest(occupIds, fieldsArr));
+        let access_token = localStorage.jwtToken ? 'Bearer ' + localStorage.jwtToken : "";
 
         // api/occupations/downloadSearchResults?occupIds=2,5,8,10,16,22,23,27,28&fields=occupationName,occupationNameMin,occupationGroup,qualiffRequirText,responsibilitiesText,haveToKnowText,codeDKHP,codeETDK,codeKP,codeZKPPTR,durationsStartDate,durationsStopDate,inKpi
-        let searchURI = `${API_DOWNLOAD_SEARCH_OCCUP_RES}?occupIds=${occupIds}&fields=${fieldsArr}`;
+        let searchURI = `${API_DOWNLOAD_SEARCH_OCCUP_RES}?occupIds=${occupIds}&fields=${fieldsArr}&a=${access_token}`;
 
         window.open(searchURI, '_blank');
         dispatch(hideModalResDownloadSettings());

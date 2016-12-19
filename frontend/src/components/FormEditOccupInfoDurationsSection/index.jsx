@@ -4,20 +4,28 @@ import FormEditOccupInfoDurationsPortion from "../FormEditOccupInfoDurationsPort
 
 export default function FormEditOccupInfoDurationsSection(props) {
     let originalDelPortionHandler = props.handleDelPortionBtnClick,
+        originalInKpiInpChangeHandler = props.handleInKpiInpChange,
         portionsMarkup = props.durationsFields.map((fieldsItem, i, fieldsArr) => {
             //прив'язуємо обробники до номера порції
             let decoratedDelHandler = (index => {
                     return () => originalDelPortionHandler(index)
-                })(i);
+                })(i),
+                decoratedInKpiInpChangeHandler = (index => {
+                    return e => originalInKpiInpChangeHandler(e.currentTarget.checked, index)
+                })(i),
+                //показуємо поле "є віртуальною", лише якщо ця порція дат для КПІ
+                showInpIsVirtual = fieldsItem.inKpi && fieldsItem.inKpi.value;
 
             return (
                 <FormEditOccupInfoDurationsPortion
                     fields={fieldsItem}
                     showDelBtn={ fieldsArr.length > 1 }
+                    showInpIsVirtual={showInpIsVirtual}
                     portionItemClassName={ i===0 ? "is-first-item" : "" }
                     key={i}
                     portionKey={i}
                     handleDelPortionBtnClick={decoratedDelHandler}
+                    handleInKpiInpChange={decoratedInKpiInpChangeHandler}
                 />
             );
         });

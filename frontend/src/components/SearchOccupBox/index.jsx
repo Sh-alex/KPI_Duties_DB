@@ -30,6 +30,8 @@ import {
     dismissDelOccupationAlert
 } from "../../actions/delOccupation"
 
+import { denyAccessToTheUserWithRedirect } from '../../actions/user'
+
 class SearchOccupBox extends Component {
     constructor(props) {
         super(props);
@@ -38,8 +40,10 @@ class SearchOccupBox extends Component {
             searchResultsIsExpanded: this.props.searchResData,//Object.keys(this.props.location.query).length,
             searchFormIsExpanded: !(this.props.searchResData && this.props.searchResData.itemsList && this.props.searchResData.itemsList.length)
         };
+    }
 
-        //this.smth = this.smth.bind(this);
+    componentWillMount() {
+        this.checkUserAccess(this.props)
     }
 
     componentDidMount() {
@@ -47,10 +51,17 @@ class SearchOccupBox extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.checkUserAccess(nextProps);
+
         this.setState({
             searchResultsIsExpanded: nextProps.searchResData,
             searchFormIsExpanded: !(nextProps.searchResData && nextProps.searchResData.itemsList && nextProps.searchResData.itemsList.length)
         });
+    }
+
+    checkUserAccess(props) {
+        if(!props.userMaySearchOccupations)
+            props.denyAccessToTheUserWithRedirect()
     }
 
     render() {
@@ -77,6 +88,10 @@ class SearchOccupBox extends Component {
                         toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
                     />
                     <SearchOccupBoxRes
+                        userMayDelOccupations={this.props.userMayDelOccupations}
+                        userMayEditOccupations={this.props.userMayEditOccupations}
+                        userMayDownloadSearchResults={this.props.userMayDownloadSearchResults}
+
                         occupationGroupList={this.props.occupationGroupList}
                         clarifiedOccupationList={this.props.clarifiedOccupationList}
                         clarificationList={this.props.clarificationList}
@@ -121,15 +136,42 @@ class SearchOccupBox extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+    let userMaySearchOccupations = state.user.isAuthenticated &&
+        state.user.permissions &&
+        state.user.permissions.forms &&
+        state.user.permissions.forms.searchOccupations &&
+        state.user.permissions.forms.searchOccupations.show,
+    userMayDelOccupations = state.user.isAuthenticated &&
+        state.user.permissions &&
+        state.user.permissions.forms &&
+        state.user.permissions.forms.delOccupations &&
+        state.user.permissions.forms.delOccupations.show,
+    userMayDownloadSearchResults = state.user.isAuthenticated &&
+        state.user.permissions &&
+        state.user.permissions.forms &&
+        state.user.permissions.forms.downloadSearchResults &&
+        state.user.permissions.forms.downloadSearchResults.show,
+    userMayEditOccupations = state.user.isAuthenticated &&
+        state.user.permissions &&
+        state.user.permissions.forms &&
+        state.user.permissions.forms.editOccupations &&
+        state.user.permissions.forms.editOccupations.show;
     return {
         ...state.occupNameInfoLists,
         ...state.delOccupation,
-        ...state.searchOccupBox
+        ...state.searchOccupBox,
+        userMaySearchOccupations,
+        userMayDelOccupations,
+        userMayDownloadSearchResults,
+        userMayEditOccupations
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        denyAccessToTheUserWithRedirect() {
+            return dispatch( denyAccessToTheUserWithRedirect() );
+        },
         fetchLists() {
             dispatch(fetchOccupGroupList());
             dispatch(fetchClarifiedOccupList());

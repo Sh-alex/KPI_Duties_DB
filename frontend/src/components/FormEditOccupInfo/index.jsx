@@ -57,6 +57,7 @@ export default class FormEditOccupInfo extends Component {
         this.handleOccupationGroupInpChange = this.handleOccupationGroupInpChange.bind(this);
         this.handleClarifiedOccupInpChange = this.handleClarifiedOccupInpChange.bind(this);
         this.handleClarificationInpChange = this.handleClarificationInpChange.bind(this);
+        this.handleInKpiInpChange = this.handleInKpiInpChange.bind(this);
 
         this.handleQualiffRequirTextChange = this.handleQualiffRequirTextChange.bind(this);
         this.handleHaveToKnowTextChange = this.handleHaveToKnowTextChange.bind(this);
@@ -166,6 +167,21 @@ export default class FormEditOccupInfo extends Component {
         this.props.handleClarificationInpChange(newVal);
     }
 
+    handleInKpiInpChange(isInKPI, portionIndex) {
+        if(!this.props.fields.durations || !this.props.fields.durations[portionIndex])
+            return console.error("Called handleInKpiInpChange, but !this.props.fields.durations || !this.props.fields.durations[portionIndex]");
+
+        this.props.fields.durations[portionIndex].inKpi && this.props.fields.durations[portionIndex].inKpi.onChange(isInKPI);
+
+        //якщо ця порція дат для держави, а не для КПІ,
+        // обнуляємо на всяк випадок значення поля "посада є віртуальною",
+        // бо в державі не може бути віртуальних посад
+        let shouldResetInpIsVirtual = !isInKPI &&
+            this.props.fields.durations[portionIndex].virtual;
+        if(shouldResetInpIsVirtual)
+            this.props.fields.durations[portionIndex].virtual.onChange(false);
+    }
+
     handleResponsibTextChange(newVal, resPortionIndex) {
         //обробляємо зміни саме тут,
         // а не всередині відповідного компонента щоб тей компонент був більш універсальним
@@ -240,14 +256,14 @@ export default class FormEditOccupInfo extends Component {
                 </div>
             ),
             popoverSubmitReset = (
-            <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
-                <div className="text-center">
-                    <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
-                        <span className="btn-label"> Очистити </span>
-                    </button>
-                </div>
-            </Popover>
-        );
+                <Popover id="form-edit-occup-info__popover-submit-reset" title={popoverSubmitResetTitle}>
+                    <div className="text-center">
+                        <button type="reset" className="btn btn-danger btn-block" onClick={this.props.resetForm} >
+                            <span className="btn-label"> Очистити </span>
+                        </button>
+                    </div>
+                </Popover>
+            );
 
         let formAlert = !shouldShowServerRespMsg ?
                 "" :
@@ -411,6 +427,7 @@ export default class FormEditOccupInfo extends Component {
                             openModalAddNewClarification={() => this.setState({ showModalAddNewClarification: true })}  />
                         <FormEditOccupInfoDurationsSection
                             durationsFields={durations}
+                            handleInKpiInpChange={this.handleInKpiInpChange}
                             handleAddPortionBtnClick={this.handleAddDurationsPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelDurationsPortionBtnClick}
                         />
@@ -436,6 +453,7 @@ export default class FormEditOccupInfo extends Component {
                                 showModalAddNewETDKCode: true,
                                 addNewETDKCodeResPortionIndex: resPortionIndex
                             })}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddCodesPortionBtnClick={this.handleAddCodesPortionBtnClick}
                             handleDelCodesPortionBtnClick={this.handleDelCodesPortionBtnClick} />
@@ -447,6 +465,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Завдання, обов'язки та повноваження"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_RESPONSIBLITIES}
                             handleTextChange={this.handleResponsibTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddResponsibPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelResponsibPortionBtnClick} />
@@ -455,6 +474,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Повинен знати"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_HAVE_TO_KNOW}
                             handleTextChange={this.handleHaveToKnowTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddHaveToKnowPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelHaveToKnowPortionBtnClick} />
@@ -463,6 +483,7 @@ export default class FormEditOccupInfo extends Component {
                             headline={"Кваліфікаційні вимоги"}
                             addInfoFromAnotherOccupTypeId={ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR}
                             handleTextChange={this.handleQualiffRequirTextChange}
+                            showBtnAddInfoFromAnotherOccupations={this.props.userMayAddInfoFromAnotherOccupations}
                             handleBtnAddInfoFromAnotherOccupClick={handleBtnAddInfoFromAnotherOccupClick}
                             handleAddPortionBtnClick={this.handleAddQualiffRequirPortionBtnClick}
                             handleDelPortionBtnClick={this.handleDelQualiffRequirPortionBtnClick} />

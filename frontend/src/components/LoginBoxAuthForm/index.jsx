@@ -7,21 +7,14 @@ import LoginBoxBody from "../LoginBoxBody";
 
 import "./styles.less";
 
-import {
-    clearLogInError,
-    logInUser
-} from "../../actions/user"
+import { logInUser } from "../../actions/user"
 
 class LoginBoxAuthForm extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         var elClassName = classNames([LoginBoxBody.className, "loginUser-box-body--auth-form-wrapper"]),
-            errorMsg = this.props.user.loginError || this.props.user.getUserInfoError,
-            errorAlert = errorMsg && (
-                    <Alert bsStyle="danger" onDismiss={this.props.handleServerRespMsgDismiss}>
+            errorMsg = this.props.user.loginError || this.props.user.getUserInfoError || this.props.user.accessError,
+            ErrorAlert = errorMsg && (
+                    <Alert bsStyle="danger" onDismiss={this.props.clearLogInError}>
                         <h4>
                             <i className="icon fa fa-warning" />
                             Помилка! :(
@@ -50,7 +43,7 @@ class LoginBoxAuthForm extends Component {
         return (
             <LoginBoxBody {...this.props} className={elClassName}>
                 <p className="login-box-msg">
-                    Авторизуйтесь для початку роботи із сервісом
+                    Авторизуйтесь для початку роботи із системою
                 </p>
 
                 <form id="auth-form" onSubmit={this.props.handleSubmit} className="auth-form" role="form">
@@ -85,7 +78,7 @@ class LoginBoxAuthForm extends Component {
                         </span>
                     </div>
                     <div className="form-group">
-                        { errorAlert }
+                        { ErrorAlert }
                     </div>
                     <div className="form-group text-right">
                         <button
@@ -130,15 +123,14 @@ export default reduxForm(
         validate: validateLogInForm,
         onSubmit: logInUser
     },
-    (state, ownProps) => {    //mapStateToProps
-        return {
-            user: state.user,
-        }
-    },
-    (dispatch, ownProps) => { //mapDispatchToProps
-        return {
-            //logInUser: userData => dispatch(logInUser(userData)),
-            handleServerRespMsgDismiss: () => dispatch( clearLogInError() )
-        }
-    }
+    // (state, ownProps) => {    //mapStateToProps
+    //     return {
+    //
+    //     }
+    // },
+    // (dispatch, ownProps) => { //mapDispatchToProps
+    //     return {
+    //
+    //     }
+    // }
 )(LoginBoxAuthForm);

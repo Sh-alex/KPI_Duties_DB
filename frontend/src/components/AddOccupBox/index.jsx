@@ -40,6 +40,8 @@ import {
     showModalAddInfoFromAnotherOccup
 } from '../../actions/addingInfoFromAnotherOccup'
 
+import { denyAccessToTheUserWithRedirect } from '../../actions/user'
+
 import validateFormOccupInfo from "../../utils/validateFormOccupInfo"
 
 import './styles.less'
@@ -58,6 +60,13 @@ let initialFormState = {
             "start": null,
             "stop": null,
             "inKpi": false,
+            "virtual": false
+        },
+        {
+            "id": null,
+            "start": null,
+            "stop": null,
+            "inKpi": true,
             "virtual": false
         }
     ],
@@ -120,7 +129,21 @@ class AddOccupBox extends Component {
         this.props.initializeForm(initialFormState);
     }
 
+    componentWillMount() {
+        this.checkUserAccess(this.props)
+    }
+    componentWillReceiveProps(nextProps) {
+        this.checkUserAccess(nextProps)
+    }
+
+    checkUserAccess(props) {
+        if(!props.userMayAddNewOccupations)
+            props.denyAccessToTheUserWithRedirect();
+    }
+
     render() {
+        // if(!this.userHaveAccess(user))
+        //     return null;
         return (
             <div className="box box-default">
                 <div className="box-header with-border text-center">
@@ -188,14 +211,31 @@ export default reduxForm(
         onSubmit: submitFormAddNewOccup
     },
     (state, ownProps) => {    //mapStateToProps
+        let userMayAddNewOccupations = state.user.isAuthenticated &&
+                state.user.permissions &&
+                state.user.permissions.forms &&
+                state.user.permissions.forms.addNewOccupations &&
+                state.user.permissions.forms.addNewOccupations.show,
+            userMayAddInfoFromAnotherOccupations = state.user.isAuthenticated &&
+                state.user.permissions &&
+                state.user.permissions.forms &&
+                state.user.permissions.forms.addInfoFromAnotherOccupations &&
+                state.user.permissions.forms.addInfoFromAnotherOccupations.show;
+
         return {
+            userMayAddNewOccupations,
+            user: state.user,
+            userMayAddInfoFromAnotherOccupations,
             occupNameInfoLists: state.occupNameInfoLists,
             occupCodesLists: state.occupCodesLists,
             shouldShowServerRespMsg: state.form.addForm.shouldShowServerRespMsg
-        }
+        };
     },
     (dispatch, ownProps) => { //mapDispatchToProps
         return {
+            denyAccessToTheUserWithRedirect() {
+                return dispatch( denyAccessToTheUserWithRedirect() );
+            },
             handleServerRespMsgDismiss() {
                 return dispatch( addNewOccupHideServerRespMsg() );
             },

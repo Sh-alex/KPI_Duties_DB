@@ -34,7 +34,26 @@ export default function SearchOccupBoxResTblRowShort(props) {
                     { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
                 </div>
             )
-        });
+        }),
+        BtnDelOccupation = props.showBtnDelOccupations ? (
+            <a
+                className="action-btns-cell__btn text-danger btn--btn-sm--btn-danger"
+                title="Видалити посаду"
+                onClick={props.onDeleteItem}
+                disabled={props.showDelSpinner}
+            >
+                <i className={`fa fa-${props.showDelSpinner ? 'spinner fa-pulse' : 'trash'}`} />
+            </a>
+        ) : null,
+        BtnEditOccupation = props.showBtnEditOccupations ? (
+            <a
+                className="action-btns-cell__btn text-warning btn--btn-sm--btn-warning"
+                title="Редагувати посаду"
+                onClick={props.onEditItem}
+            >
+                <i className="fa fa-edit" />
+            </a>
+        ) : null;
     return (
         <tr>
             <td className="text-center" title="Номер в списку">
@@ -59,21 +78,8 @@ export default function SearchOccupBoxResTblRowShort(props) {
                 { cancelingInKPIDate }
             </td>
             <th className="text-center action-btns-cell">
-                <a
-                    className="action-btns-cell__btn text-warning btn--btn-sm--btn-warning"
-                    title="Редагувати посаду"
-                    onClick={props.onEditItem}
-                >
-                    <i className="fa fa-edit" />
-                </a> {" "}
-                <a
-                    className="action-btns-cell__btn text-danger btn--btn-sm--btn-danger"
-                    title="Видалити посаду"
-                    onClick={props.onDeleteItem}
-                    disabled={props.showDelSpinner}
-                >
-                    <i className={`fa fa-${props.showDelSpinner ? 'spinner fa-pulse' : 'trash'}`} />
-                </a> {" "}
+                { BtnEditOccupation } {" "}
+                { BtnDelOccupation } {" "}
                 <a
                     className="action-btns-cell__btn occup-table__btn-expand"
                     onClick={props.onToggleExpandItem}

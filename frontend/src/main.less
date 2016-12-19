@@ -42,6 +42,18 @@ label {
 }
 
 
+
+.inp-toggler__wrapper {
+  color: #367fa9;
+}
+.inp-toggler-block:active .inp-toggler__wrapper,
+.inp-toggler__wrapper:hover,
+.inp-toggler__wrapper:focus {
+  color: #286090;
+}
+
+
+
 @media (max-width: 768px) {
   .container-fluid {
     padding-right: 3px;
@@ -55,7 +67,7 @@ label {
 
 
 
-//HACK
+//HACK: інтеграція React-widgets із Bootstrap
 .rw-i.rw-loading {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -70,4 +82,23 @@ label {
 
 .rw-i.rw-loading:before {
   content: "\F110";
+}
+
+.form-group.has-error .rw-input,
+.form-group.has-error .rw-dropdownlist,
+.form-group.has-error .rw-datetimepicker {
+  border-color: #dd4b39;
+  box-shadow: none;
+}
+.form-group.has-success .rw-input,
+.form-group.has-success .rw-dropdownlist,
+.form-group.has-success .rw-datetimepicker {
+  border-color: #00a65a;
+  box-shadow: none;
+}
+.form-group.has-warning .rw-input,
+.form-group.has-warning .rw-dropdownlist,
+.form-group.has-warning .rw-datetimepicker {
+  border-color: #f39c12;
+  box-shadow: none;
 }

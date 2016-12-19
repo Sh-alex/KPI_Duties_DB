@@ -57,6 +57,11 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
 
     compile group: 'org.apache.poi', name: 'poi', version: '3.15'
+
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE')
+    compile('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.6.0'
+    compile group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.5.2'
 }
 
 bootRepackage {
