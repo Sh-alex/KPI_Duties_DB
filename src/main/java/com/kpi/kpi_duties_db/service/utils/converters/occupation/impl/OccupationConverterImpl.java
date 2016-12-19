@@ -108,6 +108,11 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
+        entity.setDocumentName(nameOccupation.getDocumentName());
+        entity.setDocumentUrl(nameOccupation.getDocumentUrl());
+        entity.setDocumentTextsName(nameOccupation.getDocumentTextsName());
+        entity.setDocumentTextsUrl(nameOccupation.getDocumentTextsUrl());
+
         return entity;
     }
 
@@ -456,6 +461,11 @@ public class OccupationConverterImpl implements OccupationConverter {
             dataInItem.setRtDutiesParentId(entity.getParentId());
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
+
+            dataInItem.setDocumentName(entity.getDocumentName());
+            dataInItem.setDocumentUrl(entity.getDocumentUrl());
+            dataInItem.setDocumentTextsName(entity.getDocumentTextsName());
+            dataInItem.setDocumentTextsUrl(entity.getDocumentTextsUrl());
 
             dataInItem.setClarifications(createClarifications(entity));
 

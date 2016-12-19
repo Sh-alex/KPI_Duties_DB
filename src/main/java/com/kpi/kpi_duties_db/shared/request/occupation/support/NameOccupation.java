@@ -29,6 +29,18 @@ public class NameOccupation {
     @JsonProperty("occupationNameMin")
     private String rtDutiesNameShort;
 
+    @JsonProperty("documentName")
+    private String documentName;
+
+    @JsonProperty("documentUrl")
+    private String documentUrl;
+
+    @JsonProperty("documentTextsName")
+    private String documentTextsName;
+
+    @JsonProperty("documentTextsUrl")
+    private String documentTextsUrl;
+
     public Integer getDcDutiesPartitionId() {
         return dcDutiesPartitionId;
     }
@@ -67,5 +79,37 @@ public class NameOccupation {
 
     public void setRtDutiesNameShort(String rtDutiesNameShort) {
         this.rtDutiesNameShort = rtDutiesNameShort;
+    }
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
+
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
+    }
+
+    public String getDocumentTextsName() {
+        return documentTextsName;
+    }
+
+    public void setDocumentTextsName(String documentTextsName) {
+        this.documentTextsName = documentTextsName;
+    }
+
+    public String getDocumentTextsUrl() {
+        return documentTextsUrl;
+    }
+
+    public void setDocumentTextsUrl(String documentTextsUrl) {
+        this.documentTextsUrl = documentTextsUrl;
     }
 }
