@@ -1,8 +1,23 @@
+##hibernate settings
+#datasource:
+#  url: jdbc:sqlserver://77.47.209.119:21776;databaseName=Permissions_zhenya
+#  username: admin
+#  password: admin
+#  driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#  dialect: org.hibernate.dialect.SQLServerDialect
+#  ddl-auto : none
+#  show-sql : true
+#  format-sql : true
+#  entitymanager.packages.to.scan: com.kpi.kpi_duties_db.domain
+#
+#server:
+#  port: 52300
+
 #hibernate settings
 datasource:
-  url: jdbc:sqlserver://77.47.209.119:21776;databaseName=Permissions_zhenya
-  username: admin
-  password: admin
+  url: jdbc:sqlserver://localhost:1433
+  username: TKIK_32
+  password: TKIK_32_123
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   dialect: org.hibernate.dialect.SQLServerDialect
   ddl-auto : none
