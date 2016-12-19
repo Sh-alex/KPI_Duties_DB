@@ -23,14 +23,14 @@ import {
     ADDING_INFO_FROM_ANOTHER_OCCUPATION_TYPE_QUALIFF_REQUIR
 } from '../constants/addingInfoFromAnotherOccup'
 
-function calcNewOccupationNameVal(oldVal, clarifiedOccupTextVal, clarificationTextVal) {
+function calcNewOccupationNameVal(clarifiedOccupTextVal, clarificationTextVal) {
     if(clarifiedOccupTextVal && clarificationTextVal)
         return clarifiedOccupTextVal + " " + clarificationTextVal;
     if(clarifiedOccupTextVal)
         return clarifiedOccupTextVal;
     if(clarificationTextVal)
         return clarificationTextVal;
-    return oldVal;
+    return "";
 }
 
 export default function formEditOccupInfo(state, action) {
@@ -204,7 +204,6 @@ export default function formEditOccupInfo(state, action) {
                         occupationName: {
                             ...state.name.occupationName,
                             value: calcNewOccupationNameVal(
-                                state.name.occupationName.value,
                                 !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
                                 action.newVal.textValue
                             )
@@ -212,7 +211,6 @@ export default function formEditOccupInfo(state, action) {
                         occupationNameMin: {
                             ...state.name.occupationNameMin,
                             value: calcNewOccupationNameVal(
-                                state.name.occupationNameMin.value,
                                 !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
                                 action.newVal.textValue
                             )
@@ -229,23 +227,26 @@ export default function formEditOccupInfo(state, action) {
                 ...state,
                 name: {
                     ...state.name,
+                    clarification: {
+                        ...state.name.clarification,
+                        value: !action.newVal.id ? state.name.clarification.value : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
+                    },
                     occupationName: {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
-                            state.name.occupationName.value,
                             !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-                            state.clarificationTextVal
+                            !action.newVal.id ? state.clarificationTextVal : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                         )
                     },
                     occupationNameMin: {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
-                            state.name.occupationNameMin.value,
                             !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-                            state.clarificationTextVal
+                            !action.newVal.id ? state.clarificationTextVal : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                         )
                     }
                 },
+                clarificationTextVal: !action.newVal.id ? state.clarificationTextVal : "",  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                 clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
             };
 

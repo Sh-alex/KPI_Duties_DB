@@ -71,6 +71,7 @@ export default class FormEditOccupInfoDescriptionTextSection extends Component {
                         portionKey={i}
                         handleTextChange={decoratedTextChangeHandler}
                         handleDelPortionBtnClick={decoratedDelHandler}
+                        showBtnAddInfoFromAnotherOccupations={this.props.showBtnAddInfoFromAnotherOccupations}
                         handleBtnAddInfoFromAnotherOccupClick={decoratedAddInfoFromAnotherOccupHandler}
                     />
                 )

@@ -95,6 +95,8 @@ import {
 
 import { showModalEditOccup } from "../../actions/editOccup"
 
+import { denyAccessToTheUserWithRedirect } from '../../actions/user'
+
 class CtrlDcBox extends Component {
     constructor(props) {
         super(props);
@@ -145,12 +147,22 @@ class CtrlDcBox extends Component {
         this.handleToggleUsingOccupListBtnClick = this.handleToggleUsingOccupListBtnClick.bind(this);
         this.handleUsingOccupNameClick = this.handleUsingOccupNameClick.bind(this);
     }
+    componentWillMount() {
+        this.checkUserAccess(this.props)
+    }
+
+    checkUserAccess(props) {
+        if(!props.userMayCtrlDc)
+            props.denyAccessToTheUserWithRedirect()
+    }
 
     componentDidMount() {
         this.props.fetchLists();
     }
 
     componentWillReceiveProps(nextProps) {
+        this.checkUserAccess(nextProps);
+
         //визначаємо посилання на активні списки
         let listNamesDict = {
             OCCUP_GROUP: "occupationGroupList",
@@ -623,6 +635,10 @@ class CtrlDcBox extends Component {
                             onHide={this.hideModalConfirmDelOccupDcVal}
                         />
                         <CtrlDcBoxRes
+                            userMayAddNewValues={this.props.userMayAddNewValues}
+                            userMayDelValues={this.props.userMayDelValues}
+                            userMayEditValues={this.props.userMayEditValues}
+                            userMaySeeUsingOccupationsValues={this.props.userMaySeeUsingOccupationsValues}
                             showAddingInp={this.showAddingInp}
                             hideAddingInp={this.hideAddingInp}
                             addingInpIsShown={this.state.addingInpIsShown}
@@ -671,16 +687,35 @@ const mapStateToProps = (state, ownProps) => {
         occupNamesById.items[item.id] = item.textValue;
     });
 
+    let userMayCtrlDc = state.user.isAuthenticated &&
+            state.user.permissions &&
+            state.user.permissions.forms &&
+            state.user.permissions.forms.ctrlDc &&
+            state.user.permissions.forms.ctrlDc.parts &&
+            state.user.permissions.forms.ctrlDc.show,
+        userMayAddNewValues = userMayCtrlDc && state.user.permissions.forms.ctrlDc.parts.addNewValues,
+        userMayDelValues = userMayCtrlDc && state.user.permissions.forms.ctrlDc.parts.delValues,
+        userMayEditValues = userMayCtrlDc && state.user.permissions.forms.ctrlDc.parts.editValues,
+        userMaySeeUsingOccupationsValues = userMayCtrlDc && state.user.permissions.forms.ctrlDc.parts.showUsingOccupations;
+
     return {
         ...state.occupNameInfoLists,
         ...state.occupCodesLists,
         ...state.occupDescriptionTextsLists,
-        occupNamesById
+        userMayCtrlDc,
+        userMayAddNewValues,
+        userMayDelValues,
+        userMayEditValues,
+        userMaySeeUsingOccupationsValues,
+        occupNamesById,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        denyAccessToTheUserWithRedirect() {
+            return dispatch( denyAccessToTheUserWithRedirect() );
+        },
         fetchLists() {
             dispatch(fetchClarifiedOccupList());
             dispatch(fetchOccupGroupList());

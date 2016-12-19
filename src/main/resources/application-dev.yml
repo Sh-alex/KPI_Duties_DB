@@ -15,9 +15,9 @@
 
 #hibernate settings
 datasource:
-  url: jdbc:sqlserver://localhost:1433
-  username: TKIK_32
-  password: TKIK_32_123
+  url: jdbc:sqlserver://77.47.209.119:21776;databaseName=Permissions_zhenya
+  username: admin
+  password: admin111
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   dialect: org.hibernate.dialect.SQLServerDialect
   ddl-auto : none

@@ -171,6 +171,16 @@ export default class SearchOccupBoxRes extends Component {
                 itemsById: this.state.searchResData.itemsById,
                 itemsList: this.state.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
             },
+            BtnDownloadSearchResults = this.props.userMayDownloadSearchResults ? (
+                <button
+                    className="btn btn-default btn-download-search-res"
+                    title="Заватажити результати у Excel файл"
+                    onClick={this.props.showModalResDownloadSettings}
+                >
+                    <i className="fa fa-download" />
+                    {" "} Заватажити результати
+                </button>
+            ) : null,
             modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
                 this.state.deletingItem !== undefined &&
                 this.state.searchResData.itemsById[this.state.deletingItem] &&
@@ -219,6 +229,8 @@ export default class SearchOccupBoxRes extends Component {
                             </Alert>
                         ) : (
                             <SearchOccupBoxResTbl
+                                showBtnDelOccupations={this.props.userMayDelOccupations}
+                                showBtnEditOccupations={this.props.userMayEditOccupations}
                                 searchResData={showingSearchResData}
                                 tblStartIndex={portionStartIndex}
                                 occupationGroupList={this.props.occupationGroupList}
@@ -247,14 +259,7 @@ export default class SearchOccupBoxRes extends Component {
                                     sizesArr={this.state.paginationSizesArr} />
                             </div>
                             <div className="col-sm-4 text-center">
-                                <button
-                                    className="btn btn-default btn-download-search-res"
-                                    title="Заватажити результати у Excel файл"
-                                    onClick={this.props.showModalResDownloadSettings}
-                                >
-                                    <i className="fa fa-download" />
-                                    {" "} Заватажити результати
-                                </button>
+                                { BtnDownloadSearchResults }
                             </div>
                             <div className="col-sm-4 text-right">
                                 <Pagination

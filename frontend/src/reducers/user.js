@@ -13,7 +13,9 @@ import {
     REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAIL,
 
-    CLEAR_LOG_IN_ERROR
+    CLEAR_LOG_IN_ERROR,
+
+    DENY_ACCESS_TO_THE_USER,
 } from '../constants/user'
 
 const initialState = {
@@ -31,8 +33,11 @@ const initialState = {
     // logoutError: "",
     userName: "",
     userAvatar: "",
-    role: "guest",
-    permissions: {/**/}
+    accessError: "",
+    permissions: {
+        "accessName": "Доступ заборонено",
+        "forms": { }
+    },
 };
 
 export default function user(state = initialState, action) {
@@ -40,8 +45,13 @@ export default function user(state = initialState, action) {
         case GET_USER_INFO_REQUEST:
             return {
                 ...state,
+                permissions: {
+                    "accessName": "Доступ заборонено",
+                    "forms": { }
+                },
                 isAuthenticated: false,
                 getUserInfoError: "",
+                accessError: "",
                 isGettingUserInfo: true,
             };
         case GET_USER_INFO_SUCCESS:
@@ -58,16 +68,23 @@ export default function user(state = initialState, action) {
                 isAuthenticated: false,
                 isGettingUserInfo: false,
                 getUserInfoError: action.errorMsg,
-                permissions: {}
+                permissions: {
+                    "accessName": "Доступ заборонено",
+                    "forms": { }
+                },
             };
 
         case LOGIN_REQUEST:
             return {
                 ...state,
                 loginError: "",
+                accessError: "",
                 isAuthenticated: false,
                 isLoggingIn: true,
-                permissions: {},
+                permissions: {
+                    "accessName": "Доступ заборонено",
+                    "forms": { }
+                },
                 access_token: ""
             };
         case LOGIN_SUCCESS:
@@ -84,7 +101,10 @@ export default function user(state = initialState, action) {
                 isLoggingIn: false,
                 loginError: action.errorMsg,
                 access_token: "",
-                permissions: {}
+                permissions: {
+                    "accessName": "Доступ заборонено",
+                    "forms": { }
+                },
             };
 
         case LOGOUT_SUCCESS:
@@ -92,13 +112,16 @@ export default function user(state = initialState, action) {
                 isAuthenticated: false,
                 isLoggingIn: false,
                 loginError: "",
+                accessError: "",
                 // isLoggingOut: false,
                 // logoutError: "",
                 access_token: "",
                 userName: "",
                 userAvatar: "",
-                role: "guest",
-                permissions: {/**/}
+                permissions: {
+                    "accessName": "Доступ заборонено",
+                    "forms": { }
+                },
             };
 
         case CLEAR_LOG_IN_ERROR:
@@ -106,6 +129,7 @@ export default function user(state = initialState, action) {
                 ...state,
                 loginError: "",
                 getUserInfoError: "",
+                accessError: "",
             };
 
         case REFRESH_TOKEN_REQUEST:
@@ -127,6 +151,12 @@ export default function user(state = initialState, action) {
                 isRefreshingAccessToken: false,
                 access_token: "",
                 refreshingAccessTokenError: action.errorMsg,
+            };
+
+        case DENY_ACCESS_TO_THE_USER:
+            return {
+                ...state,
+                accessError: "Відмовлено в доступі до цього компоненту.",
             };
 
         default:
