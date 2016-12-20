@@ -34,24 +34,24 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+//
+//    @Autowired
+//    private PermissionsRepository employeeRepository;
 
-    @Autowired
-    private PermissionsRepository employeeRepository;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(username -> {
-                            Permissions employee = employeeRepository.loadUserByUsername(username);
-                            if (employee == null) {
-                                throw new BadCredentialsException("User not found");
-                            }
-                            return new User(username, employee.getPassword(), asList(new SimpleGrantedAuthority("ROLE_USER")));
-//                            return new User("admin", "123", asList(new SimpleGrantedAuthority("ROLE_USER")));
-                        }
-
-                );
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .userDetailsService(username -> {
+//                            Permissions employee = employeeRepository.loadUserByUsername(username);
+//                            if (employee == null) {
+//                                throw new BadCredentialsException("User not found");
+//                            }
+//                            return new User(username, employee.getPassword(), asList(new SimpleGrantedAuthority("ROLE_USER")));
+////                            return new User("admin", "123", asList(new SimpleGrantedAuthority("ROLE_USER")));
+//                        }
+//
+//                );
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,15 +71,19 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("bill")
-//                .password("123")
-//                .authorities("FOO_READ")
-//                .and()
-//                .withUser("writer")
-//                .password("writer")
-//                .authorities("FOO_READ", "FOO_WRITE");
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password("123")
+                .authorities("FOO_READ")
+                .and()
+                .withUser("reader")
+                .password("123")
+                .authorities("FOO_READ", "FOO_WRITE")
+                .and()
+                .withUser("editor")
+                .password("123")
+                .authorities("FOO_READ", "FOO_WRITE");
+    }
 }

@@ -32,6 +32,7 @@ public class UserDetailsResponse {
         this.tokenParser = tokenParser;
         this.permissionsRepository = permissionsRepository;
         this.detailService = detailService;
+
     }
 
 
