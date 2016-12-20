@@ -103,9 +103,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         return repository.getOne(id);
     }
 
-
-
-
     @Override
     @Transactional(readOnly = true)
     public List<T> getAll() {
