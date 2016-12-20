@@ -26,7 +26,7 @@ var logFileStream = fs.createWriteStream(__dirname + '/node_server_log.log', {fl
 
 
 function handleAPIResp (apiServerResp, frontEndReq, frontEndRes) {
-    console.log("PROXY:\n  " + frontEndReq.method + " " + apiServerResp.url + " - " + apiServerResp.status + "\n  frontEndReq.body = ", frontEndReq.body);
+    console.log((new Date()).toJSON(), ":\nPROXY:\n  " + frontEndReq.method + " " + apiServerResp.url + " - " + apiServerResp.status + "\n  frontEndReq.body = ", frontEndReq.body);
     frontEndRes.status(apiServerResp.status);
 
     var contentType = apiServerResp.headers.get("content-type");
@@ -256,7 +256,16 @@ function proxyJavaServer(req, res) {
         mode: 'cors',
         method: req.method,
         body: JSON.stringify(req.body),
-        headers: req.headers,
+        headers: {
+            authorization: req.headers.authorization || req.query.a, //якщо не передали як хедер, мб передали як параметр юрл
+            accept: req.headers.accept,
+            "accept-encoding": req.headers["accept-encoding"],
+            "accept-language": req.headers["accept-language"],
+            connection: req.headers.connection,
+            "content-length": req.headers["content-length"],
+            "content-type": req.headers["content-type"],
+            "user-agent": req.headers["user-agent"]
+        }
     }).then(
         function(apiServerResp) {
             handleAPIResp(apiServerResp, req, res)
@@ -284,12 +293,19 @@ app.use(function(req, res, next) {
 
 //API для генерації EXCEL-файла із результатами пошуку
 app.get('/api/occupations/downloadSearchResults', function(req, res) {
-    if(!req.headers.authorization)
-        req.headers.authorization = req.query.a;    //якщо не передали як хедер, мб передали як параметр юрл
     fetch(`${SERVER_ADDRESS}:${API_PORT}${SEARCH_OCCUPATION_URI}?occupIds=${req.query.occupIds}`, {
         mode: 'cors',
         method: "get",
-        headers: req.headers,
+        headers: {
+            authorization: req.headers.authorization || req.query.a, //якщо не передали як хедер, мб передали як параметр юрл
+            accept: req.headers.accept,
+            "accept-encoding": req.headers["accept-encoding"],
+            "accept-language": req.headers["accept-language"],
+            connection: req.headers.connection,
+            "content-length": req.headers["content-length"],
+            "content-type": req.headers["content-type"],
+            "user-agent": req.headers["user-agent"]
+        },
     })
         .then((response) => {
             console.log("DOWNLOAD SEARCH RESULTS: :\n  " + req.method + " " + response.url + " - " + response.status);
