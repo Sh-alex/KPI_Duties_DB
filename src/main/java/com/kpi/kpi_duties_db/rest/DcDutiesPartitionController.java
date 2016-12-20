@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.rest;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesPartitionEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcDutiesPartitionEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesPartitionService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
@@ -37,9 +37,14 @@ public class DcDutiesPartitionController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll() {
+    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcDutiesPartitionEntity> all = dcDutiesPartitionEntityService.getAll();
+        List<DcDutiesPartitionEntity> all;
+        if (limit != null && limit > 0 && offset != null) {
+            all = dcDutiesPartitionEntityService.getAll(offset, limit);
+        } else
+            all = dcDutiesPartitionEntityService.getAll();
+
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForDcDutiesPartition(response);
 

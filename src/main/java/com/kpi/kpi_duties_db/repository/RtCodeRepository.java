@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.repository;
 
-import com.kpi.kpi_duties_db.domain.RtCodeEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtCodeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

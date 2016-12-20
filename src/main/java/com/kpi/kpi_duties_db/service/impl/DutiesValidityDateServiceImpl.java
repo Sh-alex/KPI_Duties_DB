@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.impl;
 
-import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DutiesValidityDateEntity;
 import com.kpi.kpi_duties_db.service.DutiesValidityDateService;
 import org.springframework.stereotype.Service;
 

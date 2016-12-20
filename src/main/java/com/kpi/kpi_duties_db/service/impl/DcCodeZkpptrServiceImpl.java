@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.impl;
 
-import com.kpi.kpi_duties_db.domain.DcCodeZkpptrEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcCodeZkpptrEntity;
 import com.kpi.kpi_duties_db.repository.DcCodeZkpptrRepository;
 import com.kpi.kpi_duties_db.service.DcCodeZkpptrService;
 import org.springframework.beans.factory.annotation.Autowired;

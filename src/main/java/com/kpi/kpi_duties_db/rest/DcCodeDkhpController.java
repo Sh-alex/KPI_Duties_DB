@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.rest;
 
-import com.kpi.kpi_duties_db.domain.DcCodeDkhpEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcCodeDkhpEntity;
 import com.kpi.kpi_duties_db.service.DcCodeDkhpService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
@@ -37,9 +37,14 @@ public class DcCodeDkhpController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll() {
+    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcCodeDkhpEntity> all = dcCodeDkhpService.getAll();
+        List<DcCodeDkhpEntity> all;
+        if (limit != null && limit > 0 && offset != null) {
+            all = dcCodeDkhpService.getAll(offset, limit);
+        } else
+            all = dcCodeDkhpService.getAll();
+
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeDKHPId");
 

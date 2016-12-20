@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.repository;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesNameEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcDutiesNameEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

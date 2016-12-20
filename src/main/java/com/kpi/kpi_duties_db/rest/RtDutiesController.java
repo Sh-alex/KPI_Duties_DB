@@ -1,9 +1,9 @@
 package com.kpi.kpi_duties_db.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kpi.kpi_duties_db.domain.DutiesValidityDateEntity;
-import com.kpi.kpi_duties_db.domain.RtCodeEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DutiesValidityDateEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtCodeEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;

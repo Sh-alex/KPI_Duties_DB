@@ -1,4 +1,4 @@
-package com.kpi.kpi_duties_db.domain;
+package com.kpi.kpi_duties_db.domain.dcduties;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -9,16 +9,17 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "DcCodeETKD", schema = "dbo", catalog = "DcDuties")
-public class DcCodeEtkdEntity {
+@Table(name = "DcDutiesPartition", schema = "dbo", catalog = "DcDuties")
+public class DcDutiesPartitionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "DcDutiesPartitionId")
     private Integer id;
 
-    @Column(name = "Name")
+    @Column(name = "DcDutiesPartitionName")
     private String name;
+
 
     public Integer getId() {
         return id;
@@ -39,10 +40,10 @@ public class DcCodeEtkdEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DcCodeEtkdEntity)) return false;
-        DcCodeEtkdEntity that = (DcCodeEtkdEntity) o;
-        return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getName(), that.getName());
+        if (!(o instanceof DcDutiesPartitionEntity)) return false;
+        DcDutiesPartitionEntity entity = (DcDutiesPartitionEntity) o;
+        return Objects.equals(getId(), entity.getId()) &&
+                Objects.equals(getName(), entity.getName());
     }
 
     @Override

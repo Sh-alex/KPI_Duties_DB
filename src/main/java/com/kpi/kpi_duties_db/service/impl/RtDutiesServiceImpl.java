@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.impl;
 
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import com.kpi.kpi_duties_db.service.RtDutiesService;

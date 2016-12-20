@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.impl;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcDutiesTasksAndResponsibilitiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.utils.converters.occupation.impl;
 
-import com.kpi.kpi_duties_db.domain.*;
+import com.kpi.kpi_duties_db.domain.dcduties.*;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;

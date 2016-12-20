@@ -17,4 +17,5 @@ public interface BaseService<T> {
     List<T> update(List<T> entity);
     T getById(Integer id);
     List<T> getAll();
+    List<T> getAll(Integer offset, Integer limit);
 }

@@ -1,7 +1,7 @@
 package com.kpi.kpi_duties_db.service.utils.usingoccupations.impl;
 
-import com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesCodeEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
 import com.kpi.kpi_duties_db.shared.response.support.IdNameResponse;

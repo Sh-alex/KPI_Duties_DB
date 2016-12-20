@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service.parser.support.converter.impl;
 
-import com.kpi.kpi_duties_db.domain.*;
+import com.kpi.kpi_duties_db.domain.dcduties.*;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 import com.kpi.kpi_duties_db.service.parser.support.converter.OccupationXlsConverter;

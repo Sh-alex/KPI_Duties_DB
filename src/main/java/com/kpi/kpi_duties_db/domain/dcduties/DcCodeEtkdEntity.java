@@ -1,4 +1,4 @@
-package com.kpi.kpi_duties_db.domain;
+package com.kpi.kpi_duties_db.domain.dcduties;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "DcCodeDKHP", schema = "dbo", catalog = "DcDuties")
-public class DcCodeDkhpEntity {
+@Table(name = "DcCodeETKD", schema = "dbo", catalog = "DcDuties")
+public class DcCodeEtkdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +39,8 @@ public class DcCodeDkhpEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DcCodeDkhpEntity)) return false;
-        DcCodeDkhpEntity that = (DcCodeDkhpEntity) o;
+        if (!(o instanceof DcCodeEtkdEntity)) return false;
+        DcCodeEtkdEntity that = (DcCodeEtkdEntity) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getName(), that.getName());
     }

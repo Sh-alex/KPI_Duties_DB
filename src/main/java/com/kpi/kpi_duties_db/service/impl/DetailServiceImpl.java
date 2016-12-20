@@ -1,7 +1,6 @@
 package com.kpi.kpi_duties_db.service.impl;//package com.example.service.impl;
 
 
-
 import com.kpi.kpi_duties_db.domain.Employees2;
 import com.kpi.kpi_duties_db.domain.Passports;
 import com.kpi.kpi_duties_db.repository.EmployeeRepository;
@@ -16,8 +15,9 @@ import java.util.List;
 /**
  * Created by Yaroslav on 31.10.2016.
  */
+//TODO: Yaroslav, check this class
 @Service
-public class DetailServiceImpl  implements DetailService {
+public class DetailServiceImpl implements DetailService {
 
     @Autowired
     private PermissionsRepository permissionsRepository;
@@ -73,6 +73,12 @@ public class DetailServiceImpl  implements DetailService {
 
     @Override
     public List<Passports> getAll() {
+        return null;
+    }
+
+    //TODO, delete this method
+    @Override
+    public List<Passports> getAll(Integer offset, Integer limit) {
         return null;
     }
 }

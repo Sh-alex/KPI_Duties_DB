@@ -1,4 +1,4 @@
-package com.kpi.kpi_duties_db.domain;
+package com.kpi.kpi_duties_db.domain.dcduties;
 
 import javax.persistence.*;
 import java.util.Objects;

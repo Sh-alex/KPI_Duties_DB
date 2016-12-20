@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.rest;
 
-import com.kpi.kpi_duties_db.domain.DcCodeZkpptrEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcCodeZkpptrEntity;
 import com.kpi.kpi_duties_db.service.DcCodeZkpptrService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
@@ -37,9 +37,14 @@ public class DcCodeZkpptrController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll() {
+    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcCodeZkpptrEntity> all = dcCodeZkpptrService.getAll();
+        List<DcCodeZkpptrEntity> all;
+        if (limit != null && limit > 0 && offset != null) {
+            all = dcCodeZkpptrService.getAll(offset, limit);
+        } else
+            all = dcCodeZkpptrService.getAll();
+
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeZKPPTRId");
 

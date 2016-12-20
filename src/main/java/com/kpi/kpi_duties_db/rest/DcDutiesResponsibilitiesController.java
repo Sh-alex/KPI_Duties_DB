@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.rest;
 
-import com.kpi.kpi_duties_db.domain.DcDutiesTasksAndResponsibilitiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcDutiesTasksAndResponsibilitiesEntity;
 import com.kpi.kpi_duties_db.service.DcDutiesTaskAndResponsibilitiesService;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.usingoccupations.UsingOccupations;
@@ -37,9 +37,14 @@ public class DcDutiesResponsibilitiesController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll() {
+    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcDutiesTasksAndResponsibilitiesEntity> all = dcDutiesTaskAndResponsibilitiesService.getAll();
+        List<DcDutiesTasksAndResponsibilitiesEntity> all;
+        if (limit != null && limit > 0 && offset != null) {
+            all = dcDutiesTaskAndResponsibilitiesService.getAll(offset, limit);
+        } else
+            all = dcDutiesTaskAndResponsibilitiesService.getAll();
+
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesTaskAndResponsibilities(response);
 

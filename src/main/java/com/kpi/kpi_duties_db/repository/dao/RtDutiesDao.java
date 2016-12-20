@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.repository.dao;
 
-import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 
 import java.util.List;
 import java.util.Map;

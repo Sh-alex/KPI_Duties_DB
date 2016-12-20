@@ -1,7 +1,7 @@
 package com.kpi.kpi_duties_db.service.impl;
 
-import com.kpi.kpi_duties_db.domain.RtCodeEntity;
-import com.kpi.kpi_duties_db.domain.RtDutiesCodeEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtCodeEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesCodeEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesCodeRepository;
 import com.kpi.kpi_duties_db.service.RtDutiesCodeService;
 import org.springframework.beans.factory.annotation.Autowired;

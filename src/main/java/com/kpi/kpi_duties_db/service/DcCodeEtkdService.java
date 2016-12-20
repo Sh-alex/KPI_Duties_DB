@@ -1,6 +1,6 @@
 package com.kpi.kpi_duties_db.service;
 
-import com.kpi.kpi_duties_db.domain.DcCodeEtkdEntity;
+import com.kpi.kpi_duties_db.domain.dcduties.DcCodeEtkdEntity;
 
 /**
  * @author Olexandr Shevchenko

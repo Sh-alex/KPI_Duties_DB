@@ -7,6 +7,7 @@ import com.kpi.kpi_duties_db.shared.message.error.UpdateEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ import java.util.List;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
-    JpaRepository<T, Integer> repository;
+    private JpaRepository<T, Integer> repository;
 
     private final static Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
 
@@ -109,6 +110,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Transactional(readOnly = true)
     public List<T> getAll() {
         return repository.findAll();
-        //return repository.findAll(new PageRequest(0, 5)).getContent();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> getAll(Integer offset, Integer limit) {
+        offset /= limit;
+        return repository.findAll(new PageRequest(offset, limit)).getContent();
     }
 }
