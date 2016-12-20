@@ -1,6 +1,6 @@
 #hibernate settings
 datasource:
-  url: jdbc:sqlserver://77.47.209.119:21776;databaseName=Permissions_zhenya
+  url: jdbc:sqlserver://localhost:1433;databaseName=Permissions_zhenya
   username: admin
   password: admin111
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
