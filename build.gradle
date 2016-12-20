@@ -1,3 +1,5 @@
+
+
 buildscript {
     ext {
         springBootVersion = '1.3.5.RELEASE'
@@ -40,13 +42,16 @@ ext {
 }
 
 
+
+
+
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-jersey')
     compile('org.springframework.boot:spring-boot-starter-web')
 
 
-    compile files('C:\\Users\\Olexandr\\.m2\\repository\\com\\microsoft\\sqlserver\\sqljdbc42\\6.0\\sqljdbc42-6.0.jar')
+    compile files('C:\\Users\\Yaroslav\\Desktop\\sqljdbc42.jar')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile("joda-time:joda-time:$jodaTimeVersion")
