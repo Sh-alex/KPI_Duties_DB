@@ -30,6 +30,14 @@ public class DataInItem {
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
 
+    private String documentName;
+
+    private String documentUrl;
+
+    private String documentTextsName;
+
+    private String documentTextsUrl;
+
     private List<Duration> durations;
 
     private List<CodesInData> codes;
@@ -39,6 +47,8 @@ public class DataInItem {
     private List<Requirement> responsibilities;
 
     private List<Requirement> qualiffRequir;
+
+    private List<String> clarifications;
 
     public String getRtDutiesName() {
         return rtDutiesName;
@@ -88,6 +98,38 @@ public class DataInItem {
         this.dcDutiesNameId = dcDutiesNameId;
     }
 
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
+
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
+    }
+
+    public String getDocumentTextsName() {
+        return documentTextsName;
+    }
+
+    public void setDocumentTextsName(String documentTextsName) {
+        this.documentTextsName = documentTextsName;
+    }
+
+    public String getDocumentTextsUrl() {
+        return documentTextsUrl;
+    }
+
+    public void setDocumentTextsUrl(String documentTextsUrl) {
+        this.documentTextsUrl = documentTextsUrl;
+    }
+
     public List<Duration> getDurations() {
         return durations;
     }
@@ -126,5 +168,13 @@ public class DataInItem {
 
     public void setQualiffRequir(List<Requirement> qualiffRequir) {
         this.qualiffRequir = qualiffRequir;
+    }
+
+    public List<String> getClarifications() {
+        return clarifications;
+    }
+
+    public void setClarifications(List<String> clarifications) {
+        this.clarifications = clarifications;
     }
 }

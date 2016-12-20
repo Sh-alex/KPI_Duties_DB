@@ -28,7 +28,7 @@ import java.util.List;
 public class DcDutiesNameController {
 
     @Autowired
-    private DcDutiesNameService dcDutiesNameEntityService;
+    private DcDutiesNameService dcDutiesNameService;
 
     @Autowired
     private IdNameConverter idNameConverter;
@@ -39,7 +39,7 @@ public class DcDutiesNameController {
     @GET
     public Response getAllRtDutiesNames() {
 
-        List<DcDutiesNameEntity> all = dcDutiesNameEntityService.getAll();
+        List<DcDutiesNameEntity> all = dcDutiesNameService.getAll();
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForDcDutiesName(response);
 
@@ -51,7 +51,7 @@ public class DcDutiesNameController {
 
         DcDutiesNameEntity entity = new DcDutiesNameEntity();
         entity.setName(request.getNewVal());
-        dcDutiesNameEntityService.add(entity);
+        dcDutiesNameService.add(entity);
 
         return Response.ok().entity(entity).build();
     }
@@ -63,7 +63,7 @@ public class DcDutiesNameController {
         DcDutiesNameEntity entity = new DcDutiesNameEntity();
         entity.setId(id);
         entity.setName(request.getNewVal());
-        dcDutiesNameEntityService.update(entity);
+        dcDutiesNameService.update(entity);
 
         return Response.ok().build();
     }
@@ -72,7 +72,7 @@ public class DcDutiesNameController {
     @Path("/{id}")
     public Response delete(@PathParam("id") Integer id) {
 
-        dcDutiesNameEntityService.delete(id);
+        dcDutiesNameService.delete(id);
 
         return Response.ok().build();
     }

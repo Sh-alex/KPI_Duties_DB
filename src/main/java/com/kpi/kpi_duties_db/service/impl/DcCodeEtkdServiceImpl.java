@@ -1,7 +1,9 @@
 package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.DcCodeEtkdEntity;
+import com.kpi.kpi_duties_db.repository.DcCodeEtkdRepository;
 import com.kpi.kpi_duties_db.service.DcCodeEtkdService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,4 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DcCodeEtkdServiceImpl extends BaseServiceImpl<DcCodeEtkdEntity> implements DcCodeEtkdService {
 
+    @Autowired
+    private DcCodeEtkdRepository repository;
+
+    @Override
+    public DcCodeEtkdEntity findByName(String name) {
+        return repository.findByName(name);
+    }
 }

@@ -23,7 +23,7 @@ public class DcDutiesNameEntity {
     @Column(name = "TypeId")
     private Integer typeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TypeId", insertable = false, updatable = false)
     private DcDutiesTypeEntity dcDutiesTypeEntity;
 

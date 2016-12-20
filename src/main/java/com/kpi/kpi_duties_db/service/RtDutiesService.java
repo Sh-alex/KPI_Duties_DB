@@ -14,4 +14,6 @@ import java.util.List;
 public interface RtDutiesService extends BaseService<RtDutiesEntity> {
 
     List<RtDutiesEntity> getByParams(OccupationGetDto dto);
+
+    RtDutiesEntity findByName(String name);
 }

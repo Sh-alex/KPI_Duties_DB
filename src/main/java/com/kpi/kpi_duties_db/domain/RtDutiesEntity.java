@@ -37,35 +37,51 @@ public class RtDutiesEntity {
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
-    @ManyToOne
+    @Column(name = "documentName")
+    private String documentName;
+
+    @Column(name = "documentUrl")
+    private String documentUrl;
+
+    @Column(name = "documentTextsName")
+    private String documentTextsName;
+
+    @Column(name = "documentTextsUrl")
+    private String documentTextsUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DcDutiesNameId", insertable = false, updatable = false)
     private DcDutiesNameEntity dcDutiesNameEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DcDutiesPartitionId", insertable = false, updatable = false)
     private DcDutiesPartitionEntity dcDutiesPartitionEntity;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ParentId", insertable = false, updatable = false)
+    private RtDutiesEntity parentEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ParentId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesCodeEntity> rtDutiesCodeEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RtDutiesId")
     private Set<DutiesValidityDateEntity> dutiesValidityDateEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesQualificationRequirementsEntity> rtDutiesQualificationRequirementsEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesMustKnowEntity> rtDutiesMustKnowEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "RtDutiesId")
     private Set<RtDutiesTaskAndResponsibilitiesEntity> rtDutiesTaskAndResponsibilitiesEntities;
 
@@ -117,12 +133,52 @@ public class RtDutiesEntity {
         this.parentId = parentId;
     }
 
+    public RtDutiesEntity getParentEntity() {
+        return parentEntity;
+    }
+
+    public void setParentEntity(RtDutiesEntity parentEntity) {
+        this.parentEntity = parentEntity;
+    }
+
     public Timestamp getVcChangeDate() {
         return vcChangeDate;
     }
 
     public void setVcChangeDate(Timestamp vcChangeDate) {
         this.vcChangeDate = vcChangeDate;
+    }
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
+
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
+    }
+
+    public String getDocumentTextsName() {
+        return documentTextsName;
+    }
+
+    public void setDocumentTextsName(String documentTextsName) {
+        this.documentTextsName = documentTextsName;
+    }
+
+    public String getDocumentTextsUrl() {
+        return documentTextsUrl;
+    }
+
+    public void setDocumentTextsUrl(String documentTextsUrl) {
+        this.documentTextsUrl = documentTextsUrl;
     }
 
     public DcDutiesNameEntity getDcDutiesNameEntity() {
@@ -198,11 +254,16 @@ public class RtDutiesEntity {
                 Objects.equals(getDcDutiesPartitionId(), that.getDcDutiesPartitionId()) &&
                 Objects.equals(getName(), that.getName()) &&
                 Objects.equals(getNameShort(), that.getNameShort()) &&
-                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId());
+                Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId()) &&
+                Objects.equals(getParentId(), that.getParentId()) &&
+                Objects.equals(getDocumentName(), that.getDocumentName()) &&
+                Objects.equals(getDocumentUrl(), that.getDocumentUrl()) &&
+                Objects.equals(getDocumentTextsName(), that.getDocumentTextsName()) &&
+                Objects.equals(getDocumentTextsUrl(), that.getDocumentTextsUrl());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId(), getParentId(), getDocumentName(), getDocumentUrl(), getDocumentTextsName(), getDocumentTextsUrl());
     }
 }

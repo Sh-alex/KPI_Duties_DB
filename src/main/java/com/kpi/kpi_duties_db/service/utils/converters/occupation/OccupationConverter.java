@@ -34,4 +34,6 @@ public interface OccupationConverter {
     Map<String, Object> toParamMapFromOccupationGetDto(OccupationGetDto dto);
 
    OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list);
+
+     void deleteParentEntitiesWithoutChildren(RtDutiesEntity rtDutiesEntity);
 }

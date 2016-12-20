@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-class CorsFilter implements Filter {
+class CorsFilter extends BaseCORSFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
@@ -25,7 +25,7 @@ class CorsFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) res;
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
             if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {

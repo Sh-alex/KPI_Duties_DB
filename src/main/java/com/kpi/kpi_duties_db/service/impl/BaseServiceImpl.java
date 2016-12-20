@@ -109,5 +109,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Transactional(readOnly = true)
     public List<T> getAll() {
         return repository.findAll();
+        //return repository.findAll(new PageRequest(0, 5)).getContent();
     }
 }

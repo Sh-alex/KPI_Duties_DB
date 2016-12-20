@@ -38,6 +38,10 @@ public class OccupationGetRequest {
 
     private List<String> inKpi;
 
+    private List<Integer> offset;
+
+    private List<Integer> limit;
+
     public List<String> getIdList() {
         return idList;
     }
@@ -116,5 +120,21 @@ public class OccupationGetRequest {
 
     public void setInKpi(List<String> inKpi) {
         this.inKpi = inKpi;
+    }
+
+    public List<Integer> getOffset() {
+        return offset;
+    }
+
+    public void setOffset(List<Integer> offset) {
+        this.offset = offset;
+    }
+
+    public List<Integer> getLimit() {
+        return limit;
+    }
+
+    public void setLimit(List<Integer> limit) {
+        this.limit = limit;
     }
 }

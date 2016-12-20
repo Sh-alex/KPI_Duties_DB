@@ -36,7 +36,7 @@ public class RtDutiesCodeEntity {
     @Column(name = "RtCodeId")
     private Integer rtCodeId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "RtCodeId", insertable = false, updatable = false)
     private RtCodeEntity rtCodeEntity;
 

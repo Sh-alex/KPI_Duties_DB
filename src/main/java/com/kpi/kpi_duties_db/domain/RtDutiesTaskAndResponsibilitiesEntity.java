@@ -30,7 +30,7 @@ public class RtDutiesTaskAndResponsibilitiesEntity {
     @Column(name = "RtDutiesId")
     private Integer rtDutiesId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DcDuties_TasksAndResponsibilitiesId", insertable = false, updatable = false)
     private DcDutiesTasksAndResponsibilitiesEntity dcDutiesTasksAndResponsibilitiesEntity;
 

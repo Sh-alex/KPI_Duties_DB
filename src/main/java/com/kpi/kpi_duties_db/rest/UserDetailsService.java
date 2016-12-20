@@ -29,11 +29,7 @@ public class UserDetailsService {
 	private TokenParser tokenParser;
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
-
-	@Autowired
 	private PermissionsRepository permissionsRepository;
-
 
 
     @GET

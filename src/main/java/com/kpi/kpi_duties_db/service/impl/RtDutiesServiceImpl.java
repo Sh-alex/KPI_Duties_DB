@@ -1,6 +1,7 @@
 package com.kpi.kpi_duties_db.service.impl;
 
 import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
+import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import com.kpi.kpi_duties_db.service.RtDutiesService;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
@@ -20,10 +21,13 @@ import java.util.List;
 public class RtDutiesServiceImpl extends BaseServiceImpl<RtDutiesEntity> implements RtDutiesService {
 
     @Autowired
-    RtDutiesDao dao;
+    private RtDutiesDao dao;
 
     @Autowired
-    OccupationConverter converter;
+    private OccupationConverter converter;
+
+    @Autowired
+    private RtDutiesRepository repository;
 
 
     @Override
@@ -32,5 +36,10 @@ public class RtDutiesServiceImpl extends BaseServiceImpl<RtDutiesEntity> impleme
         List<RtDutiesEntity> occupations = dao.findByFields(converter.toParamMapFromOccupationGetDto(dto));
 
         return occupations;
+    }
+
+    @Override
+    public RtDutiesEntity findByName(String name) {
+        return repository.findByName(name);
     }
 }

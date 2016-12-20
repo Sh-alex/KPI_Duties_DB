@@ -4,9 +4,10 @@ import com.kpi.kpi_duties_db.domain.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,10 @@ import java.util.Map;
 public class RtDutiesDaoImpl implements RtDutiesDao {
 
     @Autowired
-    RtDutiesRepository repository;
+    private RtDutiesRepository repository;
 
     @Autowired
-    HibernateTemplate hibernateTemplate;
+    private HibernateTemplate hibernateTemplate;
 
     @Override
     @Transactional(readOnly = true)
@@ -35,7 +36,14 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+
+        criteria.setFetchMode("rtDutiesEntities", FetchMode.SELECT);
+        criteria.setFetchMode("rtDutiesCodeEntities", FetchMode.SELECT);
+        criteria.setFetchMode("dutiesValidityDateEntities", FetchMode.SELECT);
+        criteria.setFetchMode("rtDutiesQualificationRequirementsEntities", FetchMode.SELECT);
+        criteria.setFetchMode("rtDutiesMustKnowEntities", FetchMode.SELECT);
+        criteria.setFetchMode("rtDutiesTaskAndResponsibilitiesEntities", FetchMode.SELECT);
+
         criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         if (paramsMap == null || paramsMap.isEmpty()) {
@@ -78,34 +86,39 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "startFrom":
+                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "startTo":
+                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "stopFrom":
+                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "stopTo":
+                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
 
-                        /*case "offset":
-                            offset = (Integer) value;
+                        case "offset":
+                            if ((Integer) value > 0) {
+                                criteria.setFirstResult((Integer) value);
+                            }
                             break;
                         case "limit":
-                            limit = (Integer) value;
-                            break;*/
+                            if ((Integer) value >= 0) {
+                                criteria.setMaxResults((Integer) value);
+                            }
+                            break;
                     }
                 }
             }
 
-           /* if (offset > 0) {
-                criteria.setFirstResult(offset);
-            }
-            if (limit >= 0) {
-                criteria.setMaxResults(limit);
-            }*/
+
+
+
         }
         /*Так як приналежність до КПІ відноситься до дат, то потрібно перевірити щоб всі дати посади
         відповідали критеріям пошуку*/
@@ -113,7 +126,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
         List listByKpi = null;
         List listTemp;
-        if (paramsMap.get("inKpi") != null) {
+        if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
             switch ((String)paramsMap.get("inKpi")){
                 case "ONLY_IN_KPI" :
                     listByKpi = criteriaForDatesInKpi.list();
