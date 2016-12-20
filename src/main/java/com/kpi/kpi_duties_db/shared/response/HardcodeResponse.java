@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class HardcodeResponse {
 
-  public  Map<Object,Object> createResponse(String username) {
+    public  Map<Object,Object> createResponse(String username) {
         boolean isVisible = false;
         boolean isShow = true;
         String surname = "Генаш";
@@ -19,16 +19,16 @@ public class HardcodeResponse {
         if (username.equals("admin")){
             isVisible = true;
             isShow = true;
-               surname = "Гальченко";
-               name = "Ярослав";
-                  accessName = "admin";
+            surname = "Гальченко";
+            name = "Ярослав";
+            accessName = "admin";
         }
         else if (username.equals("reader")){
             isVisible = false;
             isShow = false;
-              surname = "Шевченко";
-              name = "Олександр";
-              accessName = "reader";
+            surname = "Шевченко";
+            name = "Олександр";
+            accessName = "reader";
         }
 
         Map<Object, Object> map = new HashMap<>();
@@ -48,7 +48,7 @@ public class HardcodeResponse {
 
 
         Map<Object, Object> addInfoFromAnotherOccupations = new HashMap<>();
-         parts = new HashMap<>();
+        parts = new HashMap<>();
         parts.put("delValues", isShow);
         parts.put("editValues", isVisible);
         parts.put("addNewValues", isVisible);
@@ -57,9 +57,19 @@ public class HardcodeResponse {
         permissions.put("addInfoFromAnotherOccupations", addInfoFromAnotherOccupations);
 
 
+        Map<Object, Object> searchOccupations = new HashMap<>();
+        parts = new HashMap<>();
+        parts.put("delValues", isShow);
+        parts.put("editValues", isVisible);
+        parts.put("addNewValues", isVisible);
+        addInfoFromAnotherOccupations.put("show", isShow);
+        addInfoFromAnotherOccupations.put("parts", parts);
+        permissions.put("searchOccupations", searchOccupations);
+
+
 
         Map<Object, Object> delOccupations = new HashMap<>();
-         parts = new HashMap<>();
+        parts = new HashMap<>();
         parts.put("delValues", isVisible);
         parts.put("editValues", isVisible);
         parts.put("addNewValues", isShow);
@@ -70,7 +80,7 @@ public class HardcodeResponse {
 
 
         Map<Object, Object> downloadSearchResults = new HashMap<>();
-         parts = new HashMap<>();
+        parts = new HashMap<>();
         parts.put("delValues", isVisible);
         parts.put("editValues", isVisible);
         parts.put("addNewValues", isVisible);
@@ -80,7 +90,7 @@ public class HardcodeResponse {
 
 
         Map<Object, Object> ctrlDc = new HashMap<>();
-         parts = new HashMap<>();
+        parts = new HashMap<>();
         parts.put("delValues", isVisible);
         parts.put("editValues", isVisible);
         parts.put("addNewValues", isShow);
@@ -91,7 +101,7 @@ public class HardcodeResponse {
 
 
         Map<Object, Object> addNewOccupations = new HashMap<>();
-         parts = new HashMap<>();
+        parts = new HashMap<>();
         parts.put("delValues", isVisible);
         parts.put("editValues", isShow);
         parts.put("addNewValues", isShow);
@@ -100,7 +110,7 @@ public class HardcodeResponse {
         permissions.put("addNewOccupations", addNewOccupations);
         permissions.put("accessName", accessName);
 
-        map.put("permissioms", permissions);
+        map.put("permissions", permissions);
         map.put("img", imageBase64);
         map.put("Surname", surname);
         map.put("Name", name);
