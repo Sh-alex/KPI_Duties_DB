@@ -75,11 +75,11 @@ public class HardcodeResponse {
 
             Map<Object, Object> permissions = new HashMap<>();
 
-            Map<Object, Object> editOcupations = new HashMap<>();
+            Map<Object, Object> editOccupations = new HashMap<>();
             Map<Object, Object> parts = new HashMap<>();
-            editOcupations.put("show", editOcupationsBool);
-            editOcupations.put("parts", parts);
-            permissions.put("editOcupations", editOcupations);
+            editOccupations.put("show", editOcupationsBool);
+            editOccupations.put("parts", parts);
+            permissions.put("editOccupations", editOccupations);
 
 
             Map<Object, Object> addInfoFromAnotherOccupations = new HashMap<>();
