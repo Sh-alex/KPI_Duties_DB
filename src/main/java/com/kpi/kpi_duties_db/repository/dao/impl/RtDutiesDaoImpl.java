@@ -52,8 +52,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
         criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
-        List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
-        List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
+
 
         Integer offset = 0;
         Integer limit = 0;
@@ -124,34 +123,36 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                         case "limit":
                             limit = (Integer) value;
                             break;
-                        case "inKpi":
-                            if (value.equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
-                                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
-                            }
-                            if (value.equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
-                                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
-                            }
-                            break;
                     }
                 }
             }
         }
+
+        List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
+        List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
+
+        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
+            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+        }
+        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
+            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+        }
+
         //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
         Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
         result.setResultSize(resultSize);
         criteria.setProjection(null);
+
+        if (paramsMap.get("sortField") != null) {
+            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
+        }
         if (offset > 0) {
             criteria.setFirstResult(offset);
         }
         if (limit >= 0) {
             criteria.setMaxResults(limit);
         }
-
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-        if (paramsMap.get("sortField") != null) {
-            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
-        }
         result.setEntities(criteria.list());
 
         return result;
