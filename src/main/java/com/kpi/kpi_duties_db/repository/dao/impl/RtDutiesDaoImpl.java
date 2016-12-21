@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -137,8 +138,8 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         відповідали критеріям пошуку*/
         criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
         criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
-        List listByKpi = null;
-        List listTemp;
+        List<RtDutiesEntity> listByKpi = null;
+        List<RtDutiesEntity> listTemp;
         if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
             switch ((String) paramsMap.get("inKpi")) {
                 case "ONLY_IN_KPI":
@@ -165,13 +166,14 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         }
         result.setEntities(criteria.list());
         if (listByKpi != null) {
-            Integer size = result.getEntities().size();
-
             //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
             result.getEntities().retainAll(listByKpi);
             //Змінюю загальну кількість посад
-            size -= result.getEntities().size();
-            result.setResultSize(resultSize - size);
+            criteria.add(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList())));
+            criteria.setFirstResult(0);
+            criteria.setFirstResult(0);
+            resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+            result.setResultSize(resultSize);
         }
 
         return result;
