@@ -382,6 +382,12 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getLimit() != null && !request.getLimit().isEmpty()) {
             occupationGetDto.setLimit(request.getLimit().get(0));
         }
+        if (request.getSortField() != null && !request.getSortField().isEmpty()) {
+            occupationGetDto.setSortField(request.getSortField().get(0));
+        }
+        if (request.getSortDirection() != null && !request.getSortDirection().isEmpty()) {
+            occupationGetDto.setSortDirection(request.getSortDirection().get(0));
+        }
 
         if (request.getDcDutiesPartitionIdList() != null && !request.getDcDutiesPartitionIdList().isEmpty()) {
             String[] split = request.getDcDutiesPartitionIdList().get(0).split(",");
@@ -436,6 +442,8 @@ public class OccupationConverterImpl implements OccupationConverter {
         params.put("inKpi", dto.getInKpi());
         params.put("offset", dto.getOffset());
         params.put("limit", dto.getLimit());
+        params.put("sortField", dto.getSortField());
+        params.put("sortDirection", dto.getSortDirection());
 
         return params;
     }

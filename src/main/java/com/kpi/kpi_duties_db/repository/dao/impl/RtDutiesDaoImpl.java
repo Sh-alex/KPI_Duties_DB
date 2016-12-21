@@ -160,6 +160,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 
+        if (paramsMap.get("sortField") != null) {
+            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
+        }
         result.setEntities(criteria.list());
         if (listByKpi != null) {
             Integer size = result.getEntities().size();
@@ -168,9 +171,69 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             result.getEntities().retainAll(listByKpi);
             //Змінюю загальну кількість посад
             size -= result.getEntities().size();
-            result.setResultSize(resultSize-size);
+            result.setResultSize(resultSize - size);
         }
 
         return result;
+    }
+
+    private void addOrder(Criteria criteria, Criteria criteriaForDatesInState, Criteria criteriaForDatesInKpi, String field, String direction) {
+
+        switch (field) {
+            case "OCCUPATION_GROUP":
+                criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dcDutiesPartitionEntity.name"));
+                } else
+                    criteria.addOrder(Order.desc("dcDutiesPartitionEntity.name"));
+                break;
+            case "OCCUPATION_NAME":
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("rtDuties.name"));
+                } else
+                    criteria.addOrder(Order.desc("rtDuties.name"));
+                break;
+            case "START_IN_STATE_DATE":
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.start"));
+                    criteriaForDatesInState.addOrder(Order.asc("dates.start"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.start"));
+                    criteriaForDatesInState.addOrder(Order.desc("dates.start"));
+                }
+                break;
+            case "STOP_IN_STATE_DATE":
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.stop"));
+                    criteriaForDatesInState.addOrder(Order.asc("dates.stop"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.stop"));
+                    criteriaForDatesInState.addOrder(Order.desc("dates.stop"));
+                }
+                break;
+            case "START_IN_KPI_DATE":
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.start"));
+                    criteriaForDatesInKpi.addOrder(Order.asc("dates.start"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.start"));
+                    criteriaForDatesInKpi.addOrder(Order.desc("dates.start"));
+                }
+                break;
+            case "STOP_IN_KPI_DATE":
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                if (direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.stop"));
+                    criteriaForDatesInKpi.addOrder(Order.asc("dates.stop"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.stop"));
+                    criteriaForDatesInKpi.addOrder(Order.desc("dates.stop"));
+                }
+                break;
+
+        }
     }
 }

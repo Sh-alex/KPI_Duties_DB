@@ -41,6 +41,10 @@ public class OccupationGetDto {
 
     private Integer offset;
 
+    private String sortField;
+
+    private String sortDirection;
+
     public List<Integer> getIdList() {
         return idList;
     }
@@ -135,5 +139,21 @@ public class OccupationGetDto {
 
     public void setOffset(Integer offset) {
         this.offset = offset;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortDirection() {
+        return sortDirection;
+    }
+
+    public void setSortDirection(String sortDirection) {
+        this.sortDirection = sortDirection;
     }
 }
