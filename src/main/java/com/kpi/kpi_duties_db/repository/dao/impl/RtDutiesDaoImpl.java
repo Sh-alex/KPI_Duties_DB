@@ -125,10 +125,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             limit = (Integer) value;
                             break;
                         case "inKpi":
-                            if (value.equals("ONLY_IN_KPI")) {
+                            if (value.equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
                                 criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
                             }
-                            if (value.equals("ONLY_IN_STATE")) {
+                            if (value.equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
                                 criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
                             }
                             break;
@@ -158,7 +158,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
     }
 
     private void addOrder(Criteria criteria, Criteria criteriaForDatesInState, Criteria criteriaForDatesInKpi, String field, String direction) {
-
         switch (field) {
             case "OCCUPATION_GROUP":
                 criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
