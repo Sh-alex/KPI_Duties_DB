@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.repository.dao.impl;
 import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.*;
@@ -32,7 +33,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
     @Override
     @Transactional(readOnly = true)
-    public List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap) {
+    public OccupationsSearchResultDto findByFields(Map<String, Object> paramsMap) {
+        OccupationsSearchResultDto result = new OccupationsSearchResultDto();
+
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
@@ -46,8 +49,17 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
         criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+
+        Integer offset = 0;
+        Integer limit = 0;
         if (paramsMap == null || paramsMap.isEmpty()) {
-            return repository.findAll();
+            result.setEntities(repository.findAll());
+
+            //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
+            Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+            result.setResultSize(resultSize);
+            criteria.setProjection(null);
+            return result;
         } else {
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
@@ -101,24 +113,25 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
-
                         case "offset":
-                            if ((Integer) value > 0) {
-                                criteria.setFirstResult((Integer) value);
-                            }
+                            offset = (Integer) value;
                             break;
                         case "limit":
-                            if ((Integer) value >= 0) {
-                                criteria.setMaxResults((Integer) value);
-                            }
+                            limit = (Integer) value;
                             break;
                     }
                 }
             }
-
-
-
-
+        }
+        //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
+        Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+        result.setResultSize(resultSize);
+        criteria.setProjection(null);
+        if (offset > 0) {
+            criteria.setFirstResult(offset);
+        }
+        if (limit >= 0) {
+            criteria.setMaxResults(limit);
         }
         /*Так як приналежність до КПІ відноситься до дат, то потрібно перевірити щоб всі дати посади
         відповідали критеріям пошуку*/
@@ -127,15 +140,15 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         List listByKpi = null;
         List listTemp;
         if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
-            switch ((String)paramsMap.get("inKpi")){
-                case "ONLY_IN_KPI" :
+            switch ((String) paramsMap.get("inKpi")) {
+                case "ONLY_IN_KPI":
                     listByKpi = criteriaForDatesInKpi.list();
                     listTemp = criteriaForDatesInState.list();
                     if (!listTemp.isEmpty()) {
                         listByKpi.removeAll(listTemp);  //Видаляю посади, які містять дати БЕЗ приналежності до КПІ
                     }
                     break;
-                case "ONLY_IN_STATE" :
+                case "ONLY_IN_STATE":
                     listByKpi = criteriaForDatesInState.list();
                     listTemp = criteriaForDatesInKpi.list();
                     if (!listTemp.isEmpty()) {
@@ -147,9 +160,15 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 
-        List result = criteria.list();
+        result.setEntities(criteria.list());
         if (listByKpi != null) {
-            result.retainAll(listByKpi); //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
+            Integer size = result.getEntities().size();
+
+            //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
+            result.getEntities().retainAll(listByKpi);
+            //Змінюю загальну кількість посад
+            size -= result.getEntities().size();
+            result.setResultSize(resultSize-size);
         }
 
         return result;

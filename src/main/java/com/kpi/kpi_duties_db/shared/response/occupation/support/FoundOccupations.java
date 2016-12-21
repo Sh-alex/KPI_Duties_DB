@@ -15,6 +15,8 @@ public class FoundOccupations {
 
     private List<Integer> itemsList;
 
+    private Integer resultsOveralSize;
+
     public Map<Integer, ItemById> getItemsById() {
         return itemsById;
     }
@@ -29,5 +31,13 @@ public class FoundOccupations {
 
     public void setItemsList(List<Integer> itemsList) {
         this.itemsList = itemsList;
+    }
+
+    public Integer getResultsOveralSize() {
+        return resultsOveralSize;
+    }
+
+    public void setResultsOveralSize(Integer resultsOveralSize) {
+        this.resultsOveralSize = resultsOveralSize;
     }
 }

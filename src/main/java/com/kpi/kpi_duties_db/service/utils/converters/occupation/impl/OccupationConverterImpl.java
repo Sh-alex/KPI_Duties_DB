@@ -4,6 +4,7 @@ import com.kpi.kpi_duties_db.domain.dcduties.*;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
@@ -440,8 +441,8 @@ public class OccupationConverterImpl implements OccupationConverter {
     }
 
     @Override
-    public OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list) {
-
+    public OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(OccupationsSearchResultDto result) {
+        List<RtDutiesEntity> list = result.getEntities();
         OccupationsGetResponse response = new OccupationsGetResponse();
 
         Map<Integer, ItemById> itemsById = new HashMap<>();
@@ -621,6 +622,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         FoundOccupations foundOccupations = new FoundOccupations();
         response.setFoundOccupations(foundOccupations);
         response.getFoundOccupations().setItemsList(itemsList);
+        response.getFoundOccupations().setResultsOveralSize(result.getResultSize());
         response.getFoundOccupations().setItemsById(itemsById);
         return response;
     }
