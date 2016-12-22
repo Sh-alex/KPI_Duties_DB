@@ -58,11 +58,8 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         Integer limit = 0;
         if (paramsMap == null || paramsMap.isEmpty()) {
             result.setEntities(repository.findAll());
-
             //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
-            Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-            result.setResultSize(resultSize);
-            criteria.setProjection(null);
+            result.setResultSize(result.getEntities().size());
             return result;
         } else {
             for (String paramName : paramsMap.keySet()) {
@@ -128,14 +125,16 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             }
         }
 
-        List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
-        List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
+        if (paramsMap.get("inKpi") != null) {
+            List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
+            List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
 
-        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
-            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
-        }
-        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
-            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+            if (paramsMap.get("inKpi").equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
+                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+            }
+            if (paramsMap.get("inKpi").equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
+                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+            }
         }
 
         //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)

@@ -2,10 +2,7 @@ package com.kpi.kpi_duties_db.shared.request.occupation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
-import com.kpi.kpi_duties_db.shared.request.occupation.support.DurationOccupation;
-import com.kpi.kpi_duties_db.shared.request.occupation.support.NameOccupation;
-import com.kpi.kpi_duties_db.shared.request.occupation.support.RequirementsOccupation;
+import com.kpi.kpi_duties_db.shared.request.occupation.support.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,6 +20,10 @@ public class OccupationRequest {
     @Valid
     @JsonProperty("name")
     private NameOccupation nameOccupation;
+
+    private InfoDocOccupation mainInfoDocRef;
+
+    private InfoDocOccupation descriptionDocRef;
 
     @Valid
     @JsonProperty("durations")
@@ -46,6 +47,22 @@ public class OccupationRequest {
 
     public void setNameOccupation(NameOccupation nameOccupation) {
         this.nameOccupation = nameOccupation;
+    }
+
+    public InfoDocOccupation getMainInfoDocRef() {
+        return mainInfoDocRef;
+    }
+
+    public void setMainInfoDocRef(InfoDocOccupation mainInfoDocRef) {
+        this.mainInfoDocRef = mainInfoDocRef;
+    }
+
+    public InfoDocOccupation getDescriptionDocRef() {
+        return descriptionDocRef;
+    }
+
+    public void setDescriptionDocRef(InfoDocOccupation descriptionDocRef) {
+        this.descriptionDocRef = descriptionDocRef;
     }
 
     public List<DurationOccupation> getDurationOccupation() {
