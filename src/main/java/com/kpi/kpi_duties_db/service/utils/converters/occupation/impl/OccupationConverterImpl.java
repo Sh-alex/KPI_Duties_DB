@@ -109,10 +109,10 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
-        entity.setDocumentName(nameOccupation.getDocumentName());
-        entity.setDocumentUrl(nameOccupation.getDocumentUrl());
-        entity.setDocumentTextsName(nameOccupation.getDocumentTextsName());
-        entity.setDocumentTextsUrl(nameOccupation.getDocumentTextsUrl());
+        entity.setMainInfoDocRefName(request.getMainInfoDocRef().getDocName());
+        entity.setMainInfoDocRefLink(request.getMainInfoDocRef().getDocLink());
+        entity.setDescriptionDocRefName(request.getDescriptionDocRef().getDocName());
+        entity.setDescriptionDocRefLink(request.getDescriptionDocRef().getDocLink());
 
         return entity;
     }
@@ -408,7 +408,6 @@ public class OccupationConverterImpl implements OccupationConverter {
             }
         }
 
-
         if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
             String[] split = request.getRtDutiesNameTags().get(0).split(",");
             if (!split[0].equals("")) {
@@ -471,12 +470,12 @@ public class OccupationConverterImpl implements OccupationConverter {
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
 
-            dataInItem.setDocumentName(entity.getDocumentName());
-            dataInItem.setDocumentUrl(entity.getDocumentUrl());
-            dataInItem.setDocumentTextsName(entity.getDocumentTextsName());
-            dataInItem.setDocumentTextsUrl(entity.getDocumentTextsUrl());
+            dataInItem.setMainInfoDocRefName(entity.getMainInfoDocRefName());
+            dataInItem.setMainInfoDocRefLink(entity.getMainInfoDocRefLink());
+            dataInItem.setDescriptionDocRefName(entity.getDescriptionDocRefName());
+            dataInItem.setDescriptionDocRefLink(entity.getDescriptionDocRefLink());
 
-            dataInItem.setClarifications(createClarifications(entity));
+            dataInItem.setOccupNameStructure(createClarifications(entity));
 
             Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
             if (dutiesValidityDateEntities != null) {
@@ -642,7 +641,6 @@ public class OccupationConverterImpl implements OccupationConverter {
             clarifications.add(entity.getDcDutiesNameEntity().getName());
             return clarifications;
         }
-
 
         clarifications.addAll(createClarifications(entity.getParentEntity()));
         clarifications.add(entity.getDcDutiesNameEntity().getName());

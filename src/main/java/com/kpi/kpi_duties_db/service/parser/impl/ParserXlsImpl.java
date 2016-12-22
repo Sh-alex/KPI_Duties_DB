@@ -7,7 +7,6 @@ import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.parser.ParserXls;
 import com.kpi.kpi_duties_db.service.parser.support.OccupationFromXls;
 import com.kpi.kpi_duties_db.service.parser.support.converter.OccupationXlsConverter;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -204,7 +203,7 @@ public class ParserXlsImpl implements ParserXls {
     @Override
     @Transactional
     public void saveOccupationsToDB(List<OccupationFromXls> occupationsFromXls) {
-
+        Long startTime = System.nanoTime();
         Integer number = 0;
         for (OccupationFromXls occupationFromXls : occupationsFromXls.subList(12000, occupationsFromXls.size())) { // підмножина задається occupationsFromXls.subList
 
@@ -239,6 +238,8 @@ public class ParserXlsImpl implements ParserXls {
 
             System.out.println("Saved to DB: " + number++);
         }
+        Long endTime = System.nanoTime();
+        System.out.println("Time "+(endTime - startTime)/ 1000000000 + " sec");
     }
 
     private void createCategoryForOccupation(Integer id, OccupationFromXls occupationFromXls, String clarificationCat) {
