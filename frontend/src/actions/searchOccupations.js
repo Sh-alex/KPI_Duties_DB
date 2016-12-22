@@ -22,7 +22,11 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
         "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
         "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
         "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +
-        "&stopTo=" + (data.stopTo && moment(data.stopTo).format("YYYY-MM-DD") || "");
+        "&stopTo=" + (data.stopTo && moment(data.stopTo).format("YYYY-MM-DD") || "") +
+        "&offset=" + (data.offset || "") +
+        "&limit=" + (data.limit || "") +
+        "&sortField=" + (data.sortField || "") +
+        "&sortDirection=" + (data.sortDirection || "");
 
     onRequest(data, searchGetParams);
 

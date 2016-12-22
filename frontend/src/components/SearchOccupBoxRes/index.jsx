@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Alert, Pagination } from 'react-bootstrap'
+import classnames from "classnames";
+
 import "./styles.less";
 
 import BtnExpandBox from "../BtnExpandBox"
@@ -10,29 +12,20 @@ import ModalResDownloadSettings from "../ModalResDownloadSettings"
 import PaginationSizeSelect from "../PaginationSizeSelect"
 
 import {
-    sortSearchResData,
-
     SORT_ASC,
     SORT_DESC,
-
-    OCCUPATION_GROUP,
-    OCCUPATION_NAME,
-    START_IN_KPI_DATE,
-    STOP_IN_KPI_DATE,
-    START_IN_STATE_DATE,
-    STOP_IN_STATE_DATE
-} from "../../utils/sortSearchResData"
+    paginationSizesArr
+} from "../../constants/common"
 
 export default class SearchOccupBoxRes extends Component {
     constructor(props) {
         super(props);
 
-        let paginationSizesArr = [10, 25, 50, 100, 200];
         this.state = {
             editingItem: null,                          //яка посада(ID) зараз редагується(для неї показуємо модальне вікно)
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
             sortField: null,                            //поле по якому портується таблиця
-            sortDirection: SORT_ASC,                    //напрям сортування SORT_ASC/SORT_DESC
+            sortDirection: null,                        //напрям сортування SORT_ASC/SORT_DESC
             searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
             paginationSize: paginationSizesArr[0],      //обраний розмір порції
             paginationSizesArr,                         //масив розмірів порцій
@@ -53,34 +46,7 @@ export default class SearchOccupBoxRes extends Component {
         this.handlePaginationSizeSelect = this.handlePaginationSizeSelect.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        let thisItemsList = this.state.searchResData.itemsList,
-            nextItemsList = nextProps.searchResData.itemsList,
-            searchResDataChanged = false,
-            i = 0;
-
-        if(thisItemsList.length !== nextItemsList.length){
-            searchResDataChanged = true;
-            i = nextItemsList.length+1;
-        }
-
-        for(; i < nextItemsList.length; i++) {
-            if(thisItemsList[i] !== nextItemsList[i]) {
-                searchResDataChanged = true;
-                break;
-            }
-        }
-
-        if(searchResDataChanged)
-            return this.setState({
-                searchResData: sortSearchResData({
-                    data: nextProps.searchResData,
-                    field: this.state.sortField,
-                    direction: this.state.sortDirection,
-                    occupationGroupList: nextProps.occupationGroupList
-                })
-            });
-    }
+    componentWillReceiveProps(nextProps) {  }
 
     handleToggleExpandItem(itemId) {
         if(this.state.expandedItems[itemId]) {
@@ -130,10 +96,19 @@ export default class SearchOccupBoxRes extends Component {
     }
 
     handlePaginationSizeSelect(e) {
+        let paginationSize = Number.parseInt(e.currentTarget.value) || this.state.paginationSizesArr[0];
+
+        this.props.getOccupations({
+            sortField: this.state.sortField,
+            sortDirection: this.state.sortDirection,
+            limit: paginationSize,
+            offset: this.state.paginationSize * (this.state.activePortion - 1)
+        });
+
         this.setState({
             activePortion: 1,
-            paginationSize: Number.parseInt(e.currentTarget.value)
-        })
+            paginationSize
+        });
     }
     
     triggerSorting(sortField) {
@@ -147,29 +122,40 @@ export default class SearchOccupBoxRes extends Component {
             sortDirection = SORT_ASC;
         }
 
-        return this.setState({
+        this.props.getOccupations({
             sortField,
             sortDirection,
-            searchResData: sortSearchResData({
-                data: this.state.searchResData,
-                field: sortField,
-                direction: sortDirection,
-                occupationGroupList: this.props.occupationGroupList
-            })
+            limit: this.state.paginationSize,
+            offset: this.state.paginationSize*(this.state.activePortion-1)
+        });
+
+        this.setState({
+            sortField,
+            sortDirection,
         });
     }
     
     handlePaginationPageSelect(pageNum) {
+        this.props.getOccupations({
+            sortField: this.state.sortField,
+            sortDirection: this.state.sortDirection,
+            limit: this.state.paginationSize,
+            offset: this.state.paginationSize*(pageNum-1)
+        });
+
         this.setState({ activePortion: pageNum });
     }
 
     render() {
-        let numOfPortions = Math.ceil(this.state.searchResData.itemsList.length / this.state.paginationSize),
-            portionStartIndex = this.state.paginationSize*(this.state.activePortion-1),
-            portionEndIndex = this.state.paginationSize*this.state.activePortion,
+        if(!this.props.show)
+            return <div />;
+
+        let numOfPortions = Math.ceil((this.props.searchResData.resultsOveralSize || 0) / this.state.paginationSize),
+            portionStartIndex = 0,
+            portionEndIndex = this.state.paginationSize,
             showingSearchResData = {
-                itemsById: this.state.searchResData.itemsById,
-                itemsList: this.state.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+                itemsById: this.props.searchResData && this.props.searchResData.itemsById,
+                itemsList: this.props.searchResData && this.props.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
             },
             BtnDownloadSearchResults = this.props.userMayDownloadSearchResults ? (
                 <button
@@ -183,15 +169,19 @@ export default class SearchOccupBoxRes extends Component {
             ) : null,
             modalConfirmDelOccupAdditionalTitle = this.state.deletingItem !== null &&
                 this.state.deletingItem !== undefined &&
-                this.state.searchResData.itemsById[this.state.deletingItem] &&
-                this.state.searchResData.itemsById[this.state.deletingItem].data &&
-                this.state.searchResData.itemsById[this.state.deletingItem].data.occupationName || "";
+                this.props.searchResData.itemsById[this.state.deletingItem] &&
+                this.props.searchResData.itemsById[this.state.deletingItem].data &&
+                this.props.searchResData.itemsById[this.state.deletingItem].data.occupationName || "",
+            boxClassName = classnames({
+                "box box-default box-search-res": true,
+                "collapsed-box": !this.props.boxIsExpanded
+            });
 
         if(this.state.dontShowAgainDelModal && this.props.delOccupationError)
             alert(this.props.delOccupationError);
 
         return (
-            <div className={`box box-default box-search-res ${this.props.boxIsExpanded ? "" : "collapsed-box"}`}>
+            <div className={boxClassName}>
                 <div className="box-header with-border text-center">
                     <h3 className="box-title">
                         Результати пошуку
@@ -220,7 +210,7 @@ export default class SearchOccupBoxRes extends Component {
                     />
                     <ModalEditOccup />
                     {
-                        !this.state.searchResData.itemsList.length ? (
+                        !this.props.searchResData.itemsList.length ? (
                             <Alert bsStyle="warning alert-sm alert--with-margin">
                                 <p>
                                     За вказаними критеріями не знайдено жодної посади.<br />
@@ -250,18 +240,15 @@ export default class SearchOccupBoxRes extends Component {
                     }
                 </div>
                 {
-                    this.state.searchResData.itemsList.length && (
+                    this.props.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
-                            <div className="col-sm-4">
+                            <div className="col-xs-12 col-md-6 col-lg-3 pagination-size-select-wrapper">
                                 <PaginationSizeSelect
                                     selectedSize={this.state.paginationSize}
                                     onSizeSelect={this.handlePaginationSizeSelect}
                                     sizesArr={this.state.paginationSizesArr} />
                             </div>
-                            <div className="col-sm-4 text-center">
-                                { BtnDownloadSearchResults }
-                            </div>
-                            <div className="col-sm-4 text-right">
+                            <div className="col-xs-12 col-lg-6 text-center pagination-wrapper">
                                 <Pagination
                                     prev
                                     next
@@ -274,6 +261,9 @@ export default class SearchOccupBoxRes extends Component {
                                     maxButtons={5}
                                     activePage={this.state.activePortion}
                                     onSelect={this.handlePaginationPageSelect} />
+                            </div>
+                            <div className="col-xs-12 col-md-6 col-lg-3 text-right btn-download-search-res-wrapper">
+                                { BtnDownloadSearchResults }
                             </div>
                         </div>
                     ) || ""

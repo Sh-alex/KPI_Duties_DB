@@ -20,6 +20,9 @@ import {
 
 import './styles.less'
 
+import {
+    paginationSizesArr
+} from "../../constants/common"
 
 export default class SearchOccupationsForm extends Component {
     constructor(props) {
@@ -83,7 +86,8 @@ export default class SearchOccupationsForm extends Component {
         e.preventDefault();
         this.props.onSubmitSearchForm({
             ...this.state.form,
-            searchTags: this.state.form.searchTags  //перевірити втф!!!!!!!!!!!!!
+            searchTags: this.state.form.searchTags,
+            limit: paginationSizesArr[paginationSizesArr.length-1],   //обмежити масимальну кількість результатів пошуку
         });
     }
 

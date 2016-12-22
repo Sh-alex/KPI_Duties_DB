@@ -15,6 +15,12 @@ import {
 import SearchOccupationsForm from "../SearchOccupationsForm"
 import BtnExpandBox from "../BtnExpandBox"
 
+import {
+    SORT_ASC,
+    SORT_DESC,
+    paginationSizesArr
+} from "../../constants/common"
+
 export default function SearchOccupBoxFormWrapper(props) {
     let formFields;
 
@@ -55,7 +61,11 @@ export default function SearchOccupBoxFormWrapper(props) {
                 new Date(props.searchQuery.stopFrom) || null,
             stopTo: props.searchQuery.stopTo &&
                 (new Date(props.searchQuery.stopTo) !== "Invalid Date") &&
-                new Date(props.searchQuery.stopTo) || null
+                new Date(props.searchQuery.stopTo) || null,
+            // offset: props.searchQuery.offset || 0,
+            // limit: props.searchQuery.limit || paginationSizesArr[paginationSizesArr.length-1],
+            // sortField: props.searchQuery.sortField || "",
+            // sortDirection: props.searchQuery.sortDirection || "",
         };
     }
 

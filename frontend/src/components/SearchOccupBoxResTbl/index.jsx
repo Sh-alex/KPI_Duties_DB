@@ -15,7 +15,7 @@ import {
     STOP_IN_KPI_DATE,
     START_IN_STATE_DATE,
     STOP_IN_STATE_DATE
-} from "../../utils/sortSearchResData"
+} from "../../constants/common"
 
 import "./styles.less";
 
