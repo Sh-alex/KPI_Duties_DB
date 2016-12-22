@@ -50,6 +50,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
         criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
+        criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
+
 
         Integer offset = 0;
         Integer limit = 0;
@@ -124,63 +127,38 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
             }
         }
+
+        List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
+        List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
+
+        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
+            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+        }
+        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi").equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
+            criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+        }
+
         //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
         Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
         result.setResultSize(resultSize);
         criteria.setProjection(null);
+
+        if (paramsMap.get("sortField") != null) {
+            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
+        }
         if (offset > 0) {
             criteria.setFirstResult(offset);
         }
         if (limit >= 0) {
             criteria.setMaxResults(limit);
         }
-        /*Так як приналежність до КПІ відноситься до дат, то потрібно перевірити щоб всі дати посади
-        відповідали критеріям пошуку*/
-        criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
-        criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
-        List<RtDutiesEntity> listByKpi = null;
-        List<RtDutiesEntity> listTemp;
-        if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
-            switch ((String) paramsMap.get("inKpi")) {
-                case "ONLY_IN_KPI":
-                    listByKpi = criteriaForDatesInKpi.list();
-                    listTemp = criteriaForDatesInState.list();
-                    if (!listTemp.isEmpty()) {
-                        listByKpi.removeAll(listTemp);  //Видаляю посади, які містять дати БЕЗ приналежності до КПІ
-                    }
-                    break;
-                case "ONLY_IN_STATE":
-                    listByKpi = criteriaForDatesInState.list();
-                    listTemp = criteriaForDatesInKpi.list();
-                    if (!listTemp.isEmpty()) {
-                        listByKpi.removeAll(listTemp); //Видаляю посади, які містять дати З приналежністю до КПІ
-                    }
-                    break;
-            }
-        }
-
         criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-        if (paramsMap.get("sortField") != null) {
-            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
-        }
         result.setEntities(criteria.list());
-        if (listByKpi != null) {
-            //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
-            result.getEntities().retainAll(listByKpi);
-            //Змінюю загальну кількість посад
-            criteria.add(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList())));
-            criteria.setFirstResult(0);
-            criteria.setFirstResult(0);
-            resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-            result.setResultSize(resultSize);
-        }
 
         return result;
     }
 
     private void addOrder(Criteria criteria, Criteria criteriaForDatesInState, Criteria criteriaForDatesInKpi, String field, String direction) {
-
         switch (field) {
             case "OCCUPATION_GROUP":
                 criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
@@ -235,7 +213,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                     criteriaForDatesInKpi.addOrder(Order.desc("dates.stop"));
                 }
                 break;
-
         }
     }
 }
