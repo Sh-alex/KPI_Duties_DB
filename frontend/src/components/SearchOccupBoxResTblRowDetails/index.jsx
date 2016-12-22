@@ -126,6 +126,14 @@ export default function SearchOccupBoxResTblRowDetails(props) {
                 <div className="occupation-details container-fluid">
                     <div className="row occupation-details__row">
                         <div className="col-sm-3 occupation-details__title">
+                            Структура назви:
+                        </div>
+                        <div className="col-sm-9 occupation-details__data">
+                            {props.data.occupNameStructure && props.data.occupNameStructure.join(" -> ") || "Не відомо" }
+                        </div>
+                    </div>
+                    <div className="row occupation-details__row">
+                        <div className="col-sm-3 occupation-details__title">
                             Скорочена назва посади:
                         </div>
                         <div className="col-sm-9 occupation-details__data">
