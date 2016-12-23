@@ -149,6 +149,52 @@ export default function SearchOccupBoxResTblRowDetails(props) {
                         </div>
                     </div>
                     <div className="row occupation-details__row">
+                        <div className="col-xs-12 occupation-details__title">
+                            Посилання на правові документи про загальну інформацію:
+                        </div>
+                        <div className="col-sm-11 pull-right">
+                            <div className="occupation-details__items-portion">
+                                <div className="row">
+                                    <div className="col-sm-2 occupation-details__title">
+                                        Назва документа:
+                                    </div>
+                                    <div className="col-sm-4 occupation-details__data" style={{paddingLeft: "3%"}}>
+                                        { props.data.mainInfoDocRefName || "-" }
+                                    </div>
+                                    <div className="col-sm-3 occupation-details__title">
+                                        Посилання на документ:
+                                    </div>
+                                    <div className="col-sm-3 occupation-details__data">
+                                        { props.data.mainInfoDocRefLink || "-" }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row occupation-details__row">
+                        <div className="col-xs-12 occupation-details__title">
+                            Посилання на правові документи про тексти з описом посади:
+                        </div>
+                        <div className="col-sm-11 pull-right">
+                            <div className="occupation-details__items-portion">
+                                <div className="row">
+                                    <div className="col-sm-2 occupation-details__title">
+                                        Назва документа:
+                                    </div>
+                                    <div className="col-sm-4 occupation-details__data" style={{paddingLeft: "3%"}}>
+                                        { props.data.descriptionDocRefName || "-" }
+                                    </div>
+                                    <div className="col-sm-3 occupation-details__title">
+                                        Посилання на документ:
+                                    </div>
+                                    <div className="col-sm-3 occupation-details__data">
+                                        { props.data.descriptionDocRefLink || "-" }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row occupation-details__row">
                         <div className="col-sm-3 occupation-details__title"> Завдання, обов'язки та повноваження: </div>
                         <div className="col-sm-11 pull-right">
                             { responsibPortions }
