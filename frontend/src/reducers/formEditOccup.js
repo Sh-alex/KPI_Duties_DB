@@ -277,6 +277,14 @@ export default function formEditOccup(state, action) {
                         "_isFieldValue": true
                     }
                 },
+                mainInfoDocRef: {
+                    docName: action.editingData.data.mainInfoDocRefName || "",
+                    docLink: action.editingData.data.mainInfoDocRefLink || "",
+                },
+                descriptionDocRef: {
+                    docName: action.editingData.data.descriptionDocRefName || "",
+                    docLink: action.editingData.data.descriptionDocRefLink || "",
+                },
                 durations: action.editingData.data.durations.map( portion => {
                     return {
                         'id': {
