@@ -195,19 +195,28 @@ export default function SearchOccupBoxResTblRowDetails(props) {
                         </div>
                     </div>
                     <div className="row occupation-details__row">
-                        <div className="col-sm-3 occupation-details__title"> Завдання, обов'язки та повноваження: </div>
+                        <div className="col-sm-3 occupation-details__title">
+                            Завдання, обов'язки та повноваження:
+                            {!props.data.responsibilities.length && " - "}
+                        </div>
                         <div className="col-sm-11 pull-right">
                             { responsibPortions }
                         </div>
                     </div>
                     <div className="row occupation-details__row">
-                        <div className="col-sm-3 occupation-details__title"> Повинен знати: </div>
+                        <div className="col-sm-3 occupation-details__title">
+                            Повинен знати:
+                            {!props.data.haveToKnow.length && " - "}
+                        </div>
                         <div className="col-sm-11 pull-right">
                             { haveToKnowPortions }
                         </div>
                     </div>
                     <div className="row occupation-details__row">
-                        <div className="col-sm-3 occupation-details__title"> Кваліфікаційні вимоги: </div>
+                        <div className="col-sm-3 occupation-details__title">
+                            Кваліфікаційні вимоги:
+                            {!props.data.qualiffRequir.length && " - "}
+                        </div>
                         <div className="col-sm-11 pull-right">
                             { qualiffRequirPortions }
                         </div>

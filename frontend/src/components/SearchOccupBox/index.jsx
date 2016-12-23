@@ -36,7 +36,6 @@ class SearchOccupBox extends Component {
     constructor(props) {
         super(props);
 
-        //TODO: searchFormIsExpanded обраховувати як "раніше не було search result success, а тепер з'явлось"
         this.state = {
             searchResultsIsExpanded: this.props.searchResData,//Object.keys(this.props.location.query).length,
             searchFormIsExpanded: !(this.props.searchResData && this.props.searchResData.itemsList && this.props.searchResData.itemsList.length)
@@ -55,10 +54,11 @@ class SearchOccupBox extends Component {
     componentWillReceiveProps(nextProps) {
         this.checkUserAccess(nextProps);
 
-        //TODO: searchFormIsExpanded обраховувати як "раніше не було search result success, а тепер з'явлось"
         this.setState({
             searchResultsIsExpanded: nextProps.searchResData,
-            searchFormIsExpanded: !(nextProps.searchResData && nextProps.searchResData.itemsList && nextProps.searchResData.itemsList.length)
+            searchFormIsExpanded: !(this.props.isSubmittngSearchForm && !nextProps.isSubmittngSearchForm) ||
+            !(nextProps.searchResData && nextProps.searchResData.itemsList &&
+                nextProps.searchResData.itemsList.length)
         });
     }
 
