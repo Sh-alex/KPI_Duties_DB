@@ -38,6 +38,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         OccupationsSearchResultDto result = new OccupationsSearchResultDto();
 
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
         Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
         Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
 
@@ -70,10 +71,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             criteria.add(Restrictions.in("id", (ArrayList) value));
                             break;
                         case "rtDutiesName":
-                            if (paramsMap.get("searchType").equals("MATCH_STRING")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
                             }
-                            if (paramsMap.get("searchType").equals("CONTAINS_STRING")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("CONTAINS_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
                             }
                             break;
@@ -82,7 +83,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             break;
                         case "dcDutiesNames":
                             //OR LIKE
-                            if (paramsMap.get("searchType").equals("SOME_TAGS")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("SOME_TAGS")) {
                                 Disjunction disjunction = Restrictions.disjunction();
                                 for (String keyword : (List<String>) paramsMap.get(paramName)) {
                                     disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
@@ -90,7 +91,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                                 criteria.add(disjunction);
                             }
                             //AND LIKE
-                            if (paramsMap.get("searchType").equals("ALL_TAGS")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("ALL_TAGS")) {
                                 Conjunction conjunction = Restrictions.conjunction();
                                 for (String keyword : (List<String>) paramsMap.get(paramName)) {
                                     conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
@@ -99,19 +100,15 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "startFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "startTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "stopFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "stopTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
                         case "offset":
@@ -173,7 +170,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                     criteria.addOrder(Order.desc("rtDuties.name"));
                 break;
             case "START_IN_STATE_DATE":
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                     criteriaForDatesInState.addOrder(Order.asc("dates.start"));
@@ -183,7 +179,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "STOP_IN_STATE_DATE":
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                     criteriaForDatesInState.addOrder(Order.asc("dates.stop"));
@@ -193,7 +188,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "START_IN_KPI_DATE":
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                     criteriaForDatesInKpi.addOrder(Order.asc("dates.start"));
@@ -203,7 +197,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "STOP_IN_KPI_DATE":
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                     criteriaForDatesInKpi.addOrder(Order.asc("dates.stop"));
