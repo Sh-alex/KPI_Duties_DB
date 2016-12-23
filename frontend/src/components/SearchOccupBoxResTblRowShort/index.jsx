@@ -7,34 +7,34 @@ export default function SearchOccupBoxResTblRowShort(props) {
     let occupationGroupItem = props.occupationGroupList.items.find(item => item.id == props.data.occupationGroup),
         occupationGroupText = occupationGroupItem && occupationGroupItem.textValue ||
             (<div title="Не вдалося визначити посадовий склад"> ? </div>),
-        creatingInStateDate = props.data.durations.map(item => {
-            if(item.inKpi) return "";
-
+        durationsInState = props.data.durations && props.data.durations.length &&
+            props.data.durations.filter(item => !item.inKpi) || [],
+        durationsInKPI = props.data.durations && props.data.durations.length &&
+            props.data.durations.filter(item => item.inKpi) || [],
+        creatingInStateDate = durationsInState.length && durationsInState.map(item => {
             let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
                 v = item.virtual ? (<span title="Посада є віртуальною" key={Math.random()}>, V</span>) : "";
             return ( <div key={Math.random()}> { d && [d,v] || "-" } </div> );
-        }),
-        cancelingInStateDate = props.data.durations.map(item => {
-            return item.inKpi ? "" : (
+        }) || "-",
+        cancelingInStateDate = durationsInState.length && durationsInState.map(item => {
+            return (
                 <div key={Math.random()}>
                     { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
                 </div>
             )
-        }),
-        creatingInKPIDate = props.data.durations.map(item => {
-            if(!item.inKpi) return "";
-
+        }) || "-",
+        creatingInKPIDate = durationsInKPI.length && durationsInKPI.map(item => {
             let d = item.start && moment(item.start).format('DD.MM.YYYY') || "",
                 v = item.virtual ? (<span key={Math.random()} title="Посада є віртуальною">, V</span>) : "";
             return ( <div key={Math.random()}> { d && [d,v] || "-" } </div> );
-        }),
-        cancelingInKPIDate = props.data.durations.map(item => {
-            return !item.inKpi ? "" : (
+        }) || "-",
+        cancelingInKPIDate = durationsInKPI.length && durationsInKPI.map(item => {
+            return (
                 <div key={Math.random()}>
                     { item.stop && moment(item.stop).format('DD.MM.YYYY') || "-" }
                 </div>
             )
-        }),
+        }) || "-",
         BtnDelOccupation = props.showBtnDelOccupations ? (
             <a
                 className="action-btns-cell__btn text-danger btn--btn-sm--btn-danger"
