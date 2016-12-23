@@ -151,11 +151,11 @@ export default class SearchOccupBoxRes extends Component {
             return <div />;
 
         let numOfPortions = Math.ceil((this.props.searchResData.resultsOveralSize || 0) / this.state.paginationSize),
-            portionStartIndex = 0,
-            portionEndIndex = this.state.paginationSize,
+            portionStartIndex = this.state.paginationSize*(this.state.activePortion-1),
+            portionEndIndex = this.state.paginationSize*this.state.activePortion,
             showingSearchResData = {
                 itemsById: this.props.searchResData && this.props.searchResData.itemsById,
-                itemsList: this.props.searchResData && this.props.searchResData.itemsList.slice(portionStartIndex, portionEndIndex)
+                itemsList: this.props.searchResData && this.props.searchResData.itemsList.slice(0, this.state.paginationSize)
             },
             BtnDownloadSearchResults = this.props.userMayDownloadSearchResults ? (
                 <button
