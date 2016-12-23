@@ -4,6 +4,7 @@ import com.kpi.kpi_duties_db.repository.PermissionsRepository;
 import com.kpi.kpi_duties_db.service.DetailService;
 import com.kpi.kpi_duties_db.service.TokenParser;
 import com.kpi.kpi_duties_db.shared.response.HardcodeResponse;
+import com.kpi.kpi_duties_db.shared.response.userdetails.UserDetailsResponse;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.lang.JoseException;
@@ -35,16 +36,11 @@ public class UserDetailsService {
     @GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserDetails(@HeaderParam("Authorization") String authHeader) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidJwtException, MalformedClaimException, JoseException, InvalidKeySpecException {
-//		UserDetailsResponse userDetailsResponse = new UserDetailsResponse(tokenParser, permissionsRepository, detailService);
-//		Map<String, Object> map = userDetailsResponse.prepareUserDetailsResponce(authHeader);
-//			return Response.status(200).entity(map).build();
-		HardcodeResponse hardcodeResponse = new HardcodeResponse();
-		Map<Object,Object> map = hardcodeResponse.createResponse(tokenParser.getUsernameFromToken(authHeader));
-		return Response.status(200).entity(map).build();
+		UserDetailsResponse userDetailsResponse = new UserDetailsResponse(tokenParser, permissionsRepository, detailService);
+		Map<String, Object> map = userDetailsResponse.prepareUserDetailsResponce(authHeader);
+			return Response.status(200).entity(map).build();
+//		HardcodeResponse hardcodeResponse = new HardcodeResponse();
+//		Map<Object,Object> map = hardcodeResponse.createResponse(tokenParser.getUsernameFromToken(authHeader));
+//		return Response.status(200).entity(map).build();
 		}
-
-
-
-
-
 }
