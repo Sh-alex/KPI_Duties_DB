@@ -1,13 +1,13 @@
 #hibernate settings
 datasource:
-  url: jdbc:sqlserver://localhost:1433;databaseName=DcDuties
+  url: jdbc:sqlserver://localhost:1433;databaseName=Permissions_zhenya
   username: TKIK_32
   password: TKIK_32_123
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   dialect: org.hibernate.dialect.SQLServerDialect
   ddl-auto : none
-  show-sql : true
-  format-sql : true
+  show-sql : false
+  format-sql : false
   entitymanager.packages.to.scan: com.kpi.kpi_duties_db.domain
 
 server:

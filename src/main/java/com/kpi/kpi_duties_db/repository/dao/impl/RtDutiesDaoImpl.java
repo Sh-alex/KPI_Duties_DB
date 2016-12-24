@@ -54,7 +54,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
         criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
 
-
         Integer offset = 0;
         Integer limit = 0;
         if (paramsMap == null || paramsMap.isEmpty()) {
