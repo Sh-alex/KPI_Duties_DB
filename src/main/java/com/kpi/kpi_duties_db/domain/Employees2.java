@@ -10,7 +10,7 @@ import java.util.Arrays;
  * Created by Yaroslav on 31.10.2016.
  */
 @Entity
-@Table(name = "Employee2", schema = "dbo", catalog = "details")
+@Table(name = "Employee2", schema = "dbo", catalog = "[kpi_dev-1k_temp]")
 public class Employees2 {
     private int idEmployee;
     private Integer idNationality;
