@@ -37,13 +37,9 @@ public class DcDutiesMustKnowController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAll(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcDutiesMustKnowEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcDutiesMustKnowService.getAll(offset, limit);
-        } else
-            all = dcDutiesMustKnowService.getAll();
+        List<DcDutiesMustKnowEntity> all = dcDutiesMustKnowService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesMustKnow(response);

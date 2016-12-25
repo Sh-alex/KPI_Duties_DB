@@ -37,13 +37,9 @@ public class DcCodeEtkdController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAll(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcCodeEtkdEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcCodeEtkdService.getAll(offset, limit);
-        } else
-            all = dcCodeEtkdService.getAll();
+        List<DcCodeEtkdEntity> all = dcCodeEtkdService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeETKDId");

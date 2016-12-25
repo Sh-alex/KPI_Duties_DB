@@ -37,13 +37,9 @@ public class DcCodeKpController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAll(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcCodeKpEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcCodeKpEntityService.getAll(offset, limit);
-        } else
-            all = dcCodeKpEntityService.getAll();
+        List<DcCodeKpEntity> all = dcCodeKpEntityService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeKPId");

@@ -37,13 +37,9 @@ public class DcCodeDkhpController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAll(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcCodeDkhpEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcCodeDkhpService.getAll(offset, limit);
-        } else
-            all = dcCodeDkhpService.getAll();
+        List<DcCodeDkhpEntity> all = dcCodeDkhpService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeDKHPId");
@@ -81,5 +77,4 @@ public class DcCodeDkhpController {
 
         return Response.ok().build();
     }
-
 }
