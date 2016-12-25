@@ -36,13 +36,9 @@ public class DcDutiesQualificationRequirementsController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAll(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAll(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcDutiesQualificationRequirementsEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcDutiesQualificationRequirementsService.getAll(offset, limit);
-        } else
-            all = dcDutiesQualificationRequirementsService.getAll();
+        List<DcDutiesQualificationRequirementsEntity> all = dcDutiesQualificationRequirementsService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesQualificationRequirements(response);

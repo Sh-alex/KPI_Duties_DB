@@ -17,7 +17,7 @@ apply plugin: 'war'
 
 
 war {
-    baseName = 'kpi_duties_db'
+    baseName = 'aiskp'
     version = '0.0.1-SNAPSHOT'
     manifest{
         attributes 'Main-Class':'com.kpi.kpi_duties_db.KpiDutiesApplication'

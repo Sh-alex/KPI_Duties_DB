@@ -61,7 +61,7 @@ public class RtDutiesEntity {
     @JoinColumn(name = "ParentId", insertable = false, updatable = false)
     private RtDutiesEntity parentEntity;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParentId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 

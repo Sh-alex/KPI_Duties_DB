@@ -75,10 +75,4 @@ public class DetailServiceImpl implements DetailService {
     public List<Passports> getAll() {
         return null;
     }
-
-    //TODO, delete this method
-    @Override
-    public List<Passports> getAll(Integer offset, Integer limit) {
-        return null;
-    }
 }

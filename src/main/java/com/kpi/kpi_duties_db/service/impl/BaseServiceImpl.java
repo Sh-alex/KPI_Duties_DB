@@ -7,7 +7,6 @@ import com.kpi.kpi_duties_db.shared.message.error.UpdateEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,12 +106,5 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Transactional(readOnly = true)
     public List<T> getAll() {
         return repository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<T> getAll(Integer offset, Integer limit) {
-        offset /= limit;
-        return repository.findAll(new PageRequest(offset, limit)).getContent();
     }
 }
