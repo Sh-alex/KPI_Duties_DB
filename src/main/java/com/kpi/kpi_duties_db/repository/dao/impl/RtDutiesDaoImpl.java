@@ -70,7 +70,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
                             } else
-                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("CONTAINS_STRING") || paramsMap.get("searchType").equals("")) {
+                            if (paramsMap.get("searchType") != null && (paramsMap.get("searchType").equals("CONTAINS_STRING") || paramsMap.get("searchType").equals(""))) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
                             }
 
