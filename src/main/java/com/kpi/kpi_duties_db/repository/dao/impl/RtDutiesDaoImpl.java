@@ -48,16 +48,15 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
         Integer offset = 0;
         Integer limit = 0;
-        Boolean createdDatesAlias = false;
         if (paramsMap == null || paramsMap.isEmpty()) {
             result.setEntities(repository.findAll());
             //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
             result.setResultSize(result.getEntities().size());
             return result;
         } else {
-            if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null) {
+            if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null
+                    || paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
                 criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-                createdDatesAlias = true;
             }
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
@@ -140,10 +139,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         result.setResultSize(resultSize);
         criteria.setProjection(null);
 
-        if (paramsMap.get("sortField") != null) {
-            if(!createdDatesAlias){
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-            }
+        if (paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
             addOrder(criteria, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
         }
         if (offset > 0) {
