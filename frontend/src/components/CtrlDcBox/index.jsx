@@ -107,6 +107,11 @@ class CtrlDcBox extends Component {
         super(props);
 
         this.state = {
+            occupNamesById: {                           //закешована-хеш таблиця назв посад по ID
+                fetchingError: "",                      //  це потрібно для того щоб коли десь у інших компонентах
+                isFetching: false,                      //  оновлюється список clarifiedOccupation, тут цей список залишався (костиль, щоб не міняти повністю структуру Redux Store)
+                items: {}
+            },
             addingInpIsShown: false,                    //чи показано зараз поле для додавання нового значення
             activeListName: "OCCUP_GROUP",              //активний список, одне із: CLARIFICATION, CODE_KP, CODE_ZKPPTR, CODE_ETDK, CODE_DKHP, RESPONSIBILITIES, HAVE_TO_KNOW, QUALIFF_REQUIR
             editingItemId: null,                        //яка елемент(ID) зараз редагується(для нього показуємо модальне вікно)
@@ -165,6 +170,7 @@ class CtrlDcBox extends Component {
         this.handleToggleUsingOccupListBtnClick = this.handleToggleUsingOccupListBtnClick.bind(this);
         this.handleUsingOccupNameClick = this.handleUsingOccupNameClick.bind(this);
     }
+
     componentWillMount() {
         this.checkUserAccess(this.props);
     }
@@ -190,6 +196,9 @@ class CtrlDcBox extends Component {
     componentWillReceiveProps(nextProps) {
         this.checkUserAccess(nextProps);
 
+        let shouldUpdateState = false,
+            newState = {...this.state};
+
         //визначаємо посилання на активні списки
         let prevPropsListData = this.props[this.state.listNamesDict[this.state.activeListName]],
             nextPropsListData = nextProps[this.state.listNamesDict[this.state.activeListName]];
@@ -197,14 +206,30 @@ class CtrlDcBox extends Component {
         if(!prevPropsListData || !nextPropsListData)
             return console.error("Can't calculate prevPropsListData or nextPropsListData!");
 
-        let successfullyAddedNewVal = !prevPropsListData.addingSuccess && nextPropsListData.addingSuccess/*,
-            successfullyEditedVal = !prevPropsListData.updatingSuccess && nextPropsListData.updatingSuccess,
-            fetchedList = prevPropsListData.isFetching && !nextPropsListData.isFetching,
-            successfullyDeletedItem = !prevPropsListData.deletingSuccess && nextPropsListData.deletingSuccess*/;
+        let successfullyAddedNewVal = !prevPropsListData.addingSuccess && nextPropsListData.addingSuccess;
 
         //очищаємо значення поля для додавання нових елементів, якщо щойно у якогось списка включився стан addingSuccess
-        if(successfullyAddedNewVal)
-            this.setState({ addingInpVal: "" });
+        if(successfullyAddedNewVal) {
+            shouldUpdateState = true;
+            newState.addingInpVal = "";
+        }
+
+        //перевіряємо чи треба змінити закешовану хеш-таблицю occupNamesById
+        if(nextProps.occupNamesById.fetchingError !== this.state.occupNamesById.fetchingError) {
+            newState.occupNamesById.fetchingError = nextProps.occupNamesById.fetchingError;
+            shouldUpdateState = true;
+        }
+        if(nextProps.occupNamesById.isFetching !== this.state.occupNamesById.isFetching) {
+            newState.occupNamesById.isFetching = nextProps.occupNamesById.isFetching;
+            shouldUpdateState = true;
+        }
+        if(Object.keys(nextProps.occupNamesById.items).length > Object.keys(this.state.occupNamesById.items).length) {
+            newState.occupNamesById.items = nextProps.occupNamesById.items;
+            shouldUpdateState = true;
+        }
+
+        if(shouldUpdateState)
+            this.setState(newState);
     }
 
     fetchListData(options={}, listName = this.state.activeListName) {
@@ -701,7 +726,7 @@ class CtrlDcBox extends Component {
                             isSavingNewVal={activeList.isAddingNewVal}
                             isFetchingItems={activeList.isFetching}
                             listDataItems={activeList.items}
-                            occupNamesById={this.props.occupNamesById}
+                            occupNamesById={this.state.occupNamesById}
                             fetchOccupNamesById={this.props.fetchClarifiedOccupList}
                             fetchingError={activeList.fetchingError}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
