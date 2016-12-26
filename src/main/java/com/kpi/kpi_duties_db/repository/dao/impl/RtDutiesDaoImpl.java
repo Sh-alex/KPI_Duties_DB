@@ -37,7 +37,8 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         OccupationsSearchResultDto result = new OccupationsSearchResultDto();
 
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+
+        Boolean createdDatesAlias = false;
 
         criteria.setFetchMode("rtDutiesEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesCodeEntities", FetchMode.SELECT);
@@ -92,15 +93,31 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "startFrom":
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "startTo":
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "stopFrom":
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "stopTo":
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
                         case "offset":
@@ -137,7 +154,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setProjection(null);
 
         if (paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
-            addOrder(criteria, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
+            addOrder(criteria, createdDatesAlias, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
         }
         if (offset > 0) {
             criteria.setFirstResult(offset);
@@ -151,7 +168,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         return result;
     }
 
-    private void addOrder(Criteria criteria, String field, String direction) {
+    private void addOrder(Criteria criteria, Boolean createdDatesAlias, String field, String direction) {
         switch (field) {
             case "OCCUPATION_GROUP":
                 criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
@@ -167,6 +184,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                     criteria.addOrder(Order.desc("rtDuties.name"));
                 break;
             case "START_IN_STATE_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
                 if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                 } else {
@@ -174,6 +194,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "STOP_IN_STATE_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
                 if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                 } else {
@@ -181,6 +204,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "START_IN_KPI_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
                 if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                 } else {
@@ -188,6 +214,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                 }
                 break;
             case "STOP_IN_KPI_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
                 if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                 } else {
