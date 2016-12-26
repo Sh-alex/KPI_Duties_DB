@@ -57,6 +57,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null
                     || paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
                 criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                criteria.setFetchMode("dates", FetchMode.SELECT);
             }
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
@@ -68,10 +69,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                         case "rtDutiesName":
                             if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
-                            }
-                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("CONTAINS_STRING")) {
+                            } else
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
-                            }
+
                             break;
                         case "dcDutiesPartitionId":
                             criteria.add(Restrictions.in("dcDutiesPartitionId", (ArrayList) value));

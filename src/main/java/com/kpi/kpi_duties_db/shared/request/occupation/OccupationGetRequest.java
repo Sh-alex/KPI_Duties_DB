@@ -19,7 +19,7 @@ public class OccupationGetRequest {
 
     private List<String> searchType;
 
-    @JsonProperty("searchText")
+    @JsonProperty("filterStr")
     private List<String> rtDutiesName;
 
     @JsonProperty("occupGroupVal")
