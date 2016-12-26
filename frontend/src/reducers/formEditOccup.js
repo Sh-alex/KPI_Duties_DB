@@ -261,9 +261,19 @@ export default function formEditOccup(state, action) {
                         "value": action.editingData.data.clarifiedOccup || null,
                         "_isFieldValue": true
                     },
+                    'clarifiedOccupName': {
+                        "initial": null,
+                        "value": action.editingData.data.clarifiedOccupName || "",
+                        "_isFieldValue": true
+                    },
                     'clarification': {
                         "initial": null,
                         "value": action.editingData.data.clarification || null,
+                        "_isFieldValue": true
+                    },
+                    'clarificationName': {
+                        "initial": null,
+                        "value": action.editingData.data.clarificationName || "",
                         "_isFieldValue": true
                     },
                     'occupationName': {
@@ -401,26 +411,23 @@ export default function formEditOccup(state, action) {
                     ...state,
                     name: {
                         ...state.name,
-                        clarification: {
-                            ...state.name.clarification,
-                            value: action.newVal.id
-                        },
+                        //поля state.name.clarification та state.name.clarificationName уже до цього
+                        // і так зміняться самі редьюсером Redux-form
                         occupationName: {
                             ...state.name.occupationName,
                             value: calcNewOccupationNameVal(
-                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                !state.name.clarifiedOccup.value ? "" : state.name.clarifiedOccupName.value || "",
                                 action.newVal.textValue
                             )
                         },
                         occupationNameMin: {
                             ...state.name.occupationNameMin,
                             value: calcNewOccupationNameVal(
-                                !state.name.clarifiedOccup.value ? "" : state.clarifiedOccupTextVal,
+                                !state.name.clarifiedOccup.value ? "" : state.name.clarifiedOccupName.value || "",
                                 action.newVal.textValue
                             )
                         }
                     },
-                    clarificationTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
                 };
             else {
                 console.log("Called EDIT_OCCUP_CLARIFICATION_INP_CHANGE reducer, but state is empty");
@@ -431,27 +438,31 @@ export default function formEditOccup(state, action) {
                 ...state,
                 name: {
                     ...state.name,
+                    //поля state.name.clarifiedOccup та state.name.clarifiedOccupName уже до цього
+                    // і так зміняться самі редьюсером Redux-form
                     clarification: {
                         ...state.name.clarification,
-                        value: !action.newVal.id ? state.name.clarification.value : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
+                        value: !action.newVal.id ? state.name.clarification.value : ""     //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
+                    },
+                    clarificationName: {
+                        ...state.name.clarification,
+                        value: !action.newVal.id ? state.name.clarificationName.value : "" //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                     },
                     occupationName: {
                         ...state.name.occupationName,
                         value: calcNewOccupationNameVal(
-                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-                            !action.newVal.id ? state.clarificationTextVal : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
+                            !action.newVal.id ? "" : action.newVal.textValue,              //якщо відсутня уточнювана посада
+                            !action.newVal.id ? state.name.clarificationName.value : ""    //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                         )
                     },
                     occupationNameMin: {
                         ...state.name.occupationNameMin,
                         value: calcNewOccupationNameVal(
-                            !action.newVal.id ? "" : action.newVal.textValue,    //якщо відсутня уточнювана посада
-                            !action.newVal.id ? state.clarificationTextVal : ""  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
+                            !action.newVal.id ? "" : action.newVal.textValue,              //якщо відсутня уточнювана посада
+                            !action.newVal.id ? state.name.clarificationName.value : ""    //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
                         )
                     }
                 },
-                clarificationTextVal: !action.newVal.id ? state.clarificationTextVal : "",  //якщо відсутня уточнювана посада, залишаємо уточнення, інакше обнуляємо його
-                clarifiedOccupTextVal: action.newVal.textValue    //потрібно щоб порахувати occupationName
             };
 
 
@@ -463,7 +474,7 @@ export default function formEditOccup(state, action) {
                         ...state.name,
                         occupationGroup: {
                             ...state.name.occupationGroup,
-                            value: action.newVal && action.newVal.id || 0
+                            value: action.newVal && action.newVal.id || null
                         },
                     }
                 };

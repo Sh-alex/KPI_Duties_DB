@@ -196,12 +196,20 @@ export default class FormEditOccupInfo extends Component {
     }
 
     handleClarifiedOccupInpChange(newVal) {
-        this.props.fields.name.clarifiedOccup && this.props.fields.name.clarifiedOccup.onChange(newVal.id);
+        if(this.props.fields.name.clarifiedOccup)
+            this.props.fields.name.clarifiedOccup.onChange(newVal.id);
+        if(this.props.fields.name.clarifiedOccupName)
+            this.props.fields.name.clarifiedOccupName.onChange(newVal.textValue);
+
         this.props.handleClarifiedOccupInpChange(newVal);
     }
 
     handleClarificationInpChange(newVal) {
-        this.props.fields.name.clarification && this.props.fields.name.clarification.onChange(newVal.id);
+        if(this.props.fields.name.clarification)
+            this.props.fields.name.clarification.onChange(newVal.id);
+        if(this.props.fields.name.clarificationName)
+            this.props.fields.name.clarificationName.onChange(newVal.textValue);
+
         this.props.handleClarificationInpChange(newVal);
     }
 

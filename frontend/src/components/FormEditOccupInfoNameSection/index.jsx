@@ -3,6 +3,7 @@ import {DropdownList} from "react-widgets";
 import classNames from "classnames"
 import replaceApostrophe from "../../utils/replaceApostrophe"
 import debounce from "../../utils/debounce"
+import fixBlur from "../../utils/fixReactWidgetsDatepickerBlur";
 
 import "./styles.less";
 
@@ -58,6 +59,8 @@ export default class FormEditOccupInfoNameSection extends Component {
                 clarifiedOccupationList,
                 clarificationList
             } = this.props,
+            clarifiedOccupVal,
+            clarificationVal,
             occupGroupFormGroupClass = classNames({
                 'form-group': true,
                 'has-error':  occupationGroupList.fetchingError || nameFields.occupationGroup.touched && nameFields.occupationGroup.error,
@@ -83,6 +86,22 @@ export default class FormEditOccupInfoNameSection extends Component {
                 'has-error': clarifiedOccupationList.fetchingError || nameFields.clarifiedOccup.touched && nameFields.clarifiedOccup.error,
                 'has-success': nameFields.clarifiedOccup.touched && !nameFields.clarifiedOccup.error && !clarifiedOccupationList.fetchingError
             });
+
+        if(nameFields.clarifiedOccup.value === undefined || nameFields.clarifiedOccup.value === "")
+            clarifiedOccupVal = null;
+        else
+            clarifiedOccupVal = {
+                id: nameFields.clarifiedOccup.value,
+                textValue: nameFields.clarifiedOccupName.value
+            };
+
+        if(nameFields.clarification.value === undefined || nameFields.clarification.value === "" || nameFields.clarification.value === null)
+            clarificationVal = null;
+        else
+            clarificationVal = {
+                id: nameFields.clarification.value,
+                textValue: nameFields.clarificationName.value
+            };
 
         return (
             <div>
@@ -162,16 +181,17 @@ export default class FormEditOccupInfoNameSection extends Component {
                                                 "id": null,
                                                 "textValue": "-(Відсутня)-"
                                             },
-                                            ...this.props.clarifiedOccupationList.items
+                                            ...clarifiedOccupationList.items
                                         ]}
-                                        value={nameFields.clarifiedOccup.value || null}
+                                        value={clarifiedOccupVal}
                                         defaultValue={{
                                             "id": null,
                                             "textValue": "-(Відсутня)-"
                                         }}
                                         valueField='id'
-                                        textField='textValue'
-                                        onChange={ this.props.handleClarifiedOccupInpChange }
+                                        textField={item => item.textValue}
+                                        onChange={this.props.handleClarifiedOccupInpChange}
+                                        onBlur={e => fixBlur(e, nameFields.clarifiedOccup)}
                                         busy={clarifiedOccupationList.isFetching}
                                         onSearch={this.onClarifiedOccupFilterStrChange}
                                         searchTerm={this.state.clarifiedOccupFilterStr}
@@ -222,16 +242,17 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         }}
                                         data={clarificationList.items}
                                         valueField='id'
-                                        textField='textValue'
+                                        textField={item => item.textValue}
                                         defaultValue={null}
+                                        value={clarificationVal}
                                         onChange={ this.props.handleClarificationInpChange }
-                                        caseSensitive={false}
+                                        onBlur={e => fixBlur(e, nameFields.clarification)}
                                         busy={clarificationList.isFetching}
                                         onSearch={this.onClarificationFilterStrChange}
                                         searchTerm={this.state.clarificationFilterStr}
                                         defaultSearchTerm=""
                                         filter={(dataItem, searchTerm) => true}
-                                        />
+                                    />
                                     <div className="input-group-btn">
                                         <button
                                             type="button"

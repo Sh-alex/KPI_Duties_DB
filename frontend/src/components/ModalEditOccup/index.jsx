@@ -56,7 +56,9 @@ class ModalEditOccup extends Component {
             name: {
                 'occupationGroup': null,
                 'clarifiedOccup': null,
+                'clarifiedOccupName': "",
                 'clarification': null,
+                'clarificationName': "",
                 'occupationName': '',
                 'occupationNameMin': ''
             },
@@ -183,7 +185,9 @@ export default reduxForm(
         fields: [
             'name.occupationGroup',
             'name.clarifiedOccup',
+            'name.clarifiedOccupName',
             'name.clarification',
+            'name.clarificationName',
             'name.occupationName',
             'name.occupationNameMin',
             'durations[].id',
