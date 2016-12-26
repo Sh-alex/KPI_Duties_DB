@@ -117,6 +117,8 @@ export default class SearchOccupationsForm extends Component {
     }
 
     onTagsFilterStrChange(newVal) {
+        if(newVal == this.state.searchTagsFilterStr)
+            return;
         this.setState({searchTagsFilterStr: newVal});
         this.handleTagsFilterListSubmit(newVal);
     }
@@ -126,6 +128,8 @@ export default class SearchOccupationsForm extends Component {
     }
 
     onOccupationGroupFilterStrChange(newVal) {
+        if(newVal == this.state.occupationGroupFilterStr)
+            return;
         this.setState({occupationGroupFilterStr: newVal});
         this.handleOccupGroupFilterListSubmit(newVal);
     }

@@ -27,21 +27,29 @@ export default class FormEditOccupInfoCodesSection extends Component {
     }
 
     onKPCodeFilterStrChange(newVal) {
+        if(newVal == this.state.KPCodeFilterStr)
+            return;
         this.setState({KPCodeFilterStr: newVal});
         this.handleKPCodeFilterListSubmit(newVal);
     }
 
     onDKHPCodeFilterStrChange(newVal) {
+        if(newVal == this.state.DKHPCodeFilterStr)
+            return;
         this.setState({DKHPCodeFilterStr: newVal});
         this.handleDKHPCodeFilterListSubmit(newVal);
     }
 
     onZKPPTRCodeFilterStrChange(newVal) {
+        if(newVal == this.state.ZKPPTRCodeFilterStr)
+            return;
         this.setState({ZKPPTRCodeFilterStr: newVal});
         this.handleZKPPTRCodeFilterListSubmit(newVal);
     }
 
     onETDKCodeFilterStrChange(newVal) {
+        if(newVal == this.state.ETDKCodeFilterStr)
+            return;
         this.setState({ETDKCodeFilterStr: newVal});
         this.handleETDKCodeFilterListSubmit(newVal);
     }

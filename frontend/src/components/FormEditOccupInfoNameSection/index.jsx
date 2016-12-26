@@ -26,16 +26,22 @@ export default class FormEditOccupInfoNameSection extends Component {
     }
 
     onOccupationGroupFilterStrChange(newVal) {
+        if(newVal == this.state.occupationGroupFilterStr)
+            return;
         this.setState({occupationGroupFilterStr: newVal});
         this.handleOccupGroupFilterListSubmit(newVal);
     }
 
     onClarificationFilterStrChange(newVal) {
+        if(newVal == this.state.clarificationFilterStr)
+            return;
         this.setState({clarificationFilterStr: newVal});
         this.handleClarificationFilterListSubmit(newVal);
     }
 
     onClarifiedOccupFilterStrChange(newVal) {
+        if(newVal == this.state.clarifiedOccupFilterStr)
+            return;
         this.setState({clarifiedOccupFilterStr: newVal});
         this.handleClarifiedOccupFilterListSubmit(newVal);
     }
