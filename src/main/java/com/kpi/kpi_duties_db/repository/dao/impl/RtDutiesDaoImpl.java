@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Olexandr Shevchenko
@@ -38,8 +37,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         OccupationsSearchResultDto result = new OccupationsSearchResultDto();
 
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
 
         criteria.setFetchMode("rtDutiesEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesCodeEntities", FetchMode.SELECT);
@@ -48,13 +45,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setFetchMode("rtDutiesMustKnowEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesTaskAndResponsibilitiesEntities", FetchMode.SELECT);
 
-        criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-        criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-        criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
-        criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
 
         Integer offset = 0;
         Integer limit = 0;
+        Boolean createdDatesAlias = false;
         if (paramsMap == null || paramsMap.isEmpty()) {
             result.setEntities(repository.findAll());
             //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
@@ -63,6 +57,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         } else {
             if (paramsMap.get("startFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null) {
                 criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                createdDatesAlias = true;
             }
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
@@ -124,14 +119,19 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         }
 
         if (paramsMap.get("inKpi") != null) {
-            List<RtDutiesEntity> listByKpi = criteriaForDatesInKpi.list();
-            List<RtDutiesEntity> listByState = criteriaForDatesInState.list();
-
-            if (paramsMap.get("inKpi").equals("ONLY_IN_KPI") && listByState != null && !listByState.isEmpty()) {
-                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByState.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+            if (paramsMap.get("inKpi").equals("ONLY_IN_KPI")) {
+                DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
+                detached.setProjection(Projections.property("id"));
+                detached.createAlias("dutiesValidityDateEntities", "dates");
+                detached.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
+                criteria.add(Property.forName("id").notIn(detached));
             }
-            if (paramsMap.get("inKpi").equals("ONLY_IN_STATE") && listByKpi != null && !listByKpi.isEmpty()) {
-                criteria.add(Restrictions.not(Restrictions.in("rtDuties.id", listByKpi.stream().map(sc -> sc.getId()).collect(Collectors.toList()))));
+            if (paramsMap.get("inKpi").equals("ONLY_IN_STATE")) {
+                DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
+                detached.setProjection(Projections.property("id"));
+                detached.createAlias("dutiesValidityDateEntities", "dates");
+                detached.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежності до КПІ
+                criteria.add(Property.forName("id").notIn(detached));
             }
         }
 
@@ -141,7 +141,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setProjection(null);
 
         if (paramsMap.get("sortField") != null) {
-            addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
+            if(!createdDatesAlias){
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+            }
+            addOrder(criteria, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
         }
         if (offset > 0) {
             criteria.setFirstResult(offset);
@@ -155,7 +158,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         return result;
     }
 
-    private void addOrder(Criteria criteria, Criteria criteriaForDatesInState, Criteria criteriaForDatesInKpi, String field, String direction) {
+    private void addOrder(Criteria criteria, String field, String direction) {
         switch (field) {
             case "OCCUPATION_GROUP":
                 criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
@@ -173,37 +176,29 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             case "START_IN_STATE_DATE":
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
-                    criteriaForDatesInState.addOrder(Order.asc("dates.start"));
                 } else {
                     criteria.addOrder(Order.desc("dates.start"));
-                    criteriaForDatesInState.addOrder(Order.desc("dates.start"));
                 }
                 break;
             case "STOP_IN_STATE_DATE":
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
-                    criteriaForDatesInState.addOrder(Order.asc("dates.stop"));
                 } else {
                     criteria.addOrder(Order.desc("dates.stop"));
-                    criteriaForDatesInState.addOrder(Order.desc("dates.stop"));
                 }
                 break;
             case "START_IN_KPI_DATE":
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
-                    criteriaForDatesInKpi.addOrder(Order.asc("dates.start"));
                 } else {
                     criteria.addOrder(Order.desc("dates.start"));
-                    criteriaForDatesInKpi.addOrder(Order.desc("dates.start"));
                 }
                 break;
             case "STOP_IN_KPI_DATE":
                 if (direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
-                    criteriaForDatesInKpi.addOrder(Order.asc("dates.stop"));
                 } else {
                     criteria.addOrder(Order.desc("dates.stop"));
-                    criteriaForDatesInKpi.addOrder(Order.desc("dates.stop"));
                 }
                 break;
         }
