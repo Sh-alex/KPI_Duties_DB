@@ -268,27 +268,13 @@ export default reduxForm(
                     resForm: 'formEditOccup'
                 }));
             },
-            fetchOccupGroupList() {
-                return dispatch(fetchOccupGroupList());
-            },
-            fetchClarifiedOccupList() {
-                return dispatch(fetchClarifiedOccupList());
-            },
-            fetchClarificationList() {
-                return dispatch(fetchClarificationList());
-            },
-            fetchKPCodesList() {
-                return dispatch(fetchKPCodesList());
-            },
-            fetchZKPPTRCodesList() {
-                return dispatch(fetchZKPPTRCodesList());
-            },
-            fetchETDKCodesList() {
-                return dispatch(fetchETDKCodesList());
-            },
-            fetchDKHPCodesList() {
-                return dispatch(fetchDKHPCodesList());
-            },
+            fetchClarifiedOccupList: reqParams => dispatch(fetchClarifiedOccupList(null, null, reqParams)),
+            fetchOccupGroupList: reqParams => dispatch(fetchOccupGroupList(null, null, reqParams)),
+            fetchClarificationList: reqParams => dispatch(fetchClarificationList(null, null, reqParams)),
+            fetchKPCodesList: reqParams => dispatch(fetchKPCodesList(null, null, reqParams)),
+            fetchZKPPTRCodesList: reqParams => dispatch(fetchZKPPTRCodesList(null, null, reqParams)),
+            fetchETDKCodesList: reqParams => dispatch(fetchETDKCodesList(null, null, reqParams)),
+            fetchDKHPCodesList: reqParams => dispatch(fetchDKHPCodesList(null, null, reqParams)),
             addNewOccupationGroup(newVal) {
                 return dispatch(addNewOccupationGroupAndUpdateForm({
                     newVal,

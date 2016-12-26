@@ -127,7 +127,9 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
-                                    emptyFilter: "Не знайдено жодного елементу"
+                                    emptyFilter: "Не знайдено жодного елементу",
+                                    filterPlaceholder: "Введіть текст для пошуку значень",
+                                    open: "Відкрити випадаючий список"
                                 }}
                                 data={props.KPCodesList.items}
                                 valueField='id'
@@ -140,8 +142,11 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     }
                                 }
                                 busy={props.KPCodesList.isFetching}
-                                caseSensitive={false}
-                                filter='startsWith' />
+                                onSearch={props.onKPCodeFilterStrChange}
+                                searchTerm={props.KPCodeFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                             <div className="input-group-btn">
                                 <button
                                     type="button"
@@ -154,7 +159,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
-                                    onClick={props.fetchKPCodesList} >
+                                    onClick={() => props.handleKPCodeFilterListSubmit()} >
                                     <i className="fa fa-refresh" />
                                 </button>
                             </div>
@@ -184,7 +189,9 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
-                                    emptyFilter: "Не знайдено жодного елементу"
+                                    emptyFilter: "Не знайдено жодного елементу",
+                                    filterPlaceholder: "Введіть текст для пошуку значень",
+                                    open: "Відкрити випадаючий список"
                                 }}
                                 data={props.ZKPPTRCodesList.items}
                                 valueField='id'
@@ -197,8 +204,11 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     }
                                 }
                                 busy={props.ZKPPTRCodesList.isFetching}
-                                caseSensitive={false}
-                                filter='startsWith' />
+                                onSearch={props.onZKPPTRCodeFilterStrChange}
+                                searchTerm={props.ZKPPTRCodeFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                             <div className="input-group-btn">
                                 <button
                                     type="button"
@@ -211,7 +221,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
-                                    onClick={props.fetchZKPPTRCodesList} >
+                                    onClick={() => props.handleZKPPTRCodeFilterListSubmit()} >
                                     <i className="fa fa-refresh" />
                                 </button>
                             </div>
@@ -244,7 +254,9 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
-                                    emptyFilter: "Не знайдено жодного елементу"
+                                    emptyFilter: "Не знайдено жодного елементу",
+                                    filterPlaceholder: "Введіть текст для пошуку значень",
+                                    open: "Відкрити випадаючий список"
                                 }}
                                 data={props.ETDKCodesList.items}
                                 valueField='id'
@@ -257,8 +269,11 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     }
                                 }
                                 busy={props.ETDKCodesList.isFetching}
-                                caseSensitive={false}
-                                filter='startsWith' />
+                                onSearch={props.onETDKCodeFilterStrChange}
+                                searchTerm={props.ETDKCodeFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                             <div className="input-group-btn">
                                 <button
                                     type="button"
@@ -271,7 +286,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
-                                    onClick={props.fetchETDKCodesList} >
+                                    onClick={() => props.handleETDKCodeFilterListSubmit()} >
                                     <i className="fa fa-refresh" />
                                 </button>
                             </div>
@@ -301,7 +316,9 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
-                                    emptyFilter: "Не знайдено жодного елементу"
+                                    emptyFilter: "Не знайдено жодного елементу",
+                                    filterPlaceholder: "Введіть текст для пошуку значень",
+                                    open: "Відкрити випадаючий список"
                                 }}
                                 data={props.DKHPCodesList.items}
                                 valueField='id'
@@ -314,8 +331,11 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     }
                                 }
                                 busy={props.DKHPCodesList.isFetching}
-                                caseSensitive={false}
-                                filter='startsWith' />
+                                onSearch={props.onDKHPCodeFilterStrChange}
+                                searchTerm={props.DKHPCodeFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                             <div className="input-group-btn">
                                 <button
                                     type="button"
@@ -328,7 +348,7 @@ export default function FormEditOccupInfoCodesPortion(props) {
                                     type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
-                                    onClick={props.fetchDKHPCodesList} >
+                                    onClick={() => props.handleDKHPCodeFilterListSubmit()} >
                                     <i className="fa fa-refresh" />
                                 </button>
                             </div>

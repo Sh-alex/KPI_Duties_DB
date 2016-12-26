@@ -4,6 +4,7 @@ import { Alert } from 'react-bootstrap'
 import classNames from 'classnames';
 
 import deepEqual from "../../utils/deepEqual"
+import debounce from "../../utils/debounce"
 
 import {OCCUPATION_MIN_DATE} from "../../constants/common";
 
@@ -29,6 +30,8 @@ export default class SearchOccupationsForm extends Component {
         super(props);
 
         this.getInitState = this.getInitState.bind(this);
+        this.fetchOccupGroupList = this.fetchOccupGroupList.bind(this);
+        this.fetchTagsList = this.fetchTagsList.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.handleSearchTypeChange = this.handleSearchTypeChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
@@ -37,6 +40,10 @@ export default class SearchOccupationsForm extends Component {
         this.handleSearchTextBlur = this.handleSearchTextBlur.bind(this);
         this.handleOccupGroupChange = this.handleOccupGroupChange.bind(this);
         this.toggleInpOccupGroupIsOpen = this.toggleInpOccupGroupIsOpen.bind(this);
+        this.onTagsFilterStrChange = this.onTagsFilterStrChange.bind(this);
+        this.handleTagsFilterListSubmit = debounce(this.handleTagsFilterListSubmit.bind(this), 400);
+        this.onOccupationGroupFilterStrChange = this.onOccupationGroupFilterStrChange.bind(this);
+        this.handleOccupGroupFilterListSubmit = debounce(this.handleOccupGroupFilterListSubmit.bind(this), 400);
 
         this.state = this.getInitState(this.props.formFields);
     }
@@ -54,6 +61,9 @@ export default class SearchOccupationsForm extends Component {
                 stopFrom: null,
                 stopTo: null,
             }, formFields),
+            searchTagsFilterStr: "",
+            occupationGroupFilterStr: "",
+            listFetchLimit: 50,
             inpOccupGroupIsOpen: false,         //чи показувати зараз список із посадовим складом
             //описали окремо в store, а не просто юзаємо через props на випадок якщо треба буде не показувати у підсказці вже обрані елементи
             tagsList: this.props.tagsList && this.props.tagsList.items && this.props.tagsList.items.map(item => item.textValue) || []
@@ -82,6 +92,21 @@ export default class SearchOccupationsForm extends Component {
             })
     }
 
+    componentDidMount() {
+        this.fetchOccupGroupList();
+        this.fetchTagsList();
+    }
+
+    fetchOccupGroupList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchOccupGroupList({...params, limit: this.state.listFetchLimit})
+    }
+
+    fetchTagsList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchTagsList({...params, limit: this.state.listFetchLimit})
+    }
+
     submitForm(e) {
         e.preventDefault();
         this.props.onSubmitSearchForm({
@@ -89,6 +114,24 @@ export default class SearchOccupationsForm extends Component {
             searchTags: this.state.form.searchTags,
             limit: paginationSizesArr[paginationSizesArr.length-1],   //обмежити масимальну кількість результатів пошуку
         });
+    }
+
+    onTagsFilterStrChange(newVal) {
+        this.setState({searchTagsFilterStr: newVal});
+        this.handleTagsFilterListSubmit(newVal);
+    }
+
+    handleTagsFilterListSubmit(filterStr = this.state.searchTagsFilterStr) {
+        this.fetchTagsList({ filterStr });
+    }
+
+    onOccupationGroupFilterStrChange(newVal) {
+        this.setState({occupationGroupFilterStr: newVal});
+        this.handleOccupGroupFilterListSubmit(newVal);
+    }
+
+    handleOccupGroupFilterListSubmit(filterStr = this.state.occupationGroupFilterStr) {
+        this.fetchOccupGroupList({ filterStr });
     }
 
     handleSearchTypeChange (e) {
@@ -225,8 +268,11 @@ export default class SearchOccupationsForm extends Component {
                     busy={this.props.tagsList.isFetching}
                     onChange={this.handleTagsChange}
                     onCreate={this.handleTagsCreate}
-                    caseSensitive={false}
-                    filter='contains' />
+                    onSearch={this.onTagsFilterStrChange}
+                    searchTerm={this.state.searchTagsFilterStr}
+                    defaultSearchTerm=""
+                    filter={(dataItem, searchTerm) => true}
+                />
             ) : "";
 
         return (
@@ -262,8 +308,11 @@ export default class SearchOccupationsForm extends Component {
                                 value={this.state.form.occupGroupVal}
                                 onChange={this.handleOccupGroupChange}
                                 busy={this.props.occupationGroupList.isFetching}
-                                caseSensitive={false}
-                                filter='contains' />
+                                onSearch={this.onOccupationGroupFilterStrChange}
+                                searchTerm={this.state.occupationGroupFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                         </div>
                     </div>
                     <div className="form-group">

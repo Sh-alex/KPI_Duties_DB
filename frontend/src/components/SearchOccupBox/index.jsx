@@ -47,10 +47,6 @@ class SearchOccupBox extends Component {
         this.checkUserAccess(this.props)
     }
 
-    componentDidMount() {
-        this.props.fetchLists();
-    }
-
     componentWillReceiveProps(nextProps) {
         this.checkUserAccess(nextProps);
 
@@ -88,6 +84,10 @@ class SearchOccupBox extends Component {
                     onAlertDismiss={this.props.handleSearchFormAlertDismiss}
                     isSubmittngSearchForm={this.props.isSubmittngSearchForm}
                     tagsList={this.props.clarificationList}
+
+                    fetchOccupGroupList={this.props.fetchOccupGroupList}
+                    fetchTagsList={this.props.fetchClarificationList}
+
                     occupationGroupList={this.props.occupationGroupList}
                     searchQuery={this.props.location.query}
                     boxIsExpanded={this.state.searchFormIsExpanded}
@@ -160,11 +160,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         denyAccessToTheUserWithRedirect() {
             return dispatch( denyAccessToTheUserWithRedirect() );
         },
-        fetchLists() {
-            dispatch(fetchOccupGroupList());
-            dispatch(fetchClarifiedOccupList());
-            dispatch(fetchClarificationList());
-        },
+
+        fetchClarifiedOccupList: reqParams => dispatch(fetchClarifiedOccupList(null, null, reqParams)),
+        fetchOccupGroupList: reqParams => dispatch(fetchOccupGroupList(null, null, reqParams)),
+        fetchClarificationList: reqParams => dispatch(fetchClarificationList(null, null, reqParams)),
+
         priorSearchOccupations(...data) {
             dispatch(priorSearchOccupations(...data, dispatch))
         },

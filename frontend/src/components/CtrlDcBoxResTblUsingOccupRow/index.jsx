@@ -16,9 +16,9 @@ export default function CtrlDcBoxResTblUsingOccupRow(props) {
             innerBlock = (
                 <div>
                     <div className="text-center">
-                        <i className="fa fa-spinner fa-pulse fa-lg" />
+                        <i className="fa fa-spinner fa-pulse" />
+                        Іде завантаження назв посад...
                     </div>
-                    <div> Іде завантаження назв посад... </div>
                 </div>
             );
         else if(props.occupNamesById.fetchingError)
@@ -59,6 +59,17 @@ export default function CtrlDcBoxResTblUsingOccupRow(props) {
                     </div>
                     <div className="list-of-using-occup">
                         { usingOccupationsList }
+                    </div>
+                    <div>
+                        <a
+                            href="javascript:void(0)"
+                            role="button"
+                            title="Оновити список назв посад"
+                            onClick={() => props.fetchOccupNamesById()}
+                        >
+                            Оновити список назв посад {" "}
+                            <i className="fa fa-refresh"/>
+                        </a>
                     </div>
                 </div>
             )

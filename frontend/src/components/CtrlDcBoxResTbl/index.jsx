@@ -111,6 +111,7 @@ export default function CtrlDcBoxResTbl(props) {
                     show={showUsingOccupRow}
                     occupNamesById={props.occupNamesById}
                     onUsingOccupNameClick={props.onUsingOccupNameClick}
+                    fetchOccupNamesById={props.fetchOccupNamesById}
                 />
             );
         return [infoRow, usingOccupRow];

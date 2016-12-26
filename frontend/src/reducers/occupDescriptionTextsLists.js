@@ -13,6 +13,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : []
     },
     responsibilitiesTextsList: {
@@ -27,6 +28,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : []
     },
     qualiffRequirTextsList: {
@@ -41,6 +43,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : []
     }
 };
@@ -61,6 +64,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 ...state,
                 haveToKnowTextsList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -89,6 +93,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 ...state,
                 responsibilitiesTextsList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -117,6 +122,7 @@ export default function occupDescriptionTextsLists(state = initialState, action)
                 ...state,
                 qualiffRequirTextsList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }

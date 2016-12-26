@@ -26,7 +26,6 @@ export default class SearchOccupBoxRes extends Component {
             deletingItem: null,                         //яка посада(ID) зараз видаляється(для неї показуємо модальне вікно)
             sortField: null,                            //поле по якому портується таблиця
             sortDirection: null,                        //напрям сортування SORT_ASC/SORT_DESC
-            searchResData: this.props.searchResData,    //дані із результатами пошуку; зберігаємо у стані компонента, бо тут вони будуть відсортовані
             paginationSize: paginationSizesArr[0],      //обраний розмір порції
             paginationSizesArr,                         //масив розмірів порцій
             activePortion: 1,                           //номер порції таблиці яку показуємо

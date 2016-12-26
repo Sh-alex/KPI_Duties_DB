@@ -1,12 +1,18 @@
 export default function generateFetchingOccupDcValRequestFunction(params) {
     let listName = params.listName || "";
-    return function fetchOccupDcVal( onSuccess, onFail ) {
+    return function fetchOccupDcVal( onSuccess, onFail, reqParams ) {
         return function (dispatch) {
+            let getParams = "?" +
+                "&offset=" + (reqParams && reqParams.offset || "") +
+                "&limit=" + (reqParams && reqParams.limit || "") +
+                "&filterStr=" + (reqParams && reqParams.filterStr || "") +
+                "&sortDirection=" + (reqParams && reqParams.sortDirection || "");
+
             dispatch({ type: params.requestConst });
 
             let access_token = localStorage.jwtToken;
 
-            return fetch( params.apiURI, {
+            return fetch( params.apiURI + getParams, {
                 credentials: 'include',
                 mode: 'cors',
                 method: 'get',
@@ -34,7 +40,8 @@ export default function generateFetchingOccupDcValRequestFunction(params) {
 
                     dispatch({
                         type: params.successConst,
-                        data: data.idNameResponses
+                        data: data.idNameResponses,
+                        resultsOveralSize: Number.parseInt(data.resultsOveralSize) || 0,
                     });
                     if(onSuccess instanceof Function)
                         onSuccess(dispatch, {data});

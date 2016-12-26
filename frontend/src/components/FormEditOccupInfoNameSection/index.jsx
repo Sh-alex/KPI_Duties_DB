@@ -2,10 +2,55 @@ import React, {Component} from "react";
 import {DropdownList} from "react-widgets";
 import classNames from "classnames"
 import replaceApostrophe from "../../utils/replaceApostrophe"
+import debounce from "../../utils/debounce"
 
 import "./styles.less";
 
 export default class FormEditOccupInfoNameSection extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            occupationGroupFilterStr: "",
+            clarifiedOccupFilterStr: "",
+            clarificationFilterStr: ""
+        };
+
+        this.onOccupationGroupFilterStrChange = this.onOccupationGroupFilterStrChange.bind(this);
+        this.onClarificationFilterStrChange = this.onClarificationFilterStrChange.bind(this);
+        this.onClarifiedOccupFilterStrChange = this.onClarifiedOccupFilterStrChange.bind(this);
+        this.handleOccupGroupFilterListSubmit = debounce(this.handleOccupGroupFilterListSubmit.bind(this), 400);
+        this.handleClarifiedOccupFilterListSubmit = debounce(this.handleClarifiedOccupFilterListSubmit.bind(this), 400);
+        this.handleClarificationFilterListSubmit = debounce(this.handleClarificationFilterListSubmit.bind(this), 400);
+    }
+
+    onOccupationGroupFilterStrChange(newVal) {
+        this.setState({occupationGroupFilterStr: newVal});
+        this.handleOccupGroupFilterListSubmit(newVal);
+    }
+
+    onClarificationFilterStrChange(newVal) {
+        this.setState({clarificationFilterStr: newVal});
+        this.handleClarificationFilterListSubmit(newVal);
+    }
+
+    onClarifiedOccupFilterStrChange(newVal) {
+        this.setState({clarifiedOccupFilterStr: newVal});
+        this.handleClarifiedOccupFilterListSubmit(newVal);
+    }
+
+    handleOccupGroupFilterListSubmit(filterStr = this.state.occupationGroupFilterStr) {
+        this.props.fetchOccupGroupList({ filterStr });
+    }
+
+    handleClarificationFilterListSubmit(filterStr = this.state.clarificationFilterStr) {
+        this.props.fetchClarificationList({ filterStr });
+    }
+
+    handleClarifiedOccupFilterListSubmit(filterStr = this.state.clarifiedOccupFilterStr) {
+        this.props.fetchClarifiedOccupList({ filterStr });
+    }
+
     render() {
         let {
                 nameFields,
@@ -53,16 +98,21 @@ export default class FormEditOccupInfoNameSection extends Component {
                                 placeholder="Оберіть варіант зі списку"
                                 messages={{
                                     emptyList:"Список пустий",
-                                    emptyFilter: "Не знайдено жодного елементу"
+                                    emptyFilter: "Не знайдено жодного елементу",
+                                    filterPlaceholder: "Введіть текст для пошуку значень",
+                                    open: "Відкрити випадаючий список"
                                 }}
                                 data={occupationGroupList.items}
                                 valueField='id'
                                 textField='textValue'
                                 defaultValue={null}
-                                onChange={ this.props.handleOccupationGroupInpChange }
+                                onChange={this.props.handleOccupationGroupInpChange}
                                 busy={occupationGroupList.isFetching}
-                                caseSensitive={false}
-                                filter='contains' />
+                                onSearch={this.onOccupationGroupFilterStrChange}
+                                searchTerm={this.state.occupationGroupFilterStr}
+                                defaultSearchTerm=""
+                                filter={(dataItem, searchTerm) => true}
+                            />
                             <div className="input-group-btn">
                                 <button
                                     type="button"
@@ -75,7 +125,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                                     type="button"
                                     title="Оновити список"
                                     className="btn btn-default btn-flat"
-                                    onClick={this.props.fetchOccupGroupList} >
+                                    onClick={() => this.handleOccupGroupFilterListSubmit()} >
                                     <i className="fa fa-refresh" />
                                 </button>
                             </div>
@@ -103,7 +153,9 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         placeholder="Оберіть варіант зі списку"
                                         messages={{
                                             emptyList: "Список пустий",
-                                            emptyFilter: "Не знайдено жодного елементу"
+                                            emptyFilter: "Не знайдено жодного елементу",
+                                            filterPlaceholder: "Введіть текст для пошуку значень",
+                                            open: "Відкрити випадаючий список"
                                         }}
                                         data={[
                                             {
@@ -120,15 +172,18 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         valueField='id'
                                         textField='textValue'
                                         onChange={ this.props.handleClarifiedOccupInpChange }
-                                        caseSensitive={false}
                                         busy={clarifiedOccupationList.isFetching}
-                                        filter='contains' />
+                                        onSearch={this.onClarifiedOccupFilterStrChange}
+                                        searchTerm={this.state.clarifiedOccupFilterStr}
+                                        defaultSearchTerm=""
+                                        filter={(dataItem, searchTerm) => true}
+                                    />
                                     <div className="input-group-btn">
                                         <button
                                             type="button"
                                             title="Оновити список"
                                             className="btn btn-default btn-flat"
-                                            onClick={this.props.fetchClarifiedOccupList} >
+                                            onClick={() => this.handleClarifiedOccupFilterListSubmit()} >
                                             <i className="fa fa-refresh" />
                                         </button>
                                     </div>
@@ -161,7 +216,9 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         placeholder="Оберіть варіант зі списку"
                                         messages={{
                                             emptyList:"Список пустий",
-                                            emptyFilter: "Не знайдено жодного елементу"
+                                            emptyFilter: "Не знайдено жодного елементу",
+                                            filterPlaceholder: "Введіть текст для пошуку значень",
+                                            open: "Відкрити випадаючий список"
                                         }}
                                         data={clarificationList.items}
                                         valueField='id'
@@ -170,7 +227,11 @@ export default class FormEditOccupInfoNameSection extends Component {
                                         onChange={ this.props.handleClarificationInpChange }
                                         caseSensitive={false}
                                         busy={clarificationList.isFetching}
-                                        filter='contains'/>
+                                        onSearch={this.onClarificationFilterStrChange}
+                                        searchTerm={this.state.clarificationFilterStr}
+                                        defaultSearchTerm=""
+                                        filter={(dataItem, searchTerm) => true}
+                                        />
                                     <div className="input-group-btn">
                                         <button
                                             type="button"
@@ -183,7 +244,7 @@ export default class FormEditOccupInfoNameSection extends Component {
                                             type="button"
                                             title="Оновити список"
                                             className="btn btn-default btn-flat"
-                                            onClick={this.props.fetchClarificationList} >
+                                            onClick={() => this.handleClarificationFilterListSubmit()} >
                                             <i className="fa fa-refresh" />
                                         </button>
                                     </div>

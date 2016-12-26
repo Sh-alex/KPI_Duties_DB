@@ -84,15 +84,15 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
 
 
-export function priorSearchOccupations(searchType, searchText) {
+export function priorSearchOccupations(searchType, filterStr) {
     return function (dispatch) {
-        let searchParams = `?searchType=${searchType}&searchText=${searchText}`,
+        let searchParams = `?searchType=${searchType}&filterStr=${filterStr}&limit=${5}`,
             access_token = localStorage.jwtToken;
 
         dispatch({
             type: PRIOR_SEARCH_OCCUP_REQUEST,
             searchType,
-            searchText
+            filterStr
         });
 
         return fetch(PRIOR_SEARCH_OCCUP_URI + searchParams, {
