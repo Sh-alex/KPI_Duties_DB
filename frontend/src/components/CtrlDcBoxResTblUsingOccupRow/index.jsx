@@ -66,6 +66,7 @@ export default function CtrlDcBoxResTblUsingOccupRow(props) {
                             href="javascript:void(0)"
                             role="button"
                             title="Оновити список назв посад"
+                            className="text-success btn-update-occupation-names-list"
                             onClick={() => props.fetchOccupNamesById()}
                         >
                             Оновити список назв посад {" "}
