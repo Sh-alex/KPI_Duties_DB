@@ -32,7 +32,7 @@ public class DcDutiesQualificationRequirementsServiceImpl extends BaseServiceImp
         if (text != null) {
             criteria.add(Restrictions.ilike("text", text, MatchMode.ANYWHERE));
         }
-        if (sortDirection != null) {
+        if (sortDirection != null && !sortDirection.equals("")) {
             if (sortDirection.equals("SORT_ASC")) {
                 criteria.addOrder(Order.asc("text"));
             } else

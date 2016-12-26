@@ -31,7 +31,7 @@ public class DcDutiesPartitionServiceImpl extends BaseServiceImpl<DcDutiesPartit
         if (name != null) {
             criteria.add(Restrictions.ilike("name", name, MatchMode.ANYWHERE));
         }
-        if (sortDirection != null) {
+        if (sortDirection != null && !sortDirection.equals("")) {
             if (sortDirection.equals("SORT_ASC")) {
                 criteria.addOrder(Order.asc("name"));
             } else
