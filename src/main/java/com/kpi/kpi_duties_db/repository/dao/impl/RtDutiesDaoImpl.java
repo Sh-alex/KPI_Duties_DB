@@ -55,7 +55,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             return result;
         } else {
             if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null
-                    || paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
+                    || (paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("OCCUPATION_GROUP") && !paramsMap.get("sortField").equals("OCCUPATION_NAME"))) {
                 criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 criteria.setFetchMode("dates", FetchMode.SELECT);
             }
@@ -160,40 +160,40 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         switch (field) {
             case "OCCUPATION_GROUP":
                 criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dcDutiesPartitionEntity.name"));
                 } else
                     criteria.addOrder(Order.desc("dcDutiesPartitionEntity.name"));
                 break;
             case "OCCUPATION_NAME":
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("rtDuties.name"));
                 } else
                     criteria.addOrder(Order.desc("rtDuties.name"));
                 break;
             case "START_IN_STATE_DATE":
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                 } else {
                     criteria.addOrder(Order.desc("dates.start"));
                 }
                 break;
             case "STOP_IN_STATE_DATE":
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                 } else {
                     criteria.addOrder(Order.desc("dates.stop"));
                 }
                 break;
             case "START_IN_KPI_DATE":
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.start"));
                 } else {
                     criteria.addOrder(Order.desc("dates.start"));
                 }
                 break;
             case "STOP_IN_KPI_DATE":
-                if (direction.equals("SORT_ASC")) {
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
                     criteria.addOrder(Order.asc("dates.stop"));
                 } else {
                     criteria.addOrder(Order.desc("dates.stop"));
