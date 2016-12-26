@@ -13,12 +13,12 @@ import {
 
 export default function searchOccupations({data, onRequest, onSucces, onFail}) {
     let searchGetParams = "?" +
-        "searchType=" + data.searchType +
+        "searchType=" + (data.searchType || "") +
         "&occupIds=" + (data.occupIds || "") +
         "&occupGroupVal=" + (data.occupGroupVal || "") +
-        "&searchText=" + data.searchText +
-        "&searchTags=" + data.searchTags +
-        "&inKpi=" + data.inKpi +
+        "&filterStr=" + (data.searchText || "") +
+        "&searchTags=" + (data.searchTags || "") +
+        "&inKpi=" + (data.inKpi || "") +
         "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
         "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
         "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +
@@ -86,7 +86,7 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
 export function priorSearchOccupations(searchType, filterStr) {
     return function (dispatch) {
-        let searchParams = `?searchType=${searchType}&filterStr=${filterStr}&limit=${5}`,
+        let searchParams = `?searchType=${searchType || ""}&filterStr=${filterStr || ""}&limit=${5}`,
             access_token = localStorage.jwtToken;
 
         dispatch({
