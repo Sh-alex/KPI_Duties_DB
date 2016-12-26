@@ -37,6 +37,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         OccupationsSearchResultDto result = new OccupationsSearchResultDto();
 
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+        criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
 
         criteria.setFetchMode("rtDutiesEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesCodeEntities", FetchMode.SELECT);
@@ -45,20 +46,15 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setFetchMode("rtDutiesMustKnowEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesTaskAndResponsibilitiesEntities", FetchMode.SELECT);
 
-
         Integer offset = 0;
         Integer limit = 0;
+
         if (paramsMap == null || paramsMap.isEmpty()) {
             result.setEntities(repository.findAll());
             //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
             result.setResultSize(result.getEntities().size());
             return result;
         } else {
-            if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null
-                    || (paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("OCCUPATION_GROUP") && !paramsMap.get("sortField").equals("OCCUPATION_NAME"))) {
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-                criteria.setFetchMode("dates", FetchMode.SELECT);
-            }
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
                 if (value != null) {
@@ -118,7 +114,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             }
         }
 
-        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi") != null) {
+        if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
             if (paramsMap.get("inKpi").equals("ONLY_IN_KPI")) {
                 DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
                 detached.setProjection(Projections.property("id"));
