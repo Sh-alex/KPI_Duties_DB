@@ -27,8 +27,14 @@ public class DataInItem {
     @JsonProperty("clarifiedOccup")
     private Integer rtDutiesParentId;
 
+    @JsonProperty("clarifiedOccupName")
+    private String rtDutiesParentName;
+
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
+
+    @JsonProperty("clarificationName")
+    private String dcDutiesName;
 
     private String mainInfoDocRefName;
 
@@ -90,12 +96,28 @@ public class DataInItem {
         this.rtDutiesParentId = rtDutiesParentId;
     }
 
+    public String getRtDutiesParentName() {
+        return rtDutiesParentName;
+    }
+
+    public void setRtDutiesParentName(String rtDutiesParentName) {
+        this.rtDutiesParentName = rtDutiesParentName;
+    }
+
     public Integer getDcDutiesNameId() {
         return dcDutiesNameId;
     }
 
     public void setDcDutiesNameId(Integer dcDutiesNameId) {
         this.dcDutiesNameId = dcDutiesNameId;
+    }
+
+    public String getDcDutiesName() {
+        return dcDutiesName;
+    }
+
+    public void setDcDutiesName(String dcDutiesName) {
+        this.dcDutiesName = dcDutiesName;
     }
 
     public String getMainInfoDocRefName() {
