@@ -43,6 +43,7 @@ public class DcDutiesResponsibilitiesController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesTaskAndResponsibilities(response);
+        response.setResultsOveralSize(dcDutiesTaskAndResponsibilitiesService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

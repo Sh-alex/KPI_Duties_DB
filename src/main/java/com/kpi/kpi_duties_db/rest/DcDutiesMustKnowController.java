@@ -43,6 +43,7 @@ public class DcDutiesMustKnowController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesMustKnow(response);
+        response.setResultsOveralSize(dcDutiesMustKnowService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

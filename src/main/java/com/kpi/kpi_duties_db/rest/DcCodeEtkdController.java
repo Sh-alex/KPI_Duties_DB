@@ -43,6 +43,7 @@ public class DcCodeEtkdController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeETKDId");
+        response.setResultsOveralSize(dcCodeEtkdService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

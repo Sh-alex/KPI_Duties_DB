@@ -43,6 +43,7 @@ public class DcDutiesPartitionController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForDcDutiesPartition(response);
+        response.setResultsOveralSize(dcDutiesPartitionEntityService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

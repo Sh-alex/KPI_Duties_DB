@@ -12,7 +12,9 @@ import java.util.List;
 
 public class IdNameListResponse {
 
-    List<IdNameResponse> idNameResponses;
+    private List<IdNameResponse> idNameResponses;
+
+    private Integer resultsOveralSize;
 
     public List<IdNameResponse> getIdNameResponses() {
         return idNameResponses;
@@ -20,5 +22,13 @@ public class IdNameListResponse {
 
     public void setIdNameResponses(List<IdNameResponse> idNameResponses) {
         this.idNameResponses = idNameResponses;
+    }
+
+    public Integer getResultsOveralSize() {
+        return resultsOveralSize;
+    }
+
+    public void setResultsOveralSize(Integer resultsOveralSize) {
+        this.resultsOveralSize = resultsOveralSize;
     }
 }

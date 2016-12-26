@@ -42,6 +42,7 @@ public class DcDutiesQualificationRequirementsController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForRtDutiesQualificationRequirements(response);
+        response.setResultsOveralSize(dcDutiesQualificationRequirementsService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

@@ -43,6 +43,7 @@ public class DcCodeZkpptrController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeZKPPTRId");
+        response.setResultsOveralSize(dcCodeZkpptrService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

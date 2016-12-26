@@ -43,6 +43,7 @@ public class DcCodeKpController {
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForCode(response, "codeKPId");
+        response.setResultsOveralSize(dcCodeKpEntityService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }
