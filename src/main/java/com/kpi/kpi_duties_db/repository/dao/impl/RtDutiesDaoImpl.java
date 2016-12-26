@@ -118,7 +118,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             }
         }
 
-        if (paramsMap.get("inKpi") != null) {
+        if (paramsMap.get("inKpi") != null && paramsMap.get("inKpi") != null) {
             if (paramsMap.get("inKpi").equals("ONLY_IN_KPI")) {
                 DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
                 detached.setProjection(Projections.property("id"));
