@@ -55,7 +55,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             result.setResultSize(result.getEntities().size());
             return result;
         } else {
-            if (paramsMap.get("startFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null) {
+            if (paramsMap.get("startFrom") != null || paramsMap.get("startTo") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null) {
                 criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                 createdDatesAlias = true;
             }
