@@ -61,6 +61,9 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
             result.setResultSize(result.getEntities().size());
             return result;
         } else {
+            if (paramsMap.get("startFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopFrom") != null || paramsMap.get("stopTo") != null) {
+                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+            }
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
                 if (value != null) {
@@ -98,23 +101,18 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "startFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "startTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "stopFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "stopTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
                         case "offset":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
                             offset = (Integer) value;
                             break;
                         case "limit":
@@ -143,9 +141,6 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setProjection(null);
 
         if (paramsMap.get("sortField") != null) {
-            if (paramsMap.get("startFrom") != null && paramsMap.get("stopFrom") != null && paramsMap.get("stopFrom") != null && paramsMap.get("stopTo") != null) {
-                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-            }
             addOrder(criteria, criteriaForDatesInState, criteriaForDatesInKpi, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
         }
         if (offset > 0) {
