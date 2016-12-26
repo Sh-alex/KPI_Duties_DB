@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import "./styles.less";
+import { Alert } from 'react-bootstrap'
 
 function bindUsingOccupClickHandler(itemId, props) {
     return () => {
