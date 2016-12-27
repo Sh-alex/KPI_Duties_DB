@@ -64,6 +64,10 @@ export default function LoginBoxNav(props) {
                         </NavLink>
                     ) || ""
                 }
+                <NavLink to="/about" className="list-group-item">
+                    <i className="fa fa-info-circle" /> {" "}
+                    Про програму
+                </NavLink>
                 <NavLink to="/help" className="list-group-item">
                     <i className="fa fa-question-circle" /> {" "}
                     Допомога
