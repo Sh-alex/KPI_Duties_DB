@@ -2,34 +2,42 @@ import React, {Component} from "react";
 import "./styles.less";
 import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { Link } from 'react-router'
+import NavLink from "../NavLink"
 
 function HeaderUserMenu(props) {
     let accessNameText = props.userState && props.userState.permissions && props.userState.permissions.accessName || "Невідомо";
     return (
         <Popover className="dropdown-menu header-user-menu" >
             {/*<div className="dropdown-menu header-user-menu">*/}
-                <li className="dropdown-header no-padding">
-                    <h5 className="no-margin"> Права доступу: </h5>
-                    <i> {accessNameText} </i>
-                </li>
-                <li role="separator" className="divider" />
-                <li className="">
-                    <Link to="/help" className="btn-block btn-flat header-user-menu-item" title="Керівництво користувачу">
-                        Допомога {" "}
-                        <i className="fa fa-question-circle" />
-                    </Link>
-                </li>
+            <li className="dropdown-header no-padding">
+                <h5 className="no-margin"> Права доступу: </h5>
+                <i> {accessNameText} </i>
+            </li>
             <li role="separator" className="divider" />
-                <li className="">
-                    <a
-                        href="javascript:void(0)"
-                        className="btn-block btn-flat header-user-menu-item btn-logout"
-                        onClick={props.logOutUser}
-                    >
-                        Вихід з аккаунта {" "}
-                        <i className="fa fa-sign-out" />
-                    </a>
-                </li>
+            <li className="">
+                <NavLink to="/help" className="btn-block btn-flat header-user-menu-item" title="Керівництво користувачу">
+                    Допомога {" "}
+                    <i className="fa fa-question-circle" />
+                </NavLink>
+            </li>
+            <li role="separator" className="divider" />
+            <li className="">
+                <NavLink to="/about" className="btn-block btn-flat header-user-menu-item" title="Переглянути інформацію про програму" >
+                    Про програму
+                    <i className="fa fa-info-circle" /> {" "}
+                </NavLink>
+            </li>
+            <li role="separator" className="divider" />
+            <li className="">
+                <a
+                    href="javascript:void(0)"
+                    className="btn-block btn-flat header-user-menu-item btn-logout"
+                    onClick={props.logOutUser}
+                >
+                    Вихід з аккаунта {" "}
+                    <i className="fa fa-sign-out" />
+                </a>
+            </li>
             {/*</div>*/}
         </Popover>
     );

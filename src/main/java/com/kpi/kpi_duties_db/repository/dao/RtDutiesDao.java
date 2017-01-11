@@ -1,8 +1,7 @@
 package com.kpi.kpi_duties_db.repository.dao;
 
-import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,5 +12,5 @@ import java.util.Map;
 
 public interface RtDutiesDao {
 
-    List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap);
+    OccupationsSearchResultDto findByFields(Map<String, Object> paramsMap);
 }

@@ -48,6 +48,7 @@ const initialState = {
         isFetching: false,
         fetchingError: "",
         items : [],
+        resultsOveralSize: 0,
         isAddingNewVal: false,
         addingSuccess: false,
         addingErrors: [],
@@ -88,12 +89,14 @@ const initialState = {
     clarifiedOccupationList: {
         isFetching: false,
         fetchingError: "",
+        resultsOveralSize: 0,
         items : []
     },
     clarificationList: {
         isFetching: false,
         fetchingError: "",
         items : [],
+        resultsOveralSize: 0,
         isAddingNewVal: false,
         addingErrors: [],
         addingSuccess: false,
@@ -206,6 +209,7 @@ export default function occupNameInfoLists(state = initialState, action) {
                 ...state,
                 occupationGroupList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -234,6 +238,7 @@ export default function occupNameInfoLists(state = initialState, action) {
                 ...state,
                 clarificationList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -262,6 +267,7 @@ export default function occupNameInfoLists(state = initialState, action) {
                 ...state,
                 clarifiedOccupationList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }

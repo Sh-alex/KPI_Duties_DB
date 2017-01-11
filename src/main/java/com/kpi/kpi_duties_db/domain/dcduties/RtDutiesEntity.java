@@ -37,17 +37,17 @@ public class RtDutiesEntity {
     @Column(name = "vcChangeDate")
     private Timestamp vcChangeDate;
 
-    @Column(name = "documentName")
-    private String documentName;
+    @Column(name = "mainInfoDocRefName")
+    private String mainInfoDocRefName;
 
-    @Column(name = "documentUrl")
-    private String documentUrl;
+    @Column(name = "mainInfoDocRefLink")
+    private String mainInfoDocRefLink;
 
-    @Column(name = "documentTextsName")
-    private String documentTextsName;
+    @Column(name = "descriptionDocRefName")
+    private String descriptionDocRefName;
 
-    @Column(name = "documentTextsUrl")
-    private String documentTextsUrl;
+    @Column(name = "descriptionDocRefLink")
+    private String descriptionDocRefLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DcDutiesNameId", insertable = false, updatable = false)
@@ -61,7 +61,7 @@ public class RtDutiesEntity {
     @JoinColumn(name = "ParentId", insertable = false, updatable = false)
     private RtDutiesEntity parentEntity;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParentId")
     private Set<RtDutiesEntity> rtDutiesEntities;
 
@@ -149,36 +149,36 @@ public class RtDutiesEntity {
         this.vcChangeDate = vcChangeDate;
     }
 
-    public String getDocumentName() {
-        return documentName;
+    public String getMainInfoDocRefName() {
+        return mainInfoDocRefName;
     }
 
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
+    public void setMainInfoDocRefName(String mainInfoDocRefName) {
+        this.mainInfoDocRefName = mainInfoDocRefName;
     }
 
-    public String getDocumentUrl() {
-        return documentUrl;
+    public String getMainInfoDocRefLink() {
+        return mainInfoDocRefLink;
     }
 
-    public void setDocumentUrl(String documentUrl) {
-        this.documentUrl = documentUrl;
+    public void setMainInfoDocRefLink(String mainInfoDocRefLink) {
+        this.mainInfoDocRefLink = mainInfoDocRefLink;
     }
 
-    public String getDocumentTextsName() {
-        return documentTextsName;
+    public String getDescriptionDocRefName() {
+        return descriptionDocRefName;
     }
 
-    public void setDocumentTextsName(String documentTextsName) {
-        this.documentTextsName = documentTextsName;
+    public void setDescriptionDocRefName(String descriptionDocRefName) {
+        this.descriptionDocRefName = descriptionDocRefName;
     }
 
-    public String getDocumentTextsUrl() {
-        return documentTextsUrl;
+    public String getDescriptionDocRefLink() {
+        return descriptionDocRefLink;
     }
 
-    public void setDocumentTextsUrl(String documentTextsUrl) {
-        this.documentTextsUrl = documentTextsUrl;
+    public void setDescriptionDocRefLink(String descriptionDocRefLink) {
+        this.descriptionDocRefLink = descriptionDocRefLink;
     }
 
     public DcDutiesNameEntity getDcDutiesNameEntity() {
@@ -256,14 +256,14 @@ public class RtDutiesEntity {
                 Objects.equals(getNameShort(), that.getNameShort()) &&
                 Objects.equals(getDcDutiesNameId(), that.getDcDutiesNameId()) &&
                 Objects.equals(getParentId(), that.getParentId()) &&
-                Objects.equals(getDocumentName(), that.getDocumentName()) &&
-                Objects.equals(getDocumentUrl(), that.getDocumentUrl()) &&
-                Objects.equals(getDocumentTextsName(), that.getDocumentTextsName()) &&
-                Objects.equals(getDocumentTextsUrl(), that.getDocumentTextsUrl());
+                Objects.equals(getMainInfoDocRefName(), that.getMainInfoDocRefName()) &&
+                Objects.equals(getMainInfoDocRefLink(), that.getMainInfoDocRefLink()) &&
+                Objects.equals(getDescriptionDocRefName(), that.getDescriptionDocRefName()) &&
+                Objects.equals(getDescriptionDocRefLink(), that.getDescriptionDocRefLink());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId(), getParentId(), getDocumentName(), getDocumentUrl(), getDocumentTextsName(), getDocumentTextsUrl());
+        return Objects.hash(getId(), getDcDutiesPartitionId(), getName(), getNameShort(), getDcDutiesNameId(), getParentId(), getMainInfoDocRefName(), getMainInfoDocRefLink(), getDescriptionDocRefName(), getDescriptionDocRefLink());
     }
 }

@@ -97,12 +97,21 @@ import { showModalEditOccup } from "../../actions/editOccup"
 
 import { denyAccessToTheUserWithRedirect } from '../../actions/user'
 
+import {
+    SORT_ASC,
+    SORT_DESC
+} from "../../constants/common"
+
 class CtrlDcBox extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            listItems: [],                              //елементи поточного списку; зберігаємо у стані компоненту щоб реалізувати функції сортування та фільтру, не викликаючи їх коли кожен раз міняється props чи state
+            occupNamesById: {                           //закешована-хеш таблиця назв посад по ID
+                fetchingError: "",                      //  це потрібно для того щоб коли десь у інших компонентах
+                isFetching: false,                      //  оновлюється список clarifiedOccupation, тут цей список залишався (костиль, щоб не міняти повністю структуру Redux Store)
+                items: {}
+            },
             addingInpIsShown: false,                    //чи показано зараз поле для додавання нового значення
             activeListName: "OCCUP_GROUP",              //активний список, одне із: CLARIFICATION, CODE_KP, CODE_ZKPPTR, CODE_ETDK, CODE_DKHP, RESPONSIBILITIES, HAVE_TO_KNOW, QUALIFF_REQUIR
             editingItemId: null,                        //яка елемент(ID) зараз редагується(для нього показуємо модальне вікно)
@@ -114,11 +123,25 @@ class CtrlDcBox extends Component {
                                                         //Tip: це можна було б і розрахувати знаючи id, але так як у нас списки - масиви, доведеться пробігати по всьому масиву, тому краще вже зберігати значення в стані компоненту
             showModalConfirmDelOccupDcVal: false,       //чи показувати модальне вікно для підтвердження видалення елемента зі списку
             dontShowAgainDelModal: false,               //більше не показувати повідомлення із підтвердженням видалення посади
-            sortDirection: "NONE",                      //напрям сортування списку, одне із: NONE/SORT_ASC/SORT_DESC
+            sortDirection: null,                        //напрям сортування списку, одне із: null/"SORT_ASC"/"SORT_DESC"
+            paginationSize: 200,                        //розмір порції при пагінації
+            activePortion: 1,                           //номер порції елементів яку показуємо (нумерація з 1)
             expandedItems: {},                          //які елементи розкриті(показується повне значення елемента списку чи скорочене)
             shownUsingOccupRows: {},
+            listNamesDict: {                            //хеш-таблиця із назвами спсиків у props у відповідності до this.state.activeListName
+                OCCUP_GROUP: "occupationGroupList",
+                CLARIFICATION: "clarificationList",
+                CODE_KP: "KPCodesList",
+                CODE_ZKPPTR: "ZKPPTRCodesList",
+                CODE_ETDK: "ETDKCodesList",
+                CODE_DKHP: "DKHPCodesList",
+                RESPONSIBILITIES: "responsibilitiesTextsList",
+                HAVE_TO_KNOW: "haveToKnowTextsList",
+                QUALIFF_REQUIR: "qualiffRequirTextsList",
+            }
         };
 
+        this.fetchListData = this.fetchListData.bind(this);
         this.showAddingInp = this.showAddingInp.bind(this);
         this.hideAddingInp = this.hideAddingInp.bind(this);
         this.changeAddingInpVal = this.changeAddingInpVal.bind(this);
@@ -132,7 +155,7 @@ class CtrlDcBox extends Component {
         this.hideModalConfirmDelOccupDcVal = this.hideModalConfirmDelOccupDcVal.bind(this);
         this.triggerDontShowAgainDel = this.triggerDontShowAgainDel.bind(this);
         this.triggerSorting = this.triggerSorting.bind(this);
-        this.sortListItems = this.sortListItems.bind(this);
+        this.handlePaginationPageSelect = this.handlePaginationPageSelect.bind(this);
         this.filterList = this.filterList.bind(this);
         this.resetFilterListInpVal = this.resetFilterListInpVal.bind(this);
         this.onChangeFilterListInpVal = this.onChangeFilterListInpVal.bind(this);
@@ -147,8 +170,9 @@ class CtrlDcBox extends Component {
         this.handleToggleUsingOccupListBtnClick = this.handleToggleUsingOccupListBtnClick.bind(this);
         this.handleUsingOccupNameClick = this.handleUsingOccupNameClick.bind(this);
     }
+
     componentWillMount() {
-        this.checkUserAccess(this.props)
+        this.checkUserAccess(this.props);
     }
 
     checkUserAccess(props) {
@@ -157,63 +181,105 @@ class CtrlDcBox extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchLists();
+        //завантажуємо список назв усіх посад щоб показувати ці назви
+        // у відповідності до id посад в рядку "Посади що використовують це значення"
+        this.props.fetchClarifiedOccupList({limit: null});
+
+        //завантажуємо дані для активного списку
+        this.fetchListData({
+            filterStr: this.state.filterListInpVal,
+            sortDirection: this.state.sortDirection,
+            offset: this.state.paginationSize*(this.state.activePortion-1)
+        });
     }
 
     componentWillReceiveProps(nextProps) {
         this.checkUserAccess(nextProps);
 
+        let shouldUpdateState = false,
+            newState = {...this.state};
+
         //визначаємо посилання на активні списки
-        let listNamesDict = {
-            OCCUP_GROUP: "occupationGroupList",
-            CLARIFICATION: "clarificationList",
-            CODE_KP: "KPCodesList",
-            CODE_ZKPPTR: "ZKPPTRCodesList",
-            CODE_ETDK: "ETDKCodesList",
-            CODE_DKHP: "DKHPCodesList",
-            RESPONSIBILITIES: "responsibilitiesTextsList",
-            HAVE_TO_KNOW: "haveToKnowTextsList",
-            QUALIFF_REQUIR: "qualiffRequirTextsList",
-        };
-        let prevPropsListData = this.props[listNamesDict[this.state.activeListName]],
-            nextPropsListData = nextProps[listNamesDict[this.state.activeListName]];
+        let prevPropsListData = this.props[this.state.listNamesDict[this.state.activeListName]],
+            nextPropsListData = nextProps[this.state.listNamesDict[this.state.activeListName]];
 
         if(!prevPropsListData || !nextPropsListData)
             return console.error("Can't calculate prevPropsListData or nextPropsListData!");
 
-        let successfullyAddedNewVal = !prevPropsListData.addingSuccess && nextPropsListData.addingSuccess,
-            successfullyEditedVal = !prevPropsListData.updatingSuccess && nextPropsListData.updatingSuccess,
-            fetchedList = prevPropsListData.isFetching && !nextPropsListData.isFetching,
-            successfullyDeletedItem = !prevPropsListData.deletingSuccess && nextPropsListData.deletingSuccess;
+        let successfullyAddedNewVal = !prevPropsListData.addingSuccess && nextPropsListData.addingSuccess;
 
         //очищаємо значення поля для додавання нових елементів, якщо щойно у якогось списка включився стан addingSuccess
-        if(successfullyAddedNewVal)
-            this.setState({ addingInpVal: "" });
+        if(successfullyAddedNewVal) {
+            shouldUpdateState = true;
+            newState.addingInpVal = "";
+        }
 
-        //якщо список змінився, оновлюємо і закешовані дані, за потреби викликаючи сортування ще раз
-        if(successfullyEditedVal || successfullyAddedNewVal || fetchedList || successfullyDeletedItem)
-            this.setState({
-                listItems: this.sortListItems(nextPropsListData.items.slice(), this.state.sortDirection)
-            });
+        //перевіряємо чи треба змінити закешовану хеш-таблицю occupNamesById
+        if(nextProps.occupNamesById.fetchingError !== this.state.occupNamesById.fetchingError) {
+            newState.occupNamesById.fetchingError = nextProps.occupNamesById.fetchingError;
+            shouldUpdateState = true;
+        }
+        if(nextProps.occupNamesById.isFetching !== this.state.occupNamesById.isFetching) {
+            newState.occupNamesById.isFetching = nextProps.occupNamesById.isFetching;
+            shouldUpdateState = true;
+        }
+        if(Object.keys(nextProps.occupNamesById.items).length > Object.keys(this.state.occupNamesById.items).length) {
+            newState.occupNamesById.items = nextProps.occupNamesById.items;
+            shouldUpdateState = true;
+        }
+
+        if(shouldUpdateState)
+            this.setState(newState);
+    }
+
+    fetchListData(options={}, listName = this.state.activeListName) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        let params = ({limit: this.state.paginationSize, ...options});
+
+        switch(listName) {
+            case "OCCUP_GROUP":
+                return this.props.fetchOccupGroupList(params);
+            case "CLARIFICATION":
+                return this.props.fetchClarificationList(params);
+            case "CODE_KP":
+                return this.props.fetchKPCodesList(params);
+            case "CODE_ZKPPTR":
+                return this.props.fetchZKPPTRCodesList(params);
+            case "CODE_ETDK":
+                return this.props.fetchETDKCodesList(params);
+            case "CODE_DKHP":
+                return this.props.fetchDKHPCodesList(params);
+            case "RESPONSIBILITIES":
+                return this.props.fetchResponsibilitiesTextsList(params);
+            case "HAVE_TO_KNOW":
+                return this.props.fetchHaveToKnowTextsList(params);
+            case "QUALIFF_REQUIR":
+                return this.props.fetchQualiffRequirTextsList(params);
+            default:
+                return () => console.error(`Called CtrlDcBox.fetchListData, but argument activeListName == ${activeListName} doesn't match any of expected values.`);
+        }
     }
 
     triggerSorting() {
-        let sortDirection = (this.state.sortDirection == "SORT_ASC") ? "SORT_DESC" : "SORT_ASC";
-        return this.setState({
+        let sortDirection = (this.state.sortDirection == SORT_ASC) ? SORT_DESC : SORT_ASC;
+
+        this.fetchListData({
+            filterStr: this.state.filterListInpVal,
             sortDirection,
-            listItems: this.sortListItems(this.state.listItems, sortDirection)
+            offset: this.state.paginationSize*(this.state.activePortion-1)
         });
+
+        return this.setState({ sortDirection });
     }
 
-    sortListItems(listItems = this.state.listItems, sortDirection = this.state.sortDirection) {
-        switch(sortDirection) {
-            case "SORT_ASC":
-                return listItems.sort((a, b) => +(a.textValue.toLocaleLowerCase() > b.textValue.toLocaleLowerCase()) || +(a.textValue.toLocaleLowerCase() === b.textValue.toLocaleLowerCase()) - 1);
-            case "SORT_DESC":
-                return listItems.sort((a, b) => +(a.textValue.toLocaleLowerCase() < b.textValue.toLocaleLowerCase()) || +(a.textValue.toLocaleLowerCase() === b.textValue.toLocaleLowerCase()) - 1);
-            default:
-                return listItems;
-        }
+    handlePaginationPageSelect(pageNum) {
+        this.fetchListData({
+            filterStr: this.state.filterListInpVal,
+            sortDirection: this.state.sortDirection,
+            offset: this.state.paginationSize*(pageNum - 1)
+        });
+
+        this.setState({ activePortion: pageNum });
     }
 
     onChangeFilterListInpVal(e) {
@@ -221,19 +287,21 @@ class CtrlDcBox extends Component {
     }
 
     filterList(filterStr="") {
-        let propsListData = this.getActiveListData().items.slice(),
-            filteredListData = propsListData.filter(item => item.textValue.includes(filterStr));
-        this.setState({
-            listItems: this.sortListItems(filteredListData, this.state.sortDirection )
+        this.fetchListData({
+            filterStr: filterStr || this.state.filterListInpVal,
+            sortDirection: this.state.sortDirection,
+            offset: this.state.paginationSize*(this.state.activePortion-1)
         });
     }
 
     resetFilterListInpVal() {
-        let propsListData = this.getActiveListData().items.slice();
-        this.setState({
-            filterListInpVal: "",
-            listItems: this.sortListItems(propsListData, this.state.sortDirection)
+        this.fetchListData({
+            filterStr: "",
+            sortDirection: this.state.sortDirection,
+            offset: this.state.paginationSize*(this.state.activePortion-1)
         });
+
+        this.setState({ filterListInpVal: "" });
     }
 
     selectAddNewOccupDcValSubmitHandler(activeListName = this.state.activeListName) {
@@ -412,6 +480,7 @@ class CtrlDcBox extends Component {
                     isFetching: false,
                     fetchingError: "",
                     items : [],
+                    resultsOveralSize: 0,
                     isAddingNewVal: false,
                     addingErrors: [],
                     addingSuccess: false,
@@ -484,12 +553,19 @@ class CtrlDcBox extends Component {
 
     setActiveListName(newActiveListName) {
         this.selectAddNewOccupDcValClearMsgHandler()(); //очищуємо помилку про додавання нового значення
+
+        this.fetchListData({
+            filterStr: this.state.filterListInpVal,
+            sortDirection: null,
+            offset: 0
+        }, newActiveListName);
+
         this.setState({
-            sortDirection: "NONE",
+            sortDirection: null,
             activeListName: newActiveListName,
             expandedItems: {},                      //обнуляємо перелік розгорнутих елементів для іншого обраного списку
             shownUsingOccupRows: {},                //обнуляємо перелік розгорнутих елементів для іншого обраного списку
-            listItems: this.getActiveListData(newActiveListName).items.slice(),
+            activePortion: 1
         })
     }
 
@@ -585,16 +661,15 @@ class CtrlDcBox extends Component {
                         <CtrlDcBoxMenu
                             activeListName={this.state.activeListName}
                             setActiveListName={this.setActiveListName}
-                            fetchClarifiedOccupList={this.props.fetchClarifiedOccupList}
-                            fetchOccupGroupList={this.props.fetchOccupGroupList}
-                            fetchClarificationList={this.props.fetchClarificationList}
-                            fetchKPCodesList={this.props.fetchKPCodesList}
-                            fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
-                            fetchETDKCodesList={this.props.fetchETDKCodesList}
-                            fetchDKHPCodesList={this.props.fetchDKHPCodesList}
-                            fetchHaveToKnowTextsList={this.props.fetchHaveToKnowTextsList}
-                            fetchResponsibilitiesTextsList={this.props.fetchResponsibilitiesTextsList}
-                            fetchQualiffRequirTextsList={this.props.fetchQualiffRequirTextsList}
+                            fetchOccupGroupList={params => this.fetchListData(params, "OCCUP_GROUP")}
+                            fetchClarificationList={params => this.fetchListData(params, "CLARIFICATION")}
+                            fetchKPCodesList={params => this.fetchListData(params, "CODE_KP")}
+                            fetchZKPPTRCodesList={params => this.fetchListData(params, "CODE_ZKPPTR")}
+                            fetchETDKCodesList={params => this.fetchListData(params, "CODE_ETDK")}
+                            fetchDKHPCodesList={params => this.fetchListData(params, "CODE_DKHP")}
+                            fetchHaveToKnowTextsList={params => this.fetchListData(params, "HAVE_TO_KNOW")}
+                            fetchResponsibilitiesTextsList={params => this.fetchListData(params, "RESPONSIBILITIES")}
+                            fetchQualiffRequirTextsList={params => this.fetchListData(params, "QUALIFF_REQUIR")}
                             occupGroupListIsLoading={this.props.occupationGroupList.isFetching}
                             clarificationListIsLoading={this.props.clarificationList.isFetching}
                             KPCodesListIsLoading={this.props.KPCodesList.isFetching}
@@ -650,8 +725,9 @@ class CtrlDcBox extends Component {
                             addingSuccess={activeList.addingSuccess}
                             isSavingNewVal={activeList.isAddingNewVal}
                             isFetchingItems={activeList.isFetching}
-                            listDataItems={this.state.listItems}
-                            occupNamesById={this.props.occupNamesById}
+                            listDataItems={activeList.items}
+                            occupNamesById={this.state.occupNamesById}
+                            fetchOccupNamesById={this.props.fetchClarifiedOccupList}
                             fetchingError={activeList.fetchingError}
                             shownOccupDescrTextsList={shownOccupDescrTextsList}
                             onEditListItemBtnClick={this.showModalEditOccupDcVal}
@@ -668,6 +744,10 @@ class CtrlDcBox extends Component {
                             onUsingOccupNameClick={this.handleUsingOccupNameClick}
                             onToggleUsingOccupListBtnClick={this.handleToggleUsingOccupListBtnClick}
                             shownUsingOccupRows={this.state.shownUsingOccupRows}
+                            activePortion={this.state.activePortion}
+                            handlePaginationPageSelect={this.handlePaginationPageSelect}
+                            paginationSize={this.state.paginationSize}
+                            resultsOveralSize={activeList.resultsOveralSize || 0}
                         />
                     </div>
                 </div>
@@ -716,30 +796,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         denyAccessToTheUserWithRedirect() {
             return dispatch( denyAccessToTheUserWithRedirect() );
         },
-        fetchLists() {
-            dispatch(fetchClarifiedOccupList());
-            dispatch(fetchOccupGroupList());
-            dispatch(fetchClarificationList());
 
-            dispatch(fetchKPCodesList());
-            dispatch(fetchZKPPTRCodesList());
-            dispatch(fetchETDKCodesList());
-            dispatch(fetchDKHPCodesList());
-
-            dispatch(fetchHaveToKnowTextsList());
-            dispatch(fetchResponsibilitiesTextsList());
-            dispatch(fetchQualiffRequirTextsList());
-        },
-        fetchClarifiedOccupList: newVal => dispatch(fetchClarifiedOccupList()),
-        fetchOccupGroupList: newVal => dispatch(fetchOccupGroupList()),
-        fetchClarificationList: newVal => dispatch(fetchClarificationList()),
-        fetchKPCodesList: newVal => dispatch(fetchKPCodesList()),
-        fetchZKPPTRCodesList: newVal => dispatch(fetchZKPPTRCodesList()),
-        fetchETDKCodesList: newVal => dispatch(fetchETDKCodesList()),
-        fetchDKHPCodesList: newVal => dispatch(fetchDKHPCodesList()),
-        fetchHaveToKnowTextsList: newVal => dispatch(fetchHaveToKnowTextsList()),
-        fetchResponsibilitiesTextsList: newVal => dispatch(fetchResponsibilitiesTextsList()),
-        fetchQualiffRequirTextsList: newVal => dispatch(fetchQualiffRequirTextsList()),
+        fetchClarifiedOccupList: reqParams => dispatch(fetchClarifiedOccupList(null, null, reqParams)),
+        fetchOccupGroupList: reqParams => dispatch(fetchOccupGroupList(null, null, reqParams)),
+        fetchClarificationList: reqParams => dispatch(fetchClarificationList(null, null, reqParams)),
+        fetchKPCodesList: reqParams => dispatch(fetchKPCodesList(null, null, reqParams)),
+        fetchZKPPTRCodesList: reqParams => dispatch(fetchZKPPTRCodesList(null, null, reqParams)),
+        fetchETDKCodesList: reqParams => dispatch(fetchETDKCodesList(null, null, reqParams)),
+        fetchDKHPCodesList: reqParams => dispatch(fetchDKHPCodesList(null, null, reqParams)),
+        fetchHaveToKnowTextsList: reqParams => dispatch(fetchHaveToKnowTextsList(null, null, reqParams)),
+        fetchResponsibilitiesTextsList: reqParams => dispatch(fetchResponsibilitiesTextsList(null, null, reqParams)),
+        fetchQualiffRequirTextsList: reqParams => dispatch(fetchQualiffRequirTextsList(null, null, reqParams)),
 
         addNewOccupGroup: newVal => dispatch(addNewOccupationGroup({newVal})),
         addNewClarification: newVal => dispatch(addNewClarification({newVal})),

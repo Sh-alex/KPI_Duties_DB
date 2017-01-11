@@ -3,6 +3,7 @@ package com.kpi.kpi_duties_db.repository.dao.impl;
 import com.kpi.kpi_duties_db.domain.dcduties.RtDutiesEntity;
 import com.kpi.kpi_duties_db.repository.RtDutiesRepository;
 import com.kpi.kpi_duties_db.repository.dao.RtDutiesDao;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.*;
@@ -32,10 +33,12 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
 
     @Override
     @Transactional(readOnly = true)
-    public List<RtDutiesEntity> findByFields(Map<String, Object> paramsMap) {
+    public OccupationsSearchResultDto findByFields(Map<String, Object> paramsMap) {
+        OccupationsSearchResultDto result = new OccupationsSearchResultDto();
+
         Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        Criteria criteriaForDatesInState = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
-        Criteria criteriaForDatesInKpi = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(RtDutiesEntity.class, "rtDuties");
+
+        Boolean createdDatesAlias = false;
 
         criteria.setFetchMode("rtDutiesEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesCodeEntities", FetchMode.SELECT);
@@ -44,10 +47,14 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
         criteria.setFetchMode("rtDutiesMustKnowEntities", FetchMode.SELECT);
         criteria.setFetchMode("rtDutiesTaskAndResponsibilitiesEntities", FetchMode.SELECT);
 
-        criteriaForDatesInState.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
-        criteriaForDatesInKpi.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+        Integer offset = 0;
+        Integer limit = 0;
+
         if (paramsMap == null || paramsMap.isEmpty()) {
-            return repository.findAll();
+            result.setEntities(repository.findAll());
+            //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
+            result.setResultSize(result.getEntities().size());
+            return result;
         } else {
             for (String paramName : paramsMap.keySet()) {
                 Object value = paramsMap.get(paramName);
@@ -57,10 +64,10 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             criteria.add(Restrictions.in("id", (ArrayList) value));
                             break;
                         case "rtDutiesName":
-                            if (paramsMap.get("searchType").equals("MATCH_STRING")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("MATCH_STRING")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.EXACT));
-                            }
-                            if (paramsMap.get("searchType").equals("CONTAINS_STRING")) {
+                            } else
+                            if (paramsMap.get("searchType") == null || paramsMap.get("searchType").equals("CONTAINS_STRING") || paramsMap.get("searchType").equals("")) {
                                 criteria.add(Restrictions.ilike("name", (String) value, MatchMode.ANYWHERE));
                             }
                             break;
@@ -69,7 +76,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             break;
                         case "dcDutiesNames":
                             //OR LIKE
-                            if (paramsMap.get("searchType").equals("SOME_TAGS")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("SOME_TAGS")) {
                                 Disjunction disjunction = Restrictions.disjunction();
                                 for (String keyword : (List<String>) paramsMap.get(paramName)) {
                                     disjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
@@ -77,7 +84,7 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                                 criteria.add(disjunction);
                             }
                             //AND LIKE
-                            if (paramsMap.get("searchType").equals("ALL_TAGS")) {
+                            if (paramsMap.get("searchType") != null && paramsMap.get("searchType").equals("ALL_TAGS")) {
                                 Conjunction conjunction = Restrictions.conjunction();
                                 for (String keyword : (List<String>) paramsMap.get(paramName)) {
                                     conjunction.add(Restrictions.ilike("name", keyword, MatchMode.ANYWHERE));
@@ -86,72 +93,136 @@ public class RtDutiesDaoImpl implements RtDutiesDao {
                             }
                             break;
                         case "startFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.ge("dates.start", value));
                             break;
                         case "startTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.le("dates.start", value));
                             break;
                         case "stopFrom":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.ge("dates.stop", value));
                             break;
                         case "stopTo":
-                            criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                            if(!createdDatesAlias) {
+                                criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                                createdDatesAlias = true;
+                            }
                             criteria.add(Restrictions.le("dates.stop", value));
                             break;
-
                         case "offset":
-                            if ((Integer) value > 0) {
-                                criteria.setFirstResult((Integer) value);
-                            }
+                            offset = (Integer) value;
                             break;
                         case "limit":
-                            if ((Integer) value >= 0) {
-                                criteria.setMaxResults((Integer) value);
-                            }
+                            limit = (Integer) value;
                             break;
                     }
                 }
             }
-
-
-
-
         }
-        /*Так як приналежність до КПІ відноситься до дат, то потрібно перевірити щоб всі дати посади
-        відповідали критеріям пошуку*/
-        criteriaForDatesInKpi.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежністю до КПІ
-        criteriaForDatesInState.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
-        List listByKpi = null;
-        List listTemp;
+
         if (paramsMap.get("inKpi") != null && !paramsMap.get("inKpi").equals("")) {
-            switch ((String)paramsMap.get("inKpi")){
-                case "ONLY_IN_KPI" :
-                    listByKpi = criteriaForDatesInKpi.list();
-                    listTemp = criteriaForDatesInState.list();
-                    if (!listTemp.isEmpty()) {
-                        listByKpi.removeAll(listTemp);  //Видаляю посади, які містять дати БЕЗ приналежності до КПІ
-                    }
-                    break;
-                case "ONLY_IN_STATE" :
-                    listByKpi = criteriaForDatesInState.list();
-                    listTemp = criteriaForDatesInKpi.list();
-                    if (!listTemp.isEmpty()) {
-                        listByKpi.removeAll(listTemp); //Видаляю посади, які містять дати З приналежністю до КПІ
-                    }
-                    break;
+            if (paramsMap.get("inKpi").equals("ONLY_IN_KPI")) {
+                DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
+                detached.setProjection(Projections.property("id"));
+                detached.createAlias("dutiesValidityDateEntities", "dates");
+                detached.add(Restrictions.eq("dates.isInKpi", false)); //Знаходжу посади, які містять дату БЕЗ приналежності до КПІ
+                criteria.add(Property.forName("id").notIn(detached));
+            }
+            if (paramsMap.get("inKpi").equals("ONLY_IN_STATE")) {
+                DetachedCriteria detached = DetachedCriteria.forClass(RtDutiesEntity.class);
+                detached.setProjection(Projections.property("id"));
+                detached.createAlias("dutiesValidityDateEntities", "dates");
+                detached.add(Restrictions.eq("dates.isInKpi", true)); //Знаходжу посади, які містять дату З приналежності до КПІ
+                criteria.add(Property.forName("id").notIn(detached));
             }
         }
 
-        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        //Загальна кількість посад, що задовольняють критерії пошуку (для пагінації на front-end)
+        Integer resultSize = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+        result.setResultSize(resultSize);
+        criteria.setProjection(null);
 
-        List result = criteria.list();
-        if (listByKpi != null) {
-            result.retainAll(listByKpi); //Знаходжу перетин посад знайдених по параметрах пошуку і посад, які знайдені по умові належності/неналежності до КПІ
+        if (paramsMap.get("sortField") != null && !paramsMap.get("sortField").equals("")) {
+            addOrder(criteria, createdDatesAlias, (String) paramsMap.get("sortField"), (String) paramsMap.get("sortDirection"));
         }
+        if (offset > 0) {
+            criteria.setFirstResult(offset);
+        }
+        if (limit >= 0) {
+            criteria.setMaxResults(limit);
+        }
+        criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        result.setEntities(criteria.list());
 
         return result;
+    }
+
+    private void addOrder(Criteria criteria, Boolean createdDatesAlias, String field, String direction) {
+        switch (field) {
+            case "OCCUPATION_GROUP":
+                criteria.createAlias("rtDuties.dcDutiesPartitionEntity", "dcDutiesPartitionEntity");
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dcDutiesPartitionEntity.name"));
+                } else
+                    criteria.addOrder(Order.desc("dcDutiesPartitionEntity.name"));
+                break;
+            case "OCCUPATION_NAME":
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("rtDuties.name"));
+                } else
+                    criteria.addOrder(Order.desc("rtDuties.name"));
+                break;
+            case "START_IN_STATE_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.start"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.start"));
+                }
+                break;
+            case "STOP_IN_STATE_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.stop"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.stop"));
+                }
+                break;
+            case "START_IN_KPI_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.start"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.start"));
+                }
+                break;
+            case "STOP_IN_KPI_DATE":
+                if(!createdDatesAlias) {
+                    criteria.createAlias("rtDuties.dutiesValidityDateEntities", "dates");
+                }
+                if (direction == null || direction.equals("") || direction.equals("SORT_ASC")) {
+                    criteria.addOrder(Order.asc("dates.stop"));
+                } else {
+                    criteria.addOrder(Order.desc("dates.stop"));
+                }
+                break;
+        }
     }
 }

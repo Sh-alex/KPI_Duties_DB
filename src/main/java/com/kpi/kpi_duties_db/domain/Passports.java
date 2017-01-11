@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * Created by Yaroslav on 31.10.2016.
  */
 @Entity
-@Table(name = "Passports", schema = "dbo", catalog = "details")
+@Table(name = "Passports", schema = "dbo", catalog = "[kpi_dev-1k_temp]")
 public class Passports {
     private int idPassport;
     private boolean active;

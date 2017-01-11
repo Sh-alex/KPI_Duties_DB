@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Alert } from 'react-bootstrap'
+import { Alert, Pagination } from 'react-bootstrap'
 
 import CtrlDcBoxResTbl from "../CtrlDcBoxResTbl"
 import LoadingBlock from "../LoadingBlock"
@@ -12,6 +12,8 @@ export default function CtrlDcBoxRes(props) {
     let listIsEmpty = !(props.listDataItems && props.listDataItems.length),
         listIsLoading = props.isFetchingItems,
         listHasErrors = props.fetchingError,
+        numOfPortions = Math.ceil(props.resultsOveralSize / props.paginationSize),
+        showPagination = !(listIsLoading || listHasErrors || listIsEmpty || (numOfPortions < 2)),
         mainHeader = document.getElementsByClassName("main-header"),
         mainHeaderH = mainHeader.length && mainHeader[0].clientHeight || 73,
         mainFooter = document.getElementsByClassName("main-footer"),
@@ -174,11 +176,29 @@ export default function CtrlDcBoxRes(props) {
                                         deletingItemId={props.deletingItemId}
                                         onToggleExpandItemClick={props.onToggleExpandItem}
                                         occupNamesById={props.occupNamesById}
+                                        fetchOccupNamesById={props.fetchOccupNamesById}
                                         onUsingOccupNameClick={props.onUsingOccupNameClick}
                                         onToggleUsingOccupListBtnClick={props.onToggleUsingOccupListBtnClick}
                                         shownUsingOccupRows={props.shownUsingOccupRows}
                                     />
                 }
+                <div className="text-center pagination-wrapper">
+                    {
+                        !showPagination ? null :
+                            <Pagination
+                                prev
+                                next
+                                first
+                                last
+                                ellipsis
+                                boundaryLinks
+                                bsClass={"pagination no-margin"}
+                                items={numOfPortions}
+                                maxButtons={3}
+                                activePage={props.activePortion}
+                                onSelect={props.handlePaginationPageSelect} />
+                    }
+                </div>
                 <div className="btn-show-adding-inp-wrapper">
                     {
                         (listIsLoading || listHasErrors || !props.userMayAddNewValues) ? null :

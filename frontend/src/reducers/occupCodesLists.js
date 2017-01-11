@@ -10,6 +10,7 @@ const initialState = {
         isUpdatingVal: false,
         updatingSuccess: false,
         updatingError: null,
+        resultsOveralSize: 0,
         items : [],
     },
     ETDKCodesList: {
@@ -24,6 +25,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : [],
     },
     ZKPPTRCodesList: {
@@ -38,6 +40,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : [],
     },
     KPCodesList: {
@@ -52,6 +55,7 @@ const initialState = {
         isDeletingVal: false,
         deletingSuccess: false,
         deletingError: null,
+        resultsOveralSize: 0,
         items : [],
     }
 };
@@ -72,6 +76,7 @@ export default function occupCodesList(state = initialState, action) {
                 ...state,
                 DKHPCodesList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -100,6 +105,7 @@ export default function occupCodesList(state = initialState, action) {
                 ...state,
                 ETDKCodesList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -128,6 +134,7 @@ export default function occupCodesList(state = initialState, action) {
                 ...state,
                 ZKPPTRCodesList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }
@@ -156,6 +163,7 @@ export default function occupCodesList(state = initialState, action) {
                 ...state,
                 KPCodesList: {
                     items: action.data,
+                    resultsOveralSize: action.resultsOveralSize,
                     isFetching: false,
                     fetchingError: ""
                 }

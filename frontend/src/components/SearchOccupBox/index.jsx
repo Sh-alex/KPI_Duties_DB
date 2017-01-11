@@ -40,14 +40,11 @@ class SearchOccupBox extends Component {
             searchResultsIsExpanded: this.props.searchResData,//Object.keys(this.props.location.query).length,
             searchFormIsExpanded: !(this.props.searchResData && this.props.searchResData.itemsList && this.props.searchResData.itemsList.length)
         };
+        this.getOccupations = this.getOccupations.bind(this);
     }
 
     componentWillMount() {
         this.checkUserAccess(this.props)
-    }
-
-    componentDidMount() {
-        this.props.fetchLists();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -55,7 +52,9 @@ class SearchOccupBox extends Component {
 
         this.setState({
             searchResultsIsExpanded: nextProps.searchResData,
-            searchFormIsExpanded: !(nextProps.searchResData && nextProps.searchResData.itemsList && nextProps.searchResData.itemsList.length)
+            searchFormIsExpanded: !(this.props.isSubmittngSearchForm && !nextProps.isSubmittngSearchForm) ||
+            !(nextProps.searchResData && nextProps.searchResData.itemsList &&
+                nextProps.searchResData.itemsList.length)
         });
     }
 
@@ -64,73 +63,62 @@ class SearchOccupBox extends Component {
             props.denyAccessToTheUserWithRedirect()
     }
 
+    getOccupations(data) {
+        return this.props.onSubmitSearchForm({...this.props.location.query, ...data});
+    }
+
     render() {
         console.log("SearchOccupBox.props.location.query: ", this.props.location.query);
         // if(Object.keys(this.props.location.query).length)
         let showSearchResults = this.props.searchResData && !this.props.searchError;
-        if(showSearchResults)
-            return (
-                <div>
-                    <SearchOccupBoxFormWrapper
-                        searchError={this.props.searchError}
-                        onSubmitSearchForm={this.props.onSubmitSearchForm}
-                        priorSearchOccupations={this.props.priorSearchOccupations}
-                        priorSearchOccupReset={this.props.priorSearchOccupReset}
-                        searchTextWillSucceed={this.props.searchTextWillSucceed}
-                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
-                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
-                        onAlertDismiss={this.props.handleSearchFormAlertDismiss}
-                        isSubmittngSearchForm={this.props.isSubmittngSearchForm}
-                        tagsList={this.props.clarificationList}
-                        occupationGroupList={this.props.occupationGroupList}
-                        searchQuery={this.props.location.query}
-                        boxIsExpanded={this.state.searchFormIsExpanded}
-                        toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
-                    />
-                    <SearchOccupBoxRes
-                        userMayDelOccupations={this.props.userMayDelOccupations}
-                        userMayEditOccupations={this.props.userMayEditOccupations}
-                        userMayDownloadSearchResults={this.props.userMayDownloadSearchResults}
+        return (
+            <div>
+                <SearchOccupBoxFormWrapper
+                    searchError={this.props.searchError}
+                    onSubmitSearchForm={this.props.onSubmitSearchForm}
+                    priorSearchOccupations={this.props.priorSearchOccupations}
+                    priorSearchOccupReset={this.props.priorSearchOccupReset}
+                    searchTextWillSucceed={this.props.searchTextWillSucceed}
+                    searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
+                    searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
+                    onAlertDismiss={this.props.handleSearchFormAlertDismiss}
+                    isSubmittngSearchForm={this.props.isSubmittngSearchForm}
+                    tagsList={this.props.clarificationList}
 
-                        occupationGroupList={this.props.occupationGroupList}
-                        clarifiedOccupationList={this.props.clarifiedOccupationList}
-                        clarificationList={this.props.clarificationList}
+                    fetchOccupGroupList={this.props.fetchOccupGroupList}
+                    fetchTagsList={this.props.fetchClarificationList}
 
-                        searchResData={this.props.searchResData}
-                        boxIsExpanded={this.state.searchResultsIsExpanded}
-                        onEditItem={this.props.handleEditItem}
-                        onDeleteItem={this.props.handleDeleteItem}
-                        toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
+                    occupationGroupList={this.props.occupationGroupList}
+                    searchQuery={this.props.location.query}
+                    boxIsExpanded={this.state.searchFormIsExpanded}
+                    toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
+                />
+                <SearchOccupBoxRes
+                    show={showSearchResults}
+                    getOccupations={this.getOccupations}
 
-                        dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
-                        showModalResDownloadSettings={this.props.showModalResDownloadSettings}
-                        delOccupationError={this.props.delOccupationError}
-                        delOccupationSuccess={this.props.delOccupationSuccess}
-                        isDeletingOccupation={this.props.isDeletingOccupation}
-                    />
-                </div>
-            );
-        else
-            return (
-                <div>
-                    <SearchOccupBoxFormWrapper
-                        searchError={this.props.searchError}
-                        onSubmitSearchForm={this.props.onSubmitSearchForm}
-                        priorSearchOccupations={this.props.priorSearchOccupations}
-                        priorSearchOccupReset={this.props.priorSearchOccupReset}
-                        searchTextWillSucceed={this.props.searchTextWillSucceed}
-                        searchTextResIsPrefetching={this.props.searchTextResIsPrefetching}
-                        searchTextResPrefetchingError={this.props.searchTextResPrefetchingError}
-                        onAlertDismiss={this.props.handleSearchFormAlertDismiss}
-                        isSubmittngSearchForm={this.props.isSubmittngSearchForm}
-                        tagsList={this.props.clarificationList}
-                        occupationGroupList={this.props.occupationGroupList}
-                        searchQuery={this.props.location.query}
-                        boxIsExpanded={this.state.searchFormIsExpanded}
-                        toggleExpand={() => this.setState({searchFormIsExpanded: !this.state.searchFormIsExpanded})}
-                    />
-                </div>
-            );
+                    userMayDelOccupations={this.props.userMayDelOccupations}
+                    userMayEditOccupations={this.props.userMayEditOccupations}
+                    userMayDownloadSearchResults={this.props.userMayDownloadSearchResults}
+
+                    occupationGroupList={this.props.occupationGroupList}
+                    clarifiedOccupationList={this.props.clarifiedOccupationList}
+                    clarificationList={this.props.clarificationList}
+
+                    searchResData={this.props.searchResData}
+                    boxIsExpanded={this.state.searchResultsIsExpanded}
+                    onEditItem={this.props.handleEditItem}
+                    onDeleteItem={this.props.handleDeleteItem}
+                    toggleExpand={() => this.setState({searchResultsIsExpanded: !this.state.searchResultsIsExpanded})}
+
+                    dismissDelOccupationAlert={this.props.dismissDelOccupationAlert}
+                    showModalResDownloadSettings={this.props.showModalResDownloadSettings}
+                    delOccupationError={this.props.delOccupationError}
+                    delOccupationSuccess={this.props.delOccupationSuccess}
+                    isDeletingOccupation={this.props.isDeletingOccupation}
+                />
+            </div>
+        );
     }
 }
 
@@ -172,11 +160,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         denyAccessToTheUserWithRedirect() {
             return dispatch( denyAccessToTheUserWithRedirect() );
         },
-        fetchLists() {
-            dispatch(fetchOccupGroupList());
-            dispatch(fetchClarifiedOccupList());
-            dispatch(fetchClarificationList());
-        },
+
+        fetchClarifiedOccupList: reqParams => dispatch(fetchClarifiedOccupList(null, null, reqParams)),
+        fetchOccupGroupList: reqParams => dispatch(fetchOccupGroupList(null, null, reqParams)),
+        fetchClarificationList: reqParams => dispatch(fetchClarificationList(null, null, reqParams)),
+
         priorSearchOccupations(...data) {
             dispatch(priorSearchOccupations(...data, dispatch))
         },

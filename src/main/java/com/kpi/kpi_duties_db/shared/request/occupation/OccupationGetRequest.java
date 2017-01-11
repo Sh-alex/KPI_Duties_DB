@@ -19,7 +19,7 @@ public class OccupationGetRequest {
 
     private List<String> searchType;
 
-    @JsonProperty("searchText")
+    @JsonProperty("filterStr")
     private List<String> rtDutiesName;
 
     @JsonProperty("occupGroupVal")
@@ -41,6 +41,10 @@ public class OccupationGetRequest {
     private List<Integer> offset;
 
     private List<Integer> limit;
+
+    private List<String> sortField ;
+
+    private List<String> sortDirection  ;
 
     public List<String> getIdList() {
         return idList;
@@ -136,5 +140,21 @@ public class OccupationGetRequest {
 
     public void setLimit(List<Integer> limit) {
         this.limit = limit;
+    }
+
+    public List<String> getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(List<String> sortField) {
+        this.sortField = sortField;
+    }
+
+    public List<String> getSortDirection() {
+        return sortDirection;
+    }
+
+    public void setSortDirection(List<String> sortDirection) {
+        this.sortDirection = sortDirection;
     }
 }

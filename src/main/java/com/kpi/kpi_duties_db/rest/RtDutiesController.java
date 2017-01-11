@@ -8,6 +8,7 @@ import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.idname.IdNameConverter;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.response.IdNameListResponse;
@@ -145,7 +146,7 @@ public class RtDutiesController {
 
         OccupationGetDto occupationGetDto = converter.toOccupationDtoFromOccupationGetRequest(occupationRequest);
 
-        List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
+        OccupationsSearchResultDto result = rtDutiesService.getByParams(occupationGetDto);
 
         OccupationsGetResponse response = converter.toOccupationsGetResponseFromRtDutiesEntityList(result);
 
@@ -164,9 +165,9 @@ public class RtDutiesController {
 
         OccupationGetDto occupationGetDto = converter.toOccupationDtoFromOccupationGetRequest(occupationRequest);
 
-        List<RtDutiesEntity> result = rtDutiesService.getByParams(occupationGetDto);
+        OccupationsSearchResultDto result = rtDutiesService.getByParams(occupationGetDto);
 
-        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(result);
+        IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(result.getEntities());
 
         return response;
     }

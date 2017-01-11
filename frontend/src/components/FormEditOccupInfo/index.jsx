@@ -25,6 +25,7 @@ export default class FormEditOccupInfo extends Component {
         super(props);
 
         this.state = {
+            listFetchLimit: 50,             //яку максимальну кількість значень списку завантажувати за раз із сервера
             newOccupationGroupVal: "",
             newClarificationInpVal: "",
             newKPCodeInpVal: "",
@@ -62,19 +63,56 @@ export default class FormEditOccupInfo extends Component {
         this.handleQualiffRequirTextChange = this.handleQualiffRequirTextChange.bind(this);
         this.handleHaveToKnowTextChange = this.handleHaveToKnowTextChange.bind(this);
         this.handleResponsibTextChange = this.handleResponsibTextChange.bind(this);
+
+        this.fetchOccupGroupList = this.fetchOccupGroupList.bind(this);
+        this.fetchClarifiedOccupList = this.fetchClarifiedOccupList.bind(this);
+        this.fetchClarificationList = this.fetchClarificationList.bind(this);
+        this.fetchKPCodesList = this.fetchKPCodesList.bind(this);
+        this.fetchZKPPTRCodesList = this.fetchZKPPTRCodesList.bind(this);
+        this.fetchETDKCodesList = this.fetchETDKCodesList.bind(this);
+        this.fetchDKHPCodesList = this.fetchDKHPCodesList.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchOccupGroupList();
-        this.props.fetchClarifiedOccupList();
-        this.props.fetchClarificationList();
+        this.fetchOccupGroupList();
+        this.fetchClarifiedOccupList();
+        this.fetchClarificationList();
 
-        this.props.fetchKPCodesList();
-        this.props.fetchZKPPTRCodesList();
-        this.props.fetchETDKCodesList();
-        this.props.fetchDKHPCodesList();
+        this.fetchKPCodesList();
+        this.fetchZKPPTRCodesList();
+        this.fetchETDKCodesList();
+        this.fetchDKHPCodesList();
     }
-//resPortionIndex
+
+    fetchOccupGroupList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchOccupGroupList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchClarifiedOccupList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchClarifiedOccupList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchClarificationList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchClarificationList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchKPCodesList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchKPCodesList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchZKPPTRCodesList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchZKPPTRCodesList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchETDKCodesList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchETDKCodesList({...params, limit: this.state.listFetchLimit})
+    }
+    fetchDKHPCodesList(params) {
+        //прив'язуємо обмеження у максимальній кількості завантажуваних елементів списку
+        return this.props.fetchDKHPCodesList({...params, limit: this.state.listFetchLimit})
+    }
+
     handleAddCodesPortionBtnClick() {
         this.props.fields.codes.addField({
             'portionStartDate': null,
@@ -158,12 +196,20 @@ export default class FormEditOccupInfo extends Component {
     }
 
     handleClarifiedOccupInpChange(newVal) {
-        this.props.fields.name.clarifiedOccup && this.props.fields.name.clarifiedOccup.onChange(newVal.id);
+        if(this.props.fields.name.clarifiedOccup)
+            this.props.fields.name.clarifiedOccup.onChange(newVal.id);
+        if(this.props.fields.name.clarifiedOccupName)
+            this.props.fields.name.clarifiedOccupName.onChange(newVal.textValue);
+
         this.props.handleClarifiedOccupInpChange(newVal);
     }
 
     handleClarificationInpChange(newVal) {
-        this.props.fields.name.clarification && this.props.fields.name.clarification.onChange(newVal.id);
+        if(this.props.fields.name.clarification)
+            this.props.fields.name.clarification.onChange(newVal.id);
+        if(this.props.fields.name.clarificationName)
+            this.props.fields.name.clarificationName.onChange(newVal.textValue);
+
         this.props.handleClarificationInpChange(newVal);
     }
 
@@ -417,9 +463,9 @@ export default class FormEditOccupInfo extends Component {
                         <FormEditOccupInfoNameSection
                             nameFields={name}
                             {...this.props.occupNameInfoLists}
-                            fetchOccupGroupList={this.props.fetchOccupGroupList}
-                            fetchClarifiedOccupList={this.props.fetchClarifiedOccupList}
-                            fetchClarificationList={this.props.fetchClarificationList}
+                            fetchOccupGroupList={this.fetchOccupGroupList}
+                            fetchClarifiedOccupList={this.fetchClarifiedOccupList}
+                            fetchClarificationList={this.fetchClarificationList}
                             handleOccupationGroupInpChange={this.handleOccupationGroupInpChange}
                             handleClarifiedOccupInpChange={this.handleClarifiedOccupInpChange}
                             handleClarificationInpChange={this.handleClarificationInpChange}
@@ -434,10 +480,10 @@ export default class FormEditOccupInfo extends Component {
                         <FormEditOccupInfoCodesSection
                             codesFields={codes}
                             {...this.props.occupCodesLists}
-                            fetchKPCodesList={this.props.fetchKPCodesList}
-                            fetchZKPPTRCodesList={this.props.fetchZKPPTRCodesList}
-                            fetchETDKCodesList={this.props.fetchETDKCodesList}
-                            fetchDKHPCodesList={this.props.fetchDKHPCodesList}
+                            fetchKPCodesList={this.fetchKPCodesList}
+                            fetchZKPPTRCodesList={this.fetchZKPPTRCodesList}
+                            fetchETDKCodesList={this.fetchETDKCodesList}
+                            fetchDKHPCodesList={this.fetchDKHPCodesList}
                             openModalAddNewKPCode={resPortionIndex => this.setState({
                                 showModalAddNewKPCode: true,
                                 addNewKPCodeResPortionIndex: resPortionIndex

@@ -13,16 +13,20 @@ import {
 
 export default function searchOccupations({data, onRequest, onSucces, onFail}) {
     let searchGetParams = "?" +
-        "searchType=" + data.searchType +
+        "searchType=" + (data.searchType || "") +
         "&occupIds=" + (data.occupIds || "") +
         "&occupGroupVal=" + (data.occupGroupVal || "") +
-        "&searchText=" + data.searchText +
-        "&searchTags=" + data.searchTags +
-        "&inKpi=" + data.inKpi +
+        "&filterStr=" + (data.searchText || "") +
+        "&searchTags=" + (data.searchTags || "") +
+        "&inKpi=" + (data.inKpi || "") +
         "&startFrom=" + (data.startFrom && moment(data.startFrom).format("YYYY-MM-DD") || "") +
         "&startTo=" + (data.startTo && moment(data.startTo).format("YYYY-MM-DD") || "") +
         "&stopFrom=" + (data.stopFrom && moment(data.stopFrom).format("YYYY-MM-DD") || "") +
-        "&stopTo=" + (data.stopTo && moment(data.stopTo).format("YYYY-MM-DD") || "");
+        "&stopTo=" + (data.stopTo && moment(data.stopTo).format("YYYY-MM-DD") || "") +
+        "&offset=" + (data.offset || "") +
+        "&limit=" + (data.limit || "") +
+        "&sortField=" + (data.sortField || "") +
+        "&sortDirection=" + (data.sortDirection || "");
 
     onRequest(data, searchGetParams);
 
@@ -80,15 +84,15 @@ export default function searchOccupations({data, onRequest, onSucces, onFail}) {
 
 
 
-export function priorSearchOccupations(searchType, searchText) {
+export function priorSearchOccupations(searchType, filterStr) {
     return function (dispatch) {
-        let searchParams = `?searchType=${searchType}&searchText=${searchText}`,
+        let searchParams = `?searchType=${searchType || ""}&filterStr=${filterStr || ""}&limit=${5}`,
             access_token = localStorage.jwtToken;
 
         dispatch({
             type: PRIOR_SEARCH_OCCUP_REQUEST,
             searchType,
-            searchText
+            filterStr
         });
 
         return fetch(PRIOR_SEARCH_OCCUP_URI + searchParams, {

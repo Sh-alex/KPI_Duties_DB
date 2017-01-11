@@ -27,16 +27,22 @@ public class DataInItem {
     @JsonProperty("clarifiedOccup")
     private Integer rtDutiesParentId;
 
+    @JsonProperty("clarifiedOccupName")
+    private String rtDutiesParentName;
+
     @JsonProperty("clarification")
     private Integer dcDutiesNameId;
 
-    private String documentName;
+    @JsonProperty("clarificationName")
+    private String dcDutiesName;
 
-    private String documentUrl;
+    private String mainInfoDocRefName;
 
-    private String documentTextsName;
+    private String mainInfoDocRefLink;
 
-    private String documentTextsUrl;
+    private String descriptionDocRefName;
+
+    private String descriptionDocRefLink;
 
     private List<Duration> durations;
 
@@ -48,7 +54,7 @@ public class DataInItem {
 
     private List<Requirement> qualiffRequir;
 
-    private List<String> clarifications;
+    private List<String> occupNameStructure;
 
     public String getRtDutiesName() {
         return rtDutiesName;
@@ -90,6 +96,14 @@ public class DataInItem {
         this.rtDutiesParentId = rtDutiesParentId;
     }
 
+    public String getRtDutiesParentName() {
+        return rtDutiesParentName;
+    }
+
+    public void setRtDutiesParentName(String rtDutiesParentName) {
+        this.rtDutiesParentName = rtDutiesParentName;
+    }
+
     public Integer getDcDutiesNameId() {
         return dcDutiesNameId;
     }
@@ -98,36 +112,44 @@ public class DataInItem {
         this.dcDutiesNameId = dcDutiesNameId;
     }
 
-    public String getDocumentName() {
-        return documentName;
+    public String getDcDutiesName() {
+        return dcDutiesName;
     }
 
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
+    public void setDcDutiesName(String dcDutiesName) {
+        this.dcDutiesName = dcDutiesName;
     }
 
-    public String getDocumentUrl() {
-        return documentUrl;
+    public String getMainInfoDocRefName() {
+        return mainInfoDocRefName;
     }
 
-    public void setDocumentUrl(String documentUrl) {
-        this.documentUrl = documentUrl;
+    public void setMainInfoDocRefName(String mainInfoDocRefName) {
+        this.mainInfoDocRefName = mainInfoDocRefName;
     }
 
-    public String getDocumentTextsName() {
-        return documentTextsName;
+    public String getMainInfoDocRefLink() {
+        return mainInfoDocRefLink;
     }
 
-    public void setDocumentTextsName(String documentTextsName) {
-        this.documentTextsName = documentTextsName;
+    public void setMainInfoDocRefLink(String mainInfoDocRefLink) {
+        this.mainInfoDocRefLink = mainInfoDocRefLink;
     }
 
-    public String getDocumentTextsUrl() {
-        return documentTextsUrl;
+    public String getDescriptionDocRefName() {
+        return descriptionDocRefName;
     }
 
-    public void setDocumentTextsUrl(String documentTextsUrl) {
-        this.documentTextsUrl = documentTextsUrl;
+    public void setDescriptionDocRefName(String descriptionDocRefName) {
+        this.descriptionDocRefName = descriptionDocRefName;
+    }
+
+    public String getDescriptionDocRefLink() {
+        return descriptionDocRefLink;
+    }
+
+    public void setDescriptionDocRefLink(String descriptionDocRefLink) {
+        this.descriptionDocRefLink = descriptionDocRefLink;
     }
 
     public List<Duration> getDurations() {
@@ -170,11 +192,11 @@ public class DataInItem {
         this.qualiffRequir = qualiffRequir;
     }
 
-    public List<String> getClarifications() {
-        return clarifications;
+    public List<String> getOccupNameStructure() {
+        return occupNameStructure;
     }
 
-    public void setClarifications(List<String> clarifications) {
-        this.clarifications = clarifications;
+    public void setOccupNameStructure(List<String> occupNameStructure) {
+        this.occupNameStructure = occupNameStructure;
     }
 }

@@ -37,16 +37,13 @@ public class DcDutiesNameController {
     private UsingOccupations usingOccupations;
 
     @GET
-    public Response getAllRtDutiesNames(@QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
+    public Response getAllRtDutiesNames(@QueryParam("filterStr") String filterStr, @QueryParam("sortDirection") String sortDirection, @QueryParam("offset") Integer offset, @QueryParam("limit") Integer limit) {
 
-        List<DcDutiesNameEntity> all;
-        if (limit != null && limit > 0 && offset != null) {
-            all = dcDutiesNameService.getAll(offset, limit);
-        } else
-            all = dcDutiesNameService.getAll();
+        List<DcDutiesNameEntity> all = dcDutiesNameService.findByParams(filterStr, sortDirection, offset, limit);
 
         IdNameListResponse response = idNameConverter.toIdNameListResponseFromEntityList(all);
         response = usingOccupations.findUsingOccupationsIdForDcDutiesName(response);
+        response.setResultsOveralSize(dcDutiesNameService.findByParams(filterStr, sortDirection, 0, 0).size());
 
         return Response.ok(response).build();
     }

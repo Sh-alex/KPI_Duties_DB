@@ -2,6 +2,7 @@ package com.kpi.kpi_duties_db.service.utils.converters.occupation;
 
 import com.kpi.kpi_duties_db.domain.dcduties.*;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.response.occupation.OccupationsGetResponse;
@@ -33,7 +34,7 @@ public interface OccupationConverter {
 
     Map<String, Object> toParamMapFromOccupationGetDto(OccupationGetDto dto);
 
-   OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list);
+    OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(OccupationsSearchResultDto result);
 
-     void deleteParentEntitiesWithoutChildren(RtDutiesEntity rtDutiesEntity);
+    void deleteParentEntitiesWithoutChildren(RtDutiesEntity rtDutiesEntity);
 }

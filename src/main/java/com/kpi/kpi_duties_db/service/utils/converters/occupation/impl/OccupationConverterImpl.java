@@ -4,6 +4,7 @@ import com.kpi.kpi_duties_db.domain.dcduties.*;
 import com.kpi.kpi_duties_db.service.*;
 import com.kpi.kpi_duties_db.service.utils.converters.occupation.OccupationConverter;
 import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationGetDto;
+import com.kpi.kpi_duties_db.shared.dto.occupation.OccupationsSearchResultDto;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationGetRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.OccupationRequest;
 import com.kpi.kpi_duties_db.shared.request.occupation.support.CodeOccupation;
@@ -108,10 +109,10 @@ public class OccupationConverterImpl implements OccupationConverter {
 
         entity.setDcDutiesNameId(nameOccupation.getDcDutiesNameId());
 
-        entity.setDocumentName(nameOccupation.getDocumentName());
-        entity.setDocumentUrl(nameOccupation.getDocumentUrl());
-        entity.setDocumentTextsName(nameOccupation.getDocumentTextsName());
-        entity.setDocumentTextsUrl(nameOccupation.getDocumentTextsUrl());
+        entity.setMainInfoDocRefName(request.getMainInfoDocRef().getDocName());
+        entity.setMainInfoDocRefLink(request.getMainInfoDocRef().getDocLink());
+        entity.setDescriptionDocRefName(request.getDescriptionDocRef().getDocName());
+        entity.setDescriptionDocRefLink(request.getDescriptionDocRef().getDocLink());
 
         return entity;
     }
@@ -381,6 +382,12 @@ public class OccupationConverterImpl implements OccupationConverter {
         if (request.getLimit() != null && !request.getLimit().isEmpty()) {
             occupationGetDto.setLimit(request.getLimit().get(0));
         }
+        if (request.getSortField() != null && !request.getSortField().isEmpty()) {
+            occupationGetDto.setSortField(request.getSortField().get(0));
+        }
+        if (request.getSortDirection() != null && !request.getSortDirection().isEmpty()) {
+            occupationGetDto.setSortDirection(request.getSortDirection().get(0));
+        }
 
         if (request.getDcDutiesPartitionIdList() != null && !request.getDcDutiesPartitionIdList().isEmpty()) {
             String[] split = request.getDcDutiesPartitionIdList().get(0).split(",");
@@ -400,7 +407,6 @@ public class OccupationConverterImpl implements OccupationConverter {
                 }
             }
         }
-
 
         if (request.getRtDutiesNameTags() != null && !request.getRtDutiesNameTags().isEmpty()) {
             String[] split = request.getRtDutiesNameTags().get(0).split(",");
@@ -435,13 +441,15 @@ public class OccupationConverterImpl implements OccupationConverter {
         params.put("inKpi", dto.getInKpi());
         params.put("offset", dto.getOffset());
         params.put("limit", dto.getLimit());
+        params.put("sortField", dto.getSortField());
+        params.put("sortDirection", dto.getSortDirection());
 
         return params;
     }
 
     @Override
-    public OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(List<RtDutiesEntity> list) {
-
+    public OccupationsGetResponse toOccupationsGetResponseFromRtDutiesEntityList(OccupationsSearchResultDto result) {
+        List<RtDutiesEntity> list = result.getEntities();
         OccupationsGetResponse response = new OccupationsGetResponse();
 
         Map<Integer, ItemById> itemsById = new HashMap<>();
@@ -459,15 +467,21 @@ public class OccupationConverterImpl implements OccupationConverter {
             dataInItem.setDcDutiesPartitionName(entity.getDcDutiesPartitionEntity().getName());
 
             dataInItem.setRtDutiesParentId(entity.getParentId());
+            RtDutiesEntity parentEntity = entity.getParentEntity();
+            if (parentEntity != null) {
+                dataInItem.setRtDutiesParentName(parentEntity.getName());
+            }
 
             dataInItem.setDcDutiesNameId(entity.getDcDutiesNameId());
 
-            dataInItem.setDocumentName(entity.getDocumentName());
-            dataInItem.setDocumentUrl(entity.getDocumentUrl());
-            dataInItem.setDocumentTextsName(entity.getDocumentTextsName());
-            dataInItem.setDocumentTextsUrl(entity.getDocumentTextsUrl());
+            dataInItem.setDcDutiesName(dcDutiesNameService.getById(entity.getDcDutiesNameId()).getName());
 
-            dataInItem.setClarifications(createClarifications(entity));
+            dataInItem.setMainInfoDocRefName(entity.getMainInfoDocRefName());
+            dataInItem.setMainInfoDocRefLink(entity.getMainInfoDocRefLink());
+            dataInItem.setDescriptionDocRefName(entity.getDescriptionDocRefName());
+            dataInItem.setDescriptionDocRefLink(entity.getDescriptionDocRefLink());
+
+            dataInItem.setOccupNameStructure(createClarifications(entity));
 
             Set<DutiesValidityDateEntity> dutiesValidityDateEntities = entity.getDutiesValidityDateEntities();
             if (dutiesValidityDateEntities != null) {
@@ -621,6 +635,7 @@ public class OccupationConverterImpl implements OccupationConverter {
         FoundOccupations foundOccupations = new FoundOccupations();
         response.setFoundOccupations(foundOccupations);
         response.getFoundOccupations().setItemsList(itemsList);
+        response.getFoundOccupations().setResultsOveralSize(result.getResultSize());
         response.getFoundOccupations().setItemsById(itemsById);
         return response;
     }
@@ -632,7 +647,6 @@ public class OccupationConverterImpl implements OccupationConverter {
             clarifications.add(entity.getDcDutiesNameEntity().getName());
             return clarifications;
         }
-
 
         clarifications.addAll(createClarifications(entity.getParentEntity()));
         clarifications.add(entity.getDcDutiesNameEntity().getName());
