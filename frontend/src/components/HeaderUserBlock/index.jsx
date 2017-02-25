@@ -23,8 +23,8 @@ function HeaderUserMenu(props) {
             <li role="separator" className="divider" />
             <li className="">
                 <NavLink to="/about" className="btn-block btn-flat header-user-menu-item" title="Переглянути інформацію про програму" >
-                    Про програму
-                    <i className="fa fa-info-circle" /> {" "}
+                    Про програму {" "}
+                    <i className="fa fa-info-circle" />
                 </NavLink>
             </li>
             <li role="separator" className="divider" />
