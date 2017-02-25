@@ -6,6 +6,12 @@ import SearchOccupationsForm from '../SearchOccupationsForm'
 import AddInfoFromAnotherOccupSearchRes from '../AddInfoFromAnotherOccupSearchRes'
 
 import {
+    fetchOccupGroupList,
+    fetchClarifiedOccupList,
+    fetchClarificationList,
+} from "../../actions/occupationNameInfo"
+
+import {
     hideModalAddInfoFromAnotherOccup,
     submitFormAddInfoFromAnotherOccup,
     dismissFormAddInfoFromAnotherOccupAlert,
@@ -45,6 +51,8 @@ class ModalAddInfoFromAnotherOccup extends Component {
         else
             InnerBlock = (
                 <SearchOccupationsForm
+                    fetchOccupGroupList={this.props.fetchOccupGroupList}
+                    fetchTagsList={this.props.fetchClarificationList}
                     searchError={this.props.searchError}
                     priorSearchOccupations={this.props.priorSearchOccupations}
                     priorSearchOccupReset={this.props.priorSearchOccupReset}
@@ -94,6 +102,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onHide() {
             dispatch(hideModalAddInfoFromAnotherOccup());
         },
+        fetchClarifiedOccupList: reqParams => dispatch(fetchClarifiedOccupList(null, null, reqParams)),
+        fetchOccupGroupList: reqParams => dispatch(fetchOccupGroupList(null, null, reqParams)),
+        fetchClarificationList: reqParams => dispatch(fetchClarificationList(null, null, reqParams)),
+
         priorSearchOccupations(...data) {
             dispatch(priorSearchOccupations(...data, dispatch))
         },
