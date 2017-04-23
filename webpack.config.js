@@ -103,6 +103,11 @@ module.exports = {
             compressor: {screw_ie8: true, keep_fnames: true, warnings: false},
             mangle: {screw_ie8: true, keep_fnames: true}
         }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
