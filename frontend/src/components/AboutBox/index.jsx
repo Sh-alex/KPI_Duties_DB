@@ -37,7 +37,7 @@ export default class AboutBox extends Component {
                             </p>
                             <hr/>
                             <p className="text-center">
-                                Усі права захищено (с) <br/>
+                                Усі права захищено © <br/>
                                 <a href="http://kbis.kpi.ua/"> КБІС НТУУ "КПІ ім. Ігоря Сікорського"</a>, 2016
                             </p>
                         </p>

@@ -241,7 +241,7 @@ export default class SearchOccupBoxRes extends Component {
                 {
                     this.props.searchResData.itemsList.length && (
                         <div className="box-footer clearfix">
-                            <div className="col-xs-12 col-md-6 col-lg-3 pagination-size-select-wrapper">
+                            <div className="col-xs-12 col-sm-6 col-lg-3 pagination-size-select-wrapper">
                                 <PaginationSizeSelect
                                     selectedSize={this.state.paginationSize}
                                     onSizeSelect={this.handlePaginationSizeSelect}
@@ -261,7 +261,7 @@ export default class SearchOccupBoxRes extends Component {
                                     activePage={this.state.activePortion}
                                     onSelect={this.handlePaginationPageSelect} />
                             </div>
-                            <div className="col-xs-12 col-md-6 col-lg-3 text-right btn-download-search-res-wrapper">
+                            <div className="col-xs-12 col-sm-6 col-lg-3 text-right btn-download-search-res-wrapper">
                                 { BtnDownloadSearchResults }
                             </div>
                         </div>

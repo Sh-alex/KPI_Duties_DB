@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import "./styles.less";
 import { Popover, OverlayTrigger } from 'react-bootstrap'
-import { Link } from 'react-router'
+
+import "./styles.less";
 import NavLink from "../NavLink"
 
 function HeaderUserMenu(props) {
     let accessNameText = props.userState && props.userState.permissions && props.userState.permissions.accessName || "Невідомо";
     return (
-        <Popover className="dropdown-menu header-user-menu" >
+        <Popover className="dropdown-menu header-user-menu" id="header-user-menu">
             {/*<div className="dropdown-menu header-user-menu">*/}
             <li className="dropdown-header no-padding">
                 <h5 className="no-margin"> Права доступу: </h5>

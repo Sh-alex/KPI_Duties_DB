@@ -1,5 +1,6 @@
 .ctrl-occup-dc-table-wrapper {
   overflow-y: auto;
+  overflow-x: hidden;
 
   .ctrl-occup-dc-table {
     margin: 0 auto !important;
@@ -14,9 +15,9 @@
     }
 
     .big-text-cell--folded {
-      max-width: 200px;
-      white-space: nowrap;
       text-overflow: ellipsis;
+      max-height: 9em;
+      display: block;
       overflow: hidden;
     }
 
